@@ -31,7 +31,26 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Run SonarQube
       run: mvn sonar:sonar   -Dsonar.projectKey=g2nee-front   -Dsonar.host.url=http://133.186.223.228:9000   -Dsonar.login=f836966ca084b6819d0825a73f6f11aeb7a2452c
-    
+    - name : upload file
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_ID }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        source: "target/*.jar"
+        target: "~/"
+        rm: false
+        
+    - name: execute shell script
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_ID }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script_stop: true
+        script: "./startup.sh"
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
