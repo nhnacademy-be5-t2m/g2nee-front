@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Run SonarQube
-      run: mvn sonar:sonar   -Dsonar.projectKey=g2neeFront   -Dsonar.host.url=http://133.186.223.228:9000   -Dsonar.login=52494cb24ea197a2db93690b16949373df430d25
+      run: mvn sonar:sonar -Dsonar.projectKey=g2neeFront -Dsonar.host.url=${{secrets.SONAR_HOST}} -Dsonar.login=${{secrets.SONAR_TOKEN}}
     - name : upload file
       uses: appleboy/scp-action@master
       with:
@@ -73,7 +73,7 @@ jobs:
         key: ${{ secrets.SSH_KEY2 }}
         port: ${{ secrets.SSH_PORT2 }}
         script_stop: true
-        script: "./startupfront.sh"
+        script: "./startupfront2.sh"
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
