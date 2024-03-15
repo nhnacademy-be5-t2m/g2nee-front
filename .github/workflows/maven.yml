@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Run SonarQube
-      run: mvn sonar:sonar   -Dsonar.projectKey=g2nee-front   -Dsonar.host.url=http://133.186.223.228:9000   -Dsonar.login=f836966ca084b6819d0825a73f6f11aeb7a2452c
+      run: mvn sonar:sonar   -Dsonar.projectKey=g2neeFront   -Dsonar.host.url=http://133.186.223.228:9000   -Dsonar.login=52494cb24ea197a2db93690b16949373df430d25
     - name : upload file
       uses: appleboy/scp-action@master
       with:
