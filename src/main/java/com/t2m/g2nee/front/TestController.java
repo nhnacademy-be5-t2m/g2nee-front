@@ -5,12 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class TestController {
 
-    @GetMapping("/")
+    @GetMapping(value={"/index.html","/"})
     public String hello() {
 
-        return "Hello Test!";
+        return "index/index";
     }
 }
