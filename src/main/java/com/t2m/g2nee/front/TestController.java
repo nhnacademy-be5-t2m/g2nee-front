@@ -37,15 +37,13 @@ public class TestController {
     }
 
     @GetMapping("/test")
-    public String goToShopTest() {
-        ResponseEntity<String> testResult = restTemplate.exchange(
+    public ResponseEntity<String> goToShopTest() {
+        return restTemplate.exchange(
                 "http://133.186.208.183/shop/hello",
                 HttpMethod.GET,
                 null,
                 String.class
         );
 
-
-        return testResult.getBody();
     }
 }
