@@ -39,7 +39,7 @@ public class TestController {
     @GetMapping("/test")
     public ResponseEntity<String> goToShopTest() {
         return restTemplate.exchange(
-                "http://133.186.208.183:8080/shop/hello",
+                "http://133.186.208.183:8100/shop/hello",
                 HttpMethod.GET,
                 null,
                 String.class
