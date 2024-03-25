@@ -46,4 +46,8 @@ public class TestController {
         );
 
     }
+    @GetMapping
+    public String test(){
+        return "hello g2nee shop";
+    }
 }
