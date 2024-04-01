@@ -1,3 +1,9 @@
+$(function(){
+    $("#header").load("header.html");
+    $("#footer").load("footer.html");
+    $("#navigator").load("nav.html");
+});
+
 (function ($) {
     "use strict";
     
@@ -101,4 +107,5 @@
     });
     
 })(jQuery);
+
 
