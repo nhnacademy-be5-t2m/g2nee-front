@@ -1,5 +1,6 @@
 (function ($) {
     "use strict";
+
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
@@ -84,7 +85,7 @@
     });
 
 
-    // 쇼핑카트 수량 up
+    // Product Quantity
     $('.quantity button').on('click', function () {
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
@@ -101,5 +102,4 @@
     });
 
 })(jQuery);
-
 

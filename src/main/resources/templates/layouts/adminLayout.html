@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>layout with category</title>
+    <title>admin layout</title>
 
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
@@ -28,18 +28,24 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/static/css/style.css" rel="stylesheet">
-    <link href="/static/css/signup.css" rel="stylesheet">
 </head>
 <body>
 <!-- th:replace 속성은 해당 속성이 선언된 html 태그를 다른 html 파일로 치환. fragments 폴더 아래 header.html 파일의 "th:fragment=header" 영역을 가져옴 -->
-<div th:replace="fragments/header::header"></div>
+<div th:replace="fragments/header:: admin-header"></div>
 
-<div th:replace="fragments/navigator :: categoryNav"></div>
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-3 col-md-12">
+            <div th:replace="fragments/navigator :: admin-navigator"></div>
+        </div>
 
-<!-- layout에서 변경되는 영역을 fragment로 설정. -->
-<div layout:fragment="content">
-
+        <!-- layout에서 변경되는 영역을 fragment로 설정. -->
+        <div class="col-lg-9 col-md-12">
+            <div layout:fragment="content"></div>
+        </div>
+    </div>
 </div>
+
 
 <!-- header와 마찬가지로 fragments 폴더 아래에 footer.html의 "th:fragment=footer" 영역을 가져옴 -->
 <div th:replace="fragments/footer::footer"></div>
