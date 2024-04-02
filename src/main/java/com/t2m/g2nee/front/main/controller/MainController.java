@@ -15,12 +15,12 @@ public class MainController {
         return "main/shop";
     }
 
-    @GetMapping("shopDetail")
+    @GetMapping("/shopDetail")
     public String detail() {
         return "main/detail";
     }
 
-    @GetMapping("cart")
+    @GetMapping("/cart")
     public String cart() {
         return "main/cart";
     }
