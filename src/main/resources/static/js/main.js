@@ -1,6 +1,5 @@
 (function ($) {
     "use strict";
-
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
@@ -85,7 +84,7 @@
     });
 
 
-    // Product Quantity
+    // 쇼핑카트 수량 up
     $('.quantity button').on('click', function () {
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
