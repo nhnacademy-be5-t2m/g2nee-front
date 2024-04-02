@@ -1,12 +1,6 @@
-$(function(){
-    $("#header").load("/src/main/resources/templates/layout/header.html/");
-    $("#categoryNav").load("/src/main/resources/templates/layout/categoryNav.html");
-    $("#footer").load("/src/main/resources/templates/layout/footer.html");
-});
-
 (function ($) {
     "use strict";
-    
+
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
@@ -20,11 +14,12 @@ $(function(){
                 $('.navbar .dropdown').off('mouseover').off('mouseout');
             }
         }
+
         toggleNavbarMethod();
         $(window).resize(toggleNavbarMethod);
     });
-    
-    
+
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -47,20 +42,20 @@ $(function(){
         autoplay: true,
         smartSpeed: 1000,
         responsive: {
-            0:{
-                items:2
+            0: {
+                items: 2
             },
-            576:{
-                items:3
+            576: {
+                items: 3
             },
-            768:{
-                items:4
+            768: {
+                items: 4
             },
-            992:{
-                items:5
+            992: {
+                items: 5
             },
-            1200:{
-                items:6
+            1200: {
+                items: 6
             }
         }
     });
@@ -74,17 +69,17 @@ $(function(){
         autoplay: true,
         smartSpeed: 1000,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:2
+            576: {
+                items: 2
             },
-            768:{
-                items:3
+            768: {
+                items: 3
             },
-            992:{
-                items:4
+            992: {
+                items: 4
             }
         }
     });
@@ -105,7 +100,7 @@ $(function(){
         }
         button.parent().parent().find('input').val(newVal);
     });
-    
+
 })(jQuery);
 
 

@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SignupController {
 
     @GetMapping
-    public String signup(){
-        return "/member/signupPage";
+    public String signup() {
+        return "member/signupPage";
     }
 
     @PostMapping
-    public String signupComplate(){
+    public String signupComplate() {
 
-        return "/member/signupComplate";
+        return "member/signupComplate";
     }
 }
