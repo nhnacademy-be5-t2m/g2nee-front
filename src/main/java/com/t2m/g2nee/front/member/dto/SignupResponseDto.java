@@ -1,4 +1,4 @@
-package com.t2m.g2nee.front.signup.dto;
+package com.t2m.g2nee.front.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberResponse {
+public class SignupResponseDto {
     private String userName;
     private String name;
     private String nickName;
