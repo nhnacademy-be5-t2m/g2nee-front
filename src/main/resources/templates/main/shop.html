@@ -4,15 +4,17 @@
       layout:decorate="~{layouts/categoryLayout}">
 
 <head>
-    <title>G2nee Book shop</title>
+    <title>G2nee Book</title>
 </head>
 
 <body>
 <div layout:fragment="content">
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">경제경영</h1>
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">
+                <span th:text="${category.categoryName}"/>
+            </h1>
         </div>
     </div>
 
@@ -24,10 +26,9 @@
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">세부 카테고리</h5>
                     <form>
-                        <a href="" class="nav-item nav-link">경제학/경제일반</a>
-                        <a href="" class="nav-item nav-link">기업경영</a>
-                        <a href="" class="nav-item nav-link">기업/경영자 스토리</a>
-
+                        <a th:each="subCategory : ${__${'subCategories' + category.categoryId}__}"
+                           th:href="@{/shop(id = ${subCategory.categoryId})}" class="nav-item nav-link">
+                            <span th:text="${subCategory.categoryName}"/> </a>
                     </form>
                 </div>
             </div>

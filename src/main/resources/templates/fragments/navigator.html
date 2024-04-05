@@ -8,36 +8,27 @@
                 <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
                    data-toggle="collapse" href="#navbar-vertical"
                    style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
+                    <h6 class="m-0">카테고리</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
                      id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">경제경영<i
-                                    class="fa fa-angle-down float-right mt-1"></i></a>
+
+                        <!--root category 반복-->
+                        <div class="nav-item dropdown" th:each="rootCategory : ${rootCategories}">
+                            <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link" data-toggle="dropdown">
+                                <span th:text="${rootCategory.categoryName}"/>
+                                <i class="fa fa-angle-down float-right mt-1"></i></a>
+
+                            <!--sub category 반복-->
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">경제학/경제일반</a>
-                                <a href="" class="dropdown-item">기업경영</a>
-                                <a href="" class="dropdown-item">기업/경영자 스토리</a>
+                                <a th:each="subCategory : ${__${'subCategories' + rootCategory.categoryId}__}" class="dropdown-item"
+                                   th:href="@{/shop(id = ${subCategory.categoryId})}">
+                                    <span th:text="${subCategory.categoryName}"/> </a>
                             </div>
                         </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">건강/취미<i
-                                    class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">건강운동</a>
-                                <a href="" class="dropdown-item">건강정보</a>
-                                <a href="" class="dropdown-item">공예</a>
-                            </div>
-                        </div>
-                        <a href="" class="nav-item nav-link">여행</a>
-                        <a href="" class="nav-item nav-link">역사</a>
-                        <a href="" class="nav-item nav-link">요리</a>
-                        <a href="" class="nav-item nav-link">만화</a>
-                        <a href="" class="nav-item nav-link">인문학</a>
-                        <a href="" class="nav-item nav-link">컴퓨터/모바일</a>
+
                     </div>
                 </nav>
             </div>
