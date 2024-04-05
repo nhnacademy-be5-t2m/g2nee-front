@@ -34,10 +34,24 @@
 <!-- th:replace 속성은 해당 속성이 선언된 html 태그를 다른 html 파일로 치환. fragments 폴더 아래 header.html 파일의 "th:fragment=header" 영역을 가져옴 -->
 <div th:replace="fragments/header::header"></div>
 
-<div th:replace="fragments/navigator :: categoryNav"></div>
 
-<!-- layout에서 변경되는 영역을 fragment로 설정. -->
-<div layout:fragment="content">
+<div class="container-fluid pt-5">
+    <div th:replace="fragments/navigator :: categoryNav"></div>
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 10px">
+        </div>
+    </div>
+    <!-- Page Header End -->
+    <div class="row px-xl-5">
+        <div class="col-lg-3 col-md-12">
+        </div>
+        <!-- layout에서 변경되는 영역을 fragment로 설정. -->
+        <div class="col-lg-9 col-md-12">
+            <div layout:fragment="content"></div>
+        </div>
+    </div>
+
 
 </div>
 
@@ -53,7 +67,7 @@
 <!-- Contact Javascript File -->
 <script src="/static/mail/jqBootstrapValidation.min.js"></script>
 <script src="/static/mail/contact.js"></script>
-
+    
 <!-- Template Javascript -->
 <script src="/static/js/main.js"></script>
 
