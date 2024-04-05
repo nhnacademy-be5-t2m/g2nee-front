@@ -7,6 +7,7 @@ import com.t2m.g2nee.front.category.dto.request.CategorySaveDto;
 import com.t2m.g2nee.front.category.dto.response.CategoryInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -29,25 +30,32 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     private final RestTemplate restTemplate;
 
 
-    @Value("${shop.api.categories.url}")
-    private String BASE_URL;
+    @Value("${g2nee-gateway}")
+    private String gateway;
+    
+    private String baseUrl;
 
     public CategoryAdaptorImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+    @PostConstruct
+    public void initUrl(){
+        baseUrl = gateway + "/shop/categories";
     }
 
     @Override
     public List<CategoryInfoDto> getRootCategories() {
         HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<List<CategoryInfoDto>> response = restTemplate
-                .exchange(BASE_URL, HttpMethod.GET, entity, LIST_TYPE_REF);
+                .exchange(baseUrl, HttpMethod.GET, entity, LIST_TYPE_REF);
 
         return response.getBody();
     }
 
     @Override
     public List<CategoryInfoDto> getSubCategories(Long categoryId) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/"+categoryId)
                 .path("/sub")
                 .build();
@@ -61,7 +69,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public PageResponse<CategoryInfoDto> getAllCategories(int page) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/all")
                 .queryParam("page", page)
                 .build();
@@ -75,7 +83,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public CategoryInfoDto getCategory(Long categoryId) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/"+categoryId)
                 .build();
 
@@ -89,7 +97,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public PageResponse<CategoryInfoDto> getCategoriesByName(String categoryName, int page) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/search")
                 .queryParam("name", categoryName)
                 .queryParam("page", page)
@@ -108,14 +116,14 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     public CategoryInfoDto requestCreatCategory(CategorySaveDto request) {
         HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
         ResponseEntity<CategoryInfoDto> response =
-                restTemplate.exchange(BASE_URL, HttpMethod.POST, entity, CategoryInfoDto.class);
+                restTemplate.exchange(baseUrl, HttpMethod.POST, entity, CategoryInfoDto.class);
 
         return response.getBody();
     }
 
     @Override
     public CategoryInfoDto requestModifyCategory(Long categoryId, CategorySaveDto request) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/"+categoryId)
                 .build();
 
@@ -128,7 +136,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public Boolean requestDeleteCategory(Long categoryId) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/"+categoryId)
                 .build();
 
@@ -141,7 +149,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public Boolean requestActiveCategory(Long categoryId) {
-        UriComponents url = UriComponentsBuilder.fromUriString(BASE_URL)
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/"+categoryId)
                 .build();
 
