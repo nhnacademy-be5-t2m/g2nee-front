@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "member", url = "${g2nee.gateway}", configuration = HeaderConfiguration.class)
+@FeignClient(name = "G2NEE-GATEWAY", configuration = HeaderConfiguration.class)
 public interface MemberAdapter {
 
     @PostMapping("/shop/member/signup")
