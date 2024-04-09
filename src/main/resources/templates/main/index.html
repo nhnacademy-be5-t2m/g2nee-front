@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mainLayout}">
+
+<head>
+    <title>G2nee shop main</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
+                   style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">도서분류</h6>
+                </a>
+                <!--                카테고리 리스트 동적으로 출력 부분-->
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
+                     id="navbar-vertical">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown">경제경영<i
+                                    class="fa fa-angle-down float-right mt-1"></i></a>
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <a href="" class="dropdown-item">경제학/경제일반</a>
+                                <a href="" class="dropdown-item">기업경영</a>
+                                <a href="" class="dropdown-item">기업/경영자 스토리</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown">건강/취미<i
+                                    class="fa fa-angle-down float-right mt-1"></i></a>
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <a href="" class="dropdown-item">건강운동</a>
+                                <a href="" class="dropdown-item">건강정보</a>
+                                <a href="" class="dropdown-item">공예</a>
+                            </div>
+                        </div>
+                        <a href="" class="nav-item nav-link">여행</a>
+                        <a href="" class="nav-item nav-link">역사</a>
+                        <a href="" class="nav-item nav-link">요리</a>
+                        <a href="" class="nav-item nav-link">만화</a>
+                        <a href="" class="nav-item nav-link">인문학</a>
+                        <a href="" class="nav-item nav-link">컴퓨터/모바일</a>
+                    </div>
+                </nav>
+            </div>
+
+            <!--            베스트 셀러 출력-->
+            <div class="col-lg-9">
+                <div class="row px-xl-5 pb-3">
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">Best Seller</p>
+                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="static/img/product-3.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">Best Seller</p>
+                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="static/img/product-1.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">Best Seller</p>
+                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="static/img/product-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">Best Seller</p>
+                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="static/img/product-3.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">Best Seller</p>
+                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="static/img/product-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">Best Seller</p>
+                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="static/img/product-1.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
