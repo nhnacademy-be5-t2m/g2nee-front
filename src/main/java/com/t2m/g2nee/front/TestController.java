@@ -21,7 +21,7 @@ public class TestController {
     RestTemplate restTemplate;
     ObjectMapper objectMapper;
 
-    @Value("${g2nee.gateway}")
+    @Value("${gatewayToShopUrl}")
     String gatewayUrl;
 
     @Autowired
@@ -38,7 +38,7 @@ public class TestController {
     @GetMapping("/test")
     public ResponseEntity<String> goToShopTest() {
         return restTemplate.exchange(
-                gatewayUrl + "shop/hello",
+                gatewayUrl + "/hello",
                 HttpMethod.GET,
                 null,
                 String.class

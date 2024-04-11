@@ -1,4 +1,4 @@
-package com.t2m.g2nee.front.signup.dto;
+package com.t2m.g2nee.front.member.dto.request;
 
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
