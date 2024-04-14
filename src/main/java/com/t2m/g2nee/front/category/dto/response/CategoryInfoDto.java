@@ -13,4 +13,5 @@ public class CategoryInfoDto {
     private Long categoryId;
     private String categoryName;
     private String categoryEngName;
+    private Boolean isActivated;
 }

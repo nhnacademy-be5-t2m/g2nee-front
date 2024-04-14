@@ -25,14 +25,23 @@
             <div class="col-lg-3 col-md-12">
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">세부 카테고리</h5>
-                    <form>
-                        <a th:each="subCategory : ${__${'subCategories' + category.categoryId}__}"
-                           th:href="@{/shop(id = ${subCategory.categoryId})}" class="nav-item nav-link">
-                            <span th:text="${subCategory.categoryName}"/> </a>
+                    <form th:if="${category.children}">
+                            <div th:if="${!#lists.isEmpty(category.children)}">
+                                <div th:each="child : ${category.children}">
+                                    <a class="dropdown-item"
+                                       th:href="@{/shop(id = ${child.categoryId})}">
+                                        <span th:text="${child.categoryName}"/> </a>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
+
             </div>
+        </div>
+
             <!-- 왼쪽 카테고리 바 -->
+
 
             <div class="col-lg-9 col-md-12">
                 <div class="row pb-3">

@@ -4,7 +4,9 @@ import static com.t2m.g2nee.front.utils.HttpHeadersUtil.getHttpHeaders;
 
 import com.t2m.g2nee.front.category.adaptor.CategoryAdaptor;
 import com.t2m.g2nee.front.category.dto.request.CategorySaveDto;
+import com.t2m.g2nee.front.category.dto.response.CategoryHierarchyDto;
 import com.t2m.g2nee.front.category.dto.response.CategoryInfoDto;
+import com.t2m.g2nee.front.category.dto.response.CategoryUpdateDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,9 +26,15 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     private static final ParameterizedTypeReference<List<CategoryInfoDto>> LIST_TYPE_REF
             = new ParameterizedTypeReference<>() {
     };
+
+    private static final ParameterizedTypeReference<List<CategoryHierarchyDto>> H_LIST_TYPE_REF
+            = new ParameterizedTypeReference<>() {
+    };
+
     private static final ParameterizedTypeReference<PageResponse<CategoryInfoDto>> PAGE_TYPE_REF
             = new ParameterizedTypeReference<>() {
     };
+
     private final RestTemplate restTemplate;
 
 
@@ -45,19 +53,18 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     }
 
     @Override
-    public List<CategoryInfoDto> getRootCategories() {
-        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
-        ResponseEntity<List<CategoryInfoDto>> response = restTemplate
-                .exchange(baseUrl, HttpMethod.GET, entity, LIST_TYPE_REF);
+    public List<CategoryHierarchyDto> getRootCategories() {
+        HttpEntity<CategoryHierarchyDto> entity = new HttpEntity<>(getHttpHeaders());
+        ResponseEntity<List<CategoryHierarchyDto>> response = restTemplate
+                .exchange(baseUrl, HttpMethod.GET, entity, H_LIST_TYPE_REF);
 
         return response.getBody();
     }
 
     @Override
-    public List<CategoryInfoDto> getSubCategories(Long categoryId) {
+    public List<CategoryInfoDto> getAllCategories() {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+categoryId)
-                .path("/sub")
+                .path("/all")
                 .build();
 
         HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
@@ -68,29 +75,15 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     }
 
     @Override
-    public PageResponse<CategoryInfoDto> getAllCategories(int page) {
-        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/all")
-                .queryParam("page", page)
-                .build();
-
-        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
-        ResponseEntity<PageResponse<CategoryInfoDto>> response = restTemplate
-                .exchange(url.toUriString(), HttpMethod.GET, entity, PAGE_TYPE_REF);
-
-        return response.getBody();
-    }
-
-    @Override
-    public CategoryInfoDto getCategory(Long categoryId) {
+    public CategoryUpdateDto getCategory(Long categoryId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/"+categoryId)
                 .build();
 
-        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
-        ResponseEntity<CategoryInfoDto> response = restTemplate
+        HttpEntity<CategoryUpdateDto> entity = new HttpEntity<>(getHttpHeaders());
+        ResponseEntity<CategoryUpdateDto> response = restTemplate
                 .exchange(url.toUriString(), HttpMethod.GET,
-                        entity, CategoryInfoDto.class);
+                        entity, CategoryUpdateDto.class);
 
         return response.getBody();
     }
@@ -105,15 +98,13 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
         HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<PageResponse<CategoryInfoDto>> response = restTemplate
-                .exchange(url.toUriString(), HttpMethod.GET,
-                        entity, new ParameterizedTypeReference<>() {
-                        });
+                .exchange(url.toUriString(), HttpMethod.GET, entity, PAGE_TYPE_REF);
 
         return response.getBody();
     }
 
     @Override
-    public CategoryInfoDto requestCreatCategory(CategorySaveDto request) {
+    public CategoryInfoDto requestCreatCategory(CategorySaveDto request){
         HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
         ResponseEntity<CategoryInfoDto> response =
                 restTemplate.exchange(baseUrl, HttpMethod.POST, entity, CategoryInfoDto.class);
