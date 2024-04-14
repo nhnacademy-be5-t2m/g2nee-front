@@ -26,7 +26,7 @@ public class MainController {
                        Model model) throws JsonProcessingException {
 
         if(id==0L){
-            id = categoryService.getAllCategories(1).getData().get(0).getCategoryId();
+            id = categoryService.getAllCategories().get(0).getCategoryId();
         }
 
         model.addAttribute("category", categoryService.getCategory(id));
