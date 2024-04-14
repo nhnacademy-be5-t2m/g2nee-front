@@ -31,7 +31,7 @@ public class JavaConfig {
         return builder
                 .setConnectTimeout(Duration.ofMillis(5000))
                 .setReadTimeout(Duration.ofMillis(5000))
-                .errorHandler(customExceptionHandler())
+                .errorHandler(customExceptionHandler())//예외처리 핸들러 등록
                 .build();
     }
 

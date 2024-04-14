@@ -19,18 +19,27 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
+/**
+ * CategoryAdaptor의 구현체
+ *
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Component
 public class CategoryAdaptorImpl implements CategoryAdaptor {
 
+
+    //CategoryInfoDto의 List를 받는 ref
     private static final ParameterizedTypeReference<List<CategoryInfoDto>> LIST_TYPE_REF
             = new ParameterizedTypeReference<>() {
     };
 
+    //CategoryHierarchy의 List를 받는 ref
     private static final ParameterizedTypeReference<List<CategoryHierarchyDto>> H_LIST_TYPE_REF
             = new ParameterizedTypeReference<>() {
     };
 
+    //페이징 처리를 위한 ref
     private static final ParameterizedTypeReference<PageResponse<CategoryInfoDto>> PAGE_TYPE_REF
             = new ParameterizedTypeReference<>() {
     };

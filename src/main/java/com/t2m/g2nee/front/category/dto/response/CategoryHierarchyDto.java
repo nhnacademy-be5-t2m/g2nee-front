@@ -4,6 +4,12 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 카테고리 계층을 위한 dto
+ *
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Getter
 @NoArgsConstructor
 public class CategoryHierarchyDto extends CategoryInfoDto{

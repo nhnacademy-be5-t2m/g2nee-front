@@ -14,7 +14,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-
+/**
+ * Category 서비스
+ * 캐시를 사용하여 빠르고 불필요한 통신이 이뤄지지 않게 함
+ *
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Service
 @CacheConfig(cacheNames = "categories")
 public class CategoryServiceImpl implements CategoryService {

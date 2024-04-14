@@ -1,3 +1,8 @@
+<!--
+카테고리 수정 양식 폼
+js 확인 필요...
+-->
+
 <!DOCTYPE html>
 <html lang="en"
       layout:decorate="~{layouts/adminLayout}"
@@ -19,7 +24,7 @@
         <input type="radio" id="activateNo" name="isActivated" value="false" th:checked="${!category.isActivated}" onclick="toggleSelect(false)">
         <label for="activateNo">비활성화</label><br /><br />
 
-        <div id="ancestorCategoryLabel" > <!--style="display: none;"-->
+        <div id="ancestorCategoryLabel" style="display: none;"> <!--style="display: none;"-->
             <label>상위 카테고리 선택</label><br />
             <select id="ancestorCategorySelect" size="5" name="ancestorCategoryId">
                 <option th:selected="${category.ancestorCategoryId} == 0"

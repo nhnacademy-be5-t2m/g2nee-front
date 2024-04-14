@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+/**
+ * 카테고리 관리자페이지 접근을 위한 컨트롤러입니다.
+ *
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminCategoryController {
