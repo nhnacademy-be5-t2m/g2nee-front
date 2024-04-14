@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
+
+<head>
+    <title>G2nee Book shop</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="col-lg-3 col-md-12">
+        <p class="search-result" th:text="'검색 결과 : ' + ${bookPage.totalElements} + '건'"></p>
+    </div>
+
+    <div class="row justify-content-center">
+    <div class="col-lg-9 col-md-12">
+        <div class="row pb-3">
+            <div class="col-12 pb-1">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="dropdown ml-4">
+                        <button class="btn border dropdown-toggle" type="button" id="triggerId"
+                                data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            Sort by
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=viewCount'}">인기도 순</a>
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salesVolume'}">판매량 순</a>
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=publishedDate'}">출간일
+                                순</a>
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceAsc'}">가격 낮은
+                                순</a>
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceDesc'}">가격 높은
+                                순</a>
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=score'}">평점 순</a>
+                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=review'}">리뷰 순</a>
+                        </div>
+                    </div>
+                    <!-- sort 버튼 end -->
+                </div>
+            </div>
+
+            <!-- 도서 목록 start -->
+            <div th:each="book : ${bookPage.data}" class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" th:src="${book.thumbnailImageUrl}" alt="thumbnail">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
+                        <div class="d-flex justify-content-center">
+                            <h6 th:text="${book.salePrice +'won'}"></h6>
+                            <h6 class="text-muted ml-2">
+                                <del th:text="${book.price +'won'}"></del>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View
+                            Detail</a>
+                        <a href="" class="btn btn-sm text-dark p-0"><i
+                                class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 도서 목록 end -->
+
+            <!-- 페이지 넘기기 start -->
+
+                <div class="col-12 pb-1 d-flex justify-content-center">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li>
+                                <a class="page-link" th:href="@{'?page=1'+'&keyword='+${keyword}+'&sort='+${sort}}">≪</a>
+                            </li>
+                            <li th:class="${bookPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                                <a class="page-link"
+                                   th:href="@{'?page=' + ${bookPage.currentPage - 1 }+'&keyword='+${keyword}+'&sort='+${sort}}"><</a>
+                            </li>
+                            <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage == 0 ? 1 : bookPage.endPage)}"
+                                th:class="${bookPage.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                                <a class="page-link"
+                                   th:href="@{'?page='+${pageButton}+'&keyword='+${keyword}+'&sort='+${sort}}"
+                                   th:text="${pageButton}"></a>
+                            </li>
+                            <li th:class="${bookPage.currentPage == bookPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                                <a class="page-link"
+                                   th:href="@{'?page=' + ${bookPage.currentPage + 1}+'&keyword='+${keyword}+'&sort='+${sort}}">></a>
+                            </li>
+                            <li>
+                                <a class="page-link"
+                                   th:href="@{'?page=' + ${bookPage.totalPage}+'&keyword='+${keyword}+'&sort='+${sort}}">≫</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- 페이지 넘기기 end -->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

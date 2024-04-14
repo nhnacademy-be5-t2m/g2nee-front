@@ -153,6 +153,22 @@ public class BookMgmtService {
         ).getBody();
     }
 
+    public Integer addBookQuantity(Long bookId, int quantity) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String url = gatewayUrl + "shop/books/quantity/" + bookId + "?quantity=" + quantity;
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.PATCH,
+                requestEntity,
+                Integer.class
+        ).getBody();
+    }
+
     /**
      * 책 정보들을 조회하는 메서드입니다.
      *

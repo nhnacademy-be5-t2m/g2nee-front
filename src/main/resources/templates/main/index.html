@@ -48,64 +48,23 @@
                 </nav>
             </div>
 
-            <!--            베스트 셀러 출력-->
+            <!--            신간 출력-->
             <div class="col-lg-9">
                 <div class="row px-xl-5 pb-3">
-                    <div class="col-lg-4 col-md-6 pb-1">
+                    <div th:each="book : ${bookList}" class="col-lg-4 col-md-6 pb-1">
                         <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                            <p class="text-right">Best Seller</p>
-                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                <img class="img-fluid" src="static/img/product-3.jpg" alt="">
+                            <p class="text-right">Recent Published</p>
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" th:src="${book.thumbnailImageUrl}" alt="thumbnail">
                             </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pb-1">
-                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                            <p class="text-right">Best Seller</p>
-                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                <img class="img-fluid" src="static/img/product-1.jpg" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pb-1">
-                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                            <p class="text-right">Best Seller</p>
-                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                <img class="img-fluid" src="static/img/product-2.jpg" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pb-1">
-                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                            <p class="text-right">Best Seller</p>
-                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                <img class="img-fluid" src="static/img/product-3.jpg" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pb-1">
-                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                            <p class="text-right">Best Seller</p>
-                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                <img class="img-fluid" src="static/img/product-2.jpg" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 pb-1">
-                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                            <p class="text-right">Best Seller</p>
-                            <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                <img class="img-fluid" src="static/img/product-1.jpg" alt="">
-                            </a>
-                        </div>
+                            <
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    </div>
 </div>
-
 </body>
 
 </html>

@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 /**
- * 책 관리 controller 클래스
+ * 관리자 책 관리 controller 클래스
  *
  * @author : 신동민
  * @since : 1.0
@@ -157,12 +157,26 @@ public class BookAdminController {
                              @RequestPart(required = false) MultipartFile thumbnail,
                              @RequestPart(required = false) MultipartFile[] details,
                              @PathVariable("bookId") Long bookId,
-                             @RequestParam("page") int page) {
+                             @RequestParam(value = "page", defaultValue = "1") int page) {
 
         bookMgmtService.updateBook(bookId, request, thumbnail, details);
 
         return "redirect:/admin/books/list?page=" + page;
 
+    }
+
+    /**
+     * 책 수량을 추가하는 컨트롤러 입니다.
+     */
+    @PatchMapping("/quantity/{bookId}")
+    public String addBookQuantity(Model model,
+                                  @RequestParam("quantity") int quantity,
+                                  @PathVariable("bookId") Long bookId) {
+
+        int updateQuantity = bookMgmtService.addBookQuantity(bookId, quantity);
+        model.addAttribute("quantity", updateQuantity);
+
+        return "redirect:/admin/books/" + bookId;
     }
 
     /**
@@ -175,6 +189,8 @@ public class BookAdminController {
         BookDto.Response response = bookGetService.getBook(bookId);
         model.addAttribute("book", response);
 
-        return "/admin/bookDetail";
+        return "admin/bookDetail";
     }
+
+
 }

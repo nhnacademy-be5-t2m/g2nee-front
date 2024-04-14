@@ -118,7 +118,6 @@ public class BookDto {
     public static class statusResponse{
         private BookStatus status;
     }
-
         @Getter
         public enum BookStatus {
 

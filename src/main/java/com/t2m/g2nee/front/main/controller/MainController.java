@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     @GetMapping
     public String main() {
-        return "main/index";
+        return "redirect:/books/new";
     }
 
     @GetMapping("/shop")
