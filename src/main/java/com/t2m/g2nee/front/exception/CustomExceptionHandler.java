@@ -1,14 +1,15 @@
 package com.t2m.g2nee.front.exception;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.client.ResponseErrorHandler;
 
-@Component
 public class CustomExceptionHandler implements ResponseErrorHandler {
 
     private final ObjectMapper objectMapper;
@@ -25,10 +26,13 @@ public class CustomExceptionHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
-        String body = StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8);
+        HttpStatus status = response.getStatusCode();
+        JsonNode body = objectMapper.readTree(StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8));
+        if(Objects.isNull(body.get("message"))){
+            throw new CustomException(status, body.get("error").asText());
+        }
 
-
-        throw new CustomException(response.getStatusCode(), objectMapper.readTree(body).get("message").asText());
+        throw new CustomException(status, body.get("message").asText());
     }
 }
 /**
