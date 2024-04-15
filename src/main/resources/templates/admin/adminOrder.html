@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전체 주문 목록</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>전체 주문 목록</h1>
+<table>
+    <thead>
+    <tr>
+        <th>주문 번호</th>
+        <th>주문 일자</th>
+        <th>고객 정보</th>
+        <th>상품 목록</th>
+        <th>총 가격</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td>2024-04-12</td>
+        <td>홍길동 (hong@example.com)</td>
+        <td>
+            <ul>
+                <li>상품 A - $10</li>
+                <li>상품 B - $15</li>
+            </ul>
+        </td>
+        <td>$25</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>2024-04-11</td>
+        <td>김철수 (kim@example.com)</td>
+        <td>
+            <ul>
+                <li>상품 C - $20</li>
+            </ul>
+        </td>
+        <td>$20</td>
+    </tr>
+    <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->
+    </tbody>
+</table>
+</body>
+</html>
