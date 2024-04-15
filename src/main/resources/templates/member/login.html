@@ -5,6 +5,7 @@
 <head>
     <title>회원 로그인 페이지</title>
     <link href="/static/css/signup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -12,23 +13,18 @@
 
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
-        <form th:action th:object="${memberLoginForm}" method="post">
+        <form>
             <label for="username">아이디</label>
-            <input type="text" id="username" th:field="*{userName}" placeholder="아이디"/>
-            <div class="username-invalid hide">영어와 숫자만 사용한 4-20자의 형식이나 이메일의 형식으로 작성하여 주십시오.</div>
-
+            <input type="text" id="username" name="username" placeholder="아이디"/>
             <br/>
             <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}" placeholder="비밀번호"/>
-            <div class="password-invalid hide">영어 숫자, 특수문자를 포함하여 8-20자의 형식으로 작성하여 주십시오.</div>
-
+            <input type="password" id="password" name="password" placeholder="비밀번호"/>
             <br/>
-            <button type="submit">로그인</button>
+            <button type="button" onclick="loginSubmit()">로그인</button>
         </form>
     </div>
     <!-- Shop Detail End -->
-
-    <script src="/static/js/signup.js"></script>
+    <script src="/static/js/member/login.js"></script>
 </div>
 
 

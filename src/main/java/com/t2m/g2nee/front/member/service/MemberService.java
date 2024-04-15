@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.member.service;
 
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,17 +53,15 @@ public class MemberService {
         return response.getBody();
     }
 
-    public boolean login(MemberLoginRequestDto request) {
-        //TODO: auth로 request를 보내 토큰처리를 해야함.
+    public ResponseEntity<Void> login(MemberLoginRequestDto request) {
         HttpEntity<MemberLoginRequestDto> requestEntity = new HttpEntity<>(request, headers);
-        ResponseEntity<Void> response = restTemplate.exchange(
-                gatewayToAuthUrl + "/auth/login",
+        return restTemplate.exchange(
+//                gatewayToShopUrl + "/auth/login",\
+                "http://localhost:8085/auth/login",
                 HttpMethod.POST,
                 requestEntity,
                 Void.class
         );
-        
-        return true;
     }
 
     public boolean customerLogin(CustomerOrderCheckRequestDto request) {
@@ -77,5 +76,42 @@ public class MemberService {
             throw new RuntimeException("비회원 주문조회에 실패하였습니다.");
         }
         return response.getBody();
+    }
+
+    /**
+     * 회원의 세부정보를 받아오기 위한 메소드
+     *
+     * @param customerId
+     * @return MemberDetailResponseDto 반환
+     */
+    public MemberDetailInfoResponseDto getMemberDetailInfoFromCustomerId(Long customerId) {
+        ResponseEntity<MemberDetailInfoResponseDto> response = restTemplate.exchange(
+                gatewayToShopUrl + "/member/getDetailInfo/" + customerId,
+                HttpMethod.GET,
+                new HttpEntity<>(headers),
+                MemberDetailInfoResponseDto.class
+        );
+        return response.getBody();
+    }
+
+    /**
+     * 회원의 세부정보를 받아오기 위한 메소드
+     *
+     * @param accessToken
+     * @return MemberDetailResponseDto
+     */
+    public MemberDetailInfoResponseDto getMemberDetailFromAccessToken(String accessToken) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(accessToken, headers);
+        ResponseEntity<MemberDetailInfoResponseDto> response = restTemplate.exchange(
+                gatewayToShopUrl + "/member/getDetailInfo",
+                HttpMethod.POST,
+                requestEntity,
+                MemberDetailInfoResponseDto.class
+        );
+        return response.getBody();
+    }
+
+    public void logout() {
+        
     }
 }

@@ -1,6 +1,5 @@
 package com.t2m.g2nee.front.member.controller;
 
-import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.member.service.MemberService;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 회원과 관련된 controller 입니다.
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since : 1.0
  */
 @Controller
-@RequestMapping("/member")
 public class MemberController {
 
     MemberService memberService;
@@ -64,34 +61,22 @@ public class MemberController {
     /**
      * 회원 로그인을 위한 페이지
      *
-     * @param model 모델
      * @return 회원 일반 로그인 페이지
      */
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("memberLoginForm", new MemberLoginRequestDto());
+    public String login() {
         return "member/login";
     }
 
     /**
-     * 회원 일반 로그인 정보로 통신한 후 성공페이지를 띄워주는 메소드.
+     * 회원 로그아웃을 위한 페이지
      *
-     * @param request 회원의 아이디 비밀번호가 담긴 요청
-     * @param model   회원 정보 일치하는지 저장할 model
-     * @return 성공, 실패 페이지를 보여준다.
+     * @return 기본 index 페이지
      */
-    @PostMapping("/login")
-    public String memberLoginComplete(@ModelAttribute("memberLoginForm") MemberLoginRequestDto request,
-                                      Model model) {
-        Boolean loginSuccess = memberService.login(request);
-
-        if (loginSuccess) {
-            return "redirect:/main/index";
-        } else {
-            model.addAttribute("failCustomerLogin", "비회원 정보가 일치하지 않습니다.");
-            return "member/login";
-        }
+    @GetMapping("/logout")
+    public String logout() {
+        memberService.logout();
+        return "main/index";
     }
-
 
 }
