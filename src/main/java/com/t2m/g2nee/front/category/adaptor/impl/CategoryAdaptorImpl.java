@@ -47,7 +47,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     private final RestTemplate restTemplate;
 
 
-    @Value("${g2nee-gateway}")
+    @Value("${g2nee.gateway}")
     private String gateway;
     
     private String baseUrl;
