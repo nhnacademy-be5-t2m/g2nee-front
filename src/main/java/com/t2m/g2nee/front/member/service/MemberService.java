@@ -1,23 +1,31 @@
 package com.t2m.g2nee.front.member.service;
 
 
+import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
+import com.t2m.g2nee.front.token.utils.CookieUtil;
+import java.util.Objects;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * 회원가입에 필요한 service
+ * Member에 필요한 service
  *
  * @author : 정지은
  * @since : 1.0
@@ -25,14 +33,16 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class MemberService {
     private final RestTemplate restTemplate;
+    private final RedisTemplate<String, MemberInfoDto> redisTemplate;
     private final HttpHeaders headers;
 
     @Value("${gatewayToShopUrl}")
     String gatewayToShopUrl;
-    @Value("${gatewayToShopUrl}")
+    @Value("${gatewayToAuthUrl}")
     String gatewayToAuthUrl;
 
-    public MemberService() {
+    public MemberService(RedisTemplate<String, MemberInfoDto> redisTemplate) {
+        this.redisTemplate = redisTemplate;
         this.restTemplate = new RestTemplate();
         this.headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -56,8 +66,7 @@ public class MemberService {
     public ResponseEntity<Void> login(MemberLoginRequestDto request) {
         HttpEntity<MemberLoginRequestDto> requestEntity = new HttpEntity<>(request, headers);
         return restTemplate.exchange(
-//                gatewayToShopUrl + "/auth/login",\
-                "http://localhost:8085/auth/login",
+                gatewayToAuthUrl + "/login",
                 HttpMethod.POST,
                 requestEntity,
                 Void.class
@@ -111,7 +120,33 @@ public class MemberService {
         return response.getBody();
     }
 
-    public void logout() {
-        
+    /**
+     * auth에게 logout을 요청하는 메소드
+     */
+    public void logout(HttpServletResponse response) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (Objects.nonNull(authentication)) {
+            SecurityContextHolder.clearContext();
+
+            Cookie jwtCookie = CookieUtil.findCookie("g2nee_accessToken");
+            jwtCookie.setMaxAge(0);
+            jwtCookie.setValue("");
+            response.addCookie(jwtCookie);
+
+            Cookie sessionCookie = CookieUtil.findCookie("auth-session");
+            sessionCookie.setMaxAge(0);
+            sessionCookie.setValue("");
+            response.addCookie(sessionCookie);
+
+            redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", "auth-session");
+
+//            restTemplate.exchange(
+//                    gatewayToAuthUrl + "/logout",
+//                    HttpMethod.POST,
+//                    new HttpEntity<>(headers),
+//                    Void.class
+//            );
+        }
     }
 }

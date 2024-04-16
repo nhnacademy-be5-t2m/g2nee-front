@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.t2m.g2nee.front.config.dto.AuthDto;
+import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.filter.CustomAuthenticationFilter;
 import com.t2m.g2nee.front.filter.CustomLoginFilter;
 import com.t2m.g2nee.front.member.service.MemberService;
@@ -33,7 +33,7 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
 @Configuration
 public class SecurityConfig {
     private final MemberService memberService;
-    private final RedisTemplate<String, AuthDto> redisTemplate;
+    private final RedisTemplate<String, MemberInfoDto> redisTemplate;
     private final CustomUserDetailsService userDetailsService;
     private final ObjectMapper objectMapper;
 

@@ -7,7 +7,6 @@ import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Date;
 import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.http.Cookie;
@@ -71,8 +70,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         String[] access_chunks = accessToken.split("\\.");
         String access_payload = new String(decoder.decode(access_chunks[1]));
         JSONObject aObject = new JSONObject(access_payload);
-        String expireTime = aObject.getString("exp");
-        return Long.parseLong(expireTime) + new Date().getTime();
+        return aObject.getLong("exp");
     }
 
     /**

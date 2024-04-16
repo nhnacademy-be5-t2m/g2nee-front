@@ -1,6 +1,6 @@
 package com.t2m.g2nee.front.token.service;
 
-import com.t2m.g2nee.front.config.dto.AuthDto;
+import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.token.utils.CookieUtil;
@@ -25,7 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final RedisTemplate<String, AuthDto> redisTemplate;
+    private final RedisTemplate<String, MemberInfoDto> redisTemplate;
     private final MemberService memberService;
 
     /**

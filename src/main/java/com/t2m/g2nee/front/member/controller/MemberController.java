@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.member.controller;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.member.service.MemberService;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,9 +75,9 @@ public class MemberController {
      * @return 기본 index 페이지
      */
     @GetMapping("/logout")
-    public String logout() {
-        memberService.logout();
-        return "main/index";
+    public String logout(HttpServletResponse response) {
+        memberService.logout(response);
+        return "redirect:/";
     }
 
 }

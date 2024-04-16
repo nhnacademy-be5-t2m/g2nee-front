@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.t2m.g2nee.front.config.dto.AuthDto;
+import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.token.utils.CookieUtil;
@@ -33,7 +33,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Slf4j
 @RequiredArgsConstructor
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
-    private final RedisTemplate<String, AuthDto> redisTemplate;
+    private final RedisTemplate<String, MemberInfoDto> redisTemplate;
     private final ObjectMapper objectMapper;
 
     /**

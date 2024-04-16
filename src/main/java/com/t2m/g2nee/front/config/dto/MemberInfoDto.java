@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class AuthDto {
-    private String memberNo;
+public class MemberInfoDto {
+    private String memberId;
     private String memberPwd;
     private List<String> authorities;
 }
