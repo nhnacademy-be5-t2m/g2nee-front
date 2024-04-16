@@ -1,0 +1,81 @@
+<!--
+카테고리 검색
+-->
+
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>카테고리 검색</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <br />
+    <form th:action="@{/admin/categories/search}" th:method="GET">
+        <input type="text" placeholder="카테고리 검색" name="name"> &nbsp
+        <input type="hidden" name="page" value="1">
+        <input type="submit" value="검색">
+    </form>
+    <br />
+
+    <table>
+        <tr>
+            <th>카테고리 명</th>
+            <th>영문 이름</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="searchCategory : ${searchCategoriesPage.data}">
+            <td>
+                ●&nbsp<span th:text="${searchCategory.categoryName}"/>
+            </td>
+            <td>
+                <span th:text="${searchCategory.categoryEngName}"/>
+            </td>
+            <td>
+                <a th:href="@{'/admin/categories/' + ${__${searchCategory.categoryId}__}}">수정</a>
+            </td>
+            <td>
+                <span th:if="${searchCategory.isActivated}">
+                    <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="delete">
+                            <button type="submit">활성</button>
+                        </form>
+                </span>
+                <span th:unless="${searchCategory.isActivated}">
+                    <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="patch">
+                            <button type="submit">비활성</button>
+                        </form>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${searchCategoriesPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${searchCategoriesPage.currentPage - 1 }}"><</a>
+            </li>
+            <li th:each="pageButton : ${#numbers.sequence(searchCategoriesPage.startPage,searchCategoriesPage.endPage)}"
+                th:class="${searchCategoriesPage.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${searchCategoriesPage.currentPage == searchCategoriesPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${searchCategoriesPage.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${searchCategoriesPage.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+
+    <br /><br />
+    <a th:href="@{/admin/categories/save}">새 카테고리</a>
+
+</div>
+</body>
+</html>
