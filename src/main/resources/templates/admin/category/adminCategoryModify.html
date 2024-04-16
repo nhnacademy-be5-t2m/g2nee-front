@@ -24,7 +24,7 @@ js 확인 필요...
         <input type="radio" id="activateNo" name="isActivated" value="false" th:checked="${!category.isActivated}" onclick="toggleSelect(false)">
         <label for="activateNo">비활성화</label><br /><br />
 
-        <div id="ancestorCategoryLabel" style="display: none;"> <!--style="display: none;"-->
+        <div id="ancestorCategoryLabel" > <!--style="display: none;"-->
             <label>상위 카테고리 선택</label><br />
             <select id="ancestorCategorySelect" size="5" name="ancestorCategoryId">
                 <option th:selected="${category.ancestorCategoryId} == 0"
@@ -43,7 +43,7 @@ js 확인 필요...
     </form>
 </div>
 
-<script type="text/javascript" th:src="@{/js/categorySave.js}"></script>
+<script src="/static/js/categorySave.js"></script>
 </body>
 
 </html>
