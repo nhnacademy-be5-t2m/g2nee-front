@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.token.util.JwtUtil;
-import com.t2m.g2nee.front.token.utils.CookieUtil;
+import com.t2m.g2nee.front.utils.CookieUtil;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +51,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
+
 
             Cookie sessionCookie = CookieUtil.findCookie("auth-session");
             if (notExistCookie(request, response, filterChain, sessionCookie)) {

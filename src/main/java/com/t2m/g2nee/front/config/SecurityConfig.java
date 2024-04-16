@@ -16,9 +16,9 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
@@ -31,21 +31,14 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;
     private final RedisTemplate<String, MemberInfoDto> redisTemplate;
     private final CustomUserDetailsService userDetailsService;
     private final ObjectMapper objectMapper;
 
-    /**
-     * security filterChain 설정.
-     *
-     * @param http 간단하게 시큐리티 설정을 할 수있도록 제공해주는 파라미터.
-     * @return 필터의 설정을 마친 후 필터체인을 리턴.
-     * @throws Exception 필터가 작동되는 과정에서 발생되는 에러
-     */
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager
                 = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
 
@@ -68,8 +61,41 @@ public class SecurityConfig {
                 UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(customAuthenticationFilter(), SecurityContextPersistenceFilter.class);
 
-        return http.build();
     }
+//
+//    /**
+//     * security filterChain 설정.
+//     *
+//     * @param http 간단하게 시큐리티 설정을 할 수있도록 제공해주는 파라미터.
+//     * @return 필터의 설정을 마친 후 필터체인을 리턴.
+//     * @throws Exception 필터가 작동되는 과정에서 발생되는 에러
+//     */
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        AuthenticationManager authenticationManager
+//                = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
+//
+//        http.authorizeRequests()
+//                .antMatchers("/", "/login", "/signup").permitAll()
+//                .antMatchers("/mypage/**").hasAuthority("ROLE_USER")
+//                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+//                .anyRequest().permitAll()
+//                .and()
+//                .csrf()
+//                .disable().cors().disable()
+//                .formLogin()
+//                .disable()
+//                .logout()
+//                .disable();
+//
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//
+//        http.addFilterAt(customLoginFilter(authenticationManager),
+//                UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterAfter(customAuthenticationFilter(), SecurityContextPersistenceFilter.class);
+//
+//        return http.build();
+//    }
 
     /**
      * 유저의 비밀번호를 암호화, 검증 해주는 메소드 빈.

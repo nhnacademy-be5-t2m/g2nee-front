@@ -1,6 +1,6 @@
 //package com.t2m.g2nee.front.interceptor;
 //import com.t2m.g2nee.front.member.service.MemberService;
-//import com.t2m.g2nee.front.token.utils.CookieUtil;
+//import com.t2m.g2nee.front.utils.CookieUtil;
 //import java.io.IOException;
 //import java.time.Duration;
 //import java.util.Date;

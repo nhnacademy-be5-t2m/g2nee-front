@@ -3,7 +3,7 @@ package com.t2m.g2nee.front.token.service;
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
-import com.t2m.g2nee.front.token.utils.CookieUtil;
+import com.t2m.g2nee.front.utils.CookieUtil;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
