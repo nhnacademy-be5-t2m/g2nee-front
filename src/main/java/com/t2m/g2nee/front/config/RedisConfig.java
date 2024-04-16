@@ -1,8 +1,5 @@
 package com.t2m.g2nee.front.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -55,21 +52,6 @@ public class RedisConfig implements BeanClassLoaderAware {
         redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
 
         return redisTemplate;
-    }
-
-
-    /**
-     * ObjectMapper 빈 등록 메소드.
-     *
-     * @return ObjectMapper.
-     */
-    @Bean
-    public ObjectMapper objectMapper() {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-        objectMapper.registerModule(new JavaTimeModule());
-        return objectMapper;
     }
 
 

@@ -17,12 +17,16 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a sec:authorize="isAnonymous()" href="/login" class="nav-item nav-link">로그인</a>
-                    <a sec:authorize="isAnonymous()" href="/signup" class="nav-item nav-link">회원가입</a>
-                    <a sec:authorize="isAnonymous()" href="/order/customLogin" class="nav-item nav-link">비회원 주문조회</a>
-                    <a sec:authorize="isAuthenticated()"
-                       th:text="${#request.getSession().getAttribute('username')+' 님 안녕하세요!'}"/>
-                    <a sec:authorize="isAuthenticated()" href="/logout" class="nav-item nav-link">로그아웃</a>
+                    <span sec:authorize="isAnonymous()">
+                        <a href="/login" class="nav-item nav-link">로그인</a>
+                        <a href="/signup" class="nav-item nav-link">회원가입</a>
+                        <a href="/order/customLogin" class="nav-item nav-link">비회원 주문조회</a>
+                    </span>
+                    <span sec:authorize="isAuthenticated()">
+                        <a th:text="${#request.getSession().getAttribute('username')+' 님 안녕하세요!'}"/>
+                        <a href="/logout" class="nav-item nav-link">로그아웃</a>
+                    </span>
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">마이페이지</a>
                         <div class="dropdown-menu rounded-0 m-0">

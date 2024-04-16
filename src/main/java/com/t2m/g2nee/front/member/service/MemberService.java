@@ -121,7 +121,9 @@ public class MemberService {
     }
 
     /**
-     * auth에게 logout을 요청하는 메소드
+     * logout 시 삭제되어야할 요소들을 삭제하며 logout되는 메소드
+     *
+     * @param response logout을 호출할때의 response
      */
     public void logout(HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -135,18 +137,17 @@ public class MemberService {
             response.addCookie(jwtCookie);
 
             Cookie sessionCookie = CookieUtil.findCookie("auth-session");
+            redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());
             sessionCookie.setMaxAge(0);
             sessionCookie.setValue("");
             response.addCookie(sessionCookie);
 
-            redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", "auth-session");
-
-//            restTemplate.exchange(
-//                    gatewayToAuthUrl + "/logout",
-//                    HttpMethod.POST,
-//                    new HttpEntity<>(headers),
-//                    Void.class
-//            );
+            restTemplate.exchange(
+                    gatewayToAuthUrl + "/logout",
+                    HttpMethod.POST,
+                    new HttpEntity<>(headers),
+                    Void.class
+            );
         }
     }
 }
