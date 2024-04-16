@@ -1,0 +1,22 @@
+package com.t2m.g2nee.front.utils;
+
+import java.util.List;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+/**
+ * Adaptor 사용시, 불필요하게 중복되는 코드가 많아서 별도로 빼둠
+ *
+ * @author : 김수빈
+ * @since : 1.0
+ */
+public class HttpHeadersUtil {
+
+
+    public static HttpHeaders getHttpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        return httpHeaders;
+    }
+}

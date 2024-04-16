@@ -4,15 +4,17 @@
       layout:decorate="~{layouts/categoryLayout}">
 
 <head>
-    <title>G2nee Book shop</title>
+    <title>G2nee Book</title>
 </head>
 
 <body>
 <div layout:fragment="content">
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">경제경영</h1>
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">
+                <span th:text="${category.categoryName}"/>
+            </h1>
         </div>
     </div>
 
@@ -23,15 +25,23 @@
             <div class="col-lg-3 col-md-12">
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">세부 카테고리</h5>
-                    <form>
-                        <a href="" class="nav-item nav-link">경제학/경제일반</a>
-                        <a href="" class="nav-item nav-link">기업경영</a>
-                        <a href="" class="nav-item nav-link">기업/경영자 스토리</a>
-
+                    <form th:if="${category.children}">
+                            <div th:if="${!#lists.isEmpty(category.children)}">
+                                <div th:each="child : ${category.children}">
+                                    <a class="dropdown-item"
+                                       th:href="@{/shop(id = ${child.categoryId})}">
+                                        <span th:text="${child.categoryName}"/> </a>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
+
             </div>
+        </div>
+
             <!-- 왼쪽 카테고리 바 -->
+
 
             <div class="col-lg-9 col-md-12">
                 <div class="row pb-3">
