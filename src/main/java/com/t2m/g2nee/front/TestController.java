@@ -1,29 +1,28 @@
 package com.t2m.g2nee.front;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 
 @RestController
 public class TestController {
 
     RestTemplate restTemplate;
     ObjectMapper objectMapper;
+
+    @Value("${g2nee.gateway}")
+    String gatewayUrl;
 
     @Autowired
     public TestController(RestTemplateBuilder restTemplateBuilder) {
@@ -39,7 +38,7 @@ public class TestController {
     @GetMapping("/test")
     public ResponseEntity<String> goToShopTest() {
         return restTemplate.exchange(
-                "http://133.186.208.183:8100/shop/hello",
+                gatewayUrl + "shop/hello",
                 HttpMethod.GET,
                 null,
                 String.class

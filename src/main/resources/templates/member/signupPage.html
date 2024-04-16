@@ -9,24 +9,17 @@
 
 <body>
 <div layout:fragment="content">
-    <!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 10px">
-        </div>
-    </div>
-    <!-- Page Header End -->
-
 
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
-        <form method="post" action="/signup">
+        <form th:action th:object="${signupForm}" method="post">
             <label for="username">아이디</label>
-            <input type="text" id="username" placeholder="아이디"/>
+            <input type="text" id="username" th:field="*{userName}" placeholder="아이디"/>
             <div class="username-invalid hide">영어와 숫자만 사용한 4-20자의 형식이나 이메일의 형식으로 작성하여 주십시오.</div>
 
             <br/>
             <label for="password">비밀번호</label>
-            <input type="password" id="password" placeholder="비밀번호"/>
+            <input type="password" id="password" th:field="*{password}" placeholder="비밀번호"/>
             <div class="password-invalid hide">영어 숫자, 특수문자를 포함하여 8-20자의 형식으로 작성하여 주십시오.</div>
 
             <br/>
@@ -36,23 +29,33 @@
 
             <br/>
             <label for="name">이름</label>
-            <input type="text" id="name" placeholder="이름"/>
+            <input type="text" id="name" th:field="*{name}" placeholder="이름"/>
             <div class="name-invalid hide">영어와 한글만 사용하여 2-20자의 형식으로 작성하여 주십시오.</div>
 
             <br/>
             <label for="nickname">닉네임</label>
-            <input type="text" id="nickname" placeholder="닉네임"/>
+            <input type="text" id="nickname" th:field="*{nickName}" placeholder="닉네임"/>
             <div class="nickname-invalid hide">한글,영어,숫자,'_','.'을 사용한 2-10자의 형식으로 작성하여 주십시오.</div>
 
             <br/>
             <label for="email">이메일</label>
-            <input type="text" id="email" placeholder="이메일"/>
+            <input type="text" id="email" th:field="*{email}" placeholder="이메일"/>
             <div class="email-invalid hide">올바른 email 형식으로 작성하여 주십시오.</div>
 
             <br/>
             <label for="phoneNumber">전화번호</label>
-            <input type="text" id="phoneNumber" placeholder="전화번호"/>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="전화번호"/>
             <div class="phoneNumber-invalid hide">010-1234-5678 의 형식으로 작성하여 주십시오.</div>
+
+            <br/>
+            <label for="birthday">생년월일</label>
+            <input type="text" id="birthday" th:field="*{birthday}" placeholder="생년월일"/>
+            <div class="birthday-invalid hide">'-'를 제외한 ex.19990403의 형식으로 작성하여 주십시오.</div>
+
+            <br/>
+            <label for="gender">성별</label>
+            <input type="text" id="gender" th:field="*{gender}" placeholder="성별"/>
+            <div class="gender-invalid hide">'Male','Female' 둘 중에 하나를 작성하여 주십시오.</div>
 
             <br/>
             <button type="submit">회원가입</button>
