@@ -24,5 +24,9 @@ public class PageResponse<T> {
     private int endPage;
     private int totalPage;
     private Long totalElements;
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
 }
 

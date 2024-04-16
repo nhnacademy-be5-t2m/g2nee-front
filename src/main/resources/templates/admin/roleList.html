@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<head>
+    <style>
+
+        /* 수정 버튼 스타일 */
+        .btn-group .btn {
+            margin-right: 5px;
+            width: auto; /* 버튼의 너비를 자동으로 설정 */
+        }
+
+        /* 수정 필드 표시 시, 수정 버튼을 오른쪽에 위치 */
+        #modifyFields- + ${publisher.publisherId} button {
+            float: right; /* 오른쪽으로 정렬 */
+            margin-left: 5px; /* 왼쪽 여백 */
+        }
+
+        /* 수정, 삭제 버튼 간의 여백 조절 */
+        .btn-group .btn:not(:last-child) {
+            margin-right: 5px;
+        }
+    </style>
+    <script th:inline="javascript">
+        function toggleRegisterFields() {
+            var registerFields = document.getElementById("registerFields");
+            if (registerFields.style.display === "none" || registerFields.style.display === "") {
+                registerFields.style.display = "block";
+            } else {
+                registerFields.style.display = "none";
+            }
+        }
+
+        function toggleModifyFields(roleId) {
+            var registerFields = document.getElementById('modifyFields-' + roleId);
+            if (registerFields.style.display === "none" || registerFields.style.display === "") {
+                registerFields.style.display = "block";
+            } else {
+                registerFields.style.display = "none";
+            }
+        }
+    </script>
+    <title>역할 목록</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="d-flex justify-content-start mb-3">
+            <!-- 등록 버튼 -->
+            <button type="button" class="btn btn-outline-primary" onclick="toggleRegisterFields()">등록</button>
+        </div>
+
+        <!-- 등록 필드 -->
+        <div id="registerFields" style="display: none;">
+            <form th:action="@{/admin/roles}" th:method="post">
+                <div class="mb-3">
+                    <label for="roleName" class="form-label">역할 이름</label>
+                    <input type="text" class="form-control-sm" id="roleName" name="roleName" pattern="^[A-Za-z0-9]+$" required>
+                </div>
+                <div class="d-flex justify-content-start mb-3">
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+            </form>
+        </div>
+        <h2 class="text-center mb-4">역할 목록</h2>
+        <div class="row justify-content-center">
+            <table class="table">
+                <thead class="text-center">
+                <tr>
+                    <th scope="col">역할 이름</th>
+                    <th scope="col">수정/삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="role : ${rolePage.data}">
+                    <td th:text="${role.roleName}" class="align-middle"></td>
+                    <td class="text-center align-middle">
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    th:onclick="'toggleModifyFields('+${role.roleId}+')'">수정
+                            </button>
+                            <div th:id="'modifyFields-'+${role.roleId}" style="display: none;">
+                                <form th:action="@{'/admin/roles/' + ${role.roleId} +'?page='+${rolePage.currentPage}}"
+                                      th:method="patch">
+                                    <div class="mb-3">
+                                        <label for="roleModifyName" class="form-label">역할 이름</label>
+                                        <input type="text" class="form-control form-control-sm" id="roleModifyName"
+                                               name="roleName">
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
+                                </form>
+                            </div>
+                            <form th:action="@{'/admin/roles/'+${role.roleId} + '?page='+${rolePage.currentPage}}"
+                                  th:method="delete">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">삭제</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <nav aria-label="...">
+                    <ul class="pagination row justify-content-center">
+                        <li>
+                            <a class="page-link" th:href="@{'?page=1'}">≪</a>
+                        </li>
+                        <li th:class="${rolePage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${rolePage.currentPage - 1 }}"><</a>
+                        </li>
+                        <li th:each="pageButton : ${#numbers.sequence(rolePage.startPage,rolePage.endPage)}"
+                            th:class="${rolePage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+                        </li>
+                        <li th:class="${rolePage.currentPage == rolePage.totalPage ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${rolePage.currentPage + 1}}">></a>
+                        </li>
+                        <li>
+                            <a class="page-link" th:href="@{'?page=' + ${rolePage.totalPage}}">≫</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -118,6 +118,7 @@ public class BookDto {
     public static class statusResponse{
         private BookStatus status;
     }
+    // 책 상태
         @Getter
         public enum BookStatus {
 
@@ -130,5 +131,20 @@ public class BookDto {
                 this.status = status;
             }
         }
+
+        // 정렬 기준
+    @Getter
+    public enum Sort {
+
+        VIEWCOUNT("인기도 순"), SALESVOLUME("판매량 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
+        SALEPRICEDESC("가격 높은 순"),
+        SCORE("평점 순"), REVIEW("리뷰 순");
+
+        private final String value;
+
+        Sort(String value) {
+            this.value = value;
+        }
+    }
 }
 

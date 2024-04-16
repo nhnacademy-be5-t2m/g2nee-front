@@ -52,6 +52,12 @@ public class BookController {
         return "main/index";
     }
 
+    /**
+     * 키워드로 책을 검색하는 컨트롤러
+     * @param keyword 키워드
+     * @param page 페이지 번호
+     * @param sort 정렬 조건
+     */
     @GetMapping("/search")
     public String getBookBySearch(Model model,
                                   @RequestParam(defaultValue = "") String keyword,
@@ -65,7 +71,7 @@ public class BookController {
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, keyword, sort);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
-        model.addAttribute("sort", sort);
+        model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
 
 
 

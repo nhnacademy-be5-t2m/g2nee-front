@@ -3,10 +3,10 @@ package com.t2m.g2nee.front.bookset.book.service;
 
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.pageUtils.PageResponse;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,8 +16,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -104,13 +102,25 @@ public class BookGetService {
                 .toUriString(), StandardCharsets.UTF_8);
 
 
-        return restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
-                }
-        ).getBody();
+        PageResponse<BookDto.ListResponse> responses = restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
+
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
+        if(responses.getData().size() != 0) {
+
+            List<BookDto.ListResponse> list = responses.getData().stream()
+                    .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
+                    .collect(Collectors.toList());
+            responses.setData(list);
+
+        }
+        return responses;
 
     }
 

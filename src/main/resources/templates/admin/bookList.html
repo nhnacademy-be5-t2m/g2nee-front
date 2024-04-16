@@ -71,7 +71,7 @@
                         <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage - 1 }}"><</a>
                     </li>
                     <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}"
-                        th:class="${bookPage.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                        th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
                         <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
                     </li>
                     <li th:class="${bookPage.currentPage == bookPage.totalPage ? 'page-item disabled' : 'page-item'}">
