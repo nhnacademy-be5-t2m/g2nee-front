@@ -95,7 +95,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     }
 
     /**
-     * 로그인 정보가 있는지 세션에서 확인
+     * 로그인 정보가 있는지 세션에서 확인하는 메소드
      *
      * @param request
      * @param response
@@ -119,7 +119,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     }
 
     /**
-     * 쿠키의 존재 여부 확인 메소드
+     * 쿠키의 존재 여부를 확인하는 메소드
      *
      * @param request
      * @param response
@@ -141,7 +141,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     }
 
     /**
-     * filter에 들어오면 안되는 요청들.
+     * filter에 들어오지 않아도 되는 요청
      *
      * @param request request.
      * @return 들어오면 안되는 요청일 때 true 반환
