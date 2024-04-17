@@ -12,7 +12,8 @@ import org.springframework.http.MediaType;
  */
 public class HttpHeadersUtil {
 
-
+    private HttpHeadersUtil() {
+    }
     public static HttpHeaders getHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
