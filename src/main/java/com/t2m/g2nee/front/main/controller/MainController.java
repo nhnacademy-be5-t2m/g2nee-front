@@ -22,11 +22,11 @@ public class MainController {
     }
 
     @GetMapping("/shop")
-    public String shop(@RequestParam(required = false, defaultValue = "0" ) Long id,
+    public String shop(@RequestParam(required = false, defaultValue = "0") Long id,
                        Model model) throws JsonProcessingException {
 
         //혹시 url로 직접 shop을 치고 들어갔을 경우, 오류를 막기 위해 기본 설정을 해줌
-        if(id==0L){
+        if (id == 0L) {
             id = categoryService.getAllCategories().get(0).getCategoryId();
         }
 
