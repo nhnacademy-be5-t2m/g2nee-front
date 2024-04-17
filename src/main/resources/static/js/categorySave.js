@@ -1,9 +1,10 @@
-function toggleSelect(isActivated) {
-    var select = document.getElementById("ancestorCategoryLabel");
-    if (isActivated) {
-        select.style.display = "block";
+function show(element) {
+    var divToShow = document.getElementById("ancestorCategoryLabel");
+    if (element.value === "true") {
+        // 라디오 버튼이 활성화되었을 때
+        divToShow.style.display = "block";
     } else {
-        select.style.display = "none";
-        document.getElementsByName("ancestorCategoryId")[0].value = "0";
+        // 라디오 버튼이 비활성화되었을 때
+        divToShow.style.display = "none";
     }
 }

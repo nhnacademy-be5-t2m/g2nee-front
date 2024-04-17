@@ -8,7 +8,8 @@ js 확인 필요...
       layout:decorate="~{layouts/adminLayout}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>admin 메인</title>
+    <title>카테고리 수정</title>
+    <script src="/static/js/categorySave.js"></script>
 </head>
 
 <body>
@@ -16,15 +17,15 @@ js 확인 필요...
     <h2>카테고리 수정</h2>
     <!-- adin page view 구현-->
     <form th:action="@{'/admin/categories/modify/' + ${category.categoryId}}" th:method="PUT">
-        <label th:text="'카테고리 이름: '"/><input type="text" name="categoryName" th:value="${category.categoryName}" /><br /><br />
-        <label th:text="'카테고리 영문이름: '"/><input type="text" name="categoryEngName" th:value="${category.categoryEngName}" /><br /><br />
+        <label th:text="'카테고리 이름:'"/><input type="text" name="categoryName" th:value="${category.categoryName}" /><br /><br />
+        <label th:text="'카테고리 영문이름:'"/><input type="text" name="categoryEngName" th:value="${category.categoryEngName}" /><br /><br />
 
-        <input type="radio" id="activateYes" name="isActivated" value="true" th:checked="${category.isActivated}" onclick="toggleSelect(true)">
+        <input type="radio" id="activateYes" name="isActivated" value="true" th:checked="${category.isActivated}" onclick="show(this);">
         <label for="activateYes">활성화</label> &nbsp
-        <input type="radio" id="activateNo" name="isActivated" value="false" th:checked="${!category.isActivated}" onclick="toggleSelect(false)">
+        <input type="radio" id="activateNo" name="isActivated" value="false" th:checked="${!category.isActivated}" onclick="show(this);">
         <label for="activateNo">비활성화</label><br /><br />
 
-        <div id="ancestorCategoryLabel" > <!--style="display: none;"-->
+        <div id="ancestorCategoryLabel" class="select"  th:style="${category.isActivated ? '' : 'display:none;'}">
             <label>상위 카테고리 선택</label><br />
             <select id="ancestorCategorySelect" size="5" name="ancestorCategoryId">
                 <option th:selected="${category.ancestorCategoryId} == 0"
@@ -43,7 +44,6 @@ js 확인 필요...
     </form>
 </div>
 
-<script src="/static/js/categorySave.js"></script>
 </body>
 
 </html>
