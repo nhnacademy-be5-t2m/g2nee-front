@@ -19,7 +19,7 @@
         <input type="submit" value="검색">
     </form>
 
-    <br />
+    <br /><br />
     <table>
         <tr>
             <th>카테고리 명</th>
@@ -27,7 +27,7 @@
             <th></th>
             <th></th>
         </tr>
-        <div th:each="rootCategory : ${session.rootCategories}">
+        <div th:each="rootCategory : ${rootCategories}">
             <tr>
                 <td>
                     ●&nbsp<span th:text="${rootCategory.categoryName}"/>
@@ -100,7 +100,6 @@
                 </tr>
 
             </div>
-
 
         </div>
     </table>
