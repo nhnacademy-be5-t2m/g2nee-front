@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class JwtUtil {
     public static final String JWT_COOKIE = "g2nee_accessToken";
-    public static final String AUTH_HEADER = "access";
-    public static final String EXP_HEADER = "access-expireTime";
+    public static final String ACCESS_HEADER = "access";
     public static final String TOKEN_TYPE = "Bearer ";
     public static final Long MILL_SEC = 1000L;
     public static final Integer EXPIRE_TIME = 7200;

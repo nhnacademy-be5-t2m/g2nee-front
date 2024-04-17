@@ -113,6 +113,13 @@ public class MemberService {
         if (Objects.nonNull(authentication)) {
             SecurityContextHolder.clearContext();
 
+            restTemplate.exchange(
+                    gatewayToAuthUrl + "/logout",
+                    HttpMethod.POST,
+                    new HttpEntity<>(makeHttpHeaders()),
+                    Void.class
+            );
+
             Cookie jwtCookie = CookieUtil.findCookie("g2nee_accessToken");
             jwtCookie.setMaxAge(0);
             jwtCookie.setValue("");
@@ -124,12 +131,6 @@ public class MemberService {
             sessionCookie.setValue("");
             response.addCookie(sessionCookie);
 
-            restTemplate.exchange(
-                    gatewayToAuthUrl + "/logout",
-                    HttpMethod.POST,
-                    new HttpEntity<>(makeHttpHeaders()),
-                    Void.class
-            );
         }
     }
 }

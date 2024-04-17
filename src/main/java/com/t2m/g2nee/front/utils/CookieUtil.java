@@ -50,6 +50,7 @@ public class CookieUtil {
                                   String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge(-1);
+        cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
     }

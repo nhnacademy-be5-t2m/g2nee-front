@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.utils;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import java.util.List;
 import java.util.Objects;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -27,9 +28,9 @@ public class HttpHeadersUtil {
                 (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
 
-        String accessToken = (String) request.getAttribute(JwtUtil.AUTH_HEADER);
+        Cookie accessToken = CookieUtil.findCookie(JwtUtil.JWT_COOKIE);
         if (Objects.nonNull(accessToken)) {
-            httpHeaders.add(JwtUtil.AUTH_HEADER, accessToken);
+            httpHeaders.add("Authorization", JwtUtil.TOKEN_TYPE + accessToken.getValue());
         }
         return httpHeaders;
     }

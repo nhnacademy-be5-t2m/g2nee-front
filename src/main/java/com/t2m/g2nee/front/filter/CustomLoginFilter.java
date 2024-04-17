@@ -48,8 +48,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         ResponseEntity<Void> jwtResponse
                 = memberService.login(loginMemberRequestDto);
 
-        String accessToken = Objects.requireNonNull(jwtResponse.getHeaders().get(JwtUtil.AUTH_HEADER)).get(0);
-
+        String accessToken = Objects.requireNonNull(jwtResponse.getHeaders().get(JwtUtil.ACCESS_HEADER)).get(0);
         Long expireTime = null;
         try {
             expireTime = getExpireTime(accessToken);
