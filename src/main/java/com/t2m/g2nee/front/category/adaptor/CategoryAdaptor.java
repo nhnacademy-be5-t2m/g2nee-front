@@ -47,9 +47,8 @@ public interface CategoryAdaptor {
      * 카테고리 생성
      * @param request
      * @return
-     * @throws JsonProcessingException
      */
-    CategoryInfoDto requestCreatCategory(CategorySaveDto request) throws JsonProcessingException;
+    CategoryInfoDto requestCreatCategory(CategorySaveDto request);
 
     /**
      * 카테고리 수정

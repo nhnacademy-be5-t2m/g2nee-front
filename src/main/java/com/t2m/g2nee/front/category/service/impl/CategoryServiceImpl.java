@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
             @CacheEvict(key = "'root'")
     })
     @Override
-    public void creatCategory(CategorySaveDto request) throws JsonProcessingException {
+    public void creatCategory(CategorySaveDto request){
         adaptor.requestCreatCategory(request);
     }
 
