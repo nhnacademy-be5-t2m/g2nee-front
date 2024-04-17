@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * PageResponse를 받는 dto 객체입니다.
+ *
  * @param <T> 데이터
  */
 @Getter

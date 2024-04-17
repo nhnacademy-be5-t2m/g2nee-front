@@ -18,12 +18,14 @@
                         <!--root category 반복-->
                         <div class="nav-item dropdown" th:each="rootCategory : ${rootCategories}">
                             <div th:if="${rootCategory.isActivated}">
-                                <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link" data-toggle="dropdown">
+                                <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link"
+                                   data-toggle="dropdown">
                                     <span th:text="${rootCategory.categoryName}"/>
                                     <i class="fa fa-angle-down float-right mt-1"></i></a>
 
                                 <!--sub category 반복-->
-                                <div th:if="${rootCategory.children}" class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <div th:if="${rootCategory.children}"
+                                     class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                     <div th:each="child : ${rootCategory.children}">
                                         <a class="dropdown-item"
                                            th:href="@{/shop(id = ${child.categoryId})}">

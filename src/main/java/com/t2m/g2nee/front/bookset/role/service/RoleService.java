@@ -1,7 +1,6 @@
 package com.t2m.g2nee.front.bookset.role.service;
 
 import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
-import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,7 @@ public class RoleService {
     @Value("${g2nee.gateway}")
     String gatewayUrl;
 
-    public List<RoleDto.Response> getAllRole(){
+    public List<RoleDto.Response> getAllRole() {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

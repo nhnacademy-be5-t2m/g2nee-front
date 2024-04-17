@@ -104,7 +104,7 @@ public class BookMgmtService {
      * @param details   세부 이미지
      */
     public void updateBook(Long bookId, BookDto.Request request, MultipartFile thumbnail,
-                          MultipartFile[] details) {
+                           MultipartFile[] details) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);

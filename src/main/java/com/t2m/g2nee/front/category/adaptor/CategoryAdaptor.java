@@ -18,18 +18,21 @@ public interface CategoryAdaptor {
 
     /**
      * 카테고리를 계층으로 가져옴
+     *
      * @return
      */
     List<CategoryHierarchyDto> getRootCategories();
 
     /**
      * 모든 카테고리를 가져옴
+     *
      * @return
      */
     List<CategoryInfoDto> getAllCategories();
 
     /**
      * 카테고리 단건 조회
+     *
      * @param categoryId
      * @return
      */
@@ -37,6 +40,7 @@ public interface CategoryAdaptor {
 
     /**
      * 카테고리명으로 검색 및 페이징
+     *
      * @param categoryName
      * @param page
      * @return
@@ -45,6 +49,7 @@ public interface CategoryAdaptor {
 
     /**
      * 카테고리 생성
+     *
      * @param request
      * @return
      * @throws JsonProcessingException
@@ -53,6 +58,7 @@ public interface CategoryAdaptor {
 
     /**
      * 카테고리 수정
+     *
      * @param categoryId
      * @param request
      * @return
@@ -61,6 +67,7 @@ public interface CategoryAdaptor {
 
     /**
      * 카테고리 삭제
+     *
      * @param categoryId
      * @return
      */
@@ -68,6 +75,7 @@ public interface CategoryAdaptor {
 
     /**
      * 카테고리 활성화
+     *
      * @param category
      * @return
      */
