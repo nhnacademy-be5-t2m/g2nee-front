@@ -40,7 +40,7 @@ public class RoleService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/roles/list";
+        String url = gatewayUrl + "/shop/roles/list";
 
         return restTemplate.exchange(
                 url,
@@ -61,7 +61,7 @@ public class RoleService {
 
         HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/roles";
+        String url = gatewayUrl + "/shop/roles";
 
         restTemplate.exchange(
                 url,
@@ -86,7 +86,7 @@ public class RoleService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/roles?page=" + page;
+        String url = gatewayUrl + "/shop/roles?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -109,7 +109,7 @@ public class RoleService {
 
         HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/roles/" + roleId;
+        String url = gatewayUrl + "/shop/roles/" + roleId;
 
         restTemplate.exchange(
                 url,
@@ -131,7 +131,7 @@ public class RoleService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/roles/" + roleId;
+        String url = gatewayUrl + "/shop/roles/" + roleId;
 
         restTemplate.exchange(
                 url,

@@ -30,7 +30,7 @@ public class TagService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/tags/list";
+        String url = gatewayUrl + "/shop/tags/list";
 
         return restTemplate.exchange(
                 url,
@@ -52,7 +52,7 @@ public class TagService {
 
         HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/tags";
+        String url = gatewayUrl + "/shop/tags";
 
         restTemplate.exchange(
                 url,
@@ -76,7 +76,7 @@ public class TagService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/tags?page=" + page;
+        String url = gatewayUrl + "/shop/tags?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -99,7 +99,7 @@ public class TagService {
 
         HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/tags/" + tagId;
+        String url = gatewayUrl + "/shop/tags/" + tagId;
 
         restTemplate.exchange(
                 url,
@@ -121,7 +121,7 @@ public class TagService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/tags/" + tagId;
+        String url = gatewayUrl + "/shop/tags/" + tagId;
 
         restTemplate.exchange(
                 url,

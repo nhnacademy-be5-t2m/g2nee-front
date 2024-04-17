@@ -61,7 +61,7 @@ public class BookAdminController {
         model.addAttribute("contributorList", contributorList);
         model.addAttribute("tagList", tagList);
 
-        return "admin/registerBookForm";
+        return "admin/book/registerBookForm";
 
     }
 
@@ -85,7 +85,7 @@ public class BookAdminController {
         model.addAttribute("book", book);
         model.addAttribute("page", page);
 
-        return "admin/updateBookForm";
+        return "admin/book/updateBookForm";
     }
 
     /**
@@ -94,7 +94,7 @@ public class BookAdminController {
     @GetMapping("/main")
     public String getBookMain() {
 
-        return "admin/bookMain";
+        return "admin/book/bookMain";
     }
 
 
@@ -109,7 +109,7 @@ public class BookAdminController {
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("bookStatus", BookDto.BookStatus.values());
 
-        return "admin/bookList";
+        return "admin/book/bookList";
     }
 
 
@@ -189,7 +189,7 @@ public class BookAdminController {
         BookDto.Response response = bookGetService.getBook(bookId);
         model.addAttribute("book", response);
 
-        return "admin/bookDetail";
+        return "admin/book/bookDetail";
     }
 
 

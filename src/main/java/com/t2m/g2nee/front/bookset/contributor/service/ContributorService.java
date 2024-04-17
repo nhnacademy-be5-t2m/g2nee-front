@@ -29,7 +29,7 @@ public class ContributorService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/contributors/list";
+        String url = gatewayUrl + "/shop/contributors/list";
 
         return restTemplate.exchange(
                 url,
@@ -51,7 +51,7 @@ public class ContributorService {
 
         HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/contributors";
+        String url = gatewayUrl + "/shop/contributors";
 
         restTemplate.exchange(
                 url,
@@ -75,7 +75,7 @@ public class ContributorService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/contributors?page=" + page;
+        String url = gatewayUrl + "/shop/contributors?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -98,7 +98,7 @@ public class ContributorService {
 
         HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/contributors/" + contributorId;
+        String url = gatewayUrl + "/shop/contributors/" + contributorId;
 
         restTemplate.exchange(
                 url,
@@ -120,7 +120,7 @@ public class ContributorService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/contributors/" + contributorId;
+        String url = gatewayUrl + "/shop/contributors/" + contributorId;
 
         restTemplate.exchange(
                 url,

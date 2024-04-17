@@ -38,7 +38,7 @@ public class PublisherService {
 
         HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/publishers";
+        String url = gatewayUrl + "/shop/publishers";
 
         restTemplate.exchange(
                 url,
@@ -62,7 +62,7 @@ public class PublisherService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/publishers/list";
+        String url = gatewayUrl + "/shop/publishers/list";
 
         return restTemplate.exchange(
                 url,
@@ -86,7 +86,7 @@ public class PublisherService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/publishers?page=" + page;
+        String url = gatewayUrl + "/shop/publishers?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -109,7 +109,7 @@ public class PublisherService {
 
         HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "shop/publishers/" + publisherId;
+        String url = gatewayUrl + "/shop/publishers/" + publisherId;
 
         restTemplate.exchange(
                 url,
@@ -127,7 +127,7 @@ public class PublisherService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/publishers/" + publisherId;
+        String url = gatewayUrl + "/shop/publishers/" + publisherId;
 
         restTemplate.exchange(
                 url,

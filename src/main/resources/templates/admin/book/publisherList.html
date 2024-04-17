@@ -32,8 +32,8 @@
             }
         }
 
-        function toggleModifyFields(tagId) {
-            var registerFields = document.getElementById('modifyFields-' + tagId);
+        function toggleModifyFields(publisherId) {
+            var registerFields = document.getElementById('modifyFields-' + publisherId);
             if (registerFields.style.display === "none" || registerFields.style.display === "") {
                 registerFields.style.display = "block";
             } else {
@@ -55,45 +55,56 @@
 
         <!-- 등록 필드 -->
         <div id="registerFields" style="display: none;">
-            <form th:action="@{/admin/tags}" th:method="post">
+            <form th:action="@{/admin/publishers}" th:method="post">
                 <div class="mb-3">
-                    <label for="tagName" class="form-label">태그 이름</label>
-                    <input type="text" class="form-control-sm" id="tagName" name="tagName">
+                    <label for="publisherName" class="form-label">출판사 이름</label>
+                    <input type="text" class="form-control-sm" id="publisherName" name="publisherName" pattern="^[가-힣0-9a-zA-Z\s]+$" required>
+                </div>
+                <div class="mb-3">
+                    <label for="publisherEngName" class="form-label">출판사 영문 이름</label>
+                    <input type="text" class="form-control-sm" id="publisherEngName" name="publisherEngName" pattern="^[0-9a-zA-Z\s]+$" required>
                 </div>
                 <div class="d-flex justify-content-start mb-3">
                     <button type="submit" class="btn btn-primary">등록</button>
                 </div>
             </form>
         </div>
-        <h2 class="text-center mb-4">태그 목록</h2>
+        <h2 class="text-center mb-4">출판사 목록</h2>
         <div class="row justify-content-center">
             <table class="table">
                 <thead class="text-center">
                 <tr>
-                    <th scope="col">태그 이름</th>
+                    <th scope="col">출판사 이름</th>
+                    <th scope="col">출판사 영문 이름</th>
                     <th scope="col">수정/삭제</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="tag : ${tagPage.data}">
-                    <td th:text="${tag.tagName}" class="align-middle"></td>
+                <tr th:each="publisher : ${publisherPage.data}">
+                    <td th:text="${publisher.publisherName}" class="align-middle"></td>
+                    <td th:text="${publisher.publisherEngName}" class="align-middle"></td>
                     <td class="text-center align-middle">
                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                    th:onclick="'toggleModifyFields('+${tag.tagId}+')'">수정
+                                    th:onclick="'toggleModifyFields('+${publisher.publisherId}+')'">수정
                             </button>
-                            <div th:id="'modifyFields-'+${tag.tagId}" style="display: none;">
-                                <form th:action="@{'/admin/tags/' + ${tag.tagId} +'?page='+${tagPage.currentPage}}"
+                            <div th:id="'modifyFields-'+${publisher.publisherId}" style="display: none;">
+                                <form th:action="@{'/admin/publishers/' + ${publisher.publisherId} +'?page='+${publisherPage.currentPage}}"
                                       th:method="patch">
                                     <div class="mb-3">
-                                        <label for="tagModifyName" class="form-label">태그 이름</label>
-                                        <input type="text" class="form-control form-control-sm" id="tagModifyName"
-                                               name="tagName">
+                                        <label for="publisherModifyName" class="form-label">출판사 이름</label>
+                                        <input type="text" class="form-control form-control-sm" id="publisherModifyName"
+                                               name="publisherName" pattern="^[가-힣0-9]+$" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="publisherModifyEngName" class="form-label">출판사 영문 이름</label>
+                                        <input type="text" class="form-control form-control-sm" id="publisherModifyEngName"
+                                               name="publisherEngName" pattern="^[A-Za-z0-9]+$">
                                     </div>
                                     <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
                                 </form>
                             </div>
-                            <form th:action="@{'/admin/tags/'+${tag.tagId} + '?page='+${tagPage.currentPage}}"
+                            <form th:action="@{'/admin/publishers/'+${publisher.publisherId} + '?page='+${publisherPage.currentPage}}"
                                   th:method="delete">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">삭제</button>
                             </form>
@@ -108,18 +119,18 @@
                         <li>
                             <a class="page-link" th:href="@{'?page=1'}">≪</a>
                         </li>
-                        <li th:class="${tagPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{'?page=' + ${tagPage.currentPage - 1 }}"><</a>
+                        <li th:class="${publisherPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${publisherPage.currentPage - 1 }}"><</a>
                         </li>
-                        <li th:each="pageButton : ${#numbers.sequence(tagPage.startPage,tagPage.endPage)}"
-                            th:class="${tagPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                        <li th:each="pageButton : ${#numbers.sequence(publisherPage.startPage,publisherPage.endPage)}"
+                            th:class="${publisherPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
                             <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
                         </li>
-                        <li th:class="${tagPage.currentPage == tagPage.totalPage ? 'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{'?page=' + ${tagPage.currentPage + 1}}">></a>
+                        <li th:class="${publisherPage.currentPage == publisherPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${publisherPage.currentPage + 1}}">></a>
                         </li>
                         <li>
-                            <a class="page-link" th:href="@{'?page=' + ${tagPage.totalPage}}">≫</a>
+                            <a class="page-link" th:href="@{'?page=' + ${publisherPage.totalPage}}">≫</a>
                         </li>
                     </ul>
                 </nav>

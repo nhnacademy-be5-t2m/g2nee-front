@@ -52,7 +52,7 @@ public class RoleController {
         PageResponse<RoleDto.Response> rolePage = roleService.getAllRole(page);
         model.addAttribute("rolePage", rolePage);
 
-        return "admin/roleList";
+        return "admin/book/roleList";
     }
 
     /**

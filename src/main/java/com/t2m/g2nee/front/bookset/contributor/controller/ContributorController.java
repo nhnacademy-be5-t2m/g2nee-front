@@ -2,8 +2,6 @@ package com.t2m.g2nee.front.bookset.contributor.controller;
 
 import com.t2m.g2nee.front.bookset.contributor.dto.ContributorDto;
 import com.t2m.g2nee.front.bookset.contributor.service.ContributorService;
-import com.t2m.g2nee.front.bookset.publisher.dto.PublisherDto;
-import com.t2m.g2nee.front.bookset.publisher.service.PublisherService;
 import com.t2m.g2nee.front.pageUtils.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -54,7 +52,7 @@ public class ContributorController {
         PageResponse<ContributorDto.Response> contributorPage = contributorService.getAllContributor(page);
         model.addAttribute("contributorPage", contributorPage);
 
-        return "admin/contributorList";
+        return "admin/book/contributorList";
     }
 
     /**

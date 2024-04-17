@@ -54,7 +54,7 @@ public class TagController {
         PageResponse<TagDto.Response> tagPage = tagService.getAllTag(page);
         model.addAttribute("tagPage", tagPage);
 
-        return "admin/tagList";
+        return "admin/book/tagList";
     }
 
     /**

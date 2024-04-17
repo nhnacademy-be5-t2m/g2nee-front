@@ -51,7 +51,7 @@ public class PublisherController {
         PageResponse<PublisherDto.Response> publisherPage = publisherService.getAllPublisher(page);
         model.addAttribute("publisherPage", publisherPage);
 
-        return "admin/publisherList";
+        return "admin/book/publisherList";
     }
 
     /**
