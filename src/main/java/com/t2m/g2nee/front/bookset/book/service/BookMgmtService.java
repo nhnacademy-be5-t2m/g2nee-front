@@ -59,7 +59,7 @@ public class BookMgmtService {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        String url = gatewayUrl + "shop/books";
+        String url = gatewayUrl + "/shop/books";
 
         restTemplate.exchange(
                 url,
@@ -83,7 +83,7 @@ public class BookMgmtService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-        String url = gatewayUrl + "shop/books/" + bookId;
+        String url = gatewayUrl + "/shop/books/" + bookId;
 
         return restTemplate.exchange(
                 url,
@@ -119,7 +119,7 @@ public class BookMgmtService {
         body.addAll("details", multipartFileList);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        String url = gatewayUrl + "shop/books/" + bookId;
+        String url = gatewayUrl + "/shop/books/" + bookId;
 
         restTemplate.exchange(
                 url,
@@ -143,7 +143,7 @@ public class BookMgmtService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<BookDto.Request> requestEntity = new HttpEntity<>(request, headers);
-        String url = gatewayUrl + "shop/books/status/" + bookId;
+        String url = gatewayUrl + "/shop/books/status/" + bookId;
 
         restTemplate.exchange(
                 url,
@@ -159,7 +159,7 @@ public class BookMgmtService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-        String url = gatewayUrl + "shop/books/quantity/" + bookId + "?quantity=" + quantity;
+        String url = gatewayUrl + "/shop/books/quantity/" + bookId + "?quantity=" + quantity;
 
         return restTemplate.exchange(
                 url,
@@ -183,7 +183,7 @@ public class BookMgmtService {
         parameters.add("page", String.valueOf(page));
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
-        String url = gatewayUrl + "shop/books/list?page=" + page;
+        String url = gatewayUrl + "/shop/books/list?page=" + page;
 
         return restTemplate.exchange(
                 url,

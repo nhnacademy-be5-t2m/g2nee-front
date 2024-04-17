@@ -37,7 +37,8 @@
                 <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
                       th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
-                <span class="mb-3" th:text="'출판사 : ' + ${book.publisherName + ' ' + book.publishedDate}"></span>
+                <br/>
+                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
                 <hr/>
                 <div class="d-flex mb-3">
                     <!-- 평점 -->
@@ -233,10 +234,7 @@
         </div>
     </div>
     <!-- 같은 카테고리 추천책 end -->
-
 </div>
-
-
 </body>
 
 </html>

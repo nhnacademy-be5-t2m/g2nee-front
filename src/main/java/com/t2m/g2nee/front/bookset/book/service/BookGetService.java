@@ -46,7 +46,7 @@ public class BookGetService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/books/" + bookId;
+        String url = gatewayUrl + "/shop/books/" + bookId;
 
         return restTemplate.exchange(
                 url,
@@ -69,7 +69,7 @@ public class BookGetService {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "shop/books/new";
+        String url = gatewayUrl + "/shop/books/new";
 
         return restTemplate.exchange(
                 url,
@@ -77,7 +77,10 @@ public class BookGetService {
                 requestEntity,
                 new ParameterizedTypeReference<List<BookDto.ListResponse>>() {
                 }
-        ).getBody();
+                ).getBody()
+                .stream()
+                .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
+                .collect(Collectors.toList());
 
     }
 
@@ -95,7 +98,7 @@ public class BookGetService {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         String url = URLDecoder.decode(UriComponentsBuilder
-                .fromHttpUrl(gatewayUrl+"shop/books/search")
+                .fromHttpUrl(gatewayUrl + "/shop/books/search")
                 .queryParam("page",page)
                 .queryParam("keyword",keyword)
                 .queryParam("sort",sort)
@@ -112,14 +115,12 @@ public class BookGetService {
                 .getBody();
 
         // 회원은 삭제된 책을 조회하지 못하게 필터링
-        if(responses.getData().size() != 0) {
 
             List<BookDto.ListResponse> list = responses.getData().stream()
                     .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
                     .collect(Collectors.toList());
             responses.setData(list);
 
-        }
         return responses;
 
     }

@@ -31,9 +31,9 @@ public class BookDto {
     @Builder
     public static class Request {
 
-        @Pattern(regexp = "^[가-힣0-9]+$", message = "출판사 한글 이름을 입력해주세요.")
+        @Pattern(regexp = "^[가-힣 0-9a-zA-Z!@#$%^&*(),.?\":{}|<>]+$", message = "책 이름을 입력해주세요.")
         private String title;
-        @Pattern(regexp = "^[A-Za-z0-9]+$", message = "출판사 영문 이름을 입력해주세요")
+        @Pattern(regexp = "^[0-9a-zA-Z\\s!@#$%^&*(),.?\":{}|<>]+$", message = "책 영문 이름을 입력해주세요.")
         private String engTitle;
         @NotNull(message = "목차를 입력해주세요")
         private String bookIndex;
@@ -136,7 +136,7 @@ public class BookDto {
     @Getter
     public enum Sort {
 
-        VIEWCOUNT("인기도 순"), SALESVOLUME("판매량 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
+        VIEWCOUNT("인기도 순"),PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
         SALEPRICEDESC("가격 높은 순"),
         SCORE("평점 순"), REVIEW("리뷰 순");
 
