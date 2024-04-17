@@ -110,26 +110,27 @@ public class BookDto {
         private String publisherEngName;
         private List<BookContributorDto.Response> contributorRoleList;
     }
+
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class statusResponse{
+    public static class statusResponse {
         private BookStatus status;
     }
 
-        @Getter
-        public enum BookStatus {
+    @Getter
+    public enum BookStatus {
 
 
-            ONSALE("정상판매"), SOLDOUT("매진"), OUTOFPRINT("절판"), DELETED("삭제");
+        ONSALE("정상판매"), SOLDOUT("매진"), OUTOFPRINT("절판"), DELETED("삭제");
 
-            private final String status;
+        private final String status;
 
-            BookStatus(String status) {
-                this.status = status;
-            }
+        BookStatus(String status) {
+            this.status = status;
         }
+    }
 }
 

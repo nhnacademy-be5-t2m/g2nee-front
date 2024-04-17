@@ -2,8 +2,6 @@ package com.t2m.g2nee.front.bookset.book.service;
 
 
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,13 +9,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 책 조회 service 클래스
@@ -36,10 +30,11 @@ public class BookGetService {
 
     /**
      * 책 하나 정보를 조회하는 서비스 입니다.
+     *
      * @param bookId 책 아이디
      * @return BookDto.Response
      */
-    public BookDto.Response getBook(Long bookId){
+    public BookDto.Response getBook(Long bookId) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

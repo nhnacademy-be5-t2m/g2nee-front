@@ -1,6 +1,5 @@
 package com.t2m.g2nee.front.bookset.tag.service;
 
-import com.t2m.g2nee.front.bookset.publisher.dto.PublisherDto;
 import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class TagService {
     @Value("${g2nee.gateway}")
     String gatewayUrl;
 
-    public List<TagDto.Response> getAllTag(){
+    public List<TagDto.Response> getAllTag() {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
