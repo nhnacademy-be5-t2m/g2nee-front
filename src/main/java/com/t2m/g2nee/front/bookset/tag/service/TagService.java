@@ -21,7 +21,7 @@ public class TagService {
     @Value("${g2nee.gateway}")
     String gatewayUrl;
 
-    public List<TagDto.Response> getAllTag(){
+    public List<TagDto.Response> getAllTag() {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

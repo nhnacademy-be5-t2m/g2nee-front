@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
 /**
  * CategoryAdaptor의 구현체
  *
@@ -49,7 +50,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Value("${g2nee.gateway}")
     private String gateway;
-    
+
     private String baseUrl;
 
     public CategoryAdaptorImpl(RestTemplate restTemplate) {
@@ -57,7 +58,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     }
 
     @PostConstruct
-    public void initUrl(){
+    public void initUrl() {
         baseUrl = gateway + "/shop/categories";
     }
 
@@ -86,7 +87,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     @Override
     public CategoryUpdateDto getCategory(Long categoryId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+categoryId)
+                .path("/" + categoryId)
                 .build();
 
         HttpEntity<CategoryUpdateDto> entity = new HttpEntity<>(getHttpHeaders());
@@ -113,7 +114,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     }
 
     @Override
-    public CategoryInfoDto requestCreatCategory(CategorySaveDto request){
+    public CategoryInfoDto requestCreatCategory(CategorySaveDto request) {
         HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
         ResponseEntity<CategoryInfoDto> response =
                 restTemplate.exchange(baseUrl, HttpMethod.POST, entity, CategoryInfoDto.class);
@@ -124,7 +125,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     @Override
     public CategoryInfoDto requestModifyCategory(Long categoryId, CategorySaveDto request) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+categoryId)
+                .path("/" + categoryId)
                 .build();
 
         HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
@@ -137,7 +138,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     @Override
     public Boolean requestDeleteCategory(Long categoryId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+categoryId)
+                .path("/" + categoryId)
                 .build();
 
         HttpEntity<Boolean> entity = new HttpEntity<>(getHttpHeaders());
@@ -150,7 +151,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     @Override
     public Boolean requestActiveCategory(Long categoryId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+categoryId)
+                .path("/" + categoryId)
                 .build();
 
         HttpEntity<Boolean> entity = new HttpEntity<>(getHttpHeaders());

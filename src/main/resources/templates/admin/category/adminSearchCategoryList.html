@@ -12,13 +12,13 @@
 
 <body>
 <div layout:fragment="content">
-    <br />
+    <br/>
     <form th:action="@{/admin/categories/search}" th:method="GET">
         <input type="text" placeholder="카테고리 검색" name="name"> &nbsp
         <input type="hidden" name="page" value="1">
         <input type="submit" value="검색">
     </form>
-    <br />
+    <br/>
 
     <table>
         <tr>
@@ -52,7 +52,7 @@
         </tr>
     </table>
 
-    <br /><br />
+    <br/><br/>
     <nav aria-label="...">
         <ul class="pagination">
             <li>
@@ -74,7 +74,7 @@
         </ul>
     </nav>
 
-    <br /><br />
+    <br/><br/>
     <a th:href="@{/admin/categories/save}">새 카테고리</a>
 
 </div>

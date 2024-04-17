@@ -118,7 +118,7 @@ public class BookDto {
     public static class statusResponse{
         private BookStatus status;
     }
-    // 책 상태
+
         @Getter
         public enum BookStatus {
 
@@ -131,8 +131,6 @@ public class BookDto {
                 this.status = status;
             }
         }
-
-        // 정렬 기준
     @Getter
     public enum Sort {
 
