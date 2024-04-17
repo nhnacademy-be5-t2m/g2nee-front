@@ -39,15 +39,17 @@
     <div th:replace="fragments/navigator :: categoryNav"></div>
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 10px">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 5px">
         </div>
     </div>
     <!-- Page Header End -->
     <div class="row px-xl-5">
         <div class="col-lg-3 col-md-12">
+            <div layout:fragment="nav"></div>
         </div>
         <!-- layout에서 변경되는 영역을 fragment로 설정. -->
         <div class="col-lg-9 col-md-12">
+
             <div layout:fragment="content"></div>
         </div>
     </div>
@@ -67,7 +69,7 @@
 <!-- Contact Javascript File -->
 <script src="/static/mail/jqBootstrapValidation.min.js"></script>
 <script src="/static/mail/contact.js"></script>
-    
+
 <!-- Template Javascript -->
 <script src="/static/js/main.js"></script>
 
