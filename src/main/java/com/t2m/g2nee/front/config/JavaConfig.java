@@ -3,10 +3,6 @@ package com.t2m.g2nee.front.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.t2m.g2nee.front.exception.CustomExceptionHandler;
-import java.time.Duration;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -33,8 +29,8 @@ public class JavaConfig {
 
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         RestTemplate restTemplate = new RestTemplate(requestFactory);
-        requestFactory.setConnectTimeout(5000);
-        requestFactory.setReadTimeout(5000);
+        requestFactory.setConnectTimeout(30000);
+        requestFactory.setReadTimeout(30000);
         restTemplate.setErrorHandler(customExceptionHandler());//예외처리 핸들러 등록
 
         return restTemplate;

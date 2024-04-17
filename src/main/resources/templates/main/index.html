@@ -22,7 +22,7 @@
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
 
                         <!--root category 반복-->
-                        <div class="nav-item dropdown"  th:each="rootCategory : ${session.rootCategories}" th:if="${rootCategory.isActivated}">
+                        <div class="nav-item dropdown"  th:each="rootCategory : ${rootCategories}" th:if="${rootCategory.isActivated}">
                             <div th:if="${rootCategory.isActivated}">
                                 <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link" data-toggle="dropdown">
                                     <span th:text="${rootCategory.categoryName}"/>
