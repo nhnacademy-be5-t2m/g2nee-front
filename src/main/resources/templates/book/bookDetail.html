@@ -52,8 +52,8 @@
                     <!-- 리뷰가 몇개인지 (눌렀을 때 리뷰페이지로 갈수있게) -->
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ' + ${book.salePrice}+' won'"></h4>
-                <h5 th:text="'정가 : ' + ${book.price}+' won'" style="color: gray; text-decoration: line-through;"></h5>
+                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : $' + ${book.salePrice}"></h4>
+                <h5 th:text="'정가 : $' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
                 <hr/>
                 <h4 class="mb-3">책 소개</h4>
                 <p class="mb-4" th:text="${book.description}"></p>

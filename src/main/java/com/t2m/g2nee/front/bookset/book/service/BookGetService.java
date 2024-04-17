@@ -2,7 +2,7 @@ package com.t2m.g2nee.front.bookset.book.service;
 
 
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -70,7 +70,7 @@ public class BookGetService {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         String url = gatewayUrl + "/shop/books/new";
-
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
         return restTemplate.exchange(
                 url,
                 HttpMethod.GET,
@@ -86,8 +86,10 @@ public class BookGetService {
 
     /**
      * 검색어를 통해 책을 검색하여 조회하는 메서드
-     *
-     * @return List<BookDto.ListResponse>
+     * @param page 페이지 번호
+     * @param keyword 검색 키워드
+     * @param sort 정렬 조건
+     * @return PageResponse<BookDto.ListResponse>
      */
     public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, String keyword, String sort) {
 
@@ -120,6 +122,94 @@ public class BookGetService {
                     .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
                     .collect(Collectors.toList());
             responses.setData(list);
+
+        return responses;
+
+    }
+
+    /**
+     * 카테고리별 책 조회 메서드
+     * @param page 페이지 번호
+     * @param sort 정렬 기준
+     * @param categoryId 카테고리 아이디
+     * @return PageResponse<BookDto.ListResponse>
+     */
+    public PageResponse<BookDto.ListResponse> getBooksByCategory(int page, String sort, Long categoryId) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        String url = URLDecoder.decode(UriComponentsBuilder
+                .fromHttpUrl(gatewayUrl + "/shop/books/category/" + categoryId)
+                .queryParam("page", page)
+                .queryParam("sort", sort)
+                .toUriString(), StandardCharsets.UTF_8);
+
+
+        PageResponse<BookDto.ListResponse> responses = restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
+
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
+
+        List<BookDto.ListResponse> list = responses.getData().stream()
+                .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
+                .collect(Collectors.toList());
+        responses.setData(list);
+
+        return responses;
+
+    }
+
+    /**
+     * 카테고리와 검색어로 책을 검색하는 메서드
+     * @param page 페이지 번호
+     * @param sort 정렬 기준
+     * @param keyword 검색 키워드
+     * @param categoryId 카테고리 아이디
+     * @return PageResponse<BookDto.ListResponse>
+     */
+    public PageResponse<BookDto.ListResponse> getBooksBySearchByCategory(int page, String sort, String keyword,
+                                                                         Long categoryId) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        String url = URLDecoder.decode(UriComponentsBuilder
+                .fromHttpUrl(gatewayUrl + "/shop/books/search")
+                .queryParam("categoryId", categoryId)
+                .queryParam("page", page)
+                .queryParam("keyword", keyword)
+                .queryParam("sort", sort)
+                .toUriString(), StandardCharsets.UTF_8);
+
+
+        PageResponse<BookDto.ListResponse> responses = restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
+
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
+
+        List<BookDto.ListResponse> list = responses.getData().stream()
+                .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
+                .collect(Collectors.toList());
+        responses.setData(list);
 
         return responses;
 

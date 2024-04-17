@@ -71,7 +71,7 @@
                                      th:src="${book.thumbnailImageUrl}" alt="썸네일">
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
+                                <h6 class="text-truncate mb-3; font-weight-semi-bold;" th:text="${book.title}"></h6>
                                 <span th:each="contributorRole : ${book.contributorRoleList}" style="text-align: center"
                                       th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')'"></span>
                                 <div class="d-flex justify-content-center">

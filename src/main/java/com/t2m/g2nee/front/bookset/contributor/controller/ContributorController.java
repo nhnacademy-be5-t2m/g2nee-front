@@ -2,7 +2,7 @@ package com.t2m.g2nee.front.bookset.contributor.controller;
 
 import com.t2m.g2nee.front.bookset.contributor.dto.ContributorDto;
 import com.t2m.g2nee.front.bookset.contributor.service.ContributorService;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

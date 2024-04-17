@@ -28,7 +28,9 @@
                                 </a>
                                 <p class="card-text">
                                 <div th:each="contributorRole : ${book.contributorRoleList}">
-                                    <span th:text="${contributorRole.contributorName + '(' + contributorRole.roleName + ')'}"></span>
+                                    <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
+                                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                                    </span>
                                 </div>
                                 출판사: <span th:text="${book.publisherName} + ' ' + ${book.publishedDate}"></span><br>
                                 판매가: <span th:text="${book.salePrice}"></span><br>

@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.bookset.publisher.service;
 
 import com.t2m.g2nee.front.bookset.publisher.dto.PublisherDto;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

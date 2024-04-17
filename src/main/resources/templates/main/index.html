@@ -25,7 +25,7 @@
                         <div class="nav-item dropdown"  th:each="rootCategory : ${rootCategories}" th:if="${rootCategory.isActivated}">
                             <div th:if="${rootCategory.isActivated}">
                                 <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link" data-toggle="dropdown">
-                                    <span th:text="${rootCategory.categoryName}"/>
+                                    <span th:text="${rootCategory.categoryName}"></span>
                                     <i class="fa fa-angle-down float-right mt-1"></i></a>
 
 
@@ -33,8 +33,8 @@
                                 <div th:if="${!#lists.isEmpty(rootCategory.children)}" class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                     <div th:each="child : ${rootCategory.children}">
                                         <a class="dropdown-item"
-                                           th:href="@{/shop(id = ${child.categoryId})}">
-                                            <span th:text="${child.categoryName}"/> </a>
+                                           th:href="@{'/books/category/' +  ${child.categoryId}}">
+                                            <span th:text="${child.categoryName}"></span></a>
                                     </div>
                                 </div>
                             </div>

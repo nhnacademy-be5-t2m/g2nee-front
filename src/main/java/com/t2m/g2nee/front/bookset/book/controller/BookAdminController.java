@@ -12,7 +12,7 @@ import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
 import com.t2m.g2nee.front.bookset.role.service.RoleService;
 import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import com.t2m.g2nee.front.bookset.tag.service.TagService;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

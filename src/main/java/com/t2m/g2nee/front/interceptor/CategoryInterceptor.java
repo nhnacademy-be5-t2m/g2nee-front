@@ -47,6 +47,7 @@ public class CategoryInterceptor implements HandlerInterceptor {
 
         //캐시가 없거나 캐시가 지워진 경우에는 항상 새로운 데이터를 불러와 캐시에 저장
         //캐시가 존재하는 경우, 서버에 저장된 캐시를 불러옴
+        List<CategoryHierarchyDto> r = service.getRootCategories();
         request.setAttribute("rootCategories", service.getRootCategories());
 
         return true;

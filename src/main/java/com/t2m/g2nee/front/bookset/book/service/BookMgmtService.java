@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.bookset.book.service;
 
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -61,12 +61,12 @@ public class BookMgmtService {
 
         String url = gatewayUrl + "/shop/books";
 
+
         restTemplate.exchange(
                 url,
-                HttpMethod.POST,
+                HttpMethod.GET,
                 requestEntity,
-                new ParameterizedTypeReference<BookDto.Response>() {
-                }
+               String.class
         );
     }
 

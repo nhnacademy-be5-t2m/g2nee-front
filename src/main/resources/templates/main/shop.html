@@ -13,7 +13,7 @@
     <div class="container-fluid bg-secondary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">
-                <span th:text="${category.categoryName}"/>
+                <span th:text="${category.categoryName}"></span>
             </h1>
         </div>
     </div>
@@ -30,7 +30,7 @@
                                 <div th:each="child : ${category.children}">
                                     <a class="dropdown-item"
                                        th:href="@{/shop(id = ${child.categoryId})}">
-                                        <span th:text="${child.categoryName}"/> </a>
+                                        <span th:text="${child.categoryName}"></span> </a>
                                 </div>
                             </div>
                     </form>
