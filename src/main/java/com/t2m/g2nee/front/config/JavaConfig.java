@@ -47,4 +47,5 @@ public class JavaConfig {
     public CustomExceptionHandler customExceptionHandler() {
         return new CustomExceptionHandler(objectMapper());
     }
+
 }

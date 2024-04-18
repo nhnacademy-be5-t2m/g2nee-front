@@ -100,6 +100,7 @@
             <artifactId>spring-security-web</artifactId>
             <version>5.7.11</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -155,6 +156,9 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>
+
+=======
+>>>>>>> parent of 7c899e1 (:sparkles: accesstoken 응답 후 저장)
 
     </dependencies>
 

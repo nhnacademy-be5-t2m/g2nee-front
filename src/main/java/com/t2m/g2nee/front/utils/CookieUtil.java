@@ -20,8 +20,9 @@ public class CookieUtil {
     }
 
     /**
-     * accessCookie 를 찾기위한 메소드
+     * cookieName으로 cookie 를 찾기위한 메소드
      *
+     * @param cookieName 쿠키이름
      * @return 쿠키의 값들 반환
      */
     public static Cookie findCookie(String cookieName) {
@@ -64,7 +65,8 @@ public class CookieUtil {
      */
     public static void deleteCookie(HttpServletResponse response, String key) {
         Cookie cookie = findCookie(key);
-        Objects.requireNonNull(cookie).setMaxAge(0);
+        cookie.setMaxAge(0);
+        cookie.setValue("");
         response.addCookie(cookie);
     }
 

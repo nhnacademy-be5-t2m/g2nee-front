@@ -20,6 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+/**
+ * 사용자 정보를 받아오기 위한 클래스
+ *
+ * @author : 정지은
+ * @since : 1.0
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

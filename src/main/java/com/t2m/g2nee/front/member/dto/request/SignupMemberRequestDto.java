@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 일반 회원가입 시 입력한 정보 request DTO개체.
+ * 일반 회원가입 시 입력한 request dto
  *
  * @author : 정지은
  * @since : 1.0

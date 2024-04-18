@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.User;
 /**
  * 커스텀하여 만든 유저 인증 provider.
  *
- * @author : 임태원
+ * @author : 정지은
  * @since : 1.0
  **/
 @Slf4j

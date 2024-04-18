@@ -4,6 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Member의 주소를 받아올 dto
+ *
+ * @author : 정지은
+ * @since : 1.0
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

@@ -28,7 +28,7 @@ public class HttpHeadersUtil {
                 (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
 
-        Cookie accessToken = CookieUtil.findCookie(JwtUtil.JWT_COOKIE);
+        Cookie accessToken = CookieUtil.findCookie(JwtUtil.ACCESS_COOKIE);
         if (Objects.nonNull(accessToken)) {
             httpHeaders.add("Authorization", JwtUtil.TOKEN_TYPE + accessToken.getValue());
         }

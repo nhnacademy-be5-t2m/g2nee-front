@@ -58,7 +58,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Cookie jwtCookie = CookieUtil.findCookie(JwtUtil.JWT_COOKIE);
+            Cookie jwtCookie = CookieUtil.findCookie(JwtUtil.ACCESS_COOKIE);
             if (notExistCookie(request, response, filterChain, jwtCookie)) {
                 return;
             }
