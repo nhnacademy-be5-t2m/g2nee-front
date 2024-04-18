@@ -81,24 +81,11 @@ public class MemberController {
      * @param model   회원 정보 일치하는지 저장할 model
      * @return 성공, 실패 페이지를 보여준다.
      */
-<<<<<<< HEAD
     @GetMapping("/logout")
     public String logout(HttpServletResponse response) {
         memberService.logout(response);
         return "redirect:/";
-=======
-    @PostMapping("/login")
-    public String memberLoginComplete(@ModelAttribute("memberLoginForm") MemberLoginRequestDto request,
-                                      Model model) {
-        Boolean loginSuccess = memberService.login(request);
 
-        if (loginSuccess) {
-            return "redirect:/main/index";
-        } else {
-            model.addAttribute("failCustomerLogin", "비회원 정보가 일치하지 않습니다.");
-            return "member/login";
-        }
->>>>>>> parent of 7c899e1 (:sparkles: accesstoken 응답 후 저장)
     }
 
 
