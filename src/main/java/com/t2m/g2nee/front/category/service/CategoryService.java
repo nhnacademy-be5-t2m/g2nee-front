@@ -12,7 +12,7 @@ public interface CategoryService {
 
     List<CategoryHierarchyDto> getRootCategories();
 
-    List<CategoryInfoDto> getAllCategories();
+    List<CategoryHierarchyDto> getAllCategories();
 
     CategoryUpdateDto getCategory(Long categoryId);
 

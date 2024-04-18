@@ -8,6 +8,8 @@ import com.t2m.g2nee.front.category.dto.response.CategoryInfoDto;
 import com.t2m.g2nee.front.category.dto.response.CategoryUpdateDto;
 import com.t2m.g2nee.front.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -41,8 +43,25 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Cacheable(key = "'all'")
     @Override
-    public List<CategoryInfoDto> getAllCategories() {
-        return adaptor.getAllCategories();
+    public List<CategoryHierarchyDto> getAllCategories() {
+        List<CategoryHierarchyDto> allCategories = new ArrayList<>();
+        List<CategoryHierarchyDto> rootCategories = getRootCategories();
+
+        for (CategoryHierarchyDto root : rootCategories) {
+            allCategories.add(root);
+            allCategories.addAll(getAllSubCategories(root.getChildren()));
+        }
+
+        return allCategories;
+    }
+
+    public List<CategoryHierarchyDto> getAllSubCategories(List<CategoryHierarchyDto> categories) {
+        List<CategoryHierarchyDto> allSubCategories = new ArrayList<>();
+        for (CategoryHierarchyDto category : categories) {
+            allSubCategories.add(category);
+            allSubCategories.addAll(category.getChildren());
+        }
+        return allSubCategories;
     }
 
     @Cacheable(key = "#categoryId", unless = "#result == null")
