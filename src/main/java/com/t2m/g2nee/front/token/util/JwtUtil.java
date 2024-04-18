@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * 토큰 사용 클래스.
  *
- * @author : 임태원
+ * @author : 정지은
  * @since : 1.0
  **/
 @Component
