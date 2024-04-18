@@ -7,6 +7,7 @@ import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
@@ -60,41 +61,15 @@ public class MemberService {
         return response.getBody();
     }
 
-<<<<<<< HEAD
     public ResponseEntity<Void> login(MemberLoginRequestDto request) {
         HttpEntity<MemberLoginRequestDto> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
         return restTemplate.exchange(
-                gatewayToAuthUrl + "/login",
-=======
-    public boolean login(MemberLoginRequestDto request) {
-        //TODO: auth로 request를 보내 토큰처리를 해야함.
-        HttpEntity<MemberLoginRequestDto> requestEntity = new HttpEntity<>(request, headers);
-        ResponseEntity<Void> response = restTemplate.exchange(
                 gatewayToAuthUrl + "/auth/login",
->>>>>>> parent of 7c899e1 (:sparkles: accesstoken 응답 후 저장)
                 HttpMethod.POST,
                 requestEntity,
                 Void.class
         );
-        
-        return true;
-    }
 
-<<<<<<< HEAD
-    /**
-     * 회원의 세부정보를 받아오기 위한 메소드
-     *
-     * @param customerId
-     * @return MemberDetailResponseDto 반환
-     */
-    public MemberDetailInfoResponseDto getMemberDetailInfoFromCustomerId(Long customerId) {
-        ResponseEntity<MemberDetailInfoResponseDto> response = restTemplate.exchange(
-                gatewayToShopUrl + "/member/getDetailInfo/" + customerId,
-                HttpMethod.GET,
-                new HttpEntity<>(makeHttpHeaders()),
-                MemberDetailInfoResponseDto.class
-        );
-        return response.getBody();
     }
 
     /**
@@ -154,19 +129,4 @@ public class MemberService {
                 Void.class
         );
     }
-=======
-    public boolean customerLogin(CustomerOrderCheckRequestDto request) {
-        HttpEntity<CustomerOrderCheckRequestDto> requestEntity = new HttpEntity<>(request, headers);
-        ResponseEntity<Boolean> response = restTemplate.exchange(
-                gatewayToShopUrl + "/customer/login",
-                HttpMethod.POST,
-                requestEntity,
-                Boolean.class
-        );
-        if (response.getStatusCode() != HttpStatus.OK) {
-            throw new RuntimeException("비회원 주문조회에 실패하였습니다.");
-        }
-        return response.getBody();
-    }
->>>>>>> parent of 7c899e1 (:sparkles: accesstoken 응답 후 저장)
 }

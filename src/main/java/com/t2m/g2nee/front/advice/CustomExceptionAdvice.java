@@ -17,6 +17,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  */
 @ControllerAdvice
 public class CustomExceptionAdvice {
+    public static String REQUIRE_LOGIN_MESSAGE = "로그인이 필요합니다.";
 
     /**
      * e에는 백엔드 shop서버에서 받아오는 에러 코드, 메시지를 가지고 있고
