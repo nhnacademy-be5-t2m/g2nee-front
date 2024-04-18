@@ -64,7 +64,7 @@ public class MemberService {
     public ResponseEntity<Void> login(MemberLoginRequestDto request) {
         HttpEntity<MemberLoginRequestDto> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
         return restTemplate.exchange(
-                gatewayToAuthUrl + "/auth/login",
+                gatewayToAuthUrl + "/login",
                 HttpMethod.POST,
                 requestEntity,
                 Void.class
