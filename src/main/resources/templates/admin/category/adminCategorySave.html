@@ -16,26 +16,26 @@
     <h2>카테고리 저장</h2>
     <!-- adin page view 구현-->
     <form th:action="@{/admin/categories/save}" th:method="POST">
-        <label th:text="'카테고리 이름: '"/><input type="text" name="categoryName"/><br /><br />
-        <label th:text="'카테고리 영문이름: '"/><input type="text" name="categoryEngName"/><br /><br />
+        <label th:text="'카테고리 이름: '"/><input type="text" name="categoryName"/><br/><br/>
+        <label th:text="'카테고리 영문이름: '"/><input type="text" name="categoryEngName"/><br/><br/>
 
         <input type="radio" id="activateYes" name="isActivated" value="true" onclick="show(this);">
         <label for="activateYes">활성화</label> &nbsp
         <input type="radio" id="activateNo" name="isActivated" value="false" onclick="show(this);">
-        <label for="activateNo">비활성화</label><br /><br />
+        <label for="activateNo">비활성화</label><br/><br/>
 
         <div id="ancestorCategoryLabel" class="select" style="display:none;">
-            <label>상위 카테고리 선택</label><br />
+            <label>상위 카테고리 선택</label><br/>
             <select id="ancestorCategorySelect" size="5" name="ancestorCategoryId">
                 <option selected value="0">상위 카테고리 없음</option>
                 <option th:each="eachCategory : ${categories}" th:if="${eachCategory.isActivated}"
                         th:value="${eachCategory.categoryId}"
                         th:text="${eachCategory.categoryName}">
                 </option>
-            </select><br />
+            </select><br/>
         </div>
 
-        <br />
+        <br/>
         <input type="submit" value="저장"/>
     </form>
 </div>

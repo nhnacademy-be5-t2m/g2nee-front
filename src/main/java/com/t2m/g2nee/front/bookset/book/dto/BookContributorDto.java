@@ -27,6 +27,7 @@ public class BookContributorDto {
         private String contributorId;
         private String contributorName;
         private String contributorEngName;
+        private String roleId;
         private String roleName;
     }
 }

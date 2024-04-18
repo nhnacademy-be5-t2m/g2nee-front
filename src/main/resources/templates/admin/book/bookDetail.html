@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/adminLayout}">
 <head>
-    <title>admin 메인</title>
+    <title>admin 도서 조회</title>
 </head>
 
 <body>
@@ -15,8 +15,8 @@
             <div class="col-lg-5 pb-5">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
-                        <div th:each="image, index : ${book.detailImageUrl}">
-                            <div th:class="${index == 0 ? 'carousel-item active' : 'carousel-item'}">
+                        <div class="carousel-inner border">
+                            <div th:each="image, index : ${book.detailImageUrl}" th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
                                 <img class="w-100 h-100" th:src="${image}" alt="Image">
                             </div>
                         </div>
@@ -34,11 +34,10 @@
             <!-- 책 세부 내용 start -->
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold" th:text="${book.title}"></h3>
-                <div th:each="contributorRole : ${book.contributorRoleList}">
-                    <h4 class="mb-3"
-                        th:text="${contributorRole.contributorName + '(' + contributorRole.roleName + ')'}"></h4>
-                </div>
-                <h4 class="mb-3" th:text="${book.publisherName + ' ' + book.publishedDate}"></h4>
+                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
+                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                </span>
+                <div class="mb-3" th:text="'출판사 : ' + ${book.publisherName + ' ' + book.publishedDate}"></div>
                 <div class="d-flex mb-3">
                     <!-- 평점 -->
                     <div class="text-primary mr-2">
@@ -69,7 +68,8 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
+                    <span th:text="'수량 : ' + ${book.quantity}"></span>
+                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 재고 추가</button>
                 </div>
             </div>
         </div>
@@ -78,25 +78,23 @@
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                     <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Information</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Reviews (0)</a>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
                         <h4 class="mb-3">기본 정보</h4>
                         <span th:text="${book.pages} +'쪽'"></span>
                         <span th:text="'ISBN : ' + ${book.isbn}"></span>
-                        <div>
-                            <div th:each="tag : ${book.tagList}">태그 :
-                                <span class="badge-info" th:text="${tag.tagName}"></span>
-                            </div>
-                        </div>
                         <div th:each="categoryList : ${book.categoryList}">
                             <span th:each="category, index : ${categoryList}" th:inline="text">
                              <span th:style="${index.last}? 'font-weight: bold' : ''"
                                    th:text="${category.categoryName + (index.last ? '' : ' > ')}"></span>
                             </span>
                         </div>
-
+                        <div text="태그 : ">
+                            <span th:each="tag : ${book.tagList}">
+                                <span class="badge-info" th:text="${tag.tagName}"></span>
+                            </span>
+                        </div>
                     </div>
                     <hr/>
                     <div>
