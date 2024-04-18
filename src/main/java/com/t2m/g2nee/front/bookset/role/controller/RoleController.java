@@ -31,6 +31,7 @@ public class RoleController {
 
     /**
      * 역할 등록 컨트롤러
+     *
      * @param request 역할 정보 객체
      */
     @PostMapping
@@ -43,11 +44,12 @@ public class RoleController {
 
     /**
      * 역할 조회 컨트롤러
+     *
      * @param page 페이지 번호
      */
     @GetMapping("/list")
     public String getRolesList(Model model,
-                                   @RequestParam(defaultValue = "1") int page) {
+                               @RequestParam(defaultValue = "1") int page) {
 
         PageResponse<RoleDto.Response> rolePage = roleService.getAllRole(page);
         model.addAttribute("rolePage", rolePage);
@@ -57,16 +59,17 @@ public class RoleController {
 
     /**
      * 역할 수정 컨트롤러
-     * @param roleId 역할 아이디
+     *
+     * @param roleId  역할 아이디
      * @param request 역할 정보 객체
-     * @param page 페이지 번호
+     * @param page    페이지 번호
      */
     @PatchMapping("/{roleId}")
     public String updateRole(@PathVariable("roleId") Long roleId,
-                                  @ModelAttribute RoleDto.Request request,
-                                  @RequestParam int page) {
+                             @ModelAttribute RoleDto.Request request,
+                             @RequestParam int page) {
 
-        roleService.updateRole(roleId,request);
+        roleService.updateRole(roleId, request);
 
 
         return "redirect:/admin/roles/list?page=" + page;
@@ -75,12 +78,13 @@ public class RoleController {
 
     /**
      * 역할 삭제 컨트롤러
+     *
      * @param roleId 역할 아이디
-     * @param page 페이지 번호
+     * @param page   페이지 번호
      */
     @DeleteMapping("/{roleId}")
     public String deleteRole(@PathVariable("roleId") Long roleId,
-                                  @RequestParam int page) {
+                             @RequestParam int page) {
 
         roleService.deleteRole(roleId);
 

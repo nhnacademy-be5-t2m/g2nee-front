@@ -29,6 +29,7 @@ public class BookController {
 
     private final BookGetService bookGetService;
     private final CategoryService categoryService;
+
     /**
      * 책 하나 정보를 가져오는 컨트롤러 입니다.
      */
@@ -58,9 +59,10 @@ public class BookController {
 
     /**
      * 키워드로 책을 검색하는 컨트롤러
+     *
      * @param keyword 키워드
-     * @param page 페이지 번호
-     * @param sort 정렬 조건
+     * @param page    페이지 번호
+     * @param sort    정렬 조건
      */
     @GetMapping("/search")
     public String getBookBySearch(Model model,
@@ -78,15 +80,15 @@ public class BookController {
         model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
 
 
-
         return "book/bookList";
     }
 
     /**
      * 카테고리와 키워드로 검색한 책을 조회하는 컨트롤러
-     * @param keyword 검색할 카워드
-     * @param page 페이지 번호
-     * @param sort 정렬 조건
+     *
+     * @param keyword    검색할 카워드
+     * @param page       페이지 번호
+     * @param sort       정렬 조건
      * @param categoryId 카테고리 아이디
      * @throws JsonProcessingException
      */
@@ -102,7 +104,8 @@ public class BookController {
             sort = "viewCount";
         }
 
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearchByCategory(page, sort, keyword,categoryId);
+        PageResponse<BookDto.ListResponse> bookPage =
+                bookGetService.getBooksBySearchByCategory(page, sort, keyword, categoryId);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
@@ -115,16 +118,17 @@ public class BookController {
 
     /**
      * 카테고리로 책을 검색하는 컨트롤러
-     * @param page 페이지 번호
-     * @param sort 정렬 기준
+     *
+     * @param page       페이지 번호
+     * @param sort       정렬 기준
      * @param categoryId 카테고리 아이디
      * @throws JsonProcessingException
      */
     @GetMapping("/category/{categoryId}")
     public String getBookByCategoryId(Model model,
-                                              @RequestParam(defaultValue = "1") int page,
-                                              @RequestParam(required = false) String sort,
-                                              @PathVariable("categoryId") Long categoryId)
+                                      @RequestParam(defaultValue = "1") int page,
+                                      @RequestParam(required = false) String sort,
+                                      @PathVariable("categoryId") Long categoryId)
             throws JsonProcessingException {
 
         if (!StringUtils.hasText(sort)) {

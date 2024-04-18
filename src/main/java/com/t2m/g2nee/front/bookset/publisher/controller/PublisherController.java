@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 /**
  * 출판사 관리 controller 클래스
  *
@@ -30,6 +31,7 @@ public class PublisherController {
 
     /**
      * 출판사 등록 컨트롤러
+     *
      * @param request 출판사 객체 정보
      */
     @PostMapping
@@ -42,6 +44,7 @@ public class PublisherController {
 
     /**
      * 출판사 조회 컨트롤러
+     *
      * @param page 페이지 번호
      */
     @GetMapping("/list")
@@ -56,16 +59,17 @@ public class PublisherController {
 
     /**
      * 출판사 수정 컨트롤러
+     *
      * @param publisherId 출판사 아이디
-     * @param request 출판사 객체 정보
-     * @param page 페이지 번호
+     * @param request     출판사 객체 정보
+     * @param page        페이지 번호
      */
     @PatchMapping("/{publisherId}")
     public String updatePublisher(@PathVariable("publisherId") Long publisherId,
                                   @ModelAttribute PublisherDto.Request request,
                                   @RequestParam int page) {
 
-        publisherService.updatePublisher(publisherId,request);
+        publisherService.updatePublisher(publisherId, request);
 
 
         return "redirect:/admin/publishers/list?page=" + page;
@@ -74,8 +78,9 @@ public class PublisherController {
 
     /**
      * 출판사 삭제 컨트롤러
+     *
      * @param publisherId 출판사 아이디
-     * @param page 페이지 번호
+     * @param page        페이지 번호
      */
     @DeleteMapping("/{publisherId}")
     public String deletePublisher(@PathVariable("publisherId") Long publisherId,

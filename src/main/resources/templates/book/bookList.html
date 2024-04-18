@@ -6,7 +6,7 @@
 <head>
 
 
-<title>G2nee Book shop</title>
+    <title>G2nee Book shop</title>
 </head>
 
 <body>
@@ -14,51 +14,53 @@
 
     <div class="row justify-content-center">
         <div class="col-lg-9 col-md-12 col-sm-12">
-        <div class="row pb-3">
-            <div class="col-12 pb-1">
-                <h5>
-                    <span style="font-weight: bold;" th:text="${keyword}"></span>
-                    <span th:text="' 로 검색한 결과'"></span>
-                </h5>
+            <div class="row pb-3">
+                <div class="col-12 pb-1">
+                    <h5>
+                        <span style="font-weight: bold;" th:text="${keyword}"></span>
+                        <span th:text="' 로 검색한 결과'"></span>
+                    </h5>
                     <h6 th:text="'검색 결과 : ' + ${bookPage.totalElements} + ' 건'"></h6>
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <!-- 검색 부분 start -->
-                    <form th:action="@{/books/search}" th:method="get">
-                        <div class="input-group">
-                            <input id="keyword" type="text" class="form-control" placeholder="Search by name"
-                                   name="keyword">
-                            <input type="hidden" name="page" value="1">
-                            <div class="input-group-append">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <!-- 검색 부분 start -->
+                        <form th:action="@{/books/search}" th:method="get">
+                            <div class="input-group">
+                                <input id="keyword" type="text" class="form-control" placeholder="Search by name"
+                                       name="keyword">
+                                <input type="hidden" name="page" value="1">
+                                <div class="input-group-append">
                                         <span class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
                                         </span>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- 검색 부분 end -->
+
+                        <!-- sort 버튼 start -->
+                        <div class="dropdown ml-4">
+                            <button class="btn border dropdown-toggle" type="button" id="triggerId"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" th:text="${sort}">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                                <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=viewCount'}">인기도
+                                    순</a>
+                                <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=publishedDate'}">출간일
+                                    순</a>
+                                <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceAsc'}">가격 낮은
+                                    순</a>
+                                <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceDesc'}">가격
+                                    높은
+                                    순</a>
+                                <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=score'}">평점 순</a>
+                                <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=review'}">리뷰 순</a>
                             </div>
                         </div>
-                    </form>
-                    <!-- 검색 부분 end -->
-
-                    <!-- sort 버튼 start -->
-                    <div class="dropdown ml-4">
-                        <button class="btn border dropdown-toggle" type="button" id="triggerId"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" th:text="${sort}">
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=viewCount'}">인기도 순</a>
-                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=publishedDate'}">출간일
-                                순</a>
-                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceAsc'}">가격 낮은
-                                순</a>
-                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceDesc'}">가격 높은
-                                순</a>
-                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=score'}">평점 순</a>
-                            <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=review'}">리뷰 순</a>
-                        </div>
+                        <!-- sort 버튼 end -->
                     </div>
-                    <!-- sort 버튼 end -->
                 </div>
             </div>
-        </div>
 
             <!-- 도서 목록 start -->
             <div class="container">
@@ -91,12 +93,12 @@
                                 <a href="" class="btn btn-sm text-dark p-0"><i
                                         class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가</a>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- 도서 목록 end -->
+                <!-- 도서 목록 end -->
 
-            <!-- 페이지 넘기기 start -->
+                <!-- 페이지 넘기기 start -->
                 <div class="col-12 pb-1">
                     <nav aria-label="...">
                         <ul class="pagination row justify-content-center">
@@ -118,10 +120,10 @@
                             </li>
                         </ul>
                     </nav>
+                </div>
+                <!-- 페이지 넘기기 end -->
             </div>
-            <!-- 페이지 넘기기 end -->
         </div>
-    </div>
     </div>
 </div>
 </body>

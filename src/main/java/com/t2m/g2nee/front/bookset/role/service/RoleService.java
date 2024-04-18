@@ -28,7 +28,7 @@ public class RoleService {
     @Value("${g2nee.gateway}")
     String gatewayUrl;
 
-    public List<RoleDto.Response> getAllRole(){
+    public List<RoleDto.Response> getAllRole() {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -45,8 +45,10 @@ public class RoleService {
                 }
         ).getBody();
     }
+
     /**
      * 역할 등록 메서드
+     *
      * @param request 등록할 정보가 있는 객체
      */
     public void registerRole(RoleDto.Request request) {
@@ -94,7 +96,8 @@ public class RoleService {
 
     /**
      * 역할 수정 메서드
-     * @param roleId 역할 아이디
+     *
+     * @param roleId  역할 아이디
      * @param request 수정할 정보가 담긴 객체
      */
     public void updateRole(Long roleId, RoleDto.Request request) {
@@ -117,6 +120,7 @@ public class RoleService {
 
     /**
      * 역할 삭제 메서드
+     *
      * @param roleId 역할 아이디
      */
     public void deleteRole(Long roleId) {

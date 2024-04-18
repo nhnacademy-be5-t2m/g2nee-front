@@ -42,6 +42,7 @@ public class ContributorService {
 
     /**
      * 기여자 등록 메서드
+     *
      * @param request 등록할 정보가 있는 객체
      */
     public void registerContributor(ContributorDto.Request request) {
@@ -66,7 +67,7 @@ public class ContributorService {
      * 기여자 조회 메서드
      *
      * @param page 기여자 번호
-     * PageResponse<ContributorDto.Response>
+     *             PageResponse<ContributorDto.Response>
      */
     public PageResponse<ContributorDto.Response> getAllContributor(int page) {
 
@@ -88,8 +89,9 @@ public class ContributorService {
 
     /**
      * 기여자 수정 메서드
+     *
      * @param contributorId 태그 아이디
-     * @param request 수정할 정보가 담긴 객체
+     * @param request       수정할 정보가 담긴 객체
      */
     public void updateContributor(Long contributorId, ContributorDto.Request request) {
 
@@ -111,6 +113,7 @@ public class ContributorService {
 
     /**
      * 역할 삭제 메서드
+     *
      * @param contributorId 태그 아이디
      */
     public void deleteContributor(Long contributorId) {
