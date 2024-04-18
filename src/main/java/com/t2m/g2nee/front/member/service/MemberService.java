@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.member.service;
 
 
+import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
@@ -8,6 +9,7 @@ import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
+import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
 import java.util.Objects;
 import javax.servlet.http.Cookie;
@@ -103,7 +105,7 @@ public class MemberService {
     }
 
     /**
-     * logout 시 삭제되어야할 요소들을 삭제하며 logout되는 메소드
+     * logout 시 삭제되어야할 요소들을 삭제하며 auth로 logout을 요청하는 메소드
      *
      * @param response logout을 호출할때의 response
      */
@@ -120,17 +122,26 @@ public class MemberService {
                     Void.class
             );
 
-            Cookie jwtCookie = CookieUtil.findCookie("g2nee_accessToken");
-            jwtCookie.setMaxAge(0);
-            jwtCookie.setValue("");
-            response.addCookie(jwtCookie);
+            deleteCookie(response, JwtUtil.ACCESS_COOKIE);
 
             Cookie sessionCookie = CookieUtil.findCookie("auth-session");
             redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());
-            sessionCookie.setMaxAge(0);
-            sessionCookie.setValue("");
-            response.addCookie(sessionCookie);
+            deleteCookie(response, "auth-session");
 
         }
+    }
+
+    /**
+     * header의 accessToken으로 token을 다시 발급받는 메소드
+     *
+     * @return auth에서의 응답 결과
+     */
+    public ResponseEntity<Void> tokenReIssueRequest() {
+        return restTemplate.exchange(
+                gatewayToAuthUrl + "/reissue",
+                HttpMethod.POST,
+                new HttpEntity<>(makeHttpHeaders()),
+                Void.class
+        );
     }
 }

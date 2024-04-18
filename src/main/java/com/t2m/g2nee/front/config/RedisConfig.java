@@ -11,6 +11,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * Redis 연결을 위한 config
+ *
+ * @author 정지은
+ * @version 1.0
+ */
 @Configuration
 public class RedisConfig implements BeanClassLoaderAware {
 

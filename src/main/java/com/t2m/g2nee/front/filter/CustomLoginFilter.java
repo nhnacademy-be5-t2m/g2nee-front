@@ -1,12 +1,12 @@
 package com.t2m.g2nee.front.filter;
 
+import static com.t2m.g2nee.front.token.util.JwtUtil.getExpireTime;
 import static com.t2m.g2nee.front.token.util.JwtUtil.makeJwtCookie;
 
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.http.Cookie;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,6 +35,13 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     private static final String LOGIN_STATUS = "X-LOGIN";
     private String social;
 
+    /**
+     * 로그인 시 입력을 바탕으로 auth에서 token을 받아오는 부분
+     *
+     * @param request  request.
+     * @param response response.
+     * @return 토큰을 받아 토큰에 대한 인증 반환
+     */
     @Override
     public Authentication attemptAuthentication(
             HttpServletRequest request, HttpServletResponse response)
@@ -64,13 +70,6 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         return getAuthenticationManager().authenticate(token);
     }
 
-    private Long getExpireTime(String accessToken) throws JSONException {
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String[] access_chunks = accessToken.split("\\.");
-        String access_payload = new String(decoder.decode(access_chunks[1]));
-        JSONObject aObject = new JSONObject(access_payload);
-        return aObject.getLong("exp");
-    }
 
     /**
      * 성공시 실행되는 메소드.

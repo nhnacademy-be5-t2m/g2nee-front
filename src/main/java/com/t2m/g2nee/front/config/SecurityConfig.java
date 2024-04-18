@@ -37,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService userDetailsService;
     private final ObjectMapper objectMapper;
 
+    /**
+     * spring security로 HTTP보안을 구성하는 메소드
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager
@@ -62,40 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(customAuthenticationFilter(), SecurityContextPersistenceFilter.class);
 
     }
-//
-//    /**
-//     * security filterChain 설정.
-//     *
-//     * @param http 간단하게 시큐리티 설정을 할 수있도록 제공해주는 파라미터.
-//     * @return 필터의 설정을 마친 후 필터체인을 리턴.
-//     * @throws Exception 필터가 작동되는 과정에서 발생되는 에러
-//     */
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        AuthenticationManager authenticationManager
-//                = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
-//
-//        http.authorizeRequests()
-//                .antMatchers("/", "/login", "/signup").permitAll()
-//                .antMatchers("/mypage/**").hasAuthority("ROLE_USER")
-//                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-//                .anyRequest().permitAll()
-//                .and()
-//                .csrf()
-//                .disable().cors().disable()
-//                .formLogin()
-//                .disable()
-//                .logout()
-//                .disable();
-//
-//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
-//        http.addFilterAt(customLoginFilter(authenticationManager),
-//                UsernamePasswordAuthenticationFilter.class);
-//        http.addFilterAfter(customAuthenticationFilter(), SecurityContextPersistenceFilter.class);
-//
-//        return http.build();
-//    }
+
 
     /**
      * 유저의 비밀번호를 암호화, 검증 해주는 메소드 빈.
@@ -121,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 로그인 폼의 id, password로 auth와 통신하여 토큰 발급해주는 필터
+     * 로그인 처리를 위한 빈 등록메소드
      *
      * @param authenticationManager token발행을 위한 로직이 실행되게 도와주는 클래스.
      * @return 커스텀한 로그인 필터.
@@ -140,8 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     * authentication manager가 실행시킬 authenticate의 구현을 담당한 provider.
-     * manager는 등록된 provider를 순차탐색하여 적절한 provider를 선택하여 실행시킨다.
+     * authenticate의 구현을 담당한 provider 빈 등록
      *
      * @return 커스텀 한 authenticationProvider.
      */
@@ -155,7 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 토큰을 securityContextHolder 에 넣어줄 필터.
+     * 토큰을 securityContextHolder 에 넣어줄 필터를 위한 빈 등록
      *
      * @return 커스텀한 인증필터 반환
      */
