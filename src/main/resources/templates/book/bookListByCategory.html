@@ -66,8 +66,9 @@
                         Sort by
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                        <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '?sort=viewCount'}">인기도
-                            순</a>
+                        <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=viewCount'}">인기도
+                            순
+                        </a>
                         <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=publishedDate'}">출간일
                             순</a>
                         <a class="dropdown-item" th:href="@{'?keyword='+${keyword}+ '&sort=salePriceAsc'}">가격
@@ -93,9 +94,14 @@
                          th:src="${book.thumbnailImageUrl}" alt="썸네일">
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                    <h6 class="text-truncate mb-3; font-weight-semi-bold;" th:text="${book.title}"></h6>
-                    <span th:each="contributorRole : ${book.contributorRoleList}" style="text-align: center"
-                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')'"></span>
+                    <h6 class="text-truncate mb-3; font-weight-semi-bold;" style="font-size: 20px;"
+                        th:text="${book.title}"></h6>
+                    <span th:with="contributorRole = ${book.contributorRoleList[0]}">
+                     <span th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + ' '"
+                           style="text-align: center"></span>
+                         <span th:if="${book.contributorRoleList.size() > 1}"
+                               th:text="'외 ' + ${book.contributorRoleList.size() - 1} + '명'"></span>
+                      </span>
                     <div class="d-flex justify-content-center">
                         <h6 th:text="'₩' + ${book.salePrice}"></h6>
                         <h6 class="text-muted ml-2">
@@ -106,6 +112,12 @@
                         <p style="text-align: center;"
                            th:text="${book.publisherName} +' | ' + ${book.publishedDate}"></p>
                     </div>
+                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}"
+                          class="badge rounded-pill bg-danger" style="color: white; font-size: 1.1em;"
+                          th:text="매진"></span>
+                    <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}"
+                          class="badge rounded-pill bg-dark" style="color: white; font-size: 1.1em;"
+                          th:text="절판"></span>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i

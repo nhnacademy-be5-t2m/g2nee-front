@@ -2,10 +2,12 @@ package com.t2m.g2nee.front.bookset.book.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
+import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,14 @@ public class BookController {
                           Model model) {
 
         BookDto.Response response = bookGetService.getBook(bookId);
+
+        // 책의 카테고리 정보를 가져옵니다.
+        List<Long> categoryIdList = response.getCategoryList().stream()
+                .flatMap(cl -> cl.stream().map(CategoryInfoDto::getCategoryId))
+                .collect(Collectors.toList());
+        List<BookDto.ListResponse> bookList = bookGetService.getRecommendBooks(categoryIdList, bookId);
+
+        model.addAttribute("bookList", bookList);
         model.addAttribute("book", response);
 
         return "book/bookDetail";
@@ -140,4 +150,5 @@ public class BookController {
         return "book/bookListByCategory";
 
     }
+
 }
