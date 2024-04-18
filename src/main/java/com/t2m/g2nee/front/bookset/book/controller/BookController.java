@@ -3,7 +3,6 @@ package com.t2m.g2nee.front.bookset.book.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
-import com.t2m.g2nee.front.category.dto.response.CategoryUpdateDto;
 import com.t2m.g2nee.front.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;

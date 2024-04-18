@@ -75,9 +75,9 @@
                                 <span th:each="contributorRole : ${book.contributorRoleList}" style="text-align: center"
                                       th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')'"></span>
                                 <div class="d-flex justify-content-center">
-                                    <h6 th:text="'$' + ${book.salePrice}"></h6>
+                                    <h6 th:text="'₩' + ${book.salePrice}"></h6>
                                     <h6 class="text-muted ml-2">
-                                        <del th:text="'$' + ${book.price}"></del>
+                                        <del th:text="'₩' + ${book.price}"></del>
                                     </h6>
                                 </div>
                                 <div>
