@@ -1,8 +1,8 @@
-package com.t2m.g2nee.front.admin.controller;
+package com.t2m.g2nee.front.bookset.category.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.t2m.g2nee.front.category.dto.request.CategorySaveDto;
-import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.dto.request.CategorySaveDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,7 +49,7 @@ public class AdminCategoryController {
      */
     @GetMapping("/categories/save")
     public String createCategoryFrom(Model model){
-        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryService.getFirstAndSecondCategories());
         return "admin/category/adminCategorySave";
     }
 

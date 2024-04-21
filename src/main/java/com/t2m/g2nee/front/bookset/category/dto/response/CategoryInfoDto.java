@@ -1,4 +1,4 @@
-package com.t2m.g2nee.front.category.dto.response;
+package com.t2m.g2nee.front.bookset.category.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

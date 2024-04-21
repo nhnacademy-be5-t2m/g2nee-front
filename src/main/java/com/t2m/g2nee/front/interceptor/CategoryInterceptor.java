@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.interceptor;
 
 
-import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import java.util.Collections;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

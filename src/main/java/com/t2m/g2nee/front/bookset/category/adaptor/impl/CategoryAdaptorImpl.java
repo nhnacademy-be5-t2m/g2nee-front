@@ -1,12 +1,12 @@
-package com.t2m.g2nee.front.category.adaptor.impl;
+package com.t2m.g2nee.front.bookset.category.adaptor.impl;
 
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.getHttpHeaders;
 
-import com.t2m.g2nee.front.category.adaptor.CategoryAdaptor;
-import com.t2m.g2nee.front.category.dto.request.CategorySaveDto;
-import com.t2m.g2nee.front.category.dto.response.CategoryHierarchyDto;
-import com.t2m.g2nee.front.category.dto.response.CategoryInfoDto;
-import com.t2m.g2nee.front.category.dto.response.CategoryUpdateDto;
+import com.t2m.g2nee.front.bookset.category.adaptor.CategoryAdaptor;
+import com.t2m.g2nee.front.bookset.category.dto.request.CategorySaveDto;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryInfoDto;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryUpdateDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import javax.annotation.PostConstruct;

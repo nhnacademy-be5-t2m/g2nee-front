@@ -1,15 +1,13 @@
-package com.t2m.g2nee.front.category.service.impl;
+package com.t2m.g2nee.front.bookset.category.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.t2m.g2nee.front.category.adaptor.CategoryAdaptor;
-import com.t2m.g2nee.front.category.dto.request.CategorySaveDto;
-import com.t2m.g2nee.front.category.dto.response.CategoryHierarchyDto;
-import com.t2m.g2nee.front.category.dto.response.CategoryInfoDto;
-import com.t2m.g2nee.front.category.dto.response.CategoryUpdateDto;
-import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.dto.request.CategorySaveDto;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryInfoDto;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryUpdateDto;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.adaptor.CategoryAdaptor;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -63,6 +61,24 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return allSubCategories;
     }
+
+    public List<CategoryHierarchyDto> getFirstAndSecondCategories() {
+        List<CategoryHierarchyDto> categories = new ArrayList<>();
+        List<CategoryHierarchyDto> rootCategories = getRootCategories();
+
+        // 1단계 카테고리 추가
+        categories.addAll(rootCategories);
+
+        for (CategoryHierarchyDto root : rootCategories) {
+            List<CategoryHierarchyDto> children = root.getChildren();
+            if (children != null && (!children.isEmpty()) ) {
+                categories.addAll(children); // 2단계 카테고리 추가
+            }
+        }
+
+        return categories;
+    }
+
 
     @Cacheable(key = "#categoryId", unless = "#result == null")
     @Override

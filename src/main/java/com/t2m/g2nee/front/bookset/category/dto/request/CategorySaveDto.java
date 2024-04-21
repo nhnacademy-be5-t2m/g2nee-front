@@ -1,4 +1,4 @@
-package com.t2m.g2nee.front.category.dto.request;
+package com.t2m.g2nee.front.bookset.category.dto.request;
 
 
 import lombok.AllArgsConstructor;
