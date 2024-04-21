@@ -16,29 +16,34 @@
     <h2>카테고리 수정</h2>
     <!-- adin page view 구현-->
     <form th:action="@{'/admin/categories/modify/' + ${category.categoryId}}" th:method="PUT">
-        <label th:text="'카테고리 이름:'"/><input type="text" name="categoryName" th:value="${category.categoryName}" /><br /><br />
-        <label th:text="'카테고리 영문이름:'"/><input type="text" name="categoryEngName" th:value="${category.categoryEngName}" /><br /><br />
+        <label th:text="'카테고리 이름:'"/><input type="text" name="categoryName"
+                                            th:value="${category.categoryName}"/><br/><br/>
+        <label th:text="'카테고리 영문이름:'"/><input type="text" name="categoryEngName"
+                                              th:value="${category.categoryEngName}"/><br/><br/>
 
-        <input type="radio" id="activateYes" name="isActivated" value="true" th:checked="${category.isActivated}" onclick="show(this);">
+        <input type="radio" id="activateYes" name="isActivated" value="true" th:checked="${category.isActivated}"
+               onclick="show(this);">
         <label for="activateYes">활성화</label> &nbsp
-        <input type="radio" id="activateNo" name="isActivated" value="false" th:checked="${!category.isActivated}" onclick="show(this);">
-        <label for="activateNo">비활성화</label><br /><br />
+        <input type="radio" id="activateNo" name="isActivated" value="false" th:checked="${!category.isActivated}"
+               onclick="show(this);">
+        <label for="activateNo">비활성화</label><br/><br/>
 
-        <div id="ancestorCategoryLabel" class="select"  th:style="${category.isActivated ? '' : 'display:none;'}">
-            <label>상위 카테고리 선택</label><br />
+        <div id="ancestorCategoryLabel" class="select" th:style="${category.isActivated ? '' : 'display:none;'}">
+            <label>상위 카테고리 선택</label><br/>
             <select id="ancestorCategorySelect" size="5" name="ancestorCategoryId">
                 <option th:selected="${category.ancestorCategoryId} == 0"
-                        value="0">상위 카테고리 없음</option>
+                        value="0">상위 카테고리 없음
+                </option>
                 <option th:each="eachCategory : ${categories}"
                         th:if="${eachCategory.isActivated and eachCategory.categoryId != category.categoryId}"
                         th:selected="${eachCategory.categoryId} == ${category.ancestorCategoryId}"
                         th:value="${eachCategory.categoryId}"
                         th:text="${eachCategory.categoryName}">
                 </option>
-            </select><br />
+            </select><br/>
         </div>
 
-        <br />
+        <br/>
         <input type="submit" value="저장"/>
     </form>
 </div>

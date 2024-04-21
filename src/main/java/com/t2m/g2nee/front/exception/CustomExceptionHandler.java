@@ -37,7 +37,7 @@ public class CustomExceptionHandler implements ResponseErrorHandler {
 
         //message를 받음
         JsonNode body = objectMapper.readTree(StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8));
-        if(Objects.isNull(body.get("message"))){
+        if (Objects.isNull(body.get("message"))) {
             //error의 경우, 서버에서 보낸, CustomException이 아닌 에러들
             throw new CustomException(status, body.get("error").asText());
         }

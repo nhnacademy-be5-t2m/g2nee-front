@@ -12,7 +12,7 @@ import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
 import com.t2m.g2nee.front.bookset.role.service.RoleService;
 import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import com.t2m.g2nee.front.bookset.tag.service.TagService;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 /**
- * 책 관리 controller 클래스
+ * 관리자 책 관리 controller 클래스
  *
  * @author : 신동민
  * @since : 1.0
@@ -61,7 +61,7 @@ public class BookAdminController {
         model.addAttribute("contributorList", contributorList);
         model.addAttribute("tagList", tagList);
 
-        return "admin/registerBookForm";
+        return "admin/book/registerBookForm";
 
     }
 
@@ -85,7 +85,7 @@ public class BookAdminController {
         model.addAttribute("book", book);
         model.addAttribute("page", page);
 
-        return "admin/updateBookForm";
+        return "admin/book/updateBookForm";
     }
 
     /**
@@ -94,7 +94,7 @@ public class BookAdminController {
     @GetMapping("/main")
     public String getBookMain() {
 
-        return "admin/bookMain";
+        return "admin/book/bookMain";
     }
 
 
@@ -109,7 +109,7 @@ public class BookAdminController {
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("bookStatus", BookDto.BookStatus.values());
 
-        return "admin/bookList";
+        return "admin/book/bookList";
     }
 
 
@@ -157,12 +157,26 @@ public class BookAdminController {
                              @RequestPart(required = false) MultipartFile thumbnail,
                              @RequestPart(required = false) MultipartFile[] details,
                              @PathVariable("bookId") Long bookId,
-                             @RequestParam("page") int page) {
+                             @RequestParam(value = "page", defaultValue = "1") int page) {
 
         bookMgmtService.updateBook(bookId, request, thumbnail, details);
 
         return "redirect:/admin/books/list?page=" + page;
 
+    }
+
+    /**
+     * 책 수량을 추가하는 컨트롤러 입니다.
+     */
+    @PatchMapping("/quantity/{bookId}")
+    public String addBookQuantity(Model model,
+                                  @RequestParam("quantity") int quantity,
+                                  @PathVariable("bookId") Long bookId) {
+
+        int updateQuantity = bookMgmtService.addBookQuantity(bookId, quantity);
+        model.addAttribute("quantity", updateQuantity);
+
+        return "redirect:/admin/books/" + bookId;
     }
 
     /**
@@ -175,6 +189,8 @@ public class BookAdminController {
         BookDto.Response response = bookGetService.getBook(bookId);
         model.addAttribute("book", response);
 
-        return "/admin/bookDetail";
+        return "admin/book/bookDetail";
     }
+
+
 }

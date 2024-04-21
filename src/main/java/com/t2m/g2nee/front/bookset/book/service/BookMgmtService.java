@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.bookset.book.service;
 
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
-import com.t2m.g2nee.front.pageUtils.PageResponse;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -59,14 +59,14 @@ public class BookMgmtService {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        String url = gatewayUrl + "shop/books";
+        String url = gatewayUrl + "/shop/books";
+
 
         restTemplate.exchange(
                 url,
-                HttpMethod.POST,
+                HttpMethod.GET,
                 requestEntity,
-                new ParameterizedTypeReference<BookDto.Response>() {
-                }
+               String.class
         );
     }
 
@@ -83,7 +83,7 @@ public class BookMgmtService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-        String url = gatewayUrl + "shop/books/" + bookId;
+        String url = gatewayUrl + "/shop/books/" + bookId;
 
         return restTemplate.exchange(
                 url,
@@ -104,7 +104,7 @@ public class BookMgmtService {
      * @param details   세부 이미지
      */
     public void updateBook(Long bookId, BookDto.Request request, MultipartFile thumbnail,
-                          MultipartFile[] details) {
+                           MultipartFile[] details) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -119,7 +119,7 @@ public class BookMgmtService {
         body.addAll("details", multipartFileList);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        String url = gatewayUrl + "shop/books/" + bookId;
+        String url = gatewayUrl + "/shop/books/" + bookId;
 
         restTemplate.exchange(
                 url,
@@ -143,13 +143,29 @@ public class BookMgmtService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<BookDto.Request> requestEntity = new HttpEntity<>(request, headers);
-        String url = gatewayUrl + "shop/books/status/" + bookId;
+        String url = gatewayUrl + "/shop/books/status/" + bookId;
 
         restTemplate.exchange(
                 url,
                 HttpMethod.PATCH,
                 requestEntity,
                 String.class
+        ).getBody();
+    }
+
+    public Integer addBookQuantity(Long bookId, int quantity) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String url = gatewayUrl + "/shop/books/quantity/" + bookId + "?quantity=" + quantity;
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.PATCH,
+                requestEntity,
+                Integer.class
         ).getBody();
     }
 
@@ -167,7 +183,7 @@ public class BookMgmtService {
         parameters.add("page", String.valueOf(page));
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
-        String url = gatewayUrl + "shop/books/list?page=" + page;
+        String url = gatewayUrl + "/shop/books/list?page=" + page;
 
         return restTemplate.exchange(
                 url,

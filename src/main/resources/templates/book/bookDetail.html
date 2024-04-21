@@ -10,7 +10,6 @@
 <body>
 <div layout:fragment="content">
 
-
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
@@ -18,14 +17,8 @@
             <div class="col-lg-5 pb-5">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
-                        <div class="carousel-item active">
-                            <img class="w-100 h-100" src="/static/img/product-1.jpg" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="/static/img/product-2.jpg" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="/static/img/product-3.jpg" alt="Image">
+                        <div th:each="image, index : ${book.detailImageUrl}" th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                            <img class="w-100 h-100" th:src="${image}" alt="Image">
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
@@ -40,8 +33,13 @@
 
             <!-- 책 세부 내용 start -->
             <div class="col-lg-7 pb-5">
-                <h3 class="font-weight-semi-bold">Book name</h3>
-                <h4 class="mb-3">작가이름, 출판사, 등등</h4>
+                <h3 class="font-weight-semi-bold" th:text="${book.title}"></h3>
+                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
+                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                </span>
+                <br/>
+                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                <hr/>
                 <div class="d-flex mb-3">
                     <!-- 평점 -->
                     <div class="text-primary mr-2">
@@ -54,8 +52,11 @@
                     <!-- 리뷰가 몇개인지 (눌렀을 때 리뷰페이지로 갈수있게) -->
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">$ 판매가</h3>
-                <p class="mb-4">책 상세 설명 부분 .......</p>
+                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : $' + ${book.salePrice}"></h4>
+                <h5 th:text="'정가 : $' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <hr/>
+                <h4 class="mb-3">책 소개</h4>
+                <p class="mb-4" th:text="${book.description}"></p>
 
                 <!-- 구매할 책 갯수 설정 -->
                 <div class="d-flex align-items-center mb-4 pt-2">
@@ -86,10 +87,24 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
                         <h4 class="mb-3">기본 정보</h4>
-                        <p>[기본정보]</p>
+                        <span th:text="${book.pages} +'쪽'"></span>
+                        <span th:text="'ISBN : ' + ${book.isbn}"></span>
+                        <div th:each="categoryList : ${book.categoryList}">
+                            <span th:each="category, index : ${categoryList}" th:inline="text">
+                             <span th:style="${index.last}? 'font-weight: bold' : ''"
+                                   th:text="${category.categoryName + (index.last ? '' : ' > ')}"></span>
+                            </span>
+                        </div>
+                        <div text="태그 : ">
+                            <span th:each="tag : ${book.tagList}">
+                                <span class="badge-info" th:text="${tag.tagName}"></span>
+                            </span>
+                        </div>
                         <hr/>
-                        <h4 class="mb-3">목차</h4>
-                        <p>[목차]</p>
+                        <div>
+                            <h4 class="mb-3">목차</h4>
+                            <p th:text="${book.bookIndex}"></p>
+                        </div>
                     </div>
 
                     <!-- 리뷰 list start -->
@@ -219,10 +234,7 @@
         </div>
     </div>
     <!-- 같은 카테고리 추천책 end -->
-
 </div>
-
-
 </body>
 
 </html>

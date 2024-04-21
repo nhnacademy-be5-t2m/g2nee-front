@@ -19,7 +19,7 @@
         <input type="submit" value="검색">
     </form>
 
-    <br /><br />
+    <br/><br/>
     <table>
         <tr>
             <th>카테고리 명</th>
@@ -51,7 +51,7 @@
                     </span>
                 </td>
             </tr>
-            <div th:each="child : ${rootCategory.children}" >
+            <div th:each="child : ${rootCategory.children}">
                 <tr style="padding-left:10px">
                     <td>
                         &nbsp ○ <span th:text="${child.categoryName}"/>
@@ -68,7 +68,7 @@
                             <button type="submit">활성</button>
                         </form>
                     </span>
-                    <span th:unless="${child.isActivated}">
+                        <span th:unless="${child.isActivated}">
                         <form th:action="@{'/admin/categories/' + ${child.categoryId}}" th:method="patch">
                             <button type="submit">비활성</button>
                         </form>
@@ -91,7 +91,7 @@
                             <button type="submit">활성</button>
                         </form>
                     </span>
-                    <span th:unless="${subChild.isActivated}">
+                        <span th:unless="${subChild.isActivated}">
                         <form th:action="@{'/admin/categories/' + ${subChild.categoryId}}" th:method="patch">
                             <button type="submit">비활성</button>
                         </form>
@@ -104,7 +104,7 @@
         </div>
     </table>
 
-    <br /><br />
+    <br/><br/>
     <a th:href="@{/admin/categories/save}">새 카테고리</a>
 
 </div>
