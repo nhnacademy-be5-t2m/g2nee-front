@@ -244,6 +244,7 @@
         const container = document.getElementById('categoryContainer');
         const select = document.createElement('select');
         select.name = 'categoryIdList';
+        select.className = 'form-control mb-2';
         select.onchange = function () {
             // 이전 하위 선택창 제거
             while (select.nextSibling) {
