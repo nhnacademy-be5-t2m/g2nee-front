@@ -18,7 +18,7 @@ public class MainController {
 
     @GetMapping
     public String main() {
-        return "redirect:/books/new";
+        return "redirect:/books";
     }
 
     @GetMapping("/shop")

@@ -10,19 +10,19 @@ import java.util.List;
 
 public interface CategoryService {
 
-    List<CategoryHierarchyDto> getRootCategories() throws JsonProcessingException;
+    List<CategoryHierarchyDto> getRootCategories();
 
-    List<CategoryInfoDto> getAllCategories() throws JsonProcessingException;
+    List<CategoryHierarchyDto> getAllCategories();
 
-    CategoryUpdateDto getCategory(Long categoryId) throws JsonProcessingException;
+    CategoryUpdateDto getCategory(Long categoryId);
 
-    PageResponse<CategoryInfoDto> getCategoriesByName(String categoryName, int page) throws JsonProcessingException;
+    PageResponse<CategoryInfoDto> getCategoriesByName(String categoryName, int page);
 
-    void creatCategory(CategorySaveDto request) throws JsonProcessingException;
+    void creatCategory(CategorySaveDto request);
 
-    void modifyCategory(Long categoryId, CategorySaveDto request) throws JsonProcessingException;
+    void modifyCategory(Long categoryId, CategorySaveDto request);
 
-    void deleteCategory(Long categoryId) throws JsonProcessingException;
+    void deleteCategory(Long categoryId);
 
-    void activeCategory(Long category) throws JsonProcessingException;
+    void activeCategory(Long category);
 }

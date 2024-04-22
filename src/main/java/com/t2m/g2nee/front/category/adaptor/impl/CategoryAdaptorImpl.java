@@ -1,6 +1,6 @@
 package com.t2m.g2nee.front.category.adaptor.impl;
 
-import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.getHttpHeaders;
 
 import com.t2m.g2nee.front.category.adaptor.CategoryAdaptor;
 import com.t2m.g2nee.front.category.dto.request.CategorySaveDto;
@@ -64,22 +64,9 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public List<CategoryHierarchyDto> getRootCategories() {
-        HttpEntity<CategoryHierarchyDto> entity = new HttpEntity<>(makeHttpHeaders());
+        HttpEntity<CategoryHierarchyDto> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<List<CategoryHierarchyDto>> response = restTemplate
                 .exchange(baseUrl, HttpMethod.GET, entity, H_LIST_TYPE_REF);
-
-        return response.getBody();
-    }
-
-    @Override
-    public List<CategoryInfoDto> getAllCategories() {
-        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/all")
-                .build();
-
-        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(makeHttpHeaders());
-        ResponseEntity<List<CategoryInfoDto>> response = restTemplate
-                .exchange(url.toUriString(), HttpMethod.GET, entity, LIST_TYPE_REF);
 
         return response.getBody();
     }
@@ -90,7 +77,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
                 .path("/" + categoryId)
                 .build();
 
-        HttpEntity<CategoryUpdateDto> entity = new HttpEntity<>(makeHttpHeaders());
+        HttpEntity<CategoryUpdateDto> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<CategoryUpdateDto> response = restTemplate
                 .exchange(url.toUriString(), HttpMethod.GET,
                         entity, CategoryUpdateDto.class);
@@ -106,7 +93,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
                 .queryParam("page", page)
                 .build();
 
-        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(makeHttpHeaders());
+        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<PageResponse<CategoryInfoDto>> response = restTemplate
                 .exchange(url.toUriString(), HttpMethod.GET, entity, PAGE_TYPE_REF);
 
@@ -115,7 +102,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @Override
     public CategoryInfoDto requestCreatCategory(CategorySaveDto request) {
-        HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
+        HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
         ResponseEntity<CategoryInfoDto> response =
                 restTemplate.exchange(baseUrl, HttpMethod.POST, entity, CategoryInfoDto.class);
 
@@ -128,7 +115,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
                 .path("/" + categoryId)
                 .build();
 
-        HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
+        HttpEntity<CategorySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
         ResponseEntity<CategoryInfoDto> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PUT, entity, CategoryInfoDto.class);
 
@@ -141,7 +128,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
                 .path("/" + categoryId)
                 .build();
 
-        HttpEntity<Boolean> entity = new HttpEntity<>(makeHttpHeaders());
+        HttpEntity<Boolean> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.DELETE, entity, Boolean.class);
 
@@ -154,7 +141,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
                 .path("/" + categoryId)
                 .build();
 
-        HttpEntity<Boolean> entity = new HttpEntity<>(makeHttpHeaders());
+        HttpEntity<Boolean> entity = new HttpEntity<>(getHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 

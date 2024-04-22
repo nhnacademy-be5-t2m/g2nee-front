@@ -22,18 +22,15 @@
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
 
                         <!--root category 반복-->
-                        <div class="nav-item dropdown" th:each="rootCategory : ${rootCategories}"
-                             th:if="${rootCategory.isActivated}">
+                        <div class="nav-item dropdown"  th:each="rootCategory : ${rootCategories}" th:if="${rootCategory.isActivated}">
                             <div th:if="${rootCategory.isActivated}">
-                                <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link"
-                                   data-toggle="dropdown">
+                                <a th:href="@{/shop(id = ${rootCategory.categoryId})}" class="nav-link" data-toggle="dropdown">
                                     <span th:text="${rootCategory.categoryName}"></span>
                                     <i class="fa fa-angle-down float-right mt-1"></i></a>
 
 
                                 <!--sub category 반복-->
-                                <div th:if="${!#lists.isEmpty(rootCategory.children)}"
-                                     class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <div th:if="${!#lists.isEmpty(rootCategory.children)}" class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                     <div th:each="child : ${rootCategory.children}">
                                         <a class="dropdown-item"
                                            th:href="@{'/books/category/' +  ${child.categoryId}}">
@@ -66,8 +63,13 @@
                                 <span th:text="'$'+${book.price}"
                                       style="color: gray; text-decoration: line-through;"></span>
                             </p>
-                            <p style="text-align: center;"
-                               th:text="${book.publisherName} +' | ' + ${book.publishedDate}"></p>
+                            <p style="text-align: center;" th:text="${book.publisherName} +' | ' + ${book.publishedDate}"></p>
+                            <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                   <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
+                         style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
+                                <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
+                                      style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
+                            </div>
                         </div>
                     </div>
                 </div>

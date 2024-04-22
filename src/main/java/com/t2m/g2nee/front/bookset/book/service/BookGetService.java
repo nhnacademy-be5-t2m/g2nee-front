@@ -6,6 +6,7 @@ import com.t2m.g2nee.front.utils.PageResponse;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -216,6 +217,43 @@ public class BookGetService {
         responses.setData(list);
 
         return responses;
+
+    }
+
+    /**
+     * 현재 책의 카테고리를 기준으로 책을 조회하는 메서드
+     *
+     * @param categoryIdList 카테고리 아이디 리스트
+     * @return PageResponse<BookDto.ListResponse>
+     */
+    public List<BookDto.ListResponse> getRecommendBooks(List<Long> categoryIdList, Long bookId) {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String categoryIds = categoryIdList.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+
+        String url =
+                gatewayUrl + "/shop/books/" + bookId + "/recommend?categoryIdList=" + categoryIds;
+
+
+        return Objects.requireNonNull(restTemplate.exchange(
+                                url,
+                                HttpMethod.GET,
+                                requestEntity,
+                                new ParameterizedTypeReference<List<BookDto.ListResponse>>() {
+                                }
+                        )
+                        .getBody())
+                .stream()
+                .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
+                .collect(Collectors.toList());
+
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
+
 
     }
 
