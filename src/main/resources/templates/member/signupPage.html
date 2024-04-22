@@ -15,7 +15,7 @@
             <table border="1" summary>
                 <colgroup>
                     <col style="width:150px;">
-                    <col style="width:800px;">
+                    <col style="width:1000px;">
                 </colgroup>
                 <tbody>
                 <tr>
@@ -27,6 +27,7 @@
                                class="text"
                                th:field="*{userName}"
                                placeholder="아이디"/>
+                        <div class="username-duplicate hide word" style="color:red;"></div>
                         <div class="username-invalid hide word" style="color:red;"> 형식이 올바르지
                             않습니다.
                         </div>
@@ -59,6 +60,7 @@
                     <th scope="row" for="nickname" class="word">닉네임</th>
                     <td style="display : flex">
                         <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임"/>
+                        <div class="nickname-duplicate hide word" style="color:red;"></div>
                         <div class="nickname-invalid hide word" style="color:red;"> 한글/영어/숫자/'_'/'.' 2-10자로 작성해주십시오.
                         </div>
                     </td>

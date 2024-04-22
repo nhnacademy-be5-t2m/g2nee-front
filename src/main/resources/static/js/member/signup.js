@@ -22,7 +22,6 @@ function validCheck(input, reg, message) {
     } else {
         message.classList.add('hide');
     }
-
 }
 
 let inputUsername = document.querySelector('#username');
@@ -30,6 +29,37 @@ let invalidUsername = document.querySelector('.username-invalid');
 
 inputUsername.onkeyup = function () {
     validCheck(inputUsername, usernameReg, invalidUsername)
+}
+
+//username 중복 체크
+inputUsername.onchange = function () {
+    var username = inputUsername.value;
+    var duplicateMessage = document.querySelector('.username-duplicate');
+    checkUsernameDuplicate(username, duplicateMessage, "아이디", "existsUsername");
+};
+
+function checkUsernameDuplicate(checkTarget, message, targetType, path) {
+    var url = 'http://localhost:8090/shop/member/' + path;
+
+    fetch(url, {
+        method: 'POST',
+        body: checkTarget
+    })
+        .then(function (response) {
+            return response.text();
+        })
+        .then(function (data) {
+            if (date === true) {
+                message.textContent = '사용 중인' + targetType + '입니다.';
+                message.classList.remove('hide');
+            } else {
+                message.textContent = '사용가능한' + targetType + '입니다.';
+                message.classList.add('hide');
+            }
+        })
+        .catch(function (error) {
+            console.error('요청 실패:', error);
+        });
 }
 
 let inputPassword = document.querySelector('#password');
@@ -64,12 +94,19 @@ let invalidNickname = document.querySelector('.nickname-invalid')
 inputNickname.onkeyup = function () {
     validCheck(inputNickname, nicknameReg, invalidNickname);
 }
+//nickname 중복 체크
+inputUsername.onchange = function () {
+    var nickname = inputNickname.value;
+    var duplicateMessage = document.querySelector('.nickname-invalid');
+    checkUsernameDuplicate(nickname, duplicateMessage, "닉네임", "existsNickname");
+};
 
 // let inputEmail = document.querySelector('#email');
 // let invalidEmail = document.querySelector('.email-invalid');
 // inputEmail.onkeyup = function () {
 //     validCheck(inputEmail, emailReg, invalidEmail);
 // }
+
 
 let inputPhoneNumber = document.querySelector('#phoneNumber');
 let invalidPhoneNumber = document.querySelector('.phoneNumber-invalid');
