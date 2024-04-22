@@ -33,7 +33,10 @@
 
             <!-- 책 세부 내용 start -->
             <div class="col-lg-7 pb-5">
-                <h3 class="font-weight-semi-bold" th:text="${book.title}"></h3>
+                <h3 class="font-weight-semi-bold">
+                    <span th:text="${book.title}"></span>
+                    <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
+                </h3>
                 <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
                       th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>

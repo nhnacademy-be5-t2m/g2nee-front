@@ -64,7 +64,7 @@ public class BookMgmtService {
 
         restTemplate.exchange(
                 url,
-                HttpMethod.GET,
+                HttpMethod.POST,
                 requestEntity,
                String.class
         );

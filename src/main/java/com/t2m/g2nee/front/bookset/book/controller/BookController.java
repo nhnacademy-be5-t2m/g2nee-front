@@ -31,7 +31,7 @@ public class BookController {
     private final BookGetService bookGetService;
     private final CategoryService categoryService;
     /**
-     * 책 하나 정보를 가져오는 컨트롤러 입니다.
+     * 책 하나 정보를 가져오고 해당 책 카테고리에 해당하는 추천 책 목록을 조회하는 컨트롤러 입니다.
      */
     @GetMapping("/{bookId}")
     public String getBook(@PathVariable("bookId") Long bookId,
@@ -43,6 +43,7 @@ public class BookController {
         List<Long> categoryIdList = response.getCategoryList().stream()
                 .flatMap(cl -> cl.stream().map(CategoryInfoDto::getCategoryId))
                 .collect(Collectors.toList());
+        // 카테고리에 맞는 책 정보 목록을 가져옵니다.
         List<BookDto.ListResponse> bookList = bookGetService.getRecommendBooks(categoryIdList, bookId);
 
         model.addAttribute("bookList", bookList);
@@ -55,7 +56,7 @@ public class BookController {
     /**
      * 메인 페이지 최근 발매된 책 6권을 조회하는 컨트롤러
      */
-    @GetMapping("/new")
+    @GetMapping
     public String getNewBooks(Model model) throws JsonProcessingException {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
