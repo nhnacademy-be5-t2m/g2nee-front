@@ -6,6 +6,12 @@ let nicknameReg = /^[a-zA-Z0-9가-힣+-\_.]{2,10}$/;
 let emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let phoneNumberReg = /^\d{3}-\d{3,4}-\d{4}$/;
 
+function setEmailDomain() {
+    var selectElement = document.querySelector('.select.text');
+    var selectedOption = selectElement.options[selectElement.selectedIndex].value;
+    document.getElementById('emailDomain').value = selectedOption;
+}
+
 function validCheck(input, reg, message) {
     if (input.value.length !== 0) {
         if (reg.test(input.value) === false) {
@@ -59,11 +65,11 @@ inputNickname.onkeyup = function () {
     validCheck(inputNickname, nicknameReg, invalidNickname);
 }
 
-let inputEmail = document.querySelector('#email');
-let invalidEmail = document.querySelector('.email-invalid');
-inputEmail.onkeyup = function () {
-    validCheck(inputEmail, emailReg, invalidEmail);
-}
+// let inputEmail = document.querySelector('#email');
+// let invalidEmail = document.querySelector('.email-invalid');
+// inputEmail.onkeyup = function () {
+//     validCheck(inputEmail, emailReg, invalidEmail);
+// }
 
 let inputPhoneNumber = document.querySelector('#phoneNumber');
 let invalidPhoneNumber = document.querySelector('.phoneNumber-invalid');
