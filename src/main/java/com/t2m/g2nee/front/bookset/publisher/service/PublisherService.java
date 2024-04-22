@@ -29,6 +29,7 @@ public class PublisherService {
 
     /**
      * 출판사 등록 메서드
+     *
      * @param request 등록할 정보가 있는 객체
      */
     public void registerPublisher(PublisherDto.Request request) {
@@ -55,7 +56,7 @@ public class PublisherService {
      *
      * @return List<PublisherDto.Response>
      */
-    public List<PublisherDto.Response> getAllPublisher(){
+    public List<PublisherDto.Response> getAllPublisher() {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -99,8 +100,9 @@ public class PublisherService {
 
     /**
      * 출판사 수정 메서드
+     *
      * @param publisherId 출판사 아이디
-     * @param request 수정할 정보가 담긴 객체
+     * @param request     수정할 정보가 담긴 객체
      */
     public void updatePublisher(Long publisherId, PublisherDto.Request request) {
 

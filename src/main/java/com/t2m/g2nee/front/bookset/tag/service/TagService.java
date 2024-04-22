@@ -41,6 +41,7 @@ public class TagService {
 
     /**
      * 태그 등록 메서드
+     *
      * @param request 등록할 정보가 있는 객체
      */
     public void registerTag(TagDto.Request request) {
@@ -87,7 +88,8 @@ public class TagService {
 
     /**
      * 역할 수정 메서드
-     * @param tagId 태그 아이디
+     *
+     * @param tagId   태그 아이디
      * @param request 수정할 정보가 담긴 객체
      */
     public void updateTag(Long tagId, TagDto.Request request) {
@@ -110,6 +112,7 @@ public class TagService {
 
     /**
      * 역할 삭제 메서드
+     *
      * @param tagId 태그 아이디
      */
     public void deleteTag(Long tagId) {

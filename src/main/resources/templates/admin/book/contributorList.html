@@ -58,11 +58,13 @@
             <form th:action="@{/admin/contributors}" th:method="post">
                 <div class="mb-3">
                     <label for="contributorName" class="form-label">기여자 이름</label>
-                    <input type="text" class="form-control-sm" id="contributorName" name="contributorName" pattern="^[가-힣0-9a-zA-Z\s]+$" required>
+                    <input type="text" class="form-control-sm" id="contributorName" name="contributorName"
+                           pattern="^[가-힣0-9a-zA-Z\s]+$" required>
                 </div>
                 <div class="mb-3">
                     <label for="contributorEngName" class="form-label">기여자 영문 이름</label>
-                    <input type="text" class="form-control-sm" id="contributorEngName" name="contributorEngName" pattern="^[0-9a-zA-Z\s]+$" required>
+                    <input type="text" class="form-control-sm" id="contributorEngName" name="contributorEngName"
+                           pattern="^[0-9a-zA-Z\s]+$" required>
                 </div>
                 <div class="d-flex justify-content-start mb-3">
                     <button type="submit" class="btn btn-primary">등록</button>
@@ -93,12 +95,14 @@
                                       th:method="patch">
                                     <div class="mb-3">
                                         <label for="contributorModifyName" class="form-label">기여자 이름</label>
-                                        <input type="text" class="form-control form-control-sm" id="contributorModifyName"
+                                        <input type="text" class="form-control form-control-sm"
+                                               id="contributorModifyName"
                                                name="contributorName">
                                     </div>
                                     <div class="mb-3">
                                         <label for="contributorModifyEngName" class="form-label">기여자 영문 이름</label>
-                                        <input type="text" class="form-control form-control-sm" id="contributorModifyEngName"
+                                        <input type="text" class="form-control form-control-sm"
+                                               id="contributorModifyEngName"
                                                name="contributorEngName">
                                     </div>
                                     <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>

@@ -17,7 +17,8 @@
             <div class="col-lg-5 pb-5">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
-                        <div th:each="image, index : ${book.detailImageUrl}" th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                        <div th:each="image, index : ${book.detailImageUrl}"
+                             th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
                             <img class="w-100 h-100" th:src="${image}" alt="Image">
                         </div>
                     </div>

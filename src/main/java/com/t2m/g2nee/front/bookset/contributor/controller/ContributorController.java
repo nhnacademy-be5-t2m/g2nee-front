@@ -31,6 +31,7 @@ public class ContributorController {
 
     /**
      * 기여자 등록 컨트롤러
+     *
      * @param request 기여자 객체 정보
      */
     @PostMapping
@@ -41,13 +42,15 @@ public class ContributorController {
         return "redirect:/admin/contributors/list";
     }
 
-    /**'
+    /**
+     * '
      * 기여자 조회 컨트롤러
+     *
      * @param page 페이지 번호
      */
     @GetMapping("/list")
     public String getContributorList(Model model,
-                                   @RequestParam(defaultValue = "1") int page) {
+                                     @RequestParam(defaultValue = "1") int page) {
 
         PageResponse<ContributorDto.Response> contributorPage = contributorService.getAllContributor(page);
         model.addAttribute("contributorPage", contributorPage);
@@ -57,16 +60,17 @@ public class ContributorController {
 
     /**
      * 기여자 수정 컨트롤러
+     *
      * @param contributorId 기여자 아이디
-     * @param request 기여자 객체 정보
-     * @param page 페이지 번호
+     * @param request       기여자 객체 정보
+     * @param page          페이지 번호
      */
     @PatchMapping("/{contributorId}")
     public String updatePublisher(@PathVariable("contributorId") Long contributorId,
                                   @ModelAttribute ContributorDto.Request request,
                                   @RequestParam int page) {
 
-        contributorService.updateContributor(contributorId,request);
+        contributorService.updateContributor(contributorId, request);
 
 
         return "redirect:/admin/contributors/list?page=" + page;
@@ -75,8 +79,9 @@ public class ContributorController {
 
     /**
      * 기여자 삭제 컨트롤러
+     *
      * @param contributorId 기여자 아이디
-     * @param page 페이지 번호
+     * @param page          페이지 번호
      */
     @DeleteMapping("/{contributorId}")
     public String deletePublisher(@PathVariable("contributorId") Long contributorId,

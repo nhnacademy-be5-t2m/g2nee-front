@@ -66,7 +66,7 @@ public class BookMgmtService {
                 url,
                 HttpMethod.POST,
                 requestEntity,
-               String.class
+                String.class
         );
     }
 

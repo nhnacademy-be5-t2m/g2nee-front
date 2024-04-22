@@ -5,9 +5,11 @@ import java.util.Collections;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @author : 김수빈
  * @since : 1.0
  */
+@Component
+@RequiredArgsConstructor
 @Slf4j
 public class CategoryInterceptor implements HandlerInterceptor {
 
