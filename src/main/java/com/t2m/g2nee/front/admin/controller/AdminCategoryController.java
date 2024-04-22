@@ -50,7 +50,7 @@ public class AdminCategoryController {
      * @throws JsonProcessingException
      */
     @GetMapping("/categories/save")
-    public String createCategoryFrom(Model model) throws JsonProcessingException {
+    public String createCategoryFrom(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
         return "admin/category/adminCategorySave";
     }
@@ -63,10 +63,9 @@ public class AdminCategoryController {
      */
     @PostMapping("/categories/save")
     public String createCategory(@RequestParam("categoryName") String categoryName,
-                                 @RequestParam("categoryEngName") String categoryEngName,
-                                 @RequestParam("isActivated") boolean isActivated,
-                                 @RequestParam("ancestorCategoryId") Long ancestorCategoryId)
-            throws JsonProcessingException {
+                                     @RequestParam("categoryEngName") String categoryEngName,
+                                     @RequestParam("isActivated") boolean isActivated,
+                                     @RequestParam("ancestorCategoryId") Long ancestorCategoryId){
 
         CategorySaveDto request = new CategorySaveDto(categoryName, categoryEngName, isActivated, ancestorCategoryId);
         categoryService.creatCategory(request);
@@ -82,8 +81,7 @@ public class AdminCategoryController {
      * @throws JsonProcessingException
      */
     @GetMapping("/categories/modify/{categoryId}")
-    public String modifyCategoryFrom(@PathVariable("categoryId") Long categoryId, Model model)
-            throws JsonProcessingException {
+    public String modifyCategoryFrom(@PathVariable("categoryId") Long categoryId, Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("category", categoryService.getCategory(categoryId));
         return "admin/category/adminCategoryModify";
@@ -101,8 +99,7 @@ public class AdminCategoryController {
                                  @RequestParam("categoryName") String categoryName,
                                  @RequestParam("categoryEngName") String categoryEngName,
                                  @RequestParam("isActivated") boolean isActivated,
-                                 @RequestParam("ancestorCategoryId") Long ancestorCategoryId)
-            throws JsonProcessingException {
+                                 @RequestParam("ancestorCategoryId") Long ancestorCategoryId){
         CategorySaveDto request = new CategorySaveDto(categoryName, categoryEngName, isActivated, ancestorCategoryId);
         categoryService.modifyCategory(categoryId, request);
         return "redirect:/admin/categories";
@@ -128,7 +125,7 @@ public class AdminCategoryController {
      * @return
      */
     @DeleteMapping("/categories/{categoryId}")
-    public String categoryDelete(@PathVariable("categoryId") Long categoryId) throws JsonProcessingException {
+    public String categoryDelete(@PathVariable("categoryId") Long categoryId){
         categoryService.deleteCategory(categoryId);
         return "redirect:/admin/categories";
     }
@@ -140,7 +137,7 @@ public class AdminCategoryController {
      * @return
      */
     @PatchMapping("/categories/{categoryId}")
-    public String categoryActivate(@PathVariable("categoryId") Long categoryId) throws JsonProcessingException {
+    public String categoryActivate(@PathVariable("categoryId") Long categoryId){
         categoryService.activeCategory(categoryId);
         return "redirect:/admin/categories";
     }

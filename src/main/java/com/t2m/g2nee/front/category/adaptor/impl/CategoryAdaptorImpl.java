@@ -72,19 +72,6 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
     }
 
     @Override
-    public List<CategoryInfoDto> getAllCategories() {
-        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/all")
-                .build();
-
-        HttpEntity<CategoryInfoDto> entity = new HttpEntity<>(getHttpHeaders());
-        ResponseEntity<List<CategoryInfoDto>> response = restTemplate
-                .exchange(url.toUriString(), HttpMethod.GET, entity, LIST_TYPE_REF);
-
-        return response.getBody();
-    }
-
-    @Override
     public CategoryUpdateDto getCategory(Long categoryId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/" + categoryId)

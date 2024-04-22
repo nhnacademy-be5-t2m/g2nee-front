@@ -24,13 +24,6 @@ public interface CategoryAdaptor {
     List<CategoryHierarchyDto> getRootCategories();
 
     /**
-     * 모든 카테고리를 가져옴
-     *
-     * @return
-     */
-    List<CategoryInfoDto> getAllCategories();
-
-    /**
      * 카테고리 단건 조회
      *
      * @param categoryId
@@ -52,9 +45,8 @@ public interface CategoryAdaptor {
      *
      * @param request
      * @return
-     * @throws JsonProcessingException
      */
-    CategoryInfoDto requestCreatCategory(CategorySaveDto request) throws JsonProcessingException;
+    CategoryInfoDto requestCreatCategory(CategorySaveDto request);
 
     /**
      * 카테고리 수정
