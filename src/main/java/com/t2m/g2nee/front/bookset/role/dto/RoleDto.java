@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.bookset.role.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,8 +22,9 @@ public class RoleDto {
     @Builder
     public static class Request {
 
-        @NotBlank(message = "역할 이름을 입력해주세요.")
+        @Pattern(regexp = "^[가-힣0-9]+$", message = "역할 이름을 입력해주세요.")
         private String roleName;
+
 
     }
 

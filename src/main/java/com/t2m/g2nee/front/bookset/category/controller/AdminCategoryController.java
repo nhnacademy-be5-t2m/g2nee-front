@@ -33,6 +33,7 @@ public class AdminCategoryController {
 
     /**
      * 관리자페이지: 카테고리 관리 페이지 보이기
+     *
      * @return
      */
     @GetMapping("/categories")
@@ -43,6 +44,7 @@ public class AdminCategoryController {
 
     /**
      * 카테고리 저장 작성 양식 보이기
+     *
      * @param model
      * @return
      * @throws JsonProcessingException
@@ -55,6 +57,7 @@ public class AdminCategoryController {
 
     /**
      * 실제 카테고리 저장
+     *
      * @return
      * @throws JsonProcessingException
      */
@@ -71,6 +74,7 @@ public class AdminCategoryController {
 
     /**
      * 카테고리 수정 양식 보이기
+     *
      * @param categoryId
      * @param model
      * @return
@@ -85,6 +89,7 @@ public class AdminCategoryController {
 
     /**
      * 실제 카테고리 수정
+     *
      * @param categoryId
      * @return
      * @throws JsonProcessingException
@@ -103,6 +108,7 @@ public class AdminCategoryController {
 
     /**
      * 카테고리 이름으로 검색
+     *
      * @return
      */
     @GetMapping("/categories/search")
@@ -114,6 +120,7 @@ public class AdminCategoryController {
 
     /**
      * 카테고리 비활성화
+     *
      * @param categoryId
      * @return
      */
@@ -125,6 +132,7 @@ public class AdminCategoryController {
 
     /**
      * 카테고리 활성화
+     *
      * @param categoryId
      * @return
      */
