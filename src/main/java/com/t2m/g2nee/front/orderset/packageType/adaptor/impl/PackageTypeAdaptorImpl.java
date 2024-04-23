@@ -41,7 +41,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
 
     @PostConstruct
     public void initUrl(){
-        baseUrl = gateway + "/shop/package";
+        baseUrl = gateway + "/packages";
     }
 
     @Override

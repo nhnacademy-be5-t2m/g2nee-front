@@ -39,7 +39,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
 
     @PostConstruct
     public void initUrl(){
-        baseUrl = gateway + "/shop/deliveryPolicy";
+        baseUrl = gateway + "/deliveryPolicies";
     }
 
     @Override

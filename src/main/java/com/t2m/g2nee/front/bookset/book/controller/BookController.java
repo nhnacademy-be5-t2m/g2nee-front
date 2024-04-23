@@ -3,8 +3,7 @@ package com.t2m.g2nee.front.bookset.book.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
-import com.t2m.g2nee.front.category.dto.response.CategoryUpdateDto;
-import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,7 @@ public class BookController {
      * 메인 페이지 최근 발매된 책 6권을 조회하는 컨트롤러
      */
     @GetMapping("/new")
-    public String getNewBooks(Model model) throws JsonProcessingException {
+    public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -96,7 +95,7 @@ public class BookController {
                                               @RequestParam(defaultValue = "1") int page,
                                               @RequestParam(required = false) String sort,
                                               @PathVariable("categoryId") Long categoryId)
-            throws JsonProcessingException {
+             {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
@@ -125,7 +124,7 @@ public class BookController {
                                               @RequestParam(defaultValue = "1") int page,
                                               @RequestParam(required = false) String sort,
                                               @PathVariable("categoryId") Long categoryId)
-            throws JsonProcessingException {
+             {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";

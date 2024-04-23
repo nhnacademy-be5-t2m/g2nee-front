@@ -29,12 +29,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class CategoryAdaptorImpl implements CategoryAdaptor {
 
-
-    //CategoryInfoDto의 List를 받는 ref
-    private static final ParameterizedTypeReference<List<CategoryInfoDto>> LIST_TYPE_REF
-            = new ParameterizedTypeReference<>() {
-    };
-
     //CategoryHierarchy의 List를 받는 ref
     private static final ParameterizedTypeReference<List<CategoryHierarchyDto>> H_LIST_TYPE_REF
             = new ParameterizedTypeReference<>() {
@@ -59,7 +53,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @PostConstruct
     public void initUrl() {
-        baseUrl = gateway + "/shop/categories";
+        baseUrl = gateway + "/categories";
     }
 
     @Override

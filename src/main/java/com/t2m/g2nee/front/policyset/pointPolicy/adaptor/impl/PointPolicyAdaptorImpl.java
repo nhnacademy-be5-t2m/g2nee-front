@@ -42,7 +42,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
 
     @PostConstruct
     public void initUrl(){
-        baseUrl = gateway + "/shop/pointPolicy";
+        baseUrl = gateway + "/pointPolicies";
     }
 
     @Override

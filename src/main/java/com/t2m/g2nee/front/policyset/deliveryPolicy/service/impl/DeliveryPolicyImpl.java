@@ -1,5 +1,6 @@
 package com.t2m.g2nee.front.policyset.deliveryPolicy.service.impl;
 
+import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.policyset.deliveryPolicy.adaptor.DeliveryPolicyAdaptor;
 import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.request.DeliveryPolicySaveDto;
 import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.response.DeliveryPolicyInfoDto;
@@ -23,7 +24,11 @@ public class DeliveryPolicyImpl implements DeliveryPolicyService {
 
     @Override
     public DeliveryPolicyInfoDto getDeliveryPolicy() {
-        return adaptor.getDeliveryPolicy();
+        try{
+            return adaptor.getDeliveryPolicy();
+        }catch(CustomException e){
+            return null;
+        }
     }
 
     @Override
