@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +23,7 @@
     </style>
 </head>
 <body>
+<div layout:fragment="content">
 <h1>전체 주문 목록</h1>
 <table>
     <thead>
@@ -58,5 +62,6 @@
     <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->
     </tbody>
 </table>
+</div>
 </body>
 </html>
