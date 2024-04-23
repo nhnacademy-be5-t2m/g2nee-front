@@ -6,7 +6,11 @@ import com.t2m.g2nee.front.orderset.packageType.dto.response.PackageInfoDto;
 import com.t2m.g2nee.front.orderset.packageType.service.PackageTypeService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import org.springframework.stereotype.Service;
-
+/**
+ * PackageTypeService의 구현체 입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Service
 public class PackageTypePolicyServiceImpl implements PackageTypeService {
 

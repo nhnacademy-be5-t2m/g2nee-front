@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 관리자가 포인트정책을 관리하기 위한 컨트롤러 입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Controller
 @RequestMapping("/admin/pointPolicies")
 public class PointPolicyController {
@@ -24,6 +29,11 @@ public class PointPolicyController {
         this.service = service;
     }
 
+    /**
+     * 포인트 정책 목록을 보여줍니다(메인)
+     * @param model
+     * @return
+     */
     @GetMapping("/list")
     public String pointPolicyList(Model model){
         model.addAttribute("pointPolicies", service.getAllPointPolicies(1));
@@ -31,7 +41,7 @@ public class PointPolicyController {
     }
 
     /**
-     * 포인트 정책 목록 보이기(페이징)
+     * 포인트 정책 목록을 페이징처리하여 보여줍니다.
      * @param page
      * @param model
      * @return
@@ -43,7 +53,7 @@ public class PointPolicyController {
     }
 
     /**
-     * 포인트 정책 저장 양식 보이기
+     * 포인트 정책 저장 양식 보여줍니다.
      * @return
      */
     @GetMapping("/save")
@@ -52,7 +62,7 @@ public class PointPolicyController {
     }
 
     /**
-     * 실제로 포인트 정책 저장
+     * 실제로 포인트 정책 저장합니다.
      * @param policyName
      * @param policyType
      * @param amount
@@ -68,7 +78,7 @@ public class PointPolicyController {
     }
 
     /**
-     * 포인트 정책 수정 양식 보이기
+     * 포인트 정책 수정 양식 보여줍니다.
      * @param pointPolicyId
      * @param model
      * @return
@@ -80,7 +90,7 @@ public class PointPolicyController {
     }
 
     /**
-     * 실제로 포인트 정책 수정
+     * 실제로 포인트 정책 수정합니다.
      * @param pointPolicyId
      * @param policyName
      * @param policyType
@@ -98,7 +108,7 @@ public class PointPolicyController {
     }
 
     /**
-     * 포인트 정책 비활성화
+     * 포인트 정책 비활성화합니다.
      * @param pointPolicyId
      * @return
      */

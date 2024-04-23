@@ -4,6 +4,11 @@ import com.t2m.g2nee.front.policyset.pointPolicy.dto.request.PointPolicySaveDto;
 import com.t2m.g2nee.front.policyset.pointPolicy.dto.response.PointPolicyInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 
+/**
+ * 포인트 정책 서비스입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 public interface PointPolicyService {
 
     /**

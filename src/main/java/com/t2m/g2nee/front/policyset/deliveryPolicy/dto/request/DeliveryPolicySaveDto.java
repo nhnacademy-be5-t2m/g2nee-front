@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 배송비 정책 저장을 위한 객체입니다.
+ * 배송비 정책 저장을 위한 dto입니다.
+ * @author : 김수빈
+ * @since : 1.0
  */
 @NoArgsConstructor
 @AllArgsConstructor

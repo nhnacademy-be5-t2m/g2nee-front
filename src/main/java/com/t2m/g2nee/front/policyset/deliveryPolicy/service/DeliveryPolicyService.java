@@ -3,7 +3,11 @@ package com.t2m.g2nee.front.policyset.deliveryPolicy.service;
 import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.request.DeliveryPolicySaveDto;
 import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.response.DeliveryPolicyInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-
+/**
+ * 배송비 정책 서비스입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 public interface DeliveryPolicyService {
 
     /**

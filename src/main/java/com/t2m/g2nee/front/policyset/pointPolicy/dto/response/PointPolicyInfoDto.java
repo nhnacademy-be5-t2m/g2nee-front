@@ -14,10 +14,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class PointPolicyInfoDto {
+    /**
+     * 포인트 정책 id
+     */
     private Long pointPolicyId;
+    /**
+     * 포인트 정책 이름
+     */
     private String policyName;
+    /**
+     * 포인트 정책 타입
+     */
     private String policyType;
+    /**
+     * 적립 수치
+     */
     private String amount;
+    /**
+     * 포인트 정책 활성화 여부
+     */
     private Boolean isActivated;
+    /**
+     * 정책 변동 날짜
+     */
     private String changedDate;
 }

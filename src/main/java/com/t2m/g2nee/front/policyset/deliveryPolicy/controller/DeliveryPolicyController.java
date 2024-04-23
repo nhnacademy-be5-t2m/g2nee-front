@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 관리자가 배송비 정책을 관리하기 위한 controller입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Controller
 @RequestMapping("/admin/deliveryPolicies")
 public class DeliveryPolicyController {
@@ -32,7 +37,7 @@ public class DeliveryPolicyController {
     }
 
     /**
-     * 배송비 정책 목록 보이기(페이지)
+     * 배송비 정책을 페이징처리하여 보여줍니다.
      * @param page
      * @param model
      * @return
@@ -44,7 +49,7 @@ public class DeliveryPolicyController {
     }
 
     /**
-     * 포인트 정책 저장 양식 보이기
+     * 배송비 정책 저장 양식을 보여줍니다.
      * @return
      */
     @GetMapping("/save")
@@ -55,7 +60,7 @@ public class DeliveryPolicyController {
 
 
     /**
-     * 실제 배송비 정책 저장
+     * 실제 배송비 정책 저장합니다.
      * @param deliveryFee
      * @param freeDeliveryStandard
      * @return

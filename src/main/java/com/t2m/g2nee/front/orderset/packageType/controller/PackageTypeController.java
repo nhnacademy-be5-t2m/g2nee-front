@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * 관리자가 포장지를 관리하기 위한 것과 관련된 controller입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 @Controller
 @RequestMapping("/admin/packages")
 public class PackageTypeController {
@@ -25,7 +30,7 @@ public class PackageTypeController {
     }
 
     /**
-     * 포장지 목록 보이기(메인)
+     * 포장지 관리 메인 페이지로, 1페이지 포장지를 보여줍니다.
      * @param model
      * @return
      */
@@ -36,7 +41,7 @@ public class PackageTypeController {
     }
 
     /**
-     * 포장지 목록 보이기(페이지)
+     * 모든 포장지를 페이징처리하여 보여줍니다.
      * @param page
      * @param model
      * @return
@@ -48,7 +53,7 @@ public class PackageTypeController {
     }
 
     /**
-     * 배송비 정책 저장 양식 보이기
+     * 포장지를 저장하기 위한 form을 보여줍니다.
      * @return
      */
     @GetMapping("/save")
@@ -57,7 +62,7 @@ public class PackageTypeController {
     }
 
     /**
-     * 실제 배송비 정책 저장
+     * 실제 포장지를 저장합니다.
      * @param name
      * @param price
      * @param isActivated
@@ -72,13 +77,26 @@ public class PackageTypeController {
         return "redirect:/admin/packages/list";
     }
 
-
+    /**
+     * 포장지를 수정하기 위한 form을 보여줍니다.
+     * @param packageId
+     * @param model
+     * @return
+     */
     @GetMapping("/modify/{packageId}")
     public String modifyPointPolicyForm(@PathVariable("packageId") Long packageId, Model model){
         model.addAttribute("package", service.getPackage(packageId));
         return "admin/package/adminPackageSave";
     }
 
+    /**
+     * 포장지를 수정합니다.
+     * @param packageId
+     * @param name
+     * @param price
+     * @param isActivated
+     * @return
+     */
 
     @PutMapping("/modify/{packageId}")
     public String modifyPointPolicy(@PathVariable("packageId") Long packageId,
@@ -91,7 +109,7 @@ public class PackageTypeController {
     }
 
     /**
-     * 포장지 비활성화
+     * 포장지 비활성화합니다.
      * @param packageId
      * @return
      */
@@ -102,7 +120,7 @@ public class PackageTypeController {
     }
 
     /**
-     * 포장지 활성화
+     * 포장지 활성화합니다.
      * @param packageId
      * @return
      */

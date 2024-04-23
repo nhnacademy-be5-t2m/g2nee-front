@@ -14,8 +14,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class PackageInfoDto {
+    /**
+     * 포장지 id
+     */
     private Long packageId;
+    /**
+     * 포장지 이름
+     */
     private String name;
+    /**
+     * 포장지 가격
+     */
     private int price;
+    /**
+     * 포장지 활성화 여부
+     */
     private Boolean isActivated;
 }

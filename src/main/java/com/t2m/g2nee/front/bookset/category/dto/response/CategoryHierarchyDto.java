@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryHierarchyDto extends CategoryInfoDto {
 
-    @Getter
+    /**
+     * 카테고리의 자식 카테고리들
+     */
     private List<CategoryHierarchyDto> children;
 
     public CategoryHierarchyDto(CategoryInfoDto categoryInfoDto, List<CategoryHierarchyDto> children) {

@@ -5,6 +5,11 @@ import com.t2m.g2nee.front.policyset.pointPolicy.dto.request.PointPolicySaveDto;
 import com.t2m.g2nee.front.policyset.pointPolicy.dto.response.PointPolicyInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 
+/**
+ * shop을 통해 포인트 정책에 관련된 정보를 받는 어댑터 인터페이스입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 public interface PointPolicyAdaptor {
 
     /**

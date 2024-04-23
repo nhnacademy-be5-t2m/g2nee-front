@@ -40,6 +40,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
+    /**
+     * 모든 카테고리 목록을 재귀를 통해 얻어옴
+     * @return 모든 카테고리 목록
+     */
     @Cacheable(key = "'all'")
     @Override
     public List<CategoryHierarchyDto> getAllCategories() {
@@ -63,6 +67,10 @@ public class CategoryServiceImpl implements CategoryService {
         return allSubCategories;
     }
 
+    /**
+     * 카테고리의 1단계, 2단계에 해당하는 카테고리만 가져옴
+     * @return 카테고리 1단계, 2단계 카테고리 목록
+     */
     public List<CategoryHierarchyDto> getFirstAndSecondCategories() {
         List<CategoryHierarchyDto> categories = new ArrayList<>();
         List<CategoryHierarchyDto> rootCategories = getRootCategories();

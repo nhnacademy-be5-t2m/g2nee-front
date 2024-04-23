@@ -4,6 +4,11 @@ import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.request.DeliveryPolicySa
 import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.response.DeliveryPolicyInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 
+/**
+ * shop에서 배송비 정책과 관련된 값들을 가져오기 위한 어댑터의 인터페이스입니다.
+ * @author : 김수빈
+ * @since : 1.0
+ */
 public interface DeliveryPolicyAdaptor {
 
     /**
