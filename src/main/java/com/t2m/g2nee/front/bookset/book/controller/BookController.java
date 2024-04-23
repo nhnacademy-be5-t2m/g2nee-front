@@ -58,7 +58,7 @@ public class BookController {
      * 메인 페이지 최근 발매된 책 6권을 조회하는 컨트롤러
      */
     @GetMapping
-    public String getNewBooks(Model model) throws JsonProcessingException {
+    public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -87,7 +87,8 @@ public class BookController {
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, keyword, sort);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
-        model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sort", sort);
 
 
         return "book/bookList";
@@ -100,7 +101,6 @@ public class BookController {
      * @param page       페이지 번호
      * @param sort       정렬 조건
      * @param categoryId 카테고리 아이디
-     * @throws JsonProcessingException
      */
     @GetMapping("/search/category/{categoryId}")
     public String getBookBySearchByCategoryId(Model model,
@@ -108,7 +108,7 @@ public class BookController {
                                               @RequestParam(defaultValue = "1") int page,
                                               @RequestParam(required = false) String sort,
                                               @PathVariable("categoryId") Long categoryId)
-            throws JsonProcessingException {
+    {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
@@ -118,7 +118,8 @@ public class BookController {
                 bookGetService.getBooksBySearchByCategory(page, sort, keyword, categoryId);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
-        model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sort",sort);
         model.addAttribute("category", categoryService.getCategory(categoryId));
 
         return "book/bookListByCategory";
@@ -132,14 +133,13 @@ public class BookController {
      * @param page       페이지 번호
      * @param sort       정렬 기준
      * @param categoryId 카테고리 아이디
-     * @throws JsonProcessingException
      */
     @GetMapping("/category/{categoryId}")
     public String getBookByCategoryId(Model model,
                                       @RequestParam(defaultValue = "1") int page,
                                       @RequestParam(required = false) String sort,
                                       @PathVariable("categoryId") Long categoryId)
-            throws JsonProcessingException {
+    {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
