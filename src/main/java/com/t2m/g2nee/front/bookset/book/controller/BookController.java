@@ -2,6 +2,8 @@ package com.t2m.g2nee.front.bookset.book.controller;
 
 import static com.t2m.g2nee.front.token.util.JwtUtil.ACCESS_COOKIE;
 
+import com.t2m.g2nee.front.annotation.Member;
+import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
@@ -34,6 +36,7 @@ public class BookController {
 
     private final BookGetService bookGetService;
     private final CategoryService categoryService;
+    private final MemberAspect memberAspect;
 
     /**
      * 책 하나 정보를 가져오고 해당 책 카테고리에 해당하는 추천 책 목록을 조회하는 컨트롤러 입니다.
@@ -42,7 +45,7 @@ public class BookController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model) {
 
-        Long memberId = getMemberIdByCookie();
+        Long memberId = (Long) memberAspect.getThreadLocal().get();
         BookDto.Response response = bookGetService.getBook(memberId,bookId);
 
         // 책의 카테고리 정보를 가져옵니다.
@@ -90,7 +93,7 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = getMemberIdByCookie();
+        Long memberId = (Long) memberAspect.getThreadLocal().get();
 
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page,memberId, keyword, sort);
         model.addAttribute("keyword", keyword);
@@ -123,7 +126,7 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = getMemberIdByCookie();
+        Long memberId = (Long) memberAspect.getThreadLocal().get();
 
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksBySearchByCategory(page,memberId, sort, keyword, categoryId);
@@ -146,6 +149,7 @@ public class BookController {
      * @param sort       정렬 기준
      * @param categoryId 카테고리 아이디
      */
+    @Member
     @GetMapping("/category/{categoryId}")
     public String getBookByCategoryId(Model model,
                                       @RequestParam(defaultValue = "1") int page,
@@ -157,7 +161,7 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = getMemberIdByCookie();
+        Long memberId = (Long) memberAspect.getThreadLocal().get();
 
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksByCategory(page,memberId, sort, categoryId);
         model.addAttribute("bookPage", bookPage);
@@ -170,13 +174,6 @@ public class BookController {
 
         return "book/bookListByCategory";
 
-    }
-
-    private Long getMemberIdByCookie(){
-        Cookie cookie = CookieUtil.findCookie(ACCESS_COOKIE);
-        if (cookie == null) return null;
-        String accessToken = cookie.getValue();
-        return JwtUtil.getMemberId(accessToken);
     }
 
 }
