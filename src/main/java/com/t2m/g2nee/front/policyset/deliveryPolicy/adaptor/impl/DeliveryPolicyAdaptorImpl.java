@@ -28,7 +28,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
 
     private final RestTemplate restTemplate;
 
-    @Value("${g2nee.gateway}")
+    @Value("${gatewayToShopUrl}")
     private String gateway;
 
     private String baseUrl;
