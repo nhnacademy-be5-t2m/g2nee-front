@@ -7,8 +7,8 @@ let emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let phoneNumberReg = /^\d{3}-\d{3,4}-\d{4}$/;
 
 function setEmailDomain() {
-    var selectElement = document.querySelector('.select.text');
-    var selectedOption = selectElement.options[selectElement.selectedIndex].value;
+    let selectElement = document.querySelector('.select.text');
+    let selectedOption = selectElement.options[selectElement.selectedIndex].value;
     document.getElementById('emailDomain').value = selectedOption;
 }
 
@@ -26,6 +26,8 @@ function validCheck(input, reg, message) {
 
 let inputUsername = document.querySelector('#username');
 let invalidUsername = document.querySelector('.username-invalid');
+let usableUsername = document.querySelector('.username-usable');
+let unUsableUsername = document.querySelector('.username-unUsable');
 
 inputUsername.onkeyup = function () {
     validCheck(inputUsername, usernameReg, invalidUsername)
@@ -33,28 +35,34 @@ inputUsername.onkeyup = function () {
 
 //username 중복 체크
 inputUsername.onchange = function () {
-    var username = inputUsername.value;
-    var duplicateMessage = document.querySelector('.username-duplicate');
-    checkUsernameDuplicate(username, duplicateMessage, "아이디", "existsUsername");
-};
+    checkName(inputUsername, invalidUsername, usableUsername, unUsableUsername, usernameReg, "아이디", "existsUsername");
+}
 
-function checkUsernameDuplicate(checkTarget, message, targetType, path) {
-    var url = 'http://localhost:8090/shop/member/' + path;
 
+function checkName(checkTarget, regMessage, usableName, unUsableName, reg, targetType, path) {
+    let url = 'http://localhost:8081/shop/member/' + path;
+
+    if (checkTarget.value.length !== 0) {
+        if (reg.test(checkTarget.value) === false) {
+            return;
+        }
+    }
+    unUsableName.classList.add('hide');
+    usableName.classList.add('hide');
     fetch(url, {
         method: 'POST',
-        body: checkTarget
+        body: checkTarget.value
     })
         .then(function (response) {
-            return response.text();
+            return response.json();
         })
         .then(function (data) {
-            if (date === true) {
-                message.textContent = '사용 중인' + targetType + '입니다.';
-                message.classList.remove('hide');
+            if (data === true) {
+                usableName.classList.remove('hide');
+                unUsableName.classList.add('hide');
             } else {
-                message.textContent = '사용가능한' + targetType + '입니다.';
-                message.classList.add('hide');
+                unUsableName.classList.remove('hide');
+                usableName.classList.add('hide');
             }
         })
         .catch(function (error) {
@@ -90,17 +98,16 @@ inputName.onkeyup = function () {
 }
 
 let inputNickname = document.querySelector('#nickname');
-let invalidNickname = document.querySelector('.nickname-invalid')
+let invalidNickname = document.querySelector('.nickname-invalid');
+let usableNickname = document.querySelector('.nickname-Usable');
+let unUsableNickname = document.querySelector('.nickname-unUsable');
 inputNickname.onkeyup = function () {
     validCheck(inputNickname, nicknameReg, invalidNickname);
 }
 //nickname 중복 체크
-inputUsername.onchange = function () {
-    var nickname = inputNickname.value;
-    var duplicateMessage = document.querySelector('.nickname-invalid');
-    checkUsernameDuplicate(nickname, duplicateMessage, "닉네임", "existsNickname");
-};
-
+inputNickname.onchange = function () {
+    checkName(inputNickname, invalidNickname, usableNickname, unUsableNickname, nicknameReg, "닉네임", "existsNickname");
+}
 // let inputEmail = document.querySelector('#email');
 // let invalidEmail = document.querySelector('.email-invalid');
 // inputEmail.onkeyup = function () {

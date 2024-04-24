@@ -27,7 +27,8 @@
                                class="text"
                                th:field="*{userName}"
                                placeholder="아이디"/>
-                        <div class="username-duplicate hide word" style="color:red;"></div>
+                        <div class="username-unUsable hide word" style="color:red;">사용중인 아이디입니다.</div>
+                        <div class="username-Usable hide word" style="color:red;">사용가능한 아이디입니다.</div>
                         <div class="username-invalid hide word" style="color:red;"> 형식이 올바르지
                             않습니다.
                         </div>
@@ -60,7 +61,8 @@
                     <th scope="row" for="nickname" class="word">닉네임</th>
                     <td style="display : flex">
                         <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임"/>
-                        <div class="nickname-duplicate hide word" style="color:red;"></div>
+                        <div class="nickname-unUsable hide word" style="color:red;">사용중인 닉네임입니다.</div>
+                        <div class="nickname-Usable hide word" style="color:red;">사용가능한 닉네임입니다.</div>
                         <div class="nickname-invalid hide word" style="color:red;"> 한글/영어/숫자/'_'/'.' 2-10자로 작성해주십시오.
                         </div>
                     </td>

@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.member.service;
 
 
+import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
@@ -124,9 +125,9 @@ public class MemberService {
 
             deleteCookie(response, JwtUtil.ACCESS_COOKIE);
 
-            Cookie sessionCookie = CookieUtil.findCookie("auth-session");
+            Cookie sessionCookie = CookieUtil.findCookie(SESSION_ID);
             redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());
-            deleteCookie(response, "auth-session");
+            deleteCookie(response, SESSION_ID);
 
         }
     }
