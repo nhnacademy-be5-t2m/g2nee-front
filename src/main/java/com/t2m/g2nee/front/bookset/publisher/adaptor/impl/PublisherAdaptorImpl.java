@@ -35,7 +35,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
 
         HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/publishers";
+        String url = gatewayUrl + "/publishers";
 
         restTemplate.exchange(
                 url,
@@ -52,7 +52,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/publishers/list";
+        String url = gatewayUrl + "/publishers/list";
 
         return restTemplate.exchange(
                 url,
@@ -70,7 +70,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/publishers?page=" + page;
+        String url = gatewayUrl + "/publishers?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -88,7 +88,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
 
         HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/publishers/" + publisherId;
+        String url = gatewayUrl + "/publishers/" + publisherId;
 
         restTemplate.exchange(
                 url,
@@ -105,7 +105,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/publishers/" + publisherId;
+        String url = gatewayUrl + "/publishers/" + publisherId;
 
         restTemplate.exchange(
                 url,

@@ -131,15 +131,15 @@ public class BookAdminController {
                            @RequestPart MultipartFile thumbnail,
                            @RequestPart MultipartFile[] details) {
 
-//        List<Long> categoryList = new ArrayList<>();
-//        // 최하위 카테고리만 추출
-//        for (int i = 2; i < categoryIdList.size(); i += 3) {
-//            Long categoryId = categoryIdList.get(i);
-//            categoryList.add(categoryId);
-//        }
+        List<Long> categoryList = new ArrayList<>();
+        // 최하위 카테고리만 추출
+        for (int i = 2; i < categoryIdList.size(); i += 3) {
+            Long categoryId = categoryIdList.get(i);
+            categoryList.add(categoryId);
+        }
 
         request.setContributorIdList(contributorIdList);
-        request.setCategoryIdList(categoryIdList);
+        request.setCategoryIdList(categoryList);
         request.setRoleIdList(roleIdList);
         request.setTagIdList(tagIdList);
         bookMgmtService.registerBook(request, thumbnail, details);
@@ -199,7 +199,7 @@ public class BookAdminController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model) {
 
-        BookDto.Response response = bookGetService.getBook(bookId);
+        BookDto.Response response = bookGetService.getBook(null,bookId);
         model.addAttribute("book", response);
 
         return "admin/book/bookDetail";

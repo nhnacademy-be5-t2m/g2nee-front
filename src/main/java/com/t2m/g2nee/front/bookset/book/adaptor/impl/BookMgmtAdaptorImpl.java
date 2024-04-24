@@ -50,7 +50,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        String url = gatewayUrl + "/shop/books";
+        String url = gatewayUrl + "/books";
 
 
         restTemplate.exchange(
@@ -74,7 +74,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-        String url = gatewayUrl + "/shop/books/" + bookId;
+        String url = gatewayUrl + "/books/" + bookId;
 
         return restTemplate.exchange(
                 url,
@@ -111,7 +111,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         body.addAll("details", multipartFileList);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        String url = gatewayUrl + "/shop/books/" + bookId;
+        String url = gatewayUrl + "/books/" + bookId;
 
         restTemplate.exchange(
                 url,
@@ -135,7 +135,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<BookDto.Request> requestEntity = new HttpEntity<>(request, headers);
-        String url = gatewayUrl + "/shop/books/status/" + bookId;
+        String url = gatewayUrl + "/books/status/" + bookId;
 
         restTemplate.exchange(
                 url,
@@ -151,7 +151,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-        String url = gatewayUrl + "/shop/books/quantity/" + bookId + "?quantity=" + quantity;
+        String url = gatewayUrl + "/books/quantity/" + bookId + "?quantity=" + quantity;
 
         return restTemplate.exchange(
                 url,
@@ -176,7 +176,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         parameters.add("page", String.valueOf(page));
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
-        String url = gatewayUrl + "/shop/books/list?page=" + page;
+        String url = gatewayUrl + "/books/list?page=" + page;
 
         return restTemplate.exchange(
                 url,

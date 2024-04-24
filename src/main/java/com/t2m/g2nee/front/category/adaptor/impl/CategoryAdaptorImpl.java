@@ -59,7 +59,7 @@ public class CategoryAdaptorImpl implements CategoryAdaptor {
 
     @PostConstruct
     public void initUrl() {
-        baseUrl = gateway + "/shop/categories";
+        baseUrl = gateway + "/categories";
     }
 
     @Override

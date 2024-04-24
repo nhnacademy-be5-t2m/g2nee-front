@@ -37,7 +37,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/roles/list";
+        String url = gatewayUrl + "/roles/list";
 
         return restTemplate.exchange(
                 url,
@@ -61,7 +61,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
 
         HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/roles";
+        String url = gatewayUrl + "/roles";
 
         restTemplate.exchange(
                 url,
@@ -87,7 +87,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/roles?page=" + page;
+        String url = gatewayUrl + "/roles?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -112,7 +112,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
 
         HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/roles/" + roleId;
+        String url = gatewayUrl + "/roles/" + roleId;
 
         restTemplate.exchange(
                 url,
@@ -136,7 +136,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/roles/" + roleId;
+        String url = gatewayUrl + "/roles/" + roleId;
 
         restTemplate.exchange(
                 url,

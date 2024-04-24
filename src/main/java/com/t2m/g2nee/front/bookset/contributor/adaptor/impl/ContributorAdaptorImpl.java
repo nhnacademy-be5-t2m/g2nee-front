@@ -37,7 +37,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/contributors/list";
+        String url = gatewayUrl + "/contributors/list";
 
         return restTemplate.exchange(
                 url,

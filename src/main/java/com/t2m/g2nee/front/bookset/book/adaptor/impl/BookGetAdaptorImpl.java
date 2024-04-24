@@ -28,19 +28,23 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 책 하나 정보를 조회하는 서비스 입니다.
-     *
+     * @param memberId 회원 아이디
      * @param bookId 책 아이디
      * @return BookDto.Response
      */
     @Override
-    public BookDto.Response getBook(Long bookId) {
+    public BookDto.Response getBook(Long memberId, Long bookId) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/books/" + bookId;
+
+        String url = URLDecoder.decode(UriComponentsBuilder
+                .fromHttpUrl(gatewayUrl + "/books/" + bookId)
+                .queryParam("memberId", memberId)
+                .toUriString());
 
         return restTemplate.exchange(
                 url,
@@ -64,7 +68,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/books/new";
+        String url = gatewayUrl + "/books/new";
         // 회원은 삭제된 책을 조회하지 못하게 필터링
         return restTemplate.exchange(
                         url,
@@ -81,14 +85,14 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 검색어를 통해 책을 검색하여 조회하는 메서드
-     *
+     * @param memberId 회원 아이디
      * @param page    페이지 번호
      * @param keyword 검색 키워드
      * @param sort    정렬 조건
      * @return PageResponse<BookDto.ListResponse>
      */
     @Override
-    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, String keyword, String sort) {
+    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -97,7 +101,8 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         String url = URLDecoder.decode(UriComponentsBuilder
-                .fromHttpUrl(gatewayUrl + "/shop/books/search")
+                .fromHttpUrl(gatewayUrl + "/books/search")
+                .queryParam("memberId", memberId)
                 .queryParam("page", page)
                 .queryParam("keyword", keyword)
                 .queryParam("sort", sort)
@@ -126,14 +131,15 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 카테고리별 책 조회 메서드
-     *
+     * @param memberId 회원 아이디
      * @param page       페이지 번호
      * @param sort       정렬 기준
      * @param categoryId 카테고리 아이디
      * @return PageResponse<BookDto.ListResponse>
      */
     @Override
-    public PageResponse<BookDto.ListResponse> getBooksByCategory(int page, String sort, Long categoryId) {
+    public PageResponse<BookDto.ListResponse> getBooksByCategory(int page, Long memberId, String sort,
+                                                                 Long categoryId) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -142,7 +148,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         String url = URLDecoder.decode(UriComponentsBuilder
-                .fromHttpUrl(gatewayUrl + "/shop/books/category/" + categoryId)
+                .fromHttpUrl(gatewayUrl + "/books/category/" + categoryId)
                 .queryParam("page", page)
                 .queryParam("sort", sort)
                 .toUriString(), StandardCharsets.UTF_8);
@@ -170,7 +176,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 카테고리와 검색어로 책을 검색하는 메서드
-     *
+     * @param memberId 회원 아이디
      * @param page       페이지 번호
      * @param sort       정렬 기준
      * @param keyword    검색 키워드
@@ -178,7 +184,8 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
      * @return PageResponse<BookDto.ListResponse>
      */
     @Override
-    public PageResponse<BookDto.ListResponse> getBooksBySearchByCategory(int page, String sort, String keyword,
+    public PageResponse<BookDto.ListResponse> getBooksBySearchByCategory(int page, Long memberId, String sort,
+                                                                         String keyword,
                                                                          Long categoryId) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -188,7 +195,8 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         String url = URLDecoder.decode(UriComponentsBuilder
-                .fromHttpUrl(gatewayUrl + "/shop/books/search")
+                .fromHttpUrl(gatewayUrl + "/books/search")
+                .queryParam("memberId", memberId)
                 .queryParam("categoryId", categoryId)
                 .queryParam("page", page)
                 .queryParam("keyword", keyword)
@@ -234,9 +242,9 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .collect(Collectors.joining(","));
 
         String url =
-                gatewayUrl + "/shop/books/" + bookId + "/recommend?categoryIdList=" + categoryIds;
+                gatewayUrl + "/books/" + bookId + "/recommend?categoryIdList=" + categoryIds;
 
-
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
         return Objects.requireNonNull(restTemplate.exchange(
                                 url,
                                 HttpMethod.GET,
@@ -248,9 +256,6 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .stream()
                 .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
                 .collect(Collectors.toList());
-
-        // 회원은 삭제된 책을 조회하지 못하게 필터링
-
 
     }
 }

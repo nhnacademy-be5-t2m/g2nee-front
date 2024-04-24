@@ -36,7 +36,7 @@ public class TagAdaptorImpl implements TagAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/tags/list";
+        String url = gatewayUrl + "/tags/list";
 
         return restTemplate.exchange(
                 url,
@@ -61,7 +61,7 @@ public class TagAdaptorImpl implements TagAdaptor {
 
         HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/tags";
+        String url = gatewayUrl + "/tags";
 
         restTemplate.exchange(
                 url,
@@ -86,7 +86,7 @@ public class TagAdaptorImpl implements TagAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/tags?page=" + page;
+        String url = gatewayUrl + "/tags?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -111,7 +111,7 @@ public class TagAdaptorImpl implements TagAdaptor {
 
         HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/tags/" + tagId;
+        String url = gatewayUrl + "/tags/" + tagId;
 
         restTemplate.exchange(
                 url,
@@ -135,7 +135,7 @@ public class TagAdaptorImpl implements TagAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/tags/" + tagId;
+        String url = gatewayUrl + "/tags/" + tagId;
 
         restTemplate.exchange(
                 url,
