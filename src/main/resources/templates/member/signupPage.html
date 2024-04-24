@@ -5,11 +5,12 @@
 <head>
     <title>회원가입 페이지</title>
     <link href="/static/css/signup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
 <div layout:fragment="content">
-    <form th:action th:object="${signupForm}" method="post">
+    <form th:action th:object="${signupForm}" method="post" onsubmit="return signupSubmit()">
         <h3>정보입력</h3>
         <div>
             <table border="1" summary>
@@ -26,9 +27,9 @@
                         <input type="text" id="username"
                                class="text"
                                th:field="*{userName}"
-                               placeholder="아이디"/>
+                               placeholder="아이디" required/>
                         <div class="username-unUsable hide word" style="color:red;">사용중인 아이디입니다.</div>
-                        <div class="username-Usable hide word" style="color:red;">사용가능한 아이디입니다.</div>
+                        <div class="username-usable hide word" style="color:red;">사용가능한 아이디입니다.</div>
                         <div class="username-invalid hide word" style="color:red;"> 형식이 올바르지
                             않습니다.
                         </div>
@@ -38,7 +39,7 @@
                 <tr>
                     <th scope="row" for="password" class="word">비밀번호</th>
                     <td style="display : flex">
-                        <input type="password" id="password" class="text" th:field="*{password}" placeholder="비밀번호"/>
+                        <input type="password" id="password" class="text" th:field="*{password}" placeholder="비밀번호" required/>
                         <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
                         <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
                     </td>
@@ -46,23 +47,23 @@
                 <tr>
                     <th scope="row" for="passwordCheck" class="word">비밀번호 재확인</th>
                     <td style="display : flex">
-                        <input type="password" id="passwordCheck" class="text" placeholder="비밀번호"/>
+                        <input type="password" id="passwordCheck" class="text" placeholder="비밀번호" required/>
                         <div class="password-incorrect hide word" style="color:red;"> 비밀번호가 일치하지 않습니다.</div>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row" for="name" class="word">이름</th>
                     <td style="display : flex">
-                        <input type="text" id="name" class="text" th:field="*{name}" placeholder="이름"/>
+                        <input type="text" id="name" class="text" th:field="*{name}" placeholder="이름" required/>
                         <div class="name-invalid hide word" style="color:red;"> 영어/한글 2-20자로 작성해주십시오.</div>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row" for="nickname" class="word">닉네임</th>
                     <td style="display : flex">
-                        <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임"/>
+                        <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임" required/>
                         <div class="nickname-unUsable hide word" style="color:red;">사용중인 닉네임입니다.</div>
-                        <div class="nickname-Usable hide word" style="color:red;">사용가능한 닉네임입니다.</div>
+                        <div class="nickname-usable hide word" style="color:red;">사용가능한 닉네임입니다.</div>
                         <div class="nickname-invalid hide word" style="color:red;"> 한글/영어/숫자/'_'/'.' 2-10자로 작성해주십시오.
                         </div>
                     </td>
@@ -70,9 +71,10 @@
                 <tr>
                     <th scope="row" for="email" class="word">이메일</th>
                     <td style="display : flex">
-                        <input type="text" id="emailId" class="text"/>
+                        <input type="hidden" id="email" name="email" for="email" />
+                        <input type="text" id="emailId" class="text" required/>
                         <div style="padding-top: 10px;padding-bottom: 10px"> @</div>
-                        <input type="text" id="emailDomain" class="text"/>
+                        <input type="text" id="emailDomain" class="text" required/>
                         <select class="select text" title="이메일 도메인 주소 선택"
                                 onchange="setEmailDomain()">
                             <option value="">--선택--</option>
@@ -87,14 +89,15 @@
                 <tr>
                     <th scope="row" for="phoneNumber" class="word">전화번호</th>
                     <td style="display : flex">
-                        <input type="text" id="phoneNumber" class="text" th:field="*{phoneNumber}" placeholder="전화번호"/>
+                        <input type="text" id="phoneNumber" class="text" th:field="*{phoneNumber}" placeholder="전화번호" required/>
                         <div class="phoneNumber-invalid hide word" style="color:red;"> 전화번호를 입력해주십시오.</div>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row" for="birthday" class="word">생년월일</th>
                     <td style="display : flex">
-                        <label for="date" class="text" id="birthday" th:field="*{birthday}">날짜를 선택하세요:
+                        <label for="date" class="text">날짜를 선택하세요:
+                            <input type="hidden" id="birthday" th:field="*{birthday}"/>
                             <input type="date"
                                    id="date"
                                    min="1900-01-01">
@@ -109,7 +112,6 @@
                                 }
 
                                 // 오늘 날짜를 max 속성에 설정
-                                document.getElementById('date').setAttribute('max', getCurrentDate());
                                 document.getElementById('date').setAttribute('max', getCurrentDate());
                             </script>
                         </label>
