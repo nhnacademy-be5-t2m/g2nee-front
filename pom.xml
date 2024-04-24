@@ -136,8 +136,9 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>6.1.6</version>
+            <version>5.3.34</version>
         </dependency>
+
 
 
     </dependencies>
