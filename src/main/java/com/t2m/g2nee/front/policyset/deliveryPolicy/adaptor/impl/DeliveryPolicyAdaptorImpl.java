@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.policyset.deliveryPolicy.adaptor.impl;
 
 
-import static com.t2m.g2nee.front.utils.HttpHeadersUtil.getHttpHeaders;
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.policyset.deliveryPolicy.adaptor.DeliveryPolicyAdaptor;
 import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.request.DeliveryPolicySaveDto;
@@ -49,7 +49,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
 
     @Override
     public DeliveryPolicyInfoDto requestCreateDeliveryPolicy(DeliveryPolicySaveDto request) {
-        HttpEntity<DeliveryPolicySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
+        HttpEntity<DeliveryPolicySaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
         ResponseEntity<DeliveryPolicyInfoDto> response =
                 restTemplate.exchange(baseUrl, HttpMethod.POST, entity, DeliveryPolicyInfoDto.class);
 
@@ -62,7 +62,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
                 .path("/recentPolicy")
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<DeliveryPolicyInfoDto> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.GET, entity, DeliveryPolicyInfoDto.class);
 
@@ -75,7 +75,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
                 .queryParam("page", page)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<PageResponse<DeliveryPolicyInfoDto>> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.GET, entity, PAGE_TYPE_REF);
 

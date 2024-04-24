@@ -1,6 +1,6 @@
 package com.t2m.g2nee.front.policyset.pointPolicy.adaptor.impl;
 
-import static com.t2m.g2nee.front.utils.HttpHeadersUtil.getHttpHeaders;
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.policyset.pointPolicy.adaptor.PointPolicyAdaptor;
@@ -51,7 +51,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
 
     @Override
     public PointPolicyInfoDto requestCreatePointPolicy(PointPolicySaveDto request) {
-        HttpEntity<PointPolicySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
+        HttpEntity<PointPolicySaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
         ResponseEntity<PointPolicyInfoDto> response =
                 restTemplate.exchange(baseUrl, HttpMethod.POST, entity, PointPolicyInfoDto.class);
 
@@ -64,7 +64,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
                 .path("/"+pointPolicyId)
                 .build();
 
-        HttpEntity<PointPolicySaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
+        HttpEntity<PointPolicySaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
         ResponseEntity<PointPolicyInfoDto> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PUT, entity, PointPolicyInfoDto.class);
 
@@ -77,7 +77,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
                 .path("/"+pointPolicyId)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 
@@ -90,7 +90,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
                 .path("/"+pointPolicyId)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<PointPolicyInfoDto> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.GET, entity, PointPolicyInfoDto.class);
 
@@ -103,7 +103,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
                 .queryParam("page", page)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<PageResponse<PointPolicyInfoDto>> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.GET, entity, PAGE_TYPE_REF);
 

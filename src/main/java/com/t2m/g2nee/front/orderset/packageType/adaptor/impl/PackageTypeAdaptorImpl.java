@@ -1,6 +1,6 @@
 package com.t2m.g2nee.front.orderset.packageType.adaptor.impl;
 
-import static com.t2m.g2nee.front.utils.HttpHeadersUtil.getHttpHeaders;
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.orderset.packageType.adaptor.PackageTypeAdaptor;
@@ -46,7 +46,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
 
     @Override
     public PackageInfoDto requestCreatePackage(PackageSaveDto request) {
-        HttpEntity<PackageSaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
+        HttpEntity<PackageSaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
         ResponseEntity<PackageInfoDto> response =
                 restTemplate.exchange(baseUrl, HttpMethod.POST, entity, PackageInfoDto.class);
 
@@ -59,7 +59,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
                 .path("/"+packageId)
                 .build();
 
-        HttpEntity<PackageSaveDto> entity = new HttpEntity<>(request, getHttpHeaders());
+        HttpEntity<PackageSaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
         ResponseEntity<PackageInfoDto> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PUT, entity, PackageInfoDto.class);
 
@@ -72,7 +72,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
                 .path("/"+packageId)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<PackageInfoDto> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.GET, entity, PackageInfoDto.class);
 
@@ -85,7 +85,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
                 .queryParam("page", page)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<PageResponse<PackageInfoDto>> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.GET, entity, PAGE_TYPE_REF);
 
@@ -99,7 +99,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
                 .path("/"+packageId)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 
@@ -113,7 +113,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
                 .path("/"+packageId)
                 .build();
 
-        HttpEntity<String> entity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 

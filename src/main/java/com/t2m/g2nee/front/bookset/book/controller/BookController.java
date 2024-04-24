@@ -5,7 +5,7 @@ import static com.t2m.g2nee.front.token.util.JwtUtil.ACCESS_COOKIE;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
-import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
 import com.t2m.g2nee.front.utils.PageResponse;
