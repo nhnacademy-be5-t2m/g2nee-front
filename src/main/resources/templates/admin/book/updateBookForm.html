@@ -22,16 +22,13 @@
         <label for="title">제목 (한글)</label>
             <input type="text" id="title" name="title" class="form-control" pattern="^[[가-힣0-9a-zA-Z]+$" required
                th:value="${book != null ? book.title : ''}">
-            <div class="invalid-feedback">
-                한글, 영문, 숫자만 입력할 수 있습니다.
-            </div>
+
         </div>
 
+        <div class="form-group">
         <label for="engTitle">제목 (영어)</label>
         <input type="text" id="engTitle" name="engTitle" class="form-control" pattern="^[A-Za-z0-9]+$" required
                th:value="${book != null ? book.engTitle : ''}">
-        <div class="invalid-feedback">
-            영문, 숫자만 입력할 수 있습니다.
         </div>
 
         <div class="form-group">
@@ -179,8 +176,11 @@
         event.preventDefault();
     }
 
+    const url = 'http://133.186.208.183:8100/api/v1/shop';
+
+    //TODO: url 바꾸기
     function fetchChildrenCategories(categoryId, callback) {
-        fetch(`http://localhost:8081/shop/categories/${categoryId}/children`)
+        fetch(url + `/shop/categories/${categoryId}/children`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -196,7 +196,7 @@
     }
 
     function fetchRootCategories(callback) {
-        fetch('http://localhost:8081/shop/categories')
+        fetch(url + '/categories')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

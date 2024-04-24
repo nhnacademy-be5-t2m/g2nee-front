@@ -1,17 +1,10 @@
 package com.t2m.g2nee.front.bookset.role.service;
 
+import com.t2m.g2nee.front.bookset.role.adaptor.RoleAdaptor;
 import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 
 /**
@@ -21,29 +14,17 @@ import org.springframework.web.client.RestTemplate;
  * @since : 1.0
  */
 @Service
-@RequiredArgsConstructor
 public class RoleService {
 
-    private final RestTemplate restTemplate;
-    @Value("${g2nee.gateway}")
-    String gatewayUrl;
+    private final RoleAdaptor roleAdaptor;
+
+    public RoleService(RoleAdaptor roleAdaptor) {
+        this.roleAdaptor = roleAdaptor;
+    }
 
     public List<RoleDto.Response> getAllRole() {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/shop/roles/list";
-
-        return restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<List<RoleDto.Response>>() {
-                }
-        ).getBody();
+        return roleAdaptor.getAllRole();
     }
 
     /**
@@ -53,20 +34,7 @@ public class RoleService {
      */
     public void registerRole(RoleDto.Request request) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
-
-        String url = gatewayUrl + "/shop/roles";
-
-        restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                requestEntity,
-                String.class
-        );
-
+        roleAdaptor.registerRole(request);
 
     }
 
@@ -78,20 +46,7 @@ public class RoleService {
      */
     public PageResponse<RoleDto.Response> getAllRole(int page) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/shop/roles?page=" + page;
-
-        return restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<PageResponse<RoleDto.Response>>() {
-                }
-        ).getBody();
+        return roleAdaptor.getAllRole(page);
     }
 
     /**
@@ -101,20 +56,7 @@ public class RoleService {
      * @param request 수정할 정보가 담긴 객체
      */
     public void updateRole(Long roleId, RoleDto.Request request) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
-
-        String url = gatewayUrl + "/shop/roles/" + roleId;
-
-        restTemplate.exchange(
-                url,
-                HttpMethod.PATCH,
-                requestEntity,
-                String.class
-        );
+        roleAdaptor.updateRole(roleId, request);
 
     }
 
@@ -124,20 +66,6 @@ public class RoleService {
      * @param roleId 역할 아이디
      */
     public void deleteRole(Long roleId) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/shop/roles/" + roleId;
-
-        restTemplate.exchange(
-                url,
-                HttpMethod.DELETE,
-                requestEntity,
-                String.class
-        );
-
+        roleAdaptor.deleteRole(roleId);
     }
 }

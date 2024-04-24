@@ -199,7 +199,7 @@ public class BookAdminController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model) {
 
-        BookDto.Response response = bookGetService.getBook(bookId);
+        BookDto.Response response = bookGetService.getBook(null,bookId);
         model.addAttribute("book", response);
 
         return "admin/book/bookDetail";

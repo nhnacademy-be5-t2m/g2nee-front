@@ -33,14 +33,13 @@ public class BookDto {
 
         @Pattern(regexp = "^[가-힣 0-9a-zA-Z!@#$%^&*(),.?\":{}|<>]+$", message = "책 이름을 입력해주세요.")
         private String title;
-        @Pattern(regexp = "^[0-9a-zA-Z\\s!@#$%^&*(),.?\":{}|<>]+$", message = "책 영문 이름을 입력해주세요.")
+        @Pattern(regexp = "^[A-Za-z 0-9]+$", message = "책 영문 이름을 입력해주세요")
         private String engTitle;
         @NotNull(message = "목차를 입력해주세요")
         private String bookIndex;
         @NotNull(message = "설명은 공백 없이 입력해주세요")
         private String description;
         @NotNull
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate publishedDate;
         @Pattern(regexp = "\\d+", message = "가격은 숫자로 입력해주세요")
         private int price;
@@ -88,6 +87,8 @@ public class BookDto {
         private List<TagDto.Response> tagList;
         private String publisherName;
         private String publisherEngName;
+        private boolean isLiked;
+        private Double scoreAverage;
     }
 
     @Getter
@@ -105,10 +106,14 @@ public class BookDto {
         private LocalDate publishedDate;
         private int price;
         private int salePrice;
-        private BookStatus bookStatus;
+        private int viewCount;
         private String publisherName;
         private String publisherEngName;
+        private BookStatus bookStatus;
         private List<BookContributorDto.Response> contributorRoleList;
+        private boolean isLiked;
+        private Long reviewCount;
+        private Double scoreAverage;
     }
 
     @Getter

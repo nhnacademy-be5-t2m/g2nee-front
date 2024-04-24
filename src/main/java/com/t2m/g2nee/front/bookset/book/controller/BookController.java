@@ -1,13 +1,17 @@
 package com.t2m.g2nee.front.bookset.book.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static com.t2m.g2nee.front.token.util.JwtUtil.ACCESS_COOKIE;
+
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.token.util.JwtUtil;
+import com.t2m.g2nee.front.utils.CookieUtil;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +42,8 @@ public class BookController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model) {
 
-        BookDto.Response response = bookGetService.getBook(bookId);
+        Long memberId = getMemberIdByCookie();
+        BookDto.Response response = bookGetService.getBook(memberId,bookId);
 
         // 책의 카테고리 정보를 가져옵니다.
         List<Long> categoryIdList = response.getCategoryList().stream()
@@ -49,6 +54,7 @@ public class BookController {
 
         model.addAttribute("bookList", bookList);
         model.addAttribute("book", response);
+        model.addAttribute("memberId", memberId);
 
         return "book/bookDetail";
     }
@@ -58,7 +64,7 @@ public class BookController {
      * 메인 페이지 최근 발매된 책 6권을 조회하는 컨트롤러
      */
     @GetMapping
-    public String getNewBooks(Model model) throws JsonProcessingException {
+    public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -84,10 +90,14 @@ public class BookController {
             sort = "viewCount";
         }
 
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, keyword, sort);
+        Long memberId = getMemberIdByCookie();
+
+        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page,memberId, keyword, sort);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
-        model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sort", sort);
+        model.addAttribute("memberId", memberId);
 
 
         return "book/bookList";
@@ -100,7 +110,6 @@ public class BookController {
      * @param page       페이지 번호
      * @param sort       정렬 조건
      * @param categoryId 카테고리 아이디
-     * @throws JsonProcessingException
      */
     @GetMapping("/search/category/{categoryId}")
     public String getBookBySearchByCategoryId(Model model,
@@ -108,18 +117,22 @@ public class BookController {
                                               @RequestParam(defaultValue = "1") int page,
                                               @RequestParam(required = false) String sort,
                                               @PathVariable("categoryId") Long categoryId)
-            throws JsonProcessingException {
+    {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
         }
 
+        Long memberId = getMemberIdByCookie();
+
         PageResponse<BookDto.ListResponse> bookPage =
-                bookGetService.getBooksBySearchByCategory(page, sort, keyword, categoryId);
+                bookGetService.getBooksBySearchByCategory(page,memberId, sort, keyword, categoryId);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
-        model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sort",sort);
         model.addAttribute("category", categoryService.getCategory(categoryId));
+        model.addAttribute("memberId", memberId);
 
         return "book/bookListByCategory";
 
@@ -132,28 +145,38 @@ public class BookController {
      * @param page       페이지 번호
      * @param sort       정렬 기준
      * @param categoryId 카테고리 아이디
-     * @throws JsonProcessingException
      */
     @GetMapping("/category/{categoryId}")
     public String getBookByCategoryId(Model model,
                                       @RequestParam(defaultValue = "1") int page,
                                       @RequestParam(required = false) String sort,
                                       @PathVariable("categoryId") Long categoryId)
-            throws JsonProcessingException {
+    {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
         }
 
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksByCategory(page, sort, categoryId);
+        Long memberId = getMemberIdByCookie();
+
+        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksByCategory(page,memberId, sort, categoryId);
         model.addAttribute("bookPage", bookPage);
-        model.addAttribute("sort", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("sort", sort);
         model.addAttribute("category", categoryService.getCategory(categoryId));
         model.addAttribute("categoryId", categoryId);
+        model.addAttribute("memberId", memberId);
 
 
         return "book/bookListByCategory";
 
+    }
+
+    private Long getMemberIdByCookie(){
+        Cookie cookie = CookieUtil.findCookie(ACCESS_COOKIE);
+        if (cookie == null) return null;
+        String accessToken = cookie.getValue();
+        return JwtUtil.getMemberId(accessToken);
     }
 
 }
