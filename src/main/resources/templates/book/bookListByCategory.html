@@ -182,6 +182,8 @@
 </html>
 
 <script>
+
+    const url = 'http://133.186.208.183:8100/api/v1/shop';
     document.querySelector('.btn.btn-sm.text-dark.p-0').addEventListener('click', function (event) {
         event.preventDefault();
         let memberId = this.dataset.memberid;
@@ -190,7 +192,7 @@
         if (memberId === undefined) {
             alert('찜은 회원만 가능합니다');
         } else {
-            fetch('http://localhost:8081/api/v1/shop/likes', {
+            fetch(url + '/likes', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

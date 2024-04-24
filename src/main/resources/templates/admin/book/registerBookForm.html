@@ -149,6 +149,8 @@
 </html>
 <script th:inline="javascript">
 
+    const url = 'http://133.186.208.183:8100/api/v1/shop';
+
     function addSelection(select, addSelection) {
         const container = document.getElementById(addSelection);
         const selection = document.getElementById(select)
@@ -168,7 +170,7 @@
     }
 
     function fetchChildrenCategories(categoryId, callback) {
-        fetch(`http://localhost:8081/api/v1/shop/categories/${categoryId}/children`)
+        fetch(url + `/categories/${categoryId}/children`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -183,9 +185,8 @@
             });
     }
 
-    //TODO: url 바꾸기
     function fetchRootCategories(callback) {
-        fetch('http://localhost:8081/api/v1/shop/categories')
+        fetch(url + '/shop/categories')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
