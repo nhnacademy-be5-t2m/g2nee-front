@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<head>
+    <title>배송비 정책</title>
+</head>
+
+<body>
+<div layout:fragment="content"  class="container my-4">
+    <h2 class="text-center">배송비 목록</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>배송비</th>
+            <th>무료 배송 기준</th>
+            <th>상태</th>
+            <th>정책 변경 날짜</th>
+        </tr>
+        </thead>
+
+        <tbody th:each="deliveryPolicy : ${deliveryPolicies.data}">
+        <tr>
+            <td>
+                <span th:text="${deliveryPolicy.deliveryFee}"></span>
+            </td>
+            <td>
+                <span th:text="${deliveryPolicy.freeDeliveryStandard}"></span>
+            </td>
+            <td>
+                <span th:if="${deliveryPolicy.isActivated}">
+                    <span class="text-success">활성</span>
+                </span>
+                <span th:unless="${deliveryPolicy.isActivated}">
+                    <span >비활성</span>
+                </span>
+            </td>
+            <td>
+                <span th:text="${deliveryPolicy.changedDate}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br /><br />
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${deliveryPolicies.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${deliveryPolicies.currentPage - 1 }}"><</a>
+            </li>
+            <li th:each="pageButton : ${#numbers.sequence(deliveryPolicies.startPage,deliveryPolicies.endPage)}"
+                th:class="${deliveryPolicies.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${deliveryPolicies.currentPage == deliveryPolicies.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${deliveryPolicies.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${deliveryPolicies.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+
+    <br /><br />
+    <a th:href="@{/admin/deliveryPolicies/save}" class="btn btn-primary">새 배송비 정책</a>
+
+
+</div>
+</body>
+</html>
