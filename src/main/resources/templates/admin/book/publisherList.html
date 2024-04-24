@@ -58,11 +58,13 @@
             <form th:action="@{/admin/publishers}" th:method="post">
                 <div class="mb-3">
                     <label for="publisherName" class="form-label">출판사 이름</label>
-                    <input type="text" class="form-control-sm" id="publisherName" name="publisherName" pattern="^[가-힣0-9a-zA-Z\s]+$" required>
+                    <input type="text" class="form-control-sm" id="publisherName" name="publisherName"
+                           pattern="^[가-힣0-9a-zA-Z\s]+$" required>
                 </div>
                 <div class="mb-3">
                     <label for="publisherEngName" class="form-label">출판사 영문 이름</label>
-                    <input type="text" class="form-control-sm" id="publisherEngName" name="publisherEngName" pattern="^[0-9a-zA-Z\s]+$" required>
+                    <input type="text" class="form-control-sm" id="publisherEngName" name="publisherEngName"
+                           pattern="^[0-9a-zA-Z\s]+$" required>
                 </div>
                 <div class="d-flex justify-content-start mb-3">
                     <button type="submit" class="btn btn-primary">등록</button>
@@ -98,7 +100,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="publisherModifyEngName" class="form-label">출판사 영문 이름</label>
-                                        <input type="text" class="form-control form-control-sm" id="publisherModifyEngName"
+                                        <input type="text" class="form-control form-control-sm"
+                                               id="publisherModifyEngName"
                                                name="publisherEngName" pattern="^[A-Za-z0-9]+$">
                                     </div>
                                     <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>

@@ -16,7 +16,8 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
                         <div class="carousel-inner border">
-                            <div th:each="image, index : ${book.detailImageUrl}" th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                            <div th:each="image, index : ${book.detailImageUrl}"
+                                 th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
                                 <img class="w-100 h-100" th:src="${image}" alt="Image">
                             </div>
                         </div>
@@ -33,11 +34,20 @@
 
             <!-- 책 세부 내용 start -->
             <div class="col-lg-7 pb-5">
-                <h3 class="font-weight-semi-bold" th:text="${book.title}"></h3>
+                <h3 class="font-weight-semi-bold">
+                    <span th:text="${book.title}"></span>
+                    <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
+                </h3>
                 <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
                       th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
-                <div class="mb-3" th:text="'출판사 : ' + ${book.publisherName + ' ' + book.publishedDate}"></div>
+                <br/>
+                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                <div>
+                            <span th:each="tag : ${book.tagList}">
+                                <span th:text="${tag.tagName}"></span>
+                            </span>
+                </div>
                 <div class="d-flex mb-3">
                     <!-- 평점 -->
                     <div class="text-primary mr-2">
@@ -50,8 +60,10 @@
                     <!-- 리뷰가 몇개인지 (눌렀을 때 리뷰페이지로 갈수있게) -->
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4" th:text="${book.salePrice}+' won'"></h3>
-                <p class="mb-4" th:text="${book.description}"></p>
+                <hr/>
+                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></h4>
+                <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <hr/>
 
                 <!-- 구매할 책 갯수 설정 -->
                 <div class="d-flex align-items-center mb-4 pt-2">
@@ -78,28 +90,28 @@
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                     <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Information</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Reviews (0)</a>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">기본 정보</h4>
-                        <span th:text="${book.pages} +'쪽'"></span>
-                        <span th:text="'ISBN : ' + ${book.isbn}"></span>
+                        <h4 class="mb-3">도서 정보</h4>
+                        <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
+                        <p th:text="'ISBN : ' + ${book.isbn}"></p>
                         <div th:each="categoryList : ${book.categoryList}">
                             <span th:each="category, index : ${categoryList}" th:inline="text">
                              <span th:style="${index.last}? 'font-weight: bold' : ''"
                                    th:text="${category.categoryName + (index.last ? '' : ' > ')}"></span>
                             </span>
                         </div>
-                        <div text="태그 : ">
-                            <span th:each="tag : ${book.tagList}">
-                                <span class="badge-info" th:text="${tag.tagName}"></span>
-                            </span>
+                        <div class="info"></div>
+                        <hr/>
+                        <h4 class="mb-3">책 소개</h4>
+                        <p class="mb-4" th:text="${book.description}"></p>
+                        <hr/>
+                        <div>
+                            <h4 class="mb-3">목차</h4>
+                            <p th:text="${book.bookIndex}"></p>
                         </div>
-                    </div>
-                    <hr/>
-                    <div>
-                        <h4 class="mb-3">목차</h4>
-                        <p th:text="${book.bookIndex}"></p>
                     </div>
                 </div>
             </div>

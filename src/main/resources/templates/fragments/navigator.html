@@ -24,7 +24,8 @@
                                     <i class="fa fa-angle-down float-right mt-1"></i></a>
 
                                 <!--sub category 반복-->
-                                <div th:if="${rootCategory.children}" class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <div th:if="${rootCategory.children}"
+                                     class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                     <div th:each="child : ${rootCategory.children}">
                                         <a class="dropdown-item"
                                            th:href="@{'/books/category/' + ${child.categoryId}}">

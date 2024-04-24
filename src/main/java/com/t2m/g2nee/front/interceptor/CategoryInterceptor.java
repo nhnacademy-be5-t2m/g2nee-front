@@ -1,15 +1,19 @@
 package com.t2m.g2nee.front.interceptor;
 
-
-import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.category.dto.response.CategoryHierarchyDto;
+import com.t2m.g2nee.front.category.service.CategoryService;
 import java.util.Collections;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+
 /**
  * 카테고리 인터셉터를 통해 카테고리 목록을 계층으로 가져옴
  * 카테고리 목록은 항상 필요하기 때문...
@@ -18,6 +22,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @author : 김수빈
  * @since : 1.0
  */
+@Component
+@RequiredArgsConstructor
 @Slf4j
 public class CategoryInterceptor implements HandlerInterceptor {
 
@@ -36,7 +42,7 @@ public class CategoryInterceptor implements HandlerInterceptor {
         Cache cache = cacheManager.getCache("categories");
         if (cache != null) {
             Cache.ValueWrapper rootCache = cache.get("root");
-            if (rootCache == null || rootCache.get() == null || rootCache.get().equals(Collections.emptyList())){
+            if (rootCache == null || rootCache.get() == null || rootCache.get().equals(Collections.emptyList())) {
                 //캐시에 있는 값이 null이거나 빈 값이면 캐시를 지워 다시 받게 해줌
                 cache.evict("root");
                 log.info("캐시 삭제");

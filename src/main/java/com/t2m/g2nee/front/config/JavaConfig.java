@@ -1,5 +1,6 @@
 package com.t2m.g2nee.front.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.t2m.g2nee.front.exception.CustomExceptionHandler;
@@ -20,6 +21,7 @@ public class JavaConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
