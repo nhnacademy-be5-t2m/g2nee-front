@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<head>
+    <title>도서 목록</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+        <h2 class="text-center mb-4">도서 목록</h2>
+        <div class="row justify-content-center">
+            <div th:each="book : ${bookPage.data}" class="col-md-10 mb-4">
+                <div class="card" style="width: 120%">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a th:href="@{'/admin/books/' + ${book.bookId}}">
+                                <img th:src="${book.thumbnailImageUrl}" class="card-img-left img-fluid w-100 h-100"
+                                     alt="thumbnail">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <a th:href="@{'/admin/books/' + ${book.bookId}}">
+                                    <h5 class="card-title" th:href="@{'/admin/books/' + ${book.bookId}}"
+                                        th:text="${book.title}"></h5>
+                                </a>
+                                <p class="card-text">
+                                <div th:each="contributorRole : ${book.contributorRoleList}">
+                                    <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
+                                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                                    </span>
+                                </div>
+                                출판사: <span th:text="${book.publisherName} + ' ' + ${book.publishedDate}"></span><br>
+                                판매가: <span th:text="${book.salePrice}"></span><br>
+                                정가: <span th:text="${book.price}"></span><br>
+                                </p>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-2">
+                                        <form th:action="@{'/admin/books/updateForm/' + ${book.bookId} + '?page=' + ${bookPage.currentPage}}"
+                                              th:method="get">
+                                            <input type="hidden" name="page" th:value="${bookPage.currentPage}">
+                                            <button type="submit" class="btn btn-primary">수정</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <form th:action="@{'/admin/books/status/' + ${book.bookId}}" th:method="patch"
+                                              style="display: flex;">
+                                            <select id="statusSelect" name="bookStatus" class="form-control mr-2">
+                                                <option th:text="${book.bookStatus.status}"></option>
+                                                <option th:each="status : ${bookStatus}" th:value="${status}"
+                                                        th:text="${status.status}"
+                                                        th:unless="${status == book.bookStatus}"></option>
+                                            </select>
+                                            <input type="hidden" name="page" th:value="${bookPage.currentPage}">
+                                            <button type="submit" class="btn btn-primary">상태 변경</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li>
+                            <a class="page-link" th:href="@{'?page=1'}">≪</a>
+                        </li>
+                        <li th:class="${bookPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage - 1 }}"><</a>
+                        </li>
+                        <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}"
+                            th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+                        </li>
+                        <li th:class="${bookPage.currentPage == bookPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage + 1}}">></a>
+                        </li>
+                        <li>
+                            <a class="page-link" th:href="@{'?page=' + ${bookPage.totalPage}}">≫</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

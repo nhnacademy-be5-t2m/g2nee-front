@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<head>
+    <title>포인트 정책 관리</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2 class="text-center">포인트 정책 목록</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>정책 이름</th>
+            <th>정책 타입</th>
+            <th>적립 수치</th>
+            <th>상태</th>
+            <th></th>
+            <th>정책 변경 날짜</th>
+        </tr>
+        </thead>
+
+        <tbody th:each="pointPolicy : ${pointPolicies.data}">
+        <tr>
+            <td>
+                <span th:text="${pointPolicy.policyName}"></span>
+            </td>
+            <td>
+                <span th:text="${pointPolicy.policyType}"></span>
+            </td>
+            <td>
+                <span th:text="${pointPolicy.amount}"></span>
+            </td>
+            <td>
+                <span th:if="${pointPolicy.isActivated}">
+                        <form th:action="@{'/admin/pointPolicies/delete/' + ${pointPolicy.pointPolicyId}}" th:method="patch" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">활성</button>
+                        </form>
+                    </span>
+                <span th:unless="${pointPolicy.isActivated}">
+                    <span >비활성</span>
+                </span>
+            </td>
+            <td>
+                <a th:if="${pointPolicy.isActivated}"
+                   th:href="@{'/admin/pointPolicies/modify/' + ${pointPolicy.pointPolicyId}}" class="btn btn-sm btn-primary">수정</a>
+            </td>
+            <td>
+                <span th:text="${pointPolicy.changedDate}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br /><br />
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${pointPolicies.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pointPolicies.currentPage - 1 }}"><</a>
+            </li>
+            <li th:each="pageButton : ${#numbers.sequence(pointPolicies.startPage,pointPolicies.endPage)}"
+                th:class="${pointPolicies.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${pointPolicies.currentPage == pointPolicies.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pointPolicies.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${pointPolicies.totalPage}}"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <br /><br />
+    <a th:href="@{/admin/pointPolicies/save}" class="btn btn-primary">새 포인트 정책</a>
+</div>
+</body>
+</html>

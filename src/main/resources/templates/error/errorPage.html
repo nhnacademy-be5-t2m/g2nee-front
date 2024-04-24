@@ -1,0 +1,38 @@
+<!--
+에러 페이지
+간단하게 상테, 메시지를 보여주고
+이전 페이지로 갈 수 있는 버튼 존재
+-->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
+
+<head>
+    <title>Error</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <img src="/static/img/errorImage.png" width="200" height="300"/>
+            <div style="margin-left: 20px">
+                <h3>
+                    <span th:text="${error.httpStatus}"/> <br>
+                </h3>
+                <p>
+                    <span th:text="${error.message}"/> <br><br>
+                </p>
+                <a style="color:red" href="javascript:history.back();">이전 페이지로 돌아가기</a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

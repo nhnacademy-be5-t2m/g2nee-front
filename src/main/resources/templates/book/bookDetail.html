@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
+
+<head>
+    <title>도서 상세</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <!-- Shop Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="row px-xl-5">
+            <!-- 책 사진 설정 (여러개 가능) start -->
+            <div class="col-lg-5 pb-5">
+                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner border">
+                        <div th:each="image, index : ${book.detailImageUrl}"
+                             th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                            <img class="w-100 h-100" th:src="${image}" alt="Image">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                        <i class="fa fa-2x fa-angle-left text-dark"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                        <i class="fa fa-2x fa-angle-right text-dark"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- 책 사진 설정 (여러개 가능) end -->
+
+            <!-- 책 세부 내용 start -->
+            <div class="col-lg-7 pb-5">
+                <h3 class="font-weight-semi-bold">
+                    <span th:text="${book.title}"></span>
+                    <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
+                </h3>
+                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
+                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                </span>
+                <br/>
+                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                <div>
+                            <span th:each="tag : ${book.tagList}">
+                                <span th:text="${tag.tagName}"></span>
+                            </span>
+                </div>
+                <div class="d-flex mb-3">
+                    <!-- 평점 -->
+                    <div class="text-primary mr-2">
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star-half-alt"></small>
+                        <small class="far fa-star"></small>
+                    </div>
+                    <!-- 리뷰가 몇개인지 (눌렀을 때 리뷰페이지로 갈수있게) -->
+                    <small class="pt-1">(50 Reviews)</small>
+                </div>
+                <hr/>
+                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></h4>
+                <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <hr/>
+
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                   <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
+                         style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
+                    <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
+                          style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
+                </div>
+                <!-- 구매할 책 갯수 설정 -->
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-minus">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control bg-secondary text-center" value="1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-plus">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
+                </div>
+            </div>
+        </div>
+        <!-- 책 세부내용 start -->
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Information</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Reviews (0)</a>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <h4 class="mb-3">도서 정보</h4>
+                        <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
+                        <p th:text="'ISBN : ' + ${book.isbn}"></p>
+                        <div th:each="categoryList : ${book.categoryList}">
+                            <span th:each="category, index : ${categoryList}" th:inline="text">
+                             <span th:style="${index.last}? 'font-weight: bold' : ''"
+                                   th:text="${category.categoryName + (index.last ? '' : ' > ')}"></span>
+                            </span>
+                        </div>
+                        <div class="info"></div>
+                        <hr/>
+                        <h4 class="mb-3">책 소개</h4>
+                        <p class="mb-4" th:text="${book.description}"></p>
+                       <hr/>
+                        <div>
+                            <h4 class="mb-3">목차</h4>
+                            <p th:text="${book.bookIndex}"></p>
+                        </div>
+                    </div>
+
+                    <!-- 리뷰 list start -->
+                    <div class="tab-pane fade" id="tab-pane-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4">리뷰 목록</h4>
+                                <div class="media mb-4">
+                                    <!-- 리뷰 사진 등록 가능 -->
+                                    <img src="/static/img/product-1.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+                                         style="width: 45px;">
+                                    <div class="media-body">
+                                        <h6>리뷰 작성자 닉네임<small> - <i>리뷰 작성 날짜</i></small></h6>
+                                        <div class="text-primary mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <p>[리뷰내용]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="mb-4">리뷰작성</h4>
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">나의 평점 :</p>
+                                    <div class="text-primary">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="review-image">사진 등록</label>
+                                        <textarea id="review-image" cols="30" rows="5" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message">리뷰 내용</label>
+                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <input type="submit" value="리뷰 작성" class="btn btn-primary px-3">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Detail End -->
+
+
+    <!-- 같은 카테고리 추천책 start -->
+    <div class="container-fluid py-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">인기 있는 추천 책 리스트</span></h2>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="owl-carousel related-carousel">
+                    <div th:each="book : ${bookList}" class="card product-item border-0">
+                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                            <img class="img-fluid w-100" th:src="${book.thumbnailImageUrl}" alt="thumbnail">
+                        </div>
+                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                            <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between bg-light border">
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>상세보기</a>
+                            <a href="" class="btn btn-sm text-dark p-0"><i
+                                    class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 같은 카테고리 추천책 end -->
+</div>
+</body>
+
+</html>

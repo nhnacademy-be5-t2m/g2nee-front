@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<head>
+    <title>포장지 관리</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2 class="text-center">포장지 목록</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>포장지 명</th>
+            <th>가격</th>
+            <th>상태</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody th:each="package : ${packages.data}">
+        <tr>
+            <td>
+                <span th:text="${package.name}"></span>
+            </td>
+            <td>
+                <span th:text="${package.price}"></span>
+            </td>
+            <td>
+                <span th:if="${package.isActivated}">
+                        <form th:action="@{'/admin/packages/delete/' + ${package.packageId}}" th:method="patch" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">활성</button>
+                        </form>
+                    </span>
+                <span th:unless="${package.isActivated}">
+                        <form th:action="@{'/admin/packages/activate/' + ${package.packageId}}" th:method="patch" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
+                        </form>
+                    </span>
+            </td>
+            <td>
+                <a th:href="@{'/admin/packages/modify/' + ${package.packageId}}" class="btn btn-sm btn-primary">수정</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br /><br />
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${packages.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${packages.currentPage - 1 }}"><</a>
+            </li>
+            <li th:each="pageButton : ${#numbers.sequence(packages.startPage,packages.endPage)}"
+                th:class="${packages.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${packages.currentPage == packages.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${packages.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${packages.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+
+    <br /><br />
+    <a th:href="@{/admin/packages/save}" class="btn btn-primary">새 포장지</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>도서 수정</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+    <h2>도서 수정</h2>
+
+    <form th:action="@{'/admin/books/' + ${book.bookId} + '?page=' +${page}}" th:method="patch"
+          enctype="multipart/form-data">
+
+        <p>이미지, 출판사, 기여자, 역할, 태그는 수정할 사항이 없으면 그대로 두시면 됩니다.</p>
+
+        <div class="form-group">
+        <label for="title">제목 (한글)</label>
+            <input type="text" id="title" name="title" class="form-control" pattern="^[[가-힣0-9a-zA-Z]+$" required
+               th:value="${book != null ? book.title : ''}">
+
+        </div>
+
+        <div class="form-group">
+        <label for="engTitle">제목 (영어)</label>
+        <input type="text" id="engTitle" name="engTitle" class="form-control" pattern="^[A-Za-z0-9]+$" required
+               th:value="${book != null ? book.engTitle : ''}">
+        </div>
+
+        <div class="form-group">
+        <label for="bookIndex">목차</label>
+            <textarea type="text" id="bookIndex" name="bookIndex" class="form-control" required
+                  th:text="${book != null ? book.bookIndex : ''}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="form-label">설명</label>
+            <textarea id="description" name="description" class="form-control" required
+                      th:text="${book != null ? book.description : ''}"></textarea>
+        </div>
+
+
+        <div class="form-group">
+        <label for="thumbnail">썸네일 이미지</label>
+            <input type="file" id="thumbnail" name="thumbnail" class="form-control-file" accept="image/*">
+        </div>
+
+        <div class="form-group">
+        <label for="details">세부 이미지</label>
+            <input type="file" id="details" name="details" class="form-control-file" accept="image/*" multiple>
+        </div>
+
+        <div class="form-group">
+        <label for="publishedDate">출판일</label>
+            <input type="date" id="publishedDate" name="publishedDate" class="form-control" required
+               th:value="${book != null ? book.publishedDate : ''}">
+        </div>
+
+        <div class="form-group">
+        <label for="price">가격</label>
+            <input type="number" id="price" name="price" class="form-control" pattern="\d+" required
+               th:value="${book != null ? book.price : ''}">
+        </div>
+
+        <div class="form-group">
+        <label for="salePrice">할인 가격</label>
+            <input type="number" id="salePrice" name="salePrice" class="form-control" pattern="\d+" required
+               th:value="${book != null ? book.salePrice : ''}">
+        </div>
+
+        <div class="form-group">
+        <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" name="isbn" class="form-control" required
+                   th:value="${book != null ? book.isbn : ''}">
+        </div>
+
+        <div class="form-group">
+        <label for="pages">페이지 수</label>
+            <input type="number" id="pages" name="pages" class="form-control" pattern="\d+" required
+               th:value="${book != null ? book.pages : ''}">
+        </div>
+
+        <div class="form-group">
+        <label for="quantity">수량</label>
+            <input type="number" id="quantity" name="quantity" class="form-control" pattern="\d+" required
+               th:value="${book != null ? book.quantity : ''}">
+        </div>
+
+        <div class="form-group">
+            <label for="publisherSelect" class="form-label">출판사 선택</label>
+            <select id="publisherSelect" name="publisherId" class="form-control">
+                <option value="">출판사를 선택해주세요</option>
+                <option th:each="publisher : ${publisherList}"
+                        th:value="${publisher.getPublisherId()}"
+                        th:text="${publisher.getPublisherName()}"></option>
+            </select>
+        </div>
+        <br>
+
+        <div id="categoryContainer">
+        </div>
+        <button class="btn btn-primary btn-sm float-right" type="button" id="removeButton">-</button>
+        <button class="btn btn-primary btn-sm float-right" type="button" id="addButton">+</button>
+
+
+        <div class="form-group">
+            <label for="contributorSelect" class="form-label">기여자 선택</label>
+            <div id="addContributorSelection">
+                <select id="contributorSelect" name="contributorIdList" class="form-control">
+                    <option value="">기여자를 선택해주세요</option>
+                    <option th:each="contributor : ${contributorList}"
+                            th:value="${contributor.getContributorId()}"
+                            th:text="${contributor.getContributorName()}"></option>
+                </select>
+
+                <label for="roleSelect" class="form-label">역할 선택</label>
+                <select id="roleSelect" name="roleIdList" class="form-control">
+                    <option value="">역할을 선택해주세요</option>
+                    <option th:each="role : ${roleList}"
+                            th:value="${role.getRoleId()}"
+                            th:text="${role.getRoleName()}">
+                    </option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-sm float-right"
+                    onclick="addSelection('contributorSelect','addContributorSelection');addSelection('roleSelect','addContributorSelection')">
+                +
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label for="tagSelect" class="form-label">태그 선택</label>
+            <div id="addTagSelection">
+                <select id="tagSelect" name="tagIdList" class="form-control" >
+                    <option value="">태그를 선택해주세요</option>
+                    <option th:each="tag : ${tagList}"
+                            th:value="${tag.getTagId()}"
+                            th:text="${tag.getTagName()}"></option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-sm float-right"
+                    onclick="addSelection('tagSelect','addTagSelection')">+
+            </button>
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" th:value="수정">
+    </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script th:inline="javascript">
+
+    function addSelection(select, addSelection) {
+        const container = document.getElementById(addSelection);
+        const selection = document.getElementById(select)
+        const cloneSelection = selection.cloneNode(true);
+
+        const newId = select + '_' + (container.children.length + 1);
+        cloneSelection.id = newId;
+
+        const label = document.querySelector(`label[for="${select}"]`);
+        const cloneLabel = label.cloneNode(true);
+        cloneLabel.setAttribute('for', newId);
+
+        container.appendChild(cloneLabel);
+        container.appendChild(cloneSelection)
+
+        event.preventDefault();
+    }
+
+    const url = 'http://133.186.208.183:8100/api/v1/shop';
+
+    //TODO: url 바꾸기
+    function fetchChildrenCategories(categoryId, callback) {
+        fetch(url + `/shop/categories/${categoryId}/children`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                callback(data);
+            })
+            .catch(error => {
+                console.error('There was a problem with fetch operation:', error.message);
+            });
+    }
+
+    function fetchRootCategories(callback) {
+        fetch(url + '/categories')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                callback(data);
+            })
+            .catch(error => {
+                console.error('There was a problem with fetch operation:', error.message);
+            });
+    }
+
+    // 선택창 추가 함수
+    function addSelector() {
+        const container = document.getElementById('categoryContainer');
+        const select = document.createElement('select');
+        select.name = 'categoryIdList';
+        select.className = 'form-control mb-2';
+        select.onchange = function () {
+            // 이전 하위 선택창 제거
+            while (select.nextSibling) {
+                container.removeChild(select.nextSibling);
+            }
+            // 새 하위 선택창 추가
+            const selectedId = select.options[select.selectedIndex].value;
+            fetchChildrenCategories(selectedId, function (data) {
+                if (data.length > 0) {
+                    addSubcategories(data);
+                }
+            });
+        };
+        const defaultOption = document.createElement('option');
+        defaultOption.value= "";
+        defaultOption.text = "카테고리를 선택해주세요";
+        select.appendChild(defaultOption);
+        // 상위 카테고리 옵션 추가
+        fetchRootCategories(function (data) {
+            for (const category of data) {
+                const option = document.createElement('option');
+                option.value = category.categoryId;
+                option.text = category.categoryName;
+                select.appendChild(option);
+            }
+        });
+        container.appendChild(select);
+    }
+
+    // 하위 카테고리 선택창 추가 함수
+    function addSubcategories(data) {
+        const container = document.getElementById('categoryContainer');
+        const select = document.createElement('select');
+        select.name = 'categoryIdList';
+        select.className = 'form-control mb-2';
+        select.onchange = function () {
+            // 이전 하위 선택창 제거
+            while (select.nextSibling) {
+                container.removeChild(select.nextSibling);
+            }
+            // 새 하위 선택창 추가
+            const selectedId = select.options[select.selectedIndex].value;
+            fetchChildrenCategories(selectedId, function (data) {
+                if (data.length > 0) {
+                    addSubcategories(data);
+                }
+            });
+        };
+        const defaultOption = document.createElement('option');
+        defaultOption.text = "카테고리를 선택해주세요";
+        select.appendChild(defaultOption);
+        // 하위 카테고리 옵션 추가
+        for (const category of data) {
+            const option = document.createElement('option');
+            option.value = category.categoryId;
+            option.text = category.categoryName;
+            select.appendChild(option);
+        }
+        container.appendChild(select);
+    }
+
+    // '+' 버튼 클릭 이벤트
+    document.getElementById('addButton').onclick = addSelector;
+
+    document.getElementById('removeButton').onclick = function () {
+        const container = document.getElementById('categoryContainer');
+        if (container.lastChild) {
+            container.removeChild(container.lastChild);
+        }
+    };
+
+    // 초기 선택창 추가
+    addSelector();
+
+</script>
