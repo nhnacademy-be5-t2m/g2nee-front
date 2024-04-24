@@ -10,4 +10,17 @@ public class OrderAdminController {
 
         return "admin/adminOrder";
     }
+    @GetMapping("/shop/order")
+    public String order(){
+        return "orders/order";
+    }
+    @GetMapping("/order-testing")
+    public String ordertest(){
+        return "orders/order-test";
+    }
+    @GetMapping("/order/{orderId}")
+    public String orderInfo(){
+        return "orders/order";
+    }
+
 }
