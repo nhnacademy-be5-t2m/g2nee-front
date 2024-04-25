@@ -6,7 +6,7 @@ import com.t2m.g2nee.front.booklike.service.BookLikeService;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
-import com.t2m.g2nee.front.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
