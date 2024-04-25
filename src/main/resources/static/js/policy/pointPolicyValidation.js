@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // policyType 유효성 검사 (AMOUNT 또는 PERCENT)
         if (policyType !== 'AMOUNT' && policyType !== 'PERCENT') {
-            validationErrors.push("정책 종류는 'AMOUNT' 또는 'PERCENT'여야 합니다.");
+            validationErrors.push("정책 종류는 '금액적립' 또는 '퍼센트적립'여야 합니다.");
         }
 
         // amount 유효성 검사
