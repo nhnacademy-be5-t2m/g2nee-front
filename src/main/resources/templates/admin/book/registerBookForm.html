@@ -149,8 +149,6 @@
 </html>
 <script th:inline="javascript">
 
-    const url = '/categories';
-
     function addSelection(select, addSelection) {
         const container = document.getElementById(addSelection);
         const selection = document.getElementById(select)
@@ -170,7 +168,7 @@
     }
 
     function fetchChildrenCategories(categoryId, callback) {
-        fetch(`/${categoryId}/children`)
+        fetch(`/categories/${categoryId}/children`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -186,7 +184,7 @@
     }
 
     function fetchRootCategories(callback) {
-        fetch(url)
+        fetch(`/categories`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -200,6 +198,7 @@
                 console.error('There was a problem with fetch operation:', error.message);
             });
     }
+
 
     // 선택창 추가 함수
     function addSelector() {

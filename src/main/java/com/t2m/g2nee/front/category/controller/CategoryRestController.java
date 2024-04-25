@@ -1,4 +1,4 @@
-package com.t2m.g2nee.front.admin.controller;
+package com.t2m.g2nee.front.category.controller;
 
 import com.t2m.g2nee.front.category.dto.response.CategoryHierarchyDto;
 import com.t2m.g2nee.front.category.service.CategoryService;
