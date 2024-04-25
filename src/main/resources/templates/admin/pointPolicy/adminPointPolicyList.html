@@ -35,7 +35,7 @@
             </td>
             <td>
                 <span th:if="${pointPolicy.isActivated}">
-                        <form th:action="@{'/admin/pointPolicies/delete/' + ${pointPolicy.pointPolicyId}}" th:method="patch" class="d-inline">
+                        <form th:action="@{'/admin/pointPolicies/' + ${pointPolicy.pointPolicyId}}" th:method="patch" class="d-inline">
                             <button type="submit" class="btn btn-sm btn-success">활성</button>
                         </form>
                     </span>
