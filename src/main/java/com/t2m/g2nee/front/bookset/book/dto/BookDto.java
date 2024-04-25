@@ -40,6 +40,7 @@ public class BookDto {
         @NotNull(message = "설명은 공백 없이 입력해주세요")
         private String description;
         @NotNull
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate publishedDate;
         @Pattern(regexp = "\\d+", message = "가격은 숫자로 입력해주세요")
         private int price;

@@ -151,6 +151,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .fromHttpUrl(gatewayUrl + "/books/category/" + categoryId)
                 .queryParam("page", page)
                 .queryParam("sort", sort)
+                .queryParam("memberId", memberId)
                 .toUriString(), StandardCharsets.UTF_8);
 
 

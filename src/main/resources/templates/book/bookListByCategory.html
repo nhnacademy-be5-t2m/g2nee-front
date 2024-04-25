@@ -5,8 +5,8 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <title>G2nee Book</title>
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>G2nee Book shop</title>
 </head>
 
 <body>
@@ -128,12 +128,13 @@
                           th:text="절판"></span>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a class="btn btn-sm text-dark p-0" th:data-memberId="${memberId}" th:data-bookId="${book.bookId}">
+                    <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                       th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
+                       th:data-memberId="${memberId}">
                         <i th:if="${book.isLiked() == false}" class="fa-regular fa-heart"></i>
                         <span th:if="${book.isLiked() == false}">찜 하기</span>
 
-                        <i th:if="${book.isLiked() == true}" class="fa-solid fa-heart"
-                           th:data-bookId="${book.bookId}"></i>
+                        <i th:if="${book.isLiked() == true}" class="fa-solid fa-heart"></i>
                         <span th:if="${book.isLiked() == true}" class="">찜 해제</span>
                     </a>
 
@@ -176,49 +177,7 @@
         <!-- 페이지 넘기기 end -->
     </div>
 </div>
-
 </body>
-
 </html>
+<script src="/static/js/book/setLike.js"></script>
 
-<script>
-
-    const url = 'http://133.186.208.183:8100/api/v1/shop';
-    document.querySelector('.btn.btn-sm.text-dark.p-0').addEventListener('click', function (event) {
-        event.preventDefault();
-        let memberId = this.dataset.memberid;
-        let bookId = this.dataset.bookid;
-
-        if (memberId === undefined) {
-            alert('찜은 회원만 가능합니다');
-        } else {
-            fetch(url + '/likes', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({bookId: bookId, memberId: memberId})
-            })
-                .then(data => {
-                    if (data.success) {
-                        let icon = this.querySelector('i');
-                        let text = this.querySelector('span');
-                        if (icon.classList.contains('fa-regular fa-heart')) {
-                            icon.classList.remove('fa-regular fa-heart');
-                            icon.classList.add('fa-solid fa-heart');
-                            text.textContent = '찜 해제';
-                        } else {
-                            icon.classList.remove('fa-solid fa-heart');
-                            icon.classList.add('fa-regular fa-heart');
-                            text.textContent = '찜 하기';
-                        }
-                    } else {
-                        console.error('Error:', data.error);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        }
-    });
-</script>

@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.review.adaptor;
 
 import com.t2m.g2nee.front.review.dto.ReviewDto;
+import com.t2m.g2nee.front.utils.PageResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ReviewAdaptor {
@@ -13,12 +14,19 @@ public interface ReviewAdaptor {
     void postReview(MultipartFile image, ReviewDto.Request request);
     /**
      * 리뷰 수정 메서드
+     * @param image 이미지
      * @param request 리뷰 정보 객체
      */
-    void updateReview(ReviewDto.Request request);
+    void updateReview(MultipartFile image,ReviewDto.Request request);
+
+    ReviewDto.Response getReview(ReviewDto.Request request);
+
     /**
-     * 리뷰 삭제 메서드
-     * @param reviewId 리뷰 아이디
+     * 책 리뷰를 조회하는 메서드
+     * @param bookId 책 아이디
+     * @return PageResponse<ReviewDto.Response>
      */
-    void deleteReview(Long reviewId);
+    PageResponse<ReviewDto.Response> getReviews(Long bookId);
+
+
 }

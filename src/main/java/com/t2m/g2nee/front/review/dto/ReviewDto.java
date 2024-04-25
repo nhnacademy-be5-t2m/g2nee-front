@@ -26,6 +26,10 @@ public class ReviewDto {
         private int score;
         private Long bookId;
         private Long memberId;
+
+        public void setReviewId(Long reviewId) {
+            this.reviewId = reviewId;
+        }
     }
     @Getter
     @NoArgsConstructor

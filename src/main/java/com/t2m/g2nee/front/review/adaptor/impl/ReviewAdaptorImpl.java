@@ -2,8 +2,10 @@ package com.t2m.g2nee.front.review.adaptor.impl;
 
 import com.t2m.g2nee.front.review.adaptor.ReviewAdaptor;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
+import com.t2m.g2nee.front.utils.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -52,12 +54,15 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
      * @param request 리뷰 정보 객체
      */
     @Override
-    public void updateReview(ReviewDto.Request request) {
+    public void updateReview(MultipartFile image,ReviewDto.Request request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("request", request);
+        body.add("image", image.getResource());
 
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         String url = gatewayUrl + "/reviews/" + request.getReviewId();
 
         restTemplate.exchange(
@@ -68,24 +73,40 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
         );
     }
 
-    /**
-     * 리뷰 삭제 메서드
-     * @param reviewId 리뷰 아이디
-     */
     @Override
-    public void deleteReview(Long reviewId) {
+    public ReviewDto.Response getReview(ReviewDto.Request request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        String url = gatewayUrl + "/reviews/" + request.getReviewId();
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.PATCH,
+                requestEntity,
+                new ParameterizedTypeReference<ReviewDto.Response>() {
+                }
+        ).getBody();
+    }
+
+    @Override
+    public PageResponse<ReviewDto.Response> getReviews(Long bookId) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/reviews/" + reviewId;
+        String url = gatewayUrl + "/reviews/book/" + bookId;
 
-        restTemplate.exchange(
+        return restTemplate.exchange(
                 url,
-                HttpMethod.DELETE,
+                HttpMethod.GET,
                 requestEntity,
-                String.class
-        );
+                new ParameterizedTypeReference<PageResponse<ReviewDto.Response>>() {
+                }
+        ).getBody();
     }
 }

@@ -19,6 +19,8 @@ public class JwtUtil {
     public static final String ACCESS_COOKIE = "g2nee_accessToken";
     public static final String ACCESS_HEADER = "access";
     public static final String TOKEN_TYPE = "Bearer ";
+    public static final String SESSION_ID = "auth-session";
+
     public static final Long MILL_SEC = 1000L;
     public static final Integer EXPIRE_TIME = 7200;
 
@@ -68,7 +70,7 @@ public class JwtUtil {
         String[] access_chunks = accessToken.split("\\.");
         String access_payload = new String(decoder.decode(access_chunks[1]));
         JSONObject aObject = new JSONObject(access_payload);
-        return aObject.getLong("username");
+        return aObject.getLong("memberId");
     }
 
 }
