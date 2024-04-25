@@ -30,7 +30,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
 
     private final RestTemplate restTemplate;
 
-    @Value("${g2nee.gateway}")
+    @Value("${gatewayToShopUrl}")
     private String gateway;
 
     private String baseUrl;
