@@ -1,7 +1,8 @@
-package com.t2m.g2nee.front.category.controller;
+package com.t2m.g2nee.front.bookset.category.controller;
 
-import com.t2m.g2nee.front.category.dto.response.CategoryHierarchyDto;
-import com.t2m.g2nee.front.category.service.CategoryService;
+
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
