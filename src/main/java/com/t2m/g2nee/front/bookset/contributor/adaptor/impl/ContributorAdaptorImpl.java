@@ -60,7 +60,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/contributors";
+        String url = gatewayUrl + "/contributors";
 
         restTemplate.exchange(
                 url,
@@ -85,7 +85,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/contributors?page=" + page;
+        String url = gatewayUrl + "/contributors?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -109,7 +109,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/contributors/" + contributorId;
+        String url = gatewayUrl + "/contributors/" + contributorId;
 
         restTemplate.exchange(
                 url,
@@ -132,7 +132,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/contributors/" + contributorId;
+        String url = gatewayUrl + "/contributors/" + contributorId;
 
         restTemplate.exchange(
                 url,
