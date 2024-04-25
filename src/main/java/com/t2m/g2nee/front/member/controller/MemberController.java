@@ -51,7 +51,7 @@ public class MemberController {
     @PostMapping("/signup")
     public String signupComplete(@ModelAttribute("signupForm") SignupMemberRequestDto request, Model model) {
         request.setIsOAuth(false);
-        request.setGender(request.getGender().substring(0,request.getGender().length()-1));
+        request.setGender(request.getGender().substring(0, request.getGender().length() - 1));
         String passwordEncoding = passwordEncoder.encode(request.getPassword());
         request.setPassword(passwordEncoding);
         MemberResponse response = memberService.signup(request);
@@ -80,7 +80,6 @@ public class MemberController {
         memberService.logout(response);
         return "redirect:/";
     }
-
 
 
 }

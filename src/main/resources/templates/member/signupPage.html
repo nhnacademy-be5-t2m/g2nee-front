@@ -39,7 +39,8 @@
                 <tr>
                     <th scope="row" for="password" class="word">비밀번호</th>
                     <td style="display : flex">
-                        <input type="password" id="password" class="text" th:field="*{password}" placeholder="비밀번호" required/>
+                        <input type="password" id="password" class="text" th:field="*{password}" placeholder="비밀번호"
+                               required/>
                         <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
                         <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
                     </td>
@@ -61,7 +62,8 @@
                 <tr>
                     <th scope="row" for="nickname" class="word">닉네임</th>
                     <td style="display : flex">
-                        <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임" required/>
+                        <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임"
+                               required/>
                         <div class="nickname-unUsable hide word" style="color:red;">사용중인 닉네임입니다.</div>
                         <div class="nickname-usable hide word" style="color:red;">사용가능한 닉네임입니다.</div>
                         <div class="nickname-invalid hide word" style="color:red;"> 한글/영어/숫자/'_'/'.' 2-10자로 작성해주십시오.
@@ -71,7 +73,7 @@
                 <tr>
                     <th scope="row" for="email" class="word">이메일</th>
                     <td style="display : flex">
-                        <input type="hidden" id="email" name="email" for="email" />
+                        <input type="hidden" id="email" name="email" for="email"/>
                         <input type="text" id="emailId" class="text" style="margin-right: 10px;" required/>
                         <div style="padding-top: 10px;padding-bottom: 10px">@</div>
                         <input type="text" id="emailDomain" class="text" required/>
@@ -89,8 +91,9 @@
                 <tr>
                     <th scope="row" for="phoneNumber" class="word">전화번호</th>
                     <td style="display : flex">
-                        <input type="text" id="phoneNumber" class="text" th:field="*{phoneNumber}" placeholder="전화번호" required/>
-                        <div class="phoneNumber-invalid hide word" style="color:red;"> 형식을 맞춰 작성해주십시오. </div>
+                        <input type="text" id="phoneNumber" class="text" th:field="*{phoneNumber}" placeholder="전화번호"
+                               required/>
+                        <div class="phoneNumber-invalid hide word" style="color:red;"> 형식을 맞춰 작성해주십시오.</div>
                         <div style="color:gray;" class="word"> (ex.010-1234-5678)</div>
                     </td>
                 </tr>

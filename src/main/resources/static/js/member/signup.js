@@ -10,9 +10,10 @@ let nicknameCheck = false;
 let phoneNumberReg = /^\d{3}-\d{3,4}-\d{4}$/;
 let phoneNumberCheck = false;
 
-let inputEmailId =  document.querySelector('#emailId');
-let inputEmailDomain =  document.querySelector('#emailDomain');
-let inputDate =  document.querySelector('#date');
+let inputEmailId = document.querySelector('#emailId');
+let inputEmailDomain = document.querySelector('#emailDomain');
+let inputDate = document.querySelector('#date');
+
 function setEmailDomain() {
     let selectElement = document.querySelector('.select.text');
     let selectedOption = selectElement.options[selectElement.selectedIndex].value;
@@ -44,9 +45,9 @@ inputUsername.onchange = function () {
     usernameCheck = validCheck(inputUsername, usernameReg, invalidUsername);
     checkName(inputUsername, invalidUsername, usableUsername, unUsableUsername, usernameReg, "아이디", "existsUsername")
         .then((result) => {
-        usernameCheck = result;
-        return result;
-    });
+            usernameCheck = result;
+            return result;
+        });
 }
 
 async function checkName(checkTarget, regMessage, usableName, unUsableName, reg, targetType, path) {
@@ -94,18 +95,19 @@ inputPassword.onchange = function () {
 inputCheckPassword.onchange = function () {
     passwordEqCheck(inputPassword, inputCheckPassword)
 }
-function passwordEqCheck(password, checkPassword){
+
+function passwordEqCheck(password, checkPassword) {
     if (checkPassword.value.length !== 0) {
         if (password.value === checkPassword.value) {
             incorrectPassword.classList.add('hide');
-            passwordCheck=true;
+            passwordCheck = true;
         } else {
             incorrectPassword.classList.remove('hide');
-            passwordCheck=false;
+            passwordCheck = false;
         }
     } else {
         incorrectPassword.classList.add('hide');
-        passwordCheck=false;
+        passwordCheck = false;
     }
 }
 
@@ -136,51 +138,51 @@ inputPhoneNumber.onchange = function () {
     phoneNumberCheck = validCheck(inputPhoneNumber, phoneNumberReg, invalidPhoneNumber);
 }
 
-function signupSubmit(){
-    if(usernameCheck===false){
+function signupSubmit() {
+    if (usernameCheck === false) {
         Swal.fire({
             icon: 'warning',
             title: '아이디 입력 오류',
             text: '아이디를 다시 입력하여 주십시오.'
         })
-    }else if(passwordCheck===false){
+    } else if (passwordCheck === false) {
         Swal.fire({
             icon: 'warning',
             title: '비밀번호 입력 오류',
             text: '비밀번호를 다시 입력하여 주십시오.'
         })
-    }else if(nameCheck===false){
+    } else if (nameCheck === false) {
         Swal.fire({
             icon: 'warning',
             title: '이름 입력 오류',
             text: '이름을 다시 입력하여 주십시오.'
         })
-    }else if(nicknameCheck===false){
+    } else if (nicknameCheck === false) {
         Swal.fire({
             icon: 'warning',
             title: '닉네임 입력 오류',
             text: '닉네임을 다시 입력하여 주십시오.'
         })
-    }else if(inputEmailId.value===""||inputEmailDomain.value===""){
+    } else if (inputEmailId.value === "" || inputEmailDomain.value === "") {
         Swal.fire({
             icon: 'warning',
             title: 'email 입력 오류',
             text: 'email을 다시 입력하여 주십시오.'
         })
-    }else if(phoneNumberCheck===false){
+    } else if (phoneNumberCheck === false) {
         Swal.fire({
             icon: 'warning',
             title: '전화번호 입력 오류',
             text: '전화번호를 다시 입력하여 주십시오.'
         })
-    }else if(inputDate.value===""){
+    } else if (inputDate.value === "") {
         Swal.fire({
             icon: 'warning',
             title: '생년월일 입력 오류',
             text: '생년월일을 입력하여 주십시오.'
         })
-    }else{
-        let email = inputEmailId.value+'@'+inputEmailDomain.value;
+    } else {
+        let email = inputEmailId.value + '@' + inputEmailDomain.value;
         document.querySelector('#email').value = email;
 
         let selectedDate = inputDate.value;

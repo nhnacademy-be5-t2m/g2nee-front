@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 카테고리 저장을 위한 dto
+ *
  * @author : 김수빈
  * @since : 1.0
  */

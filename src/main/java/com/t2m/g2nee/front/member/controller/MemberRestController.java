@@ -25,7 +25,7 @@ public class MemberRestController {
      * @return 중복여부를 true, false 로 반환
      */
     @PostMapping("/existsUsername")
-    public ResponseEntity<Boolean> existsUsername(@RequestBody String username){
+    public ResponseEntity<Boolean> existsUsername(@RequestBody String username) {
         Boolean result = memberService.existsUsername(username);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -39,7 +39,7 @@ public class MemberRestController {
      * @return 중복여부를 true, false 로 반환
      */
     @PostMapping("/existsNickname")
-    public ResponseEntity<Boolean> existsNickname(@RequestBody String nickname){
+    public ResponseEntity<Boolean> existsNickname(@RequestBody String nickname) {
         Boolean result = memberService.existsNickName(nickname);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)

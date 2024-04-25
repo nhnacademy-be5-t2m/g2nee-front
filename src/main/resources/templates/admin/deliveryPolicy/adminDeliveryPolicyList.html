@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div layout:fragment="content"  class="container my-4">
+<div layout:fragment="content" class="container my-4">
     <h2 class="text-center">배송비 목록</h2>
 
     <table class="table table-bordered table-hover">
@@ -33,7 +33,7 @@
                     <span class="text-success">활성</span>
                 </span>
                 <span th:unless="${deliveryPolicy.isActivated}">
-                    <span >비활성</span>
+                    <span>비활성</span>
                 </span>
             </td>
             <td>
@@ -43,7 +43,7 @@
         </tbody>
     </table>
 
-    <br /><br />
+    <br/><br/>
     <nav aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li>
@@ -65,7 +65,7 @@
         </ul>
     </nav>
 
-    <br /><br />
+    <br/><br/>
     <a th:href="@{/admin/deliveryPolicies/save}" class="btn btn-primary">새 배송비 정책</a>
 
 

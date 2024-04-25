@@ -18,14 +18,14 @@ public interface PublisherAdaptor {
      *
      * @param request 등록할 정보가 있는 객체
      */
-     void registerPublisher(PublisherDto.Request request);
+    void registerPublisher(PublisherDto.Request request);
 
     /**
      * 출판사 조회 메서드
      *
      * @return List<PublisherDto.Response>
      */
-     List<PublisherDto.Response> getAllPublisher();
+    List<PublisherDto.Response> getAllPublisher();
 
     /**
      * 출판사 조회 메서드
@@ -33,7 +33,7 @@ public interface PublisherAdaptor {
      * @param page 페이지 번호
      * @return PageResponse<PublisherDto.Response>
      */
-     PageResponse<PublisherDto.Response> getAllPublisher(int page);
+    PageResponse<PublisherDto.Response> getAllPublisher(int page);
 
     /**
      * 출판사 수정 메서드
@@ -41,11 +41,12 @@ public interface PublisherAdaptor {
      * @param publisherId 출판사 아이디
      * @param request     수정할 정보가 담긴 객체
      */
-     void updatePublisher(Long publisherId, PublisherDto.Request request);
+    void updatePublisher(Long publisherId, PublisherDto.Request request);
 
     /**
      * 출판사 삭제 메서드
+     *
      * @param publisherId 출판사 아이디
      */
-     void deletePublisher(Long publisherId);
+    void deletePublisher(Long publisherId);
 }

@@ -68,7 +68,7 @@ public class ContributorService {
      */
     public void updateContributor(Long contributorId, ContributorDto.Request request) {
 
-        contributorAdaptor.updateContributor(contributorId,request);
+        contributorAdaptor.updateContributor(contributorId, request);
 
     }
 
@@ -79,6 +79,6 @@ public class ContributorService {
      */
     public void deleteContributor(Long contributorId) {
 
-       contributorAdaptor.deleteContributor(contributorId);
+        contributorAdaptor.deleteContributor(contributorId);
     }
 }

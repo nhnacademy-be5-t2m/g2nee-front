@@ -166,7 +166,7 @@ public class MemberService {
      */
     public Boolean existsUsername(String username) {
         HttpEntity<String> requestEntity = new HttpEntity<>(username, makeHttpHeaders());
-        ResponseEntity<Boolean> response =  restTemplate.exchange(
+        ResponseEntity<Boolean> response = restTemplate.exchange(
                 gatewayToShopUrl + "/member/existsUsername",
                 HttpMethod.POST,
                 requestEntity,
@@ -183,7 +183,7 @@ public class MemberService {
      */
     public Boolean existsNickName(String nickname) {
         HttpEntity<String> requestEntity = new HttpEntity<>(nickname, makeHttpHeaders());
-        ResponseEntity<Boolean> response =  restTemplate.exchange(
+        ResponseEntity<Boolean> response = restTemplate.exchange(
                 gatewayToShopUrl + "/member/existsNickname",
                 HttpMethod.POST,
                 requestEntity,
