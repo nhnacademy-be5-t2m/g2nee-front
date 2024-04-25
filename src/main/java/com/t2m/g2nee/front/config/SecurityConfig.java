@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
 
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/signup").permitAll()
+                .antMatchers("/", "/login", "/signup","/books").permitAll()
                 .antMatchers("/mypage/**").hasAuthority("ROLE_USER")
                 .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll()
