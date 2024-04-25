@@ -11,101 +11,112 @@
 </head>
 
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="container my-4">
 
-    <form th:action="@{/admin/categories/search}" th:method="GET">
-        <input type="text" placeholder="카테고리 검색" name="name"> &nbsp
+    <h2 class="text-center">카테고리 목록</h2>
+
+    <br /><br />
+    <form th:action="@{/admin/categories/search}" th:method="GET" class="form-inline mb-3 d-flex justify-content-between">
+        <input type="text" class="form-control" placeholder="카테고리 검색" name="name" style="width: 70%;">
         <input type="hidden" name="page" value="1">
-        <input type="submit" value="검색">
+        <input type="submit" class="btn btn-primary ms-3" value="검색">
     </form>
 
-    <br/><br/>
-    <table>
+    <br /><br />
+    <table class="table table-bordered table-hover">
+        <thead>
         <tr>
             <th>카테고리 명</th>
             <th>영문 이름</th>
             <th></th>
-            <th></th>
+            <th>상태</th>
         </tr>
-        <div th:each="rootCategory : ${rootCategories}">
+        </thead>
+
+        <!-- 루트 카테고리 -->
+        <tbody th:each="rootCategory : ${rootCategories}">
             <tr>
                 <td>
-                    ●&nbsp<span th:text="${rootCategory.categoryName}"/>
+                    ● <span th:text="${rootCategory.categoryName}"></span>
                 </td>
                 <td>
-                    <span th:text="${rootCategory.categoryEngName}"/>
+                    <span th:text="${rootCategory.categoryEngName}"></span>
                 </td>
                 <td>
-                    <a th:href="@{'/admin/categories/modify/' + ${__${rootCategory.categoryId}__}}">수정</a>
+                    <a th:href="@{'/admin/categories/modify/' + ${rootCategory.categoryId}}" class="btn btn-sm btn-primary">수정</a>
                 </td>
                 <td>
                     <span th:if="${rootCategory.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${rootCategory.categoryId}}" th:method="delete">
-                            <button type="submit">활성</button>
+                        <form th:action="@{'/admin/categories/' + ${rootCategory.categoryId}}" th:method="delete" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">활성</button>
                         </form>
                     </span>
                     <span th:unless="${rootCategory.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${rootCategory.categoryId}}" th:method="patch">
-                            <button type="submit">비활성</button>
+                        <form th:action="@{'/admin/categories/' + ${rootCategory.categoryId}}" th:method="patch" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
                         </form>
                     </span>
                 </td>
             </tr>
+
+
+            <!-- 2단계 카테고리 -->
             <div th:each="child : ${rootCategory.children}">
-                <tr style="padding-left:10px">
-                    <td>
-                        &nbsp ○ <span th:text="${child.categoryName}"/>
-                    </td>
-                    <td>
-                        <span th:text="${child.categoryEngName}"/>
-                    </td>
-                    <td>
-                        <a th:href="@{'/admin/categories/modify/' + ${__${child.categoryId}__}}">수정</a>
-                    </td>
-                    <td>
+            <tr >
+                <td style="padding-left: 20px;">
+                    &nbsp;○ <span th:text="${child.categoryName}"></span>
+                </td>
+                <td>
+                    <span th:text="${child.categoryEngName}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/admin/categories/modify/' + ${child.categoryId}}" class="btn btn-sm btn-primary">수정</a>
+                </td>
+                <td>
                     <span th:if="${child.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${child.categoryId}}" th:method="delete">
-                            <button type="submit">활성</button>
+                        <form th:action="@{'/admin/categories/' + ${child.categoryId}}" th:method="delete" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">활성</button>
                         </form>
                     </span>
-                        <span th:unless="${child.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${child.categoryId}}" th:method="patch">
-                            <button type="submit">비활성</button>
+                    <span th:unless="${child.isActivated}">
+                        <form th:action="@{'/admin/categories/' + ${child.categoryId}}" th:method="patch" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
                         </form>
                     </span>
-                    </td>
-                </tr>
-                <tr th:each="subChild : ${child.children}" style="padding-left:20px">
-                    <td>
-                        &nbsp &nbsp └ <span th:text="${subChild.categoryName}"/>
-                    </td>
-                    <td>
-                        <span th:text="${subChild.categoryEngName}"/>
-                    </td>
-                    <td>
-                        <a th:href="@{'/admin/categories/modify/' + ${__${subChild.categoryId}__}}">수정</a>
-                    </td>
-                    <td>
+                </td>
+
+            </tr>
+
+        <!-- 3단계 카테고리 -->
+            <tr th:each="subChild : ${child.children}">
+                <td style="padding-left: 40px;">
+                    &nbsp;&nbsp;&nbsp;└ <span th:text="${subChild.categoryName}"></span>
+                </td>
+                <td>
+                    <span th:text="${subChild.categoryEngName}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/admin/categories/modify/' + ${subChild.categoryId}}" class="btn btn-sm btn-primary">수정</a>
+                </td>
+                <td>
                     <span th:if="${subChild.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${subChild.categoryId}}" th:method="delete">
-                            <button type="submit">활성</button>
+                        <form th:action="@{'/admin/categories/' + ${subChild.categoryId}}" th:method="delete" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-success">활성</button>
                         </form>
                     </span>
-                        <span th:unless="${subChild.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${subChild.categoryId}}" th:method="patch">
-                            <button type="submit">비활성</button>
+                    <span th:unless="${subChild.isActivated}">
+                        <form th:action="@{'/admin/categories/' + ${subChild.categoryId}}" th:method="patch" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
                         </form>
                     </span>
-                    </td>
-                </tr>
-
+                </td>
+            </tr>
             </div>
-
-        </div>
+        </tbody>
     </table>
 
-    <br/><br/>
-    <a th:href="@{/admin/categories/save}">새 카테고리</a>
+    <br /><br />
+    <a th:href="@{/admin/categories/save}" class="btn btn-primary">새 카테고리</a>
 
 </div>
 </body>

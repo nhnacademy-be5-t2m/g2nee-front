@@ -1,17 +1,11 @@
 package com.t2m.g2nee.front.bookset.publisher.service;
 
+import com.t2m.g2nee.front.bookset.publisher.adaptor.PublisherAdaptor;
 import com.t2m.g2nee.front.bookset.publisher.dto.PublisherDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 출판사 관리 service 클래스
@@ -20,12 +14,14 @@ import org.springframework.web.client.RestTemplate;
  * @since : 1.0
  */
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class PublisherService {
 
-    private final RestTemplate restTemplate;
-    @Value("${g2nee.gateway}")
-    String gatewayUrl;
+    private final PublisherAdaptor publisherAdaptor;
+
+    public PublisherService(PublisherAdaptor publisherAdaptor) {
+        this.publisherAdaptor = publisherAdaptor;
+    }
 
     /**
      * 출판사 등록 메서드
@@ -34,21 +30,7 @@ public class PublisherService {
      */
     public void registerPublisher(PublisherDto.Request request) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
-
-        String url = gatewayUrl + "/shop/publishers";
-
-        restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                requestEntity,
-                String.class
-        );
-
-
+        publisherAdaptor.registerPublisher(request);
     }
 
     /**
@@ -58,20 +40,7 @@ public class PublisherService {
      */
     public List<PublisherDto.Response> getAllPublisher() {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/shop/publishers/list";
-
-        return restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<List<PublisherDto.Response>>() {
-                }
-        ).getBody();
+        return publisherAdaptor.getAllPublisher();
     }
 
     /**
@@ -82,20 +51,7 @@ public class PublisherService {
      */
     public PageResponse<PublisherDto.Response> getAllPublisher(int page) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/shop/publishers?page=" + page;
-
-        return restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<PageResponse<PublisherDto.Response>>() {
-                }
-        ).getBody();
+        return publisherAdaptor.getAllPublisher(page);
     }
 
     /**
@@ -106,37 +62,12 @@ public class PublisherService {
      */
     public void updatePublisher(Long publisherId, PublisherDto.Request request) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
-
-        String url = gatewayUrl + "/shop/publishers/" + publisherId;
-
-        restTemplate.exchange(
-                url,
-                HttpMethod.PATCH,
-                requestEntity,
-                String.class
-        );
+        publisherAdaptor.updatePublisher(publisherId, request);
 
     }
 
     public void deletePublisher(Long publisherId) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/shop/publishers/" + publisherId;
-
-        restTemplate.exchange(
-                url,
-                HttpMethod.DELETE,
-                requestEntity,
-                String.class
-        );
+        publisherAdaptor.deletePublisher(publisherId);
 
     }
 }

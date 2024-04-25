@@ -12,7 +12,10 @@ import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
 import com.t2m.g2nee.front.bookset.role.service.RoleService;
 import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import com.t2m.g2nee.front.bookset.tag.service.TagService;
+import com.t2m.g2nee.front.bookset.category.adaptor.CategoryAdaptor;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,7 @@ public class BookAdminController {
     private final ContributorService contributorService;
     private final TagService tagService;
     private final BookGetService bookGetService;
+    private final CategoryAdaptor categoryAdaptor;
 
     /**
      * 책을 등록하는 폼을 가져오는 컨트롤러 입니다.
@@ -56,13 +60,15 @@ public class BookAdminController {
         List<RoleDto.Response> roleList = roleService.getAllRole();
         List<ContributorDto.Response> contributorList = contributorService.getAllContributor();
         List<TagDto.Response> tagList = tagService.getAllTag();
+        List<CategoryHierarchyDto> categoryList = categoryAdaptor.getRootCategories();
+
         model.addAttribute("publisherList", publisherList);
         model.addAttribute("roleList", roleList);
         model.addAttribute("contributorList", contributorList);
         model.addAttribute("tagList", tagList);
+        model.addAttribute("categoryList", categoryList);
 
         return "admin/book/registerBookForm";
-
     }
 
     /**
@@ -125,8 +131,15 @@ public class BookAdminController {
                            @RequestPart MultipartFile thumbnail,
                            @RequestPart MultipartFile[] details) {
 
+        List<Long> categoryList = new ArrayList<>();
+        // 최하위 카테고리만 추출
+        for (int i = 2; i < categoryIdList.size(); i += 3) {
+            Long categoryId = categoryIdList.get(i);
+            categoryList.add(categoryId);
+        }
+
         request.setContributorIdList(contributorIdList);
-        request.setCategoryIdList(categoryIdList);
+        request.setCategoryIdList(categoryList);
         request.setRoleIdList(roleIdList);
         request.setTagIdList(tagIdList);
         bookMgmtService.registerBook(request, thumbnail, details);
@@ -186,7 +199,7 @@ public class BookAdminController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model) {
 
-        BookDto.Response response = bookGetService.getBook(bookId);
+        BookDto.Response response = bookGetService.getBook(null,bookId);
         model.addAttribute("book", response);
 
         return "admin/book/bookDetail";

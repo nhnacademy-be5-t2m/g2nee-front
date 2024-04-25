@@ -18,8 +18,9 @@ import org.springframework.stereotype.Component;
 public class JwtUtil {
     public static final String ACCESS_COOKIE = "g2nee_accessToken";
     public static final String ACCESS_HEADER = "access";
-    public static final String SESSION_ID = "auth-session";
     public static final String TOKEN_TYPE = "Bearer ";
+    public static final String SESSION_ID = "auth-session";
+
     public static final Long MILL_SEC = 1000L;
     public static final Integer EXPIRE_TIME = 7200;
 
@@ -58,18 +59,18 @@ public class JwtUtil {
         return aObject.getLong("exp");
     }
 
-//    /**
-//     * 토큰에서 memberId를 파싱하는 메소드
-//     *
-//     * @param accessToken
-//     * @return memberId
-//     */
-//    public static Long getMemberId(String accessToken) throws JSONException {
-//        Base64.Decoder decoder = Base64.getUrlDecoder();
-//        String[] access_chunks = accessToken.split("\\.");
-//        String access_payload = new String(decoder.decode(access_chunks[1]));
-//        JSONObject aObject = new JSONObject(access_payload);
-//        return aObject.getLong("username");
-//    }
+    /**
+     * 토큰에서 memberId를 파싱하는 메소드
+     *
+     * @param accessToken
+     * @return memberId
+     */
+    public static Long getMemberId(String accessToken) throws JSONException {
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String[] access_chunks = accessToken.split("\\.");
+        String access_payload = new String(decoder.decode(access_chunks[1]));
+        JSONObject aObject = new JSONObject(access_payload);
+        return aObject.getLong("memberId");
+    }
 
 }
