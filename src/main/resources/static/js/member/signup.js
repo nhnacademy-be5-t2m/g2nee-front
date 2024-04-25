@@ -12,7 +12,6 @@ let phoneNumberCheck = false;
 
 let inputEmailId =  document.querySelector('#emailId');
 let inputEmailDomain =  document.querySelector('#emailDomain');
-let inputBirthday =  document.querySelector('#birthday');
 let inputDate =  document.querySelector('#date');
 function setEmailDomain() {
     let selectElement = document.querySelector('.select.text');
@@ -42,48 +41,44 @@ let unUsableUsername = document.querySelector('.username-unUsable');
 
 //username 중복 체크
 inputUsername.onchange = function () {
-    usernameCheck = validCheck(inputUsername, usernameReg, invalidUsername)
+    usernameCheck = validCheck(inputUsername, usernameReg, invalidUsername);
     checkName(inputUsername, invalidUsername, usableUsername, unUsableUsername, usernameReg, "아이디", "existsUsername")
         .then((result) => {
-            usernameCheck = result;
-            return result;
-        });
+        usernameCheck = result;
+        return result;
+    });
 }
 
-
-function checkName(checkTarget, regMessage, usableName, unUsableName, reg, targetType, path,check) {
-    let url = 'http://localhost:8081/api/v1/shop/member/' + path;
+async function checkName(checkTarget, regMessage, usableName, unUsableName, reg, targetType, path) {
     unUsableName.classList.add('hide');
     usableName.classList.add('hide');
 
-    return new Promise((resolve, reject) => {
-        if (checkTarget.value.length !== 0) {
-            if (reg.test(checkTarget.value) === false) {
-                resolve(false);
-            }
+    if (checkTarget.value.length !== 0) {
+        if (reg.test(checkTarget.value) === false) {
+            return false;
         }
+    }
 
-        fetch(url, {
+    try {
+        const response = await fetch("/member/" + path, {
             method: 'POST',
             body: checkTarget.value
-        })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                if (data === false) {
-                    usableName.classList.remove('hide');
-                    resolve(true);
-                } else {
-                    unUsableName.classList.remove('hide');
-                    resolve(false);
-                }
-            })
-            .catch(function (error) {
-                console.error('요청 실패:', error);
-                resolve(false);
-            });
-    });
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data === false) {
+            usableName.classList.remove('hide');
+            return true;
+        } else {
+            unUsableName.classList.remove('hide');
+            return false;
+        }
+    } catch (error) {
+        console.error('요청 실패:', error);
+        return false;
+    }
 }
 
 let inputPassword = document.querySelector('#password');
@@ -130,16 +125,10 @@ inputNickname.onchange = function () {
     nicknameCheck = validCheck(inputNickname, nicknameReg, invalidNickname);
     checkName(inputNickname, invalidNickname, usableNickname, unUsableNickname, nicknameReg, "닉네임", "existsNickname")
         .then((result) => {
-        nicknameCheck = result;
-        return result;
-    });
+            nicknameCheck = result;
+            return result;
+        });
 }
-// let inputEmail = document.querySelector('#email');
-// let invalidEmail = document.querySelector('.email-invalid');
-// inputEmail.onkeyup = function () {
-//     validCheck(inputEmail, emailReg, invalidEmail);
-// }
-
 
 let inputPhoneNumber = document.querySelector('#phoneNumber');
 let invalidPhoneNumber = document.querySelector('.phoneNumber-invalid');
@@ -184,7 +173,6 @@ function signupSubmit(){
             title: '전화번호 입력 오류',
             text: '전화번호를 다시 입력하여 주십시오.'
         })
-        return;
     }else if(inputDate.value===""){
         Swal.fire({
             icon: 'warning',

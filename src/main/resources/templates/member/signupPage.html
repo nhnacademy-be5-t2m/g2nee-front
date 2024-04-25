@@ -72,8 +72,8 @@
                     <th scope="row" for="email" class="word">이메일</th>
                     <td style="display : flex">
                         <input type="hidden" id="email" name="email" for="email" />
-                        <input type="text" id="emailId" class="text" required/>
-                        <div style="padding-top: 10px;padding-bottom: 10px"> @</div>
+                        <input type="text" id="emailId" class="text" style="margin-right: 10px;" required/>
+                        <div style="padding-top: 10px;padding-bottom: 10px">@</div>
                         <input type="text" id="emailDomain" class="text" required/>
                         <select class="select text" title="이메일 도메인 주소 선택"
                                 onchange="setEmailDomain()">
@@ -90,7 +90,8 @@
                     <th scope="row" for="phoneNumber" class="word">전화번호</th>
                     <td style="display : flex">
                         <input type="text" id="phoneNumber" class="text" th:field="*{phoneNumber}" placeholder="전화번호" required/>
-                        <div class="phoneNumber-invalid hide word" style="color:red;"> 전화번호를 입력해주십시오.</div>
+                        <div class="phoneNumber-invalid hide word" style="color:red;"> 형식을 맞춰 작성해주십시오. </div>
+                        <div style="color:gray;" class="word"> (ex.010-1234-5678)</div>
                     </td>
                 </tr>
                 <tr>
@@ -130,15 +131,14 @@
                 </tbody>
             </table>
         </div>
-        <h3 style="margin-top: 30px">이용약관 동의</h3>
-        <div>
 
-        </div>
+        <div style="margin-bottom: 20px;"></div>
         <button type="submit">회원가입</button>
 
     </form>
 
-    <script src="static/js/member/signup.js"></script>
+
+    <script src="/static/js/member/signup.js"></script>
 </div>
 
 

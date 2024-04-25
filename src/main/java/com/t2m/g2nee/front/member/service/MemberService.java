@@ -48,6 +48,12 @@ public class MemberService {
     }
 
 
+    /**
+     * 회원가입을 위한 메소드
+     *
+     * @param request 회원가입 시 필요한 정보가 담긴 dto
+     * @return MemberResponse 회원가입한 member의 기본 정보가 담긴 dto 반환
+     */
     public MemberResponse signup(SignupMemberRequestDto request) {
         HttpEntity<SignupMemberRequestDto> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
         ResponseEntity<MemberResponse> response = restTemplate.exchange(
@@ -62,6 +68,12 @@ public class MemberService {
         return response.getBody();
     }
 
+    /**
+     * token 발급을 위해 auth server로 로그인 정보를 보내는 메소드
+     *
+     * @param request login 정보 (username, password)
+     * @return ResponseEntity
+     */
     public ResponseEntity<Void> login(MemberLoginRequestDto request) {
         HttpEntity<MemberLoginRequestDto> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
         return restTemplate.exchange(
@@ -144,5 +156,39 @@ public class MemberService {
                 new HttpEntity<>(makeHttpHeaders()),
                 Void.class
         );
+    }
+
+    /**
+     * shop DB에 username이 있는지 확인하는 메소드
+     *
+     * @param username 중복여부를 확인할 username
+     * @return 응답을 true, false로 반환
+     */
+    public Boolean existsUsername(String username) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(username, makeHttpHeaders());
+        ResponseEntity<Boolean> response =  restTemplate.exchange(
+                gatewayToShopUrl + "/member/existsUsername",
+                HttpMethod.POST,
+                requestEntity,
+                Boolean.class
+        );
+        return response.getBody();
+    }
+
+    /**
+     * shop DB에 nickname 있는지 확인하는 메소드
+     *
+     * @param nickname 중복여부를 확인할 nickname
+     * @return 응답을 true, false로 반환
+     */
+    public Boolean existsNickName(String nickname) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(nickname, makeHttpHeaders());
+        ResponseEntity<Boolean> response =  restTemplate.exchange(
+                gatewayToShopUrl + "/member/existsNickname",
+                HttpMethod.POST,
+                requestEntity,
+                Boolean.class
+        );
+        return response.getBody();
     }
 }
