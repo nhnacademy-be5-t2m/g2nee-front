@@ -18,11 +18,8 @@ public interface ReviewAdaptor {
      * @param request 리뷰 정보 객체
      */
     void updateReview(MultipartFile image,ReviewDto.Request request);
-    /**
-     * 리뷰 삭제 메서드
-     * @param reviewId 리뷰 아이디
-     */
-    void deleteReview(Long reviewId);
+
+    ReviewDto.Response getReview(ReviewDto.Request request);
 
     /**
      * 책 리뷰를 조회하는 메서드
@@ -30,4 +27,6 @@ public interface ReviewAdaptor {
      * @return PageResponse<ReviewDto.Response>
      */
     PageResponse<ReviewDto.Response> getReviews(Long bookId);
+
+
 }

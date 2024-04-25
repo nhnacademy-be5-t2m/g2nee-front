@@ -149,7 +149,7 @@
 </html>
 <script th:inline="javascript">
 
-    const url = 'http://133.186.208.183:8100/api/v1/shop';
+    const url = '/categories';
 
     function addSelection(select, addSelection) {
         const container = document.getElementById(addSelection);
@@ -170,7 +170,7 @@
     }
 
     function fetchChildrenCategories(categoryId, callback) {
-        fetch(url + `/categories/${categoryId}/children`)
+        fetch(`/${categoryId}/children`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -186,7 +186,7 @@
     }
 
     function fetchRootCategories(callback) {
-        fetch(url + '/shop/categories')
+        fetch(url)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
