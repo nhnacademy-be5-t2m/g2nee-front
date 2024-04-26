@@ -28,7 +28,6 @@ public class CategoryRestController {
 
     @GetMapping("/{categoryId}/children")
     public ResponseEntity<List<CategoryHierarchyDto>> getChildCategories(@PathVariable("categoryId") Long categoryId) {
-
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(categoryService.getCategory(categoryId).getChildren());
     }
