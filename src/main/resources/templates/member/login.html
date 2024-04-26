@@ -10,6 +10,7 @@
 
 <body>
 <div layout:fragment="content">
+
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
         <form>
@@ -23,12 +24,14 @@
                     <tr>
                         <th scope="row" for="username" class="word">아이디</th>
                         <td style="display : flex">
-                            <input type="text" id="username" name="username" placeholder="아이디"/>
+                            <input type="text" class="text" id="username" name="username" placeholder="아이디"/>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" for="password" class="word">비밀번호</th>
-                        <input type="password" id="password" name="password" placeholder="비밀번호"/>
+                        <td style="display : flex">
+                            <input type="password" class="text" id="password" name="password" placeholder="비밀번호"/>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
