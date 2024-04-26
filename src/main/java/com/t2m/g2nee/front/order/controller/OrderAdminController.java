@@ -16,7 +16,7 @@ public class OrderAdminController {
     }
     @GetMapping("/order-testing")
     public String ordertest(){
-        return "orders/order-test";
+        return "admin/adminOrder";
     }
     @GetMapping("/order/{orderId}")
     public String orderInfo(){
