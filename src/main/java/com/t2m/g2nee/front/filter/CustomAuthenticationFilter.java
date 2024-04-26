@@ -47,6 +47,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
         try {
+
             if (notControllerUri(request)) {
                 filterChain.doFilter(request, response);
                 return;
