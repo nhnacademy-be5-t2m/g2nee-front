@@ -183,7 +183,7 @@
 
     //TODO: url 바꾸기
     function fetchChildrenCategories(categoryId, callback) {
-        fetch(url + `/shop/categories/${categoryId}/children`)
+        fetch(url + `/categories/${categoryId}/children`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

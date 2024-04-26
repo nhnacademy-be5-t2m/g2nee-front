@@ -53,7 +53,7 @@ public class BookLikeAdaptorImpl implements BookLikeAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = "http://localhost:8081/api/v1/shop" + "/likes/member/" + memberId;
+        String url = gatewayUrl + "/likes/member/" + memberId;
 
 
         return restTemplate.exchange(
