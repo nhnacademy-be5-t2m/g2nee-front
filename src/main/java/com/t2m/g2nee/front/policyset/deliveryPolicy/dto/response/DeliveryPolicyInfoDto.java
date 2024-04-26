@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 배송비 정책을 보여주기 위한 dto입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */

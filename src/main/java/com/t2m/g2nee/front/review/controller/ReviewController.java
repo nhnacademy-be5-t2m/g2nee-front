@@ -30,7 +30,7 @@ public class ReviewController {
     public String postReview(@RequestPart MultipartFile image,
                              @ModelAttribute ReviewDto.Request request) {
 
-        reviewService.postReview(image,request);
+        reviewService.postReview(image, request);
 
         return "redirect:/book" + request.getBookId();
     }
@@ -41,14 +41,14 @@ public class ReviewController {
                                @ModelAttribute ReviewDto.Request request) {
 
         request.setReviewId(reviewId);
-        reviewService.updateReview(image,request);
+        reviewService.updateReview(image, request);
 
         return "redirect:/book" + request.getBookId();
 
     }
 
     @GetMapping
-    public String getReview(@ModelAttribute ReviewDto.Request request){
+    public String getReview(@ModelAttribute ReviewDto.Request request) {
 
         return null;
     }

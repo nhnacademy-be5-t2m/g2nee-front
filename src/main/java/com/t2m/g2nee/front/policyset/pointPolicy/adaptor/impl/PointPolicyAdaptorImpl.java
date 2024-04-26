@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * PointPolicyAdaptor의 구현체 입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */
@@ -45,7 +46,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
     }
 
     @PostConstruct
-    public void initUrl(){
+    public void initUrl() {
         baseUrl = gateway + "/pointPolicies";
     }
 
@@ -61,7 +62,7 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
     @Override
     public PointPolicyInfoDto requestUpdatePointPolicy(Long pointPolicyId, PointPolicySaveDto request) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+pointPolicyId)
+                .path("/" + pointPolicyId)
                 .build();
 
         HttpEntity<PointPolicySaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
@@ -74,20 +75,21 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
     @Override
     public boolean requestDeletePointPolicy(Long pointPolicyId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+pointPolicyId)
+                .path("/" + pointPolicyId)
                 .build();
 
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 
-        return Optional.ofNullable(response.getBody()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "삭제할 포인트 정책을 찾을 수 없습니다."));
+        return Optional.ofNullable(response.getBody())
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "삭제할 포인트 정책을 찾을 수 없습니다."));
     }
 
     @Override
     public PointPolicyInfoDto getPointPolicy(Long pointPolicyId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+pointPolicyId)
+                .path("/" + pointPolicyId)
                 .build();
 
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());

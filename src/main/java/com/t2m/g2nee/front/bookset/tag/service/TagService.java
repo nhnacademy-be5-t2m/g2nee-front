@@ -61,7 +61,7 @@ public class TagService {
      */
     public void updateTag(Long tagId, TagDto.Request request) {
 
-        tagAdaptor.updateTag(tagId,request);
+        tagAdaptor.updateTag(tagId, request);
 
     }
 

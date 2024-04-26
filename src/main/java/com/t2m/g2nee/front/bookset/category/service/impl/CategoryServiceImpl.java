@@ -42,6 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 모든 카테고리 목록을 재귀를 통해 얻어옴
+     *
      * @return 모든 카테고리 목록
      */
     @Cacheable(key = "'all'")
@@ -69,6 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 카테고리의 1단계, 2단계에 해당하는 카테고리만 가져옴
+     *
      * @return 카테고리 1단계, 2단계 카테고리 목록
      */
     public List<CategoryHierarchyDto> getFirstAndSecondCategories() {
@@ -80,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         for (CategoryHierarchyDto root : rootCategories) {
             List<CategoryHierarchyDto> children = root.getChildren();
-            if (children != null && (!children.isEmpty()) ) {
+            if (children != null && (!children.isEmpty())) {
                 categories.addAll(children); // 2단계 카테고리 추가
             }
         }
@@ -105,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService {
             @CacheEvict(key = "'root'")
     })
     @Override
-    public void creatCategory(CategorySaveDto request){
+    public void creatCategory(CategorySaveDto request) {
         adaptor.requestCreatCategory(request);
     }
 

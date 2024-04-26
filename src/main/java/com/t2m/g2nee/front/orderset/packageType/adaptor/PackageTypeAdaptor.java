@@ -6,6 +6,7 @@ import com.t2m.g2nee.front.utils.PageResponse;
 
 /**
  * 백엔드에서 포장지와 관련된 값들을 가져옴
+ *
  * @author : 김수빈
  * @since : 1.0
  */
@@ -13,6 +14,7 @@ public interface PackageTypeAdaptor {
 
     /**
      * 포장지를 저장함
+     *
      * @param request
      * @return
      */
@@ -21,6 +23,7 @@ public interface PackageTypeAdaptor {
 
     /**
      * 포장지를 수정함
+     *
      * @param packageId
      * @param request
      * @return
@@ -30,6 +33,7 @@ public interface PackageTypeAdaptor {
 
     /**
      * 특정 포장지 하나를 얻음
+     *
      * @param packageId
      * @return
      */
@@ -37,6 +41,7 @@ public interface PackageTypeAdaptor {
 
     /**
      * 모든 포장지를 페이징하여 반환
+     *
      * @param page
      * @return
      */
@@ -44,6 +49,7 @@ public interface PackageTypeAdaptor {
 
     /**
      * 포장지를 soft delete합니다.
+     *
      * @param packageId
      * @return
      */
@@ -51,6 +57,7 @@ public interface PackageTypeAdaptor {
 
     /**
      * 비활성화된 포장지를 활성화 합니다.
+     *
      * @param packageId
      * @return
      */

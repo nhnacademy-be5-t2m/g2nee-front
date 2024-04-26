@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * DeliveryPolicyService의 구현체 입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */
@@ -29,9 +30,9 @@ public class DeliveryPolicyImpl implements DeliveryPolicyService {
 
     @Override
     public DeliveryPolicyInfoDto getDeliveryPolicy() {
-        try{
+        try {
             return adaptor.getDeliveryPolicy();
-        }catch(CustomException e){
+        } catch (CustomException e) {
             return null;
         }
     }

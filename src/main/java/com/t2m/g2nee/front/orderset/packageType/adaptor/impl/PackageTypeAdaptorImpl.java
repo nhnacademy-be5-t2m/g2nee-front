@@ -40,7 +40,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
     }
 
     @PostConstruct
-    public void initUrl(){
+    public void initUrl() {
         baseUrl = gateway + "/packages";
     }
 
@@ -56,7 +56,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
     @Override
     public PackageInfoDto requestUpdatePackage(Long packageId, PackageSaveDto request) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+packageId)
+                .path("/" + packageId)
                 .build();
 
         HttpEntity<PackageSaveDto> entity = new HttpEntity<>(request, makeHttpHeaders());
@@ -69,7 +69,7 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
     @Override
     public PackageInfoDto getPackage(Long packageId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+packageId)
+                .path("/" + packageId)
                 .build();
 
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
@@ -96,27 +96,29 @@ public class PackageTypeAdaptorImpl implements PackageTypeAdaptor {
     public boolean requestDeletePackage(Long packageId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/delete")
-                .path("/"+packageId)
+                .path("/" + packageId)
                 .build();
 
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 
-        return Optional.ofNullable(response.getBody()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "삭제할 포장지를 찾을 수 없습니다."));
+        return Optional.ofNullable(response.getBody())
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "삭제할 포장지를 찾을 수 없습니다."));
     }
 
     @Override
     public boolean requestActivatePackage(Long packageId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/activate")
-                .path("/"+packageId)
+                .path("/" + packageId)
                 .build();
 
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
         ResponseEntity<Boolean> response =
                 restTemplate.exchange(url.toUriString(), HttpMethod.PATCH, entity, Boolean.class);
 
-        return Optional.ofNullable(response.getBody()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "활성화할 포장지를 찾을 수 없습니다."));
+        return Optional.ofNullable(response.getBody())
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "활성화할 포장지를 찾을 수 없습니다."));
     }
 }

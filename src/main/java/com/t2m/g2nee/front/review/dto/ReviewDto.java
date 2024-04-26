@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 /**
  * 리뷰 dto 클래스
  *
@@ -14,12 +15,14 @@ import lombok.NoArgsConstructor;
  */
 public class ReviewDto {
 
-    private ReviewDto(){}
+    private ReviewDto() {
+    }
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class Request{
+    public static class Request {
 
         private Long reviewId;
         private String content;
@@ -31,12 +34,13 @@ public class ReviewDto {
             this.reviewId = reviewId;
         }
     }
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Response{
+    public static class Response {
 
         private Long reviewId;
         private String content;
