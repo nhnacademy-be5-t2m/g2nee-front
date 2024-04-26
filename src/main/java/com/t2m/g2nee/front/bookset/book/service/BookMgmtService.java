@@ -86,7 +86,7 @@ public class BookMgmtService {
     }
 
     public Integer addBookQuantity(Long bookId, int quantity) {
-       return bookMgmtAdaptor.addBookQuantity(bookId, quantity);
+        return bookMgmtAdaptor.addBookQuantity(bookId, quantity);
     }
 
     /**

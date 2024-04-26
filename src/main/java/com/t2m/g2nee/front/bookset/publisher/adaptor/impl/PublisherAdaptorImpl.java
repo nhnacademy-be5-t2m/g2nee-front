@@ -28,6 +28,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
     private final RestTemplate restTemplate;
     @Value("${g2nee.gateway}")
     String gatewayUrl;
+
     @Override
     public void registerPublisher(PublisherDto.Request request) {
         HttpHeaders headers = new HttpHeaders();

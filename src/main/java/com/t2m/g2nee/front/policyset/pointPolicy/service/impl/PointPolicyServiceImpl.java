@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * PointPolicyService의 구현체 입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */

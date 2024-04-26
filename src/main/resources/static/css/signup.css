@@ -1,3 +1,25 @@
 .hide {
     display: none;
 }
+
+.word {
+    margin-left: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.text {
+    height: 30px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.form_btn {
+    box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
+}
+
+.form_btn:active {
+    box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
+}

@@ -3,8 +3,10 @@ package com.t2m.g2nee.front.orderset.packageType.service;
 import com.t2m.g2nee.front.orderset.packageType.dto.request.PackageSaveDto;
 import com.t2m.g2nee.front.orderset.packageType.dto.response.PackageInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+
 /**
  * 포장지에 관련된 서비스입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */
@@ -12,6 +14,7 @@ public interface PackageTypeService {
 
     /**
      * 포장지를 저장합니다.
+     *
      * @param request
      * @return
      */
@@ -20,6 +23,7 @@ public interface PackageTypeService {
 
     /**
      * 포장지를 수정합니다.
+     *
      * @param packageId
      * @param request
      * @return
@@ -29,6 +33,7 @@ public interface PackageTypeService {
 
     /**
      * 특정 포장지 하나를 반환합니다.
+     *
      * @param packageId
      * @return
      */
@@ -36,6 +41,7 @@ public interface PackageTypeService {
 
     /**
      * 모든 포장지를 페이징하여 반환합니다.
+     *
      * @param page
      * @return
      */
@@ -43,6 +49,7 @@ public interface PackageTypeService {
 
     /**
      * 포장지를 soft delete합니다.
+     *
      * @param packageId
      * @return
      */
@@ -50,6 +57,7 @@ public interface PackageTypeService {
 
     /**
      * 비활성화된 포장지를 활성화 합니다.
+     *
      * @param packageId
      * @return
      */

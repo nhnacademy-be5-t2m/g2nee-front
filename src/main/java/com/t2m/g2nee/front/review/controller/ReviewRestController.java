@@ -23,7 +23,7 @@ public class ReviewRestController {
     private final ReviewService reviewService;
 
     @GetMapping
-    public ResponseEntity<ReviewDto.Response> getReview(@RequestBody ReviewDto.Request request){
+    public ResponseEntity<ReviewDto.Response> getReview(@RequestBody ReviewDto.Request request) {
         ReviewDto.Response review = reviewService.getReview(request);
 
         return ResponseEntity.ok().body(review);

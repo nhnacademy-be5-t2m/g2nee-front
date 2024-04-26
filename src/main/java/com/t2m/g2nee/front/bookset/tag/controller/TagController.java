@@ -44,6 +44,7 @@ public class TagController {
 
     /**
      * 태그 조회 컨트롤러
+     *
      * @param page 페이지 번호
      */
     @GetMapping("/list")

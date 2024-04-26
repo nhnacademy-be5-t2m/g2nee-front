@@ -26,7 +26,7 @@ public class BookLikeService {
         if (memberId == null) {
             return 0L;
         } else {
-        // 회원 일때만 메서드 실행
+            // 회원 일때만 메서드 실행
             return bookLikeAdaptor.getMemberLikesNum(memberId);
         }
     }
