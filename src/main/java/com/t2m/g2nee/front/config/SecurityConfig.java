@@ -32,7 +32,7 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;
     private final RedisTemplate<String, MemberInfoDto> redisTemplate;
     private final CustomUserDetailsService userDetailsService;
@@ -41,13 +41,15 @@ public class SecurityConfig {
     /**
      * spring security로 HTTP보안을 구성하는 메소드
      */
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager
                 = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
 
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/signup").permitAll()
+                .antMatchers("/mypage/**").hasAuthority("ROLE_USER")
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .csrf()
@@ -57,14 +59,12 @@ public class SecurityConfig {
                 .logout()
                 .disable();
 
-
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterAt(customLoginFilter(authenticationManager),
                 UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(customAuthenticationFilter(), SecurityContextPersistenceFilter.class);
 
-        return http.build();
     }
 
 
