@@ -22,6 +22,8 @@
         <tbody th:each="address : ${addressList}">
         <tr>
             <td>
+                <input type="radio" th:name="selectedAddress" th:value="${address.getAddressId()}"
+                       th:checked="${address.getIsDefault()}" onclick="setDefaultAddress(this)">
             </td>
             <td>
                 <span th:text="${address.getAlias()}"></span>
@@ -44,6 +46,9 @@
         </tr>
         </tbody>
     </table>
+
+    <button type="button" onclick="changeDefaultAddress()"
+            class="btn btn-primary">기본 배송지 변경</button>
 </div>
 
 </body>
