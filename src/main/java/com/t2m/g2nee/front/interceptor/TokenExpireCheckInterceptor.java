@@ -66,6 +66,10 @@ public class TokenExpireCheckInterceptor implements HandlerInterceptor {
 
         if (getValidTime(exp)) {
             ResponseEntity<Void> result = memberService.tokenReIssueRequest();
+            if(result.getStatusCode()!=HttpStatus.OK){
+                memberService.logout(response);
+                throw new CustomException(HttpStatus.BAD_REQUEST,"로그인시간이 만료되었습니다.");
+            }
             String newAccessToken = Objects.requireNonNull(result.getHeaders().get(JwtUtil.ACCESS_HEADER)).get(0);
             Long expireTime = getExpireTime(newAccessToken);
             updateAccessToken(response, accessTokenCookie, newAccessToken, expireTime);
