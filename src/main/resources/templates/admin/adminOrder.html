@@ -38,7 +38,7 @@
         </thead>
         <tbody>
         <tr th:each="order : ${orders}">
-            <td th:text="${order['order_id']}"></td>
+            <td th:text="${orders['order_id']}"></td>
             <td th:text="${order['order_date']}"></td>
             <td th:text="${order['customer_name']} + ' (' + ${order['customer_email']} + ')'"></td>
             <td>
