@@ -55,7 +55,7 @@ function postAddress() {
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                 addr = data.roadAddress;
             } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                addr = data.jibunAddress;
+                addr = data.roadAddress;
             }
 
             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
