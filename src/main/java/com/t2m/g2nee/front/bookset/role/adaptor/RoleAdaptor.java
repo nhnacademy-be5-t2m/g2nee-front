@@ -14,6 +14,7 @@ import java.util.List;
 public interface RoleAdaptor {
     /**
      * 모든 역할을 조회하는 메서드
+     *
      * @return List<RoleDto.Response>
      */
     List<RoleDto.Response> getAllRole();
@@ -23,7 +24,7 @@ public interface RoleAdaptor {
      *
      * @param request 등록할 정보가 있는 객체
      */
-   void registerRole(RoleDto.Request request);
+    void registerRole(RoleDto.Request request);
 
     /**
      * 역할 조회 메서드
@@ -48,4 +49,4 @@ public interface RoleAdaptor {
      * @param roleId 역할 아이디
      */
     void deleteRole(Long roleId);
-    }
+}

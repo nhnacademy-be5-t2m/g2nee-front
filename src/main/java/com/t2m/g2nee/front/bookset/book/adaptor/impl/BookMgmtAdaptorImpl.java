@@ -144,6 +144,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
                 String.class
         ).getBody();
     }
+
     @Override
     public Integer addBookQuantity(Long bookId, int quantity) {
 

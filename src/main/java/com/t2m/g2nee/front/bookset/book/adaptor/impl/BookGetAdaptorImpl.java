@@ -1,4 +1,5 @@
 package com.t2m.g2nee.front.bookset.book.adaptor.impl;
+
 import com.t2m.g2nee.front.bookset.book.adaptor.BookGetAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -28,8 +29,9 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 책 하나 정보를 조회하는 서비스 입니다.
+     *
      * @param memberId 회원 아이디
-     * @param bookId 책 아이디
+     * @param bookId   책 아이디
      * @return BookDto.Response
      */
     @Override
@@ -85,10 +87,11 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 검색어를 통해 책을 검색하여 조회하는 메서드
+     *
      * @param memberId 회원 아이디
-     * @param page    페이지 번호
-     * @param keyword 검색 키워드
-     * @param sort    정렬 조건
+     * @param page     페이지 번호
+     * @param keyword  검색 키워드
+     * @param sort     정렬 조건
      * @return PageResponse<BookDto.ListResponse>
      */
     @Override
@@ -131,7 +134,8 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 카테고리별 책 조회 메서드
-     * @param memberId 회원 아이디
+     *
+     * @param memberId   회원 아이디
      * @param page       페이지 번호
      * @param sort       정렬 기준
      * @param categoryId 카테고리 아이디
@@ -151,6 +155,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .fromHttpUrl(gatewayUrl + "/books/category/" + categoryId)
                 .queryParam("page", page)
                 .queryParam("sort", sort)
+                .queryParam("memberId", memberId)
                 .toUriString(), StandardCharsets.UTF_8);
 
 
@@ -176,7 +181,8 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 카테고리와 검색어로 책을 검색하는 메서드
-     * @param memberId 회원 아이디
+     *
+     * @param memberId   회원 아이디
      * @param page       페이지 번호
      * @param sort       정렬 기준
      * @param keyword    검색 키워드

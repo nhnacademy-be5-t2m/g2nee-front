@@ -35,17 +35,18 @@
             </td>
             <td>
                 <span th:if="${pointPolicy.isActivated}">
-                        <form th:action="@{'/admin/pointPolicies/delete/' + ${pointPolicy.pointPolicyId}}" th:method="patch" class="d-inline">
+                        <form th:action="@{'/admin/pointPolicies/' + ${pointPolicy.pointPolicyId}}" th:method="patch" class="d-inline">
                             <button type="submit" class="btn btn-sm btn-success">활성</button>
                         </form>
                     </span>
                 <span th:unless="${pointPolicy.isActivated}">
-                    <span >비활성</span>
+                    <span>비활성</span>
                 </span>
             </td>
             <td>
                 <a th:if="${pointPolicy.isActivated}"
-                   th:href="@{'/admin/pointPolicies/modify/' + ${pointPolicy.pointPolicyId}}" class="btn btn-sm btn-primary">수정</a>
+                   th:href="@{'/admin/pointPolicies/modify/' + ${pointPolicy.pointPolicyId}}"
+                   class="btn btn-sm btn-primary">수정</a>
             </td>
             <td>
                 <span th:text="${pointPolicy.changedDate}"></span>
@@ -54,7 +55,7 @@
         </tbody>
     </table>
 
-    <br /><br />
+    <br/><br/>
     <nav aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li>
@@ -76,7 +77,7 @@
         </ul>
     </nav>
 
-    <br /><br />
+    <br/><br/>
     <a th:href="@{/admin/pointPolicies/save}" class="btn btn-primary">새 포인트 정책</a>
 </div>
 </body>

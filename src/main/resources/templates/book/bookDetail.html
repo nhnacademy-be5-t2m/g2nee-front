@@ -4,7 +4,10 @@
       layout:decorate="~{layouts/categoryLayout}">
 
 <head>
-    <title>도서 상세</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>G2nee Book shop</title>
 </head>
 
 <body>
@@ -65,14 +68,16 @@
                 <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
                 <hr/>
 
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
+                     class="d-flex align-items-center mb-4 pt-2">
                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
                          style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
                     <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
                           style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
                 </div>
                 <!-- 구매할 책 갯수 설정 -->
-                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
+                     class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus">
@@ -86,7 +91,25 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
+                    <button class="btn btn-primary px-3" style="margin-right: 10px"><i
+                            class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
+                    </button>
+                    <button class="btn btn-primary px-3"><a class="btn btn-sm text-dark p-0"
+                                                            th:data-bookId="${book.bookId}"
+                                                            th:data-liked="${book.isLiked().toString()}"
+                                                            th:data-likesNum="${likesNum}"
+                                                            th:data-memberId="${memberId}">
+                        <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                           th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
+                           th:data-memberId="${memberId}">
+                            <i th:if="${book.isLiked() == false}" class="fa-regular fa-heart"></i>
+                            <span th:if="${book.isLiked() == false}">찜 하기</span>
+
+                            <i th:if="${book.isLiked() == true}" class="fa-solid fa-heart"></i>
+                            <span th:if="${book.isLiked() == true}">찜 해제</span>
+                        </a>
+                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -112,7 +135,7 @@
                         <hr/>
                         <h4 class="mb-3">책 소개</h4>
                         <p class="mb-4" th:text="${book.description}"></p>
-                       <hr/>
+                        <hr/>
                         <div>
                             <h4 class="mb-3">목차</h4>
                             <p th:text="${book.bookIndex}"></p>
@@ -192,7 +215,8 @@
                             <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>상세보기</a>
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i
+                                    class="fas fa-eye text-primary mr-1"></i>상세보기</a>
                             <a href="" class="btn btn-sm text-dark p-0"><i
                                     class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</a>
                         </div>
@@ -206,3 +230,4 @@
 </body>
 
 </html>
+<script src="/static/js/book/setLike.js"></script>

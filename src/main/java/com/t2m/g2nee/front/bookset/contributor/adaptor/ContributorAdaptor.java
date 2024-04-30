@@ -15,16 +15,17 @@ public interface ContributorAdaptor {
 
     /**
      * 모든 기여자를 조회하는 메서드
-     * @return  List<ContributorDto.Response>
+     *
+     * @return List<ContributorDto.Response>
      */
-     List<ContributorDto.Response> getAllContributor();
+    List<ContributorDto.Response> getAllContributor();
 
     /**
      * 기여자 등록 메서드
      *
      * @param request 등록할 정보가 있는 객체
      */
-     void registerContributor(ContributorDto.Request request);
+    void registerContributor(ContributorDto.Request request);
 
     /**
      * 기여자 조회 메서드
@@ -32,7 +33,7 @@ public interface ContributorAdaptor {
      * @param page 기여자 번호
      *             PageResponse<ContributorDto.Response>
      */
-     PageResponse<ContributorDto.Response> getAllContributor(int page);
+    PageResponse<ContributorDto.Response> getAllContributor(int page);
 
     /**
      * 기여자 수정 메서드
@@ -40,12 +41,12 @@ public interface ContributorAdaptor {
      * @param contributorId 태그 아이디
      * @param request       수정할 정보가 담긴 객체
      */
-     void updateContributor(Long contributorId, ContributorDto.Request request);
+    void updateContributor(Long contributorId, ContributorDto.Request request);
 
     /**
      * 역할 삭제 메서드
      *
      * @param contributorId 태그 아이디
      */
-     void deleteContributor(Long contributorId);
+    void deleteContributor(Long contributorId);
 }

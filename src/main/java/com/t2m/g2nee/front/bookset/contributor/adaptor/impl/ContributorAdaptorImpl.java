@@ -50,6 +50,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
     /**
      * 기여자 등록 메서드
+     *
      * @param request 등록할 정보가 있는 객체
      */
     @Override
@@ -60,7 +61,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/contributors";
+        String url = gatewayUrl + "/contributors";
 
         restTemplate.exchange(
                 url,
@@ -85,7 +86,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/contributors?page=" + page;
+        String url = gatewayUrl + "/contributors?page=" + page;
 
         return restTemplate.exchange(
                 url,
@@ -98,6 +99,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
     /**
      * 기여자 수정 메서드
+     *
      * @param contributorId 태그 아이디
      * @param request       수정할 정보가 담긴 객체
      */
@@ -109,7 +111,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
 
-        String url = gatewayUrl + "/shop/contributors/" + contributorId;
+        String url = gatewayUrl + "/contributors/" + contributorId;
 
         restTemplate.exchange(
                 url,
@@ -122,6 +124,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
     /**
      * 역할 삭제 메서드
+     *
      * @param contributorId 태그 아이디
      */
     @Override
@@ -132,7 +135,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/shop/contributors/" + contributorId;
+        String url = gatewayUrl + "/contributors/" + contributorId;
 
         restTemplate.exchange(
                 url,

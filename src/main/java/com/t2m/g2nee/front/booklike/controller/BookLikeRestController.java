@@ -1,0 +1,41 @@
+package com.t2m.g2nee.front.booklike.controller;
+
+import com.t2m.g2nee.front.annotation.Member;
+import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.booklike.dto.BookLikeDto;
+import com.t2m.g2nee.front.booklike.service.BookLikeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+/**
+ * fetch용 like restcontroller 클래스
+ *
+ * @author : 신동민
+ * @since : 1.0
+ */
+@RestController
+@RequestMapping("/likes")
+@RequiredArgsConstructor
+public class BookLikeRestController {
+
+    private final BookLikeService bookLikeService;
+    private final MemberAspect memberAspect;
+
+    @Member
+    @PutMapping
+    public ResponseEntity<BookLikeDto> postLike(@RequestBody BookLikeDto request) {
+
+        Long memberId = (Long) memberAspect.getThreadLocal().get();
+
+        request.setMemberId(memberId);
+        BookLikeDto bookLikeDto = bookLikeService.setLike(request);
+
+        return ResponseEntity.ok().body(bookLikeDto);
+    }
+
+}

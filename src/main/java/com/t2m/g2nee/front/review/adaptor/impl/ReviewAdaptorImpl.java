@@ -23,9 +23,11 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
     private final RestTemplate restTemplate;
     @Value("${g2nee.gateway}")
     private String gatewayUrl;
+
     /**
      * 리뷰 작성 메서드
-     * @param image 이미지
+     *
+     * @param image   이미지
      * @param request 리뷰 정보 객체
      */
     @Override
@@ -51,10 +53,11 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
 
     /**
      * 리뷰 수정 메서드
+     *
      * @param request 리뷰 정보 객체
      */
     @Override
-    public void updateReview(MultipartFile image,ReviewDto.Request request) {
+    public void updateReview(MultipartFile image, ReviewDto.Request request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -73,25 +76,22 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
         );
     }
 
-    /**
-     * 리뷰 삭제 메서드
-     * @param reviewId 리뷰 아이디
-     */
     @Override
-    public void deleteReview(Long reviewId) {
+    public ReviewDto.Response getReview(ReviewDto.Request request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/reviews/" + reviewId;
+        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        String url = gatewayUrl + "/reviews/" + request.getReviewId();
 
-        restTemplate.exchange(
+        return restTemplate.exchange(
                 url,
-                HttpMethod.DELETE,
+                HttpMethod.PATCH,
                 requestEntity,
-                String.class
-        );
+                new ParameterizedTypeReference<ReviewDto.Response>() {
+                }
+        ).getBody();
     }
 
     @Override
