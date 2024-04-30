@@ -14,19 +14,18 @@ public interface ReviewAdaptor {
     void postReview(MultipartFile image, ReviewDto.Request request);
     /**
      * 리뷰 수정 메서드
-     * @param image 이미지
      * @param request 리뷰 정보 객체
      */
-    void updateReview(MultipartFile image,ReviewDto.Request request);
+    void updateReview(ReviewDto.Request request);
 
-    ReviewDto.Response getReview(ReviewDto.Request request);
+    ReviewDto.Response getReview(Long memberId, Long bookId);
 
     /**
      * 책 리뷰를 조회하는 메서드
      * @param bookId 책 아이디
      * @return PageResponse<ReviewDto.Response>
      */
-    PageResponse<ReviewDto.Response> getReviews(Long bookId);
+    PageResponse<ReviewDto.Response> getReviews(Long bookId, int page);
 
 
 }
