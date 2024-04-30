@@ -15,7 +15,6 @@ import com.t2m.g2nee.front.bookset.tag.service.TagService;
 import com.t2m.g2nee.front.bookset.category.adaptor.CategoryAdaptor;
 import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -131,15 +130,8 @@ public class BookAdminController {
                            @RequestPart MultipartFile thumbnail,
                            @RequestPart MultipartFile[] details) {
 
-        List<Long> categoryList = new ArrayList<>();
-        // 최하위 카테고리만 추출
-        for (int i = 2; i < categoryIdList.size(); i += 3) {
-            Long categoryId = categoryIdList.get(i);
-            categoryList.add(categoryId);
-        }
-
         request.setContributorIdList(contributorIdList);
-        request.setCategoryIdList(categoryList);
+        request.setCategoryIdList(categoryIdList);
         request.setRoleIdList(roleIdList);
         request.setTagIdList(tagIdList);
         bookMgmtService.registerBook(request, thumbnail, details);

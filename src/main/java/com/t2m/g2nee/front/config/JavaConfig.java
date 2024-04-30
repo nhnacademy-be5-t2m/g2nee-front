@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.t2m.g2nee.front.exception.CustomExceptionHandler;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,9 @@ public class JavaConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.registerModule(new JavaTimeModule());
+
         return objectMapper;
     }
 
@@ -47,5 +50,4 @@ public class JavaConfig {
     public CustomExceptionHandler customExceptionHandler() {
         return new CustomExceptionHandler(objectMapper());
     }
-
 }
