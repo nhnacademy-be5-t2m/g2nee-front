@@ -16,6 +16,11 @@
     margin-bottom: 10px
 }
 
+.postButton {
+    height: 33px;
+    margin: 10px;
+}
+
 .form_btn {
     box-shadow: -5px -5px 10px #fff, 5px 5px 8px #babebc;
 }
