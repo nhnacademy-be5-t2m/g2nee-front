@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.aop;
 
 import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
+import static com.t2m.g2nee.front.utils.CookieUtil.findCookie;
 
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import java.util.Arrays;
@@ -38,10 +39,7 @@ public class MemberAspect {
                 (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
 
-        Cookie c = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals(SESSION_ID))
-                .findAny()
-                .orElse(null);
+        Cookie c = findCookie(SESSION_ID);
 
         if (c != null) {
             String sessionId = c.getValue();

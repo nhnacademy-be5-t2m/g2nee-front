@@ -14,8 +14,9 @@
 <div layout:fragment="content">
     <h2 class="text-center">카테고리 검색</h2>
 
-    <br /><br />
-    <form th:action="@{/admin/categories/search}" th:method="GET" class="form-inline mb-3 d-flex justify-content-between">
+    <br/><br/>
+    <form th:action="@{/admin/categories/search}" th:method="GET"
+          class="form-inline mb-3 d-flex justify-content-between">
         <input type="text" class="form-control" placeholder="카테고리 검색" name="name" style="width: 70%;">
         <input type="hidden" name="page" value="1">
         <input type="submit" class="btn btn-primary ms-3" value="검색">
@@ -41,16 +42,19 @@
                 <span th:text="${searchCategory.categoryEngName}"></span>
             </td>
             <td>
-                <a th:href="@{'/admin/categories/modify/' + ${searchCategory.categoryId}}" class="btn btn-sm btn-primary">수정</a>
+                <a th:href="@{'/admin/categories/modify/' + ${searchCategory.categoryId}}"
+                   class="btn btn-sm btn-primary">수정</a>
             </td>
             <td>
                     <span th:if="${searchCategory.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="delete" class="d-inline">
+                        <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="delete"
+                              class="d-inline">
                             <button type="submit" class="btn btn-sm btn-success">활성</button>
                         </form>
                     </span>
                 <span th:unless="${searchCategory.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="patch" class="d-inline">
+                        <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="patch"
+                              class="d-inline">
                             <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
                         </form>
                     </span>
@@ -59,7 +63,7 @@
         </tbody>
     </table>
 
-    <br /><br />
+    <br/><br/>
     <nav aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li>
@@ -81,7 +85,7 @@
         </ul>
     </nav>
 
-    <br /><br />
+    <br/><br/>
     <a th:href="@{/admin/categories/save}" class="btn btn-primary">새 카테고리</a>
 
 </div>

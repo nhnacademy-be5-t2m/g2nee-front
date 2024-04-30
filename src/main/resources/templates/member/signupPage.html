@@ -5,66 +5,143 @@
 <head>
     <title>회원가입 페이지</title>
     <link href="/static/css/signup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
 <div layout:fragment="content">
+    <form th:action th:object="${signupForm}" method="post" onsubmit="return signupSubmit()">
+        <h3>정보입력</h3>
+        <div>
+            <table border="1" summary>
+                <colgroup>
+                    <col style="width:150px;">
+                    <col style="width:1000px;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row" for="username" class="word">
+                        아이디
+                    </th>
+                    <td style="display : flex">
+                        <input type="text" id="username"
+                               class="text"
+                               th:field="*{userName}"
+                               placeholder="아이디" required/>
+                        <div class="username-unUsable hide word" style="color:red;">사용중인 아이디입니다.</div>
+                        <div class="username-usable hide word" style="color:red;">사용가능한 아이디입니다.</div>
+                        <div class="username-invalid hide word" style="color:red;"> 형식이 올바르지
+                            않습니다.
+                        </div>
+                        <div style="color:gray;" class="word"> (영문소문자/숫자, 4~16자)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="password" class="word">비밀번호</th>
+                    <td style="display : flex">
+                        <input type="password" id="password" class="text" th:field="*{password}" placeholder="비밀번호"
+                               required/>
+                        <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
+                        <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="passwordCheck" class="word">비밀번호 재확인</th>
+                    <td style="display : flex">
+                        <input type="password" id="passwordCheck" class="text" placeholder="비밀번호" required/>
+                        <div class="password-incorrect hide word" style="color:red;"> 비밀번호가 일치하지 않습니다.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="name" class="word">이름</th>
+                    <td style="display : flex">
+                        <input type="text" id="name" class="text" th:field="*{name}" placeholder="이름" required/>
+                        <div class="name-invalid hide word" style="color:red;"> 영어/한글 2-20자로 작성해주십시오.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="nickname" class="word">닉네임</th>
+                    <td style="display : flex">
+                        <input type="text" id="nickname" class="text" th:field="*{nickName}" placeholder="닉네임"
+                               required/>
+                        <div class="nickname-unUsable hide word" style="color:red;">사용중인 닉네임입니다.</div>
+                        <div class="nickname-usable hide word" style="color:red;">사용가능한 닉네임입니다.</div>
+                        <div class="nickname-invalid hide word" style="color:red;"> 한글/영어/숫자/'_'/'.' 2-10자로 작성해주십시오.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="email" class="word">이메일</th>
+                    <td style="display : flex">
+                        <input type="hidden" id="email" name="email" for="email"/>
+                        <input type="text" id="emailId" class="text" style="margin-right: 10px;" required/>
+                        <div style="padding-top: 10px;padding-bottom: 10px"> @</div>
+                        <input type="text" id="emailDomain" class="text" required/>
+                        <select class="select text" title="이메일 도메인 주소 선택"
+                                onchange="setEmailDomain()">
+                            <option value="">--선택--</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="hanmail.com">hanmail.com</option>
+                            <option value="korea.com"> korea.com</option>
+                            <option value="nate.com">nate.com</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="phoneNumber" class="word">전화번호</th>
+                    <td style="display : flex">
+                        <input type="text" id="phoneNumber" class="text" th:field="*{phoneNumber}" placeholder="전화번호"
+                               required/>
+                        <div class="phoneNumber-invalid hide word" style="color:red;"> 형식을 맞춰 작성해주십시오.</div>
+                        <div style="color:gray;" class="word"> (ex.010-1234-5678)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="birthday" class="word">생년월일</th>
+                    <td style="display : flex">
+                        <label for="date" class="text">날짜를 선택하세요:
+                            <input type="hidden" id="birthday" th:field="*{birthday}"/>
+                            <input type="date"
+                                   id="date"
+                                   min="1900-01-01">
+                            <script>
+                                // 현재 날짜를 가져오는 함수
+                                function getCurrentDate() {
+                                    let today = new Date();
+                                    let year = today.getFullYear();
+                                    let month = (today.getMonth() + 1).toString().padStart(2, '0');
+                                    let day = today.getDate().toString().padStart(2, '0');
+                                    return `${year}-${month}-${day}`;
+                                }
 
-    <!-- Shop Detail Start -->
-    <div class="container-fluid py-5">
-        <form th:action th:object="${signupForm}" method="post">
-            <label for="username">아이디</label>
-            <input type="text" id="username" th:field="*{userName}" placeholder="아이디"/>
-            <div class="username-invalid hide">영어와 숫자만 사용한 4-20자의 형식이나 이메일의 형식으로 작성하여 주십시오.</div>
+                                // 오늘 날짜를 max 속성에 설정
+                                document.getElementById('date').setAttribute('max', getCurrentDate());
+                            </script>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="gender" class="word">성별</th>
+                    <td style="display: flex; align-items: center;">
+                        <label for="male" class="word">남</label>
+                        <input type="radio" id="male" class="radio text" name="gender" value="Male" checked>
+                        <label for="female" class="word">여</label>
+                        <input type="radio" id="female" class="radio text" name="gender" value="Female">
+                        <input type="hidden" th:field="*{gender}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <br/>
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}" placeholder="비밀번호"/>
-            <div class="password-invalid hide">영어 숫자, 특수문자를 포함하여 8-20자의 형식으로 작성하여 주십시오.</div>
+        <div style="margin-bottom: 20px;"></div>
+        <button type="submit">회원가입</button>
 
-            <br/>
-            <label for="passwordCheck">비밀번호재확인</label>
-            <input type="password" id="passwordCheck" placeholder="비밀번호재확인"/>
-            <div class="password-incorrect hide">비밀번호가 일치하지 않습니다.</div>
+    </form>
 
-            <br/>
-            <label for="name">이름</label>
-            <input type="text" id="name" th:field="*{name}" placeholder="이름"/>
-            <div class="name-invalid hide">영어와 한글만 사용하여 2-20자의 형식으로 작성하여 주십시오.</div>
 
-            <br/>
-            <label for="nickname">닉네임</label>
-            <input type="text" id="nickname" th:field="*{nickName}" placeholder="닉네임"/>
-            <div class="nickname-invalid hide">한글,영어,숫자,'_','.'을 사용한 2-10자의 형식으로 작성하여 주십시오.</div>
-
-            <br/>
-            <label for="email">이메일</label>
-            <input type="text" id="email" th:field="*{email}" placeholder="이메일"/>
-            <div class="email-invalid hide">올바른 email 형식으로 작성하여 주십시오.</div>
-
-            <br/>
-            <label for="phoneNumber">전화번호</label>
-            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="전화번호"/>
-            <div class="phoneNumber-invalid hide">010-1234-5678 의 형식으로 작성하여 주십시오.</div>
-
-            <br/>
-            <label for="birthday">생년월일</label>
-            <input type="text" id="birthday" th:field="*{birthday}" placeholder="생년월일"/>
-            <div class="birthday-invalid hide">'-'를 제외한 ex.19990403의 형식으로 작성하여 주십시오.</div>
-
-            <br/>
-            <label for="gender">성별</label>
-            <input type="text" id="gender" th:field="*{gender}" placeholder="성별"/>
-            <div class="gender-invalid hide">'Male','Female' 둘 중에 하나를 작성하여 주십시오.</div>
-
-            <br/>
-            <button type="submit">회원가입</button>
-
-        </form>
-    </div>
-    <!-- Shop Detail End -->
-
-    <script src="/js/member/signup.js"></script>
+    <script src="/static/js/member/signup.js"></script>
 </div>
 
 

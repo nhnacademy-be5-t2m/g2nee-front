@@ -9,6 +9,7 @@ import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.category.service.CategoryService;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
+import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +48,7 @@ public class BookController {
                           Model model) {
 
         Long memberId = (Long) memberAspect.getThreadLocal().get();
-        BookDto.Response response = bookGetService.getBook(memberId,bookId);
+        BookDto.Response response = bookGetService.getBook(memberId, bookId);
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         // 책의 카테고리 정보를 가져옵니다.
@@ -108,7 +109,7 @@ public class BookController {
         Long memberId = (Long) memberAspect.getThreadLocal().get();
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page,memberId, keyword, sort);
+        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
@@ -134,8 +135,7 @@ public class BookController {
                                               @RequestParam(defaultValue = "") String keyword,
                                               @RequestParam(defaultValue = "1") int page,
                                               @RequestParam(required = false) String sort,
-                                              @PathVariable("categoryId") Long categoryId)
-    {
+                                              @PathVariable("categoryId") Long categoryId) {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
@@ -146,12 +146,12 @@ public class BookController {
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage =
-                bookGetService.getBooksBySearchByCategory(page,memberId, sort, keyword, categoryId);
+                bookGetService.getBooksBySearchByCategory(page, memberId, sort, keyword, categoryId);
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
-        model.addAttribute("sort",sort);
+        model.addAttribute("sort", sort);
         model.addAttribute("category", categoryService.getCategory(categoryId));
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
@@ -173,8 +173,7 @@ public class BookController {
     public String getBookByCategoryId(Model model,
                                       @RequestParam(defaultValue = "1") int page,
                                       @RequestParam(required = false) String sort,
-                                      @PathVariable("categoryId") Long categoryId)
-    {
+                                      @PathVariable("categoryId") Long categoryId) {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
@@ -183,7 +182,8 @@ public class BookController {
         Long memberId = (Long) memberAspect.getThreadLocal().get();
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksByCategory(page,memberId, sort, categoryId);
+        PageResponse<BookDto.ListResponse> bookPage =
+                bookGetService.getBooksByCategory(page, memberId, sort, categoryId);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
         model.addAttribute("sort", sort);

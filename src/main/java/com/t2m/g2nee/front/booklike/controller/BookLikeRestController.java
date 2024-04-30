@@ -28,7 +28,7 @@ public class BookLikeRestController {
 
     @Member
     @PutMapping
-    public ResponseEntity<BookLikeDto> postLike(@RequestBody BookLikeDto request){
+    public ResponseEntity<BookLikeDto> postLike(@RequestBody BookLikeDto request) {
 
         Long memberId = (Long) memberAspect.getThreadLocal().get();
 

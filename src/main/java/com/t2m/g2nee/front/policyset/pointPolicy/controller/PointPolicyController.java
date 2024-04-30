@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 관리자가 포인트정책을 관리하기 위한 컨트롤러 입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */
@@ -31,38 +32,42 @@ public class PointPolicyController {
 
     /**
      * 포인트 정책 목록을 보여줍니다(메인)
+     *
      * @param model
      * @return
      */
     @GetMapping("/list")
-    public String pointPolicyList(Model model){
+    public String pointPolicyList(Model model) {
         model.addAttribute("pointPolicies", service.getAllPointPolicies(1));
         return "admin/pointPolicy/adminPointPolicyList";
     }
 
     /**
      * 포인트 정책 목록을 페이징처리하여 보여줍니다.
+     *
      * @param page
      * @param model
      * @return
      */
     @GetMapping
-    public String pointPolicyPage(@RequestParam int page, Model model){
+    public String pointPolicyPage(@RequestParam int page, Model model) {
         model.addAttribute("pointPolicies", service.getAllPointPolicies(page));
         return "admin/pointPolicy/adminPointPolicyList";
     }
 
     /**
      * 포인트 정책 저장 양식 보여줍니다.
+     *
      * @return
      */
     @GetMapping("/save")
-    public String pointPolicySaveForm(){
+    public String pointPolicySaveForm() {
         return "admin/pointPolicy/adminPointPolicySave";
     }
 
     /**
      * 실제로 포인트 정책 저장합니다.
+     *
      * @param policyName
      * @param policyType
      * @param amount
@@ -71,7 +76,7 @@ public class PointPolicyController {
     @PostMapping("/save")
     public String createPointPolicy(@RequestParam("policyName") String policyName,
                                     @RequestParam("policyType") String policyType,
-                                    @RequestParam("amount") BigDecimal amount){
+                                    @RequestParam("amount") BigDecimal amount) {
         PointPolicySaveDto request = new PointPolicySaveDto(policyName, policyType, amount);
         service.createPointPolicy(request);
         return "redirect:/admin/pointPolicies/list";
@@ -79,18 +84,20 @@ public class PointPolicyController {
 
     /**
      * 포인트 정책 수정 양식 보여줍니다.
+     *
      * @param pointPolicyId
      * @param model
      * @return
      */
     @GetMapping("/modify/{pointPolicyId}")
-    public String modifyPointPolicyForm(@PathVariable("pointPolicyId") Long pointPolicyId, Model model){
+    public String modifyPointPolicyForm(@PathVariable("pointPolicyId") Long pointPolicyId, Model model) {
         model.addAttribute("pointPolicy", service.getPointPolicy(pointPolicyId));
         return "admin/pointPolicy/adminPointPolicySave";
     }
 
     /**
      * 실제로 포인트 정책 수정합니다.
+     *
      * @param pointPolicyId
      * @param policyName
      * @param policyType
@@ -101,7 +108,7 @@ public class PointPolicyController {
     public String modifyPointPolicy(@PathVariable("pointPolicyId") Long pointPolicyId,
                                     @RequestParam("policyName") String policyName,
                                     @RequestParam("policyType") String policyType,
-                                    @RequestParam("amount") BigDecimal amount){
+                                    @RequestParam("amount") BigDecimal amount) {
         PointPolicySaveDto request = new PointPolicySaveDto(policyName, policyType, amount);
         service.updatePointPolicy(pointPolicyId, request);
         return "redirect:/admin/pointPolicies/list";
@@ -109,11 +116,12 @@ public class PointPolicyController {
 
     /**
      * 포인트 정책 비활성화합니다.
+     *
      * @param pointPolicyId
      * @return
      */
     @PatchMapping("/{pointPolicyId}")
-    public String deletePointPolicy(@PathVariable("pointPolicyId") Long pointPolicyId){
+    public String deletePointPolicy(@PathVariable("pointPolicyId") Long pointPolicyId) {
         service.deletePointPolicy(pointPolicyId);
         return "redirect:/admin/pointPolicies/list";
     }

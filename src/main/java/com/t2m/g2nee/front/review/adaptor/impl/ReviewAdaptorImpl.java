@@ -23,9 +23,11 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
     private final RestTemplate restTemplate;
     @Value("${g2nee.gateway}")
     private String gatewayUrl;
+
     /**
      * 리뷰 작성 메서드
-     * @param image 이미지
+     *
+     * @param image   이미지
      * @param request 리뷰 정보 객체
      */
     @Override
@@ -53,10 +55,12 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
 
     /**
      * 리뷰 수정 메서드
+     *
      * @param request 리뷰 정보 객체
      */
     @Override
     public void updateReview(ReviewDto.Request request) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 

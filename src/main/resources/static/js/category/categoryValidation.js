@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (event) {
         const categoryName = document.getElementById('categoryName').value.trim();
         const categoryEngName = document.getElementById('categoryEngName').value.trim();
-        const isActivated = document.getElementById('isActivated');
-        const ancestorCategoryId = document.getElementById('ancestorCategoryId');
+        const isActivated = document.querySelector('input[name="isActivated"]:checked');
+
 
         let validationErrors = [];
 
@@ -18,16 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
             validationErrors.push("카테고리 영문 명은 1~50자 사이여야 합니다.");
         }
 
-        // isActivated 유효성 검사 (null 체크)
-        if (isActivated === null) {
-            validationErrors.push("활성화 여부를 지정해야 합니다.");
+        // isActivated 유효성 검사 (라디오 버튼이 선택되어야 함)
+        if (!isActivated) {
+            validationErrors.push("활성화 상태는 선택되어야 합니다.");
         }
-
-        // ancestorCategoryId 유효성 검사 (null 체크)
-        if (ancestorCategoryId === null) {
-            validationErrors.push("상위 카테고리를 선택해야 합니다.");
-        }
-
 
         // 유효성 검사 실패 시 모달 팝업 표시
         if (validationErrors.length > 0) {

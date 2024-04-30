@@ -26,7 +26,7 @@ public class BookLikeAdaptorImpl implements BookLikeAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<BookLikeDto> requestEntity = new HttpEntity<>(request,headers);
+        HttpEntity<BookLikeDto> requestEntity = new HttpEntity<>(request, headers);
 
         String url = gatewayUrl + "/likes";
 
@@ -42,6 +42,7 @@ public class BookLikeAdaptorImpl implements BookLikeAdaptor {
 
     /**
      * 회원 좋아요 개수를 조회하는 메서드
+     *
      * @param memberId 회원아이디
      * @return Long
      */
@@ -52,7 +53,7 @@ public class BookLikeAdaptorImpl implements BookLikeAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = "http://localhost:8081/api/v1/shop" + "/likes/member/" + memberId;
+        String url = gatewayUrl + "/likes/member/" + memberId;
 
 
         return restTemplate.exchange(

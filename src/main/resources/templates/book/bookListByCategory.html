@@ -70,21 +70,28 @@
                         Sort by
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=viewCount' : '?sort=viewCount'}}"
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=viewCount' : '?sort=viewCount'}}"
                         >인기도
                             순
                         </a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=publishedDate' : '?sort=publishedDate'}}"
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=publishedDate' : '?sort=publishedDate'}}"
                         >출간일
                             순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceAsc' : '?sort=salePriceAsc'}}">가격
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceAsc' : '?sort=salePriceAsc'}}">가격
                             낮은
                             순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceDesc' : '?sort=salePriceDesc'}}">가격
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceDesc' : '?sort=salePriceDesc'}}">가격
                             높은
                             순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=score' : '?sort=score'}}">평점 순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=review' : '?sort=review'}}">리뷰
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=score' : '?sort=score'}}">평점
+                            순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=review' : '?sort=review'}}">리뷰
                             순</a>
                     </div>
                 </div>
@@ -97,14 +104,14 @@
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <a th:href="@{'/books/' + ${book.bookId}}">
-                    <img class="img-fluid w-100 h-100"
-                         th:src="${book.thumbnailImageUrl}" alt="썸네일">
+                        <img class="img-fluid w-100 h-100"
+                             th:src="${book.thumbnailImageUrl}" alt="썸네일">
                     </a>
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                     <a th:href="@{'/books/' + ${book.bookId}}">
-                    <h6 class="text-truncate mb-3; font-weight-semi-bold;" style="font-size: 20px;"
-                        th:text="${book.title}"></h6>
+                        <h6 class="text-truncate mb-3; font-weight-semi-bold;" style="font-size: 20px;"
+                            th:text="${book.title}"></h6>
                     </a>
                     <span th:with="contributorRole = ${book.contributorRoleList[0]}">
                      <span th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + ' '"

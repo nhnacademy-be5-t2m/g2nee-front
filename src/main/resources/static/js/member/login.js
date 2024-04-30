@@ -18,21 +18,6 @@ function loginSubmit() {
             text: '패스워드를 입력하여 주십시오.'
         })
     } else {
-        // fetch("http://localhost:8085/auth/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         username: username,
-        //         password: password
-        //     })
-        // })
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         console.log(res)
-        //         localStorage.setItem('access-token'), res.access
-        //     })
         $.ajax({
             type: "post",
             async: true,

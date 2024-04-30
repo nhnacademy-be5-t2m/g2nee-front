@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * DeliveryPolicyAdaptor의 구현체 입니다.
+ *
  * @author : 김수빈
  * @since : 1.0
  */
@@ -28,7 +29,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
 
     private final RestTemplate restTemplate;
 
-    @Value("${g2nee.gateway}")
+    @Value("${gatewayToShopUrl}")
     private String gateway;
 
     private String baseUrl;
@@ -43,7 +44,7 @@ public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
     }
 
     @PostConstruct
-    public void initUrl(){
+    public void initUrl() {
         baseUrl = gateway + "/deliveryPolicies";
     }
 
