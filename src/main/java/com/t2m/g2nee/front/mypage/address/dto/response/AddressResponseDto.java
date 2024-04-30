@@ -1,4 +1,4 @@
-package com.t2m.g2nee.front.mypage.dto.response;
+package com.t2m.g2nee.front.mypage.address.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

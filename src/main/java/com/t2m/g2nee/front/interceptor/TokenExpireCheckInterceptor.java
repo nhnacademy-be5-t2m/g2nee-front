@@ -44,7 +44,7 @@ public class TokenExpireCheckInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws IOException {
 
-         Cookie accessTokenCookie = CookieUtil.findCookie(ACCESS_COOKIE);
+        Cookie accessTokenCookie = CookieUtil.findCookie(ACCESS_COOKIE);
         Cookie authSessionCookie = CookieUtil.findCookie(SESSION_ID);
 
         if (Objects.isNull(accessTokenCookie) || Objects.isNull(authSessionCookie)) {
