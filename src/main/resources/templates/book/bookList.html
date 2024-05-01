@@ -111,6 +111,7 @@
                            th:if="${book.isLiked() == false}"></i>
                         <i class="fa-solid fa-heart text-primary" style="font-size: 24px"
                            th:if="${book.isLiked() == true}"></i>
+                        <small th:text="${book.scoreAverage} + ' (' + ${book.reviewCount} +' Reviews)'"></small>
                     </a>
                     <a href="" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가</a>

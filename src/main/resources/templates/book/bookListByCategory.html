@@ -52,11 +52,14 @@
                 <form th:action="@{'/books/search/category/' + ${categoryId}}">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search by name" name="keyword">
-                        <span class="text-muted" th:text="' - 선택한 카테고리에 해당하는 책을 검색할 수 있습니다' "></span>
                         <div class="input-group-append">
                                         <span class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
                                         </span>
+                            <span class="input-group-text bg-transparent text-primary text-muted">
+                            <i class="fa-regular fa-hand-pointer fa-rotate-270" ></i>
+                                <span th:text="' ' + '선택한 카테고리에 해당하는 책을 검색할 수 있습니다'"></span>
+                                   </span>
                         </div>
                     </div>
                 </form>
@@ -140,11 +143,12 @@
                     <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                        th:data-memberId="${memberId}">
-                        <i class="fa-regular fa-heart text-primary" style="font-size: 24px"
+                        <i class="fa-regular fa-heart text-primary" style="font-size: 20px"
                            th:if="${book.isLiked() == false}"></i>
-                        <i class="fa-solid fa-heart text-primary" style="font-size: 24px"
+                        <i class="fa-solid fa-heart text-primary" style="font-size: 20px"
                            th:if="${book.isLiked() == true}"></i>
                     </a>
+                    <small th:text="${book.scoreAverage} + ' (' + ${book.reviewCount} +' Reviews)'"></small>
 
                     <a href="" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가</a>
