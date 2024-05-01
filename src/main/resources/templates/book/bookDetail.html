@@ -295,22 +295,25 @@
         var scoreDecimal = [[${book.scoreAverage}]] % 1;
         const starRatingElement = document.getElementById('star-rating');
         let stars = '';
+
         for (let i = 0; i < scoreAverage; i++) {
             stars += '<small> <i class="fas fa-star"></i></small>';
         }
+
         if (scoreDecimal > 0) {
-            if (scoreDecimal <= 0.3) {
+            if (scoreDecimal <= 0.25) {
                 stars += '<small> <i class="far fa-star"></i></small>';
             } else if (scoreDecimal <= 0.75) {
                 stars += '<small> <i class="fas fa-star-half-alt"></i></small>';
-                stars += '<small> <i class="far fa-star"></i></small>';
             } else {
                 stars += '<small> <i class="fas fa-star"></i></small>';
             }
         }
+
         for (let i = 5 - Math.ceil([[${book.scoreAverage}]]); i > 0; i--) {
             stars += '<small> <i class="far fa-star"></i></small>';
         }
+
         starRatingElement.innerHTML = stars;
     }
 
