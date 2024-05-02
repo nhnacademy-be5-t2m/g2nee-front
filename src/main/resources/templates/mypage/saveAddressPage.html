@@ -12,7 +12,6 @@
 </head>
 <body>
 <div>
-    <form id="addressForm" th:object="${addressForm}">
         <h3> 새 주소 등록 </h3>
         <table border="1" summary>
             <colgroup>
@@ -25,14 +24,14 @@
                     주소별칭
                 </th>
                 <td style="display : flex">
-                    <input type="text" id="alias" class="text" th:field="*{alias}" maxlength="20" required/>
+                    <input type="text" id="alias" class="text" maxlength="20" required/>
                 </td>
             <tr>
                 <th scope="row" for="zipcode">
                     우편번호
                 </th>
                 <td style="display : flex">
-                    <input type="text" id="zipcode" class="text" th:field="*{zipcode}" readonly/>
+                    <input type="text" id="zipcode" class="text" readonly/>
                     <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
                 </td>
             </tr>
@@ -41,7 +40,7 @@
                     주소
                 </th>
                 <td style="display : flex">
-                    <input type="text" id="address" class="text" th:field="*{address}" maxlength="100" readonly/>
+                    <input type="text" id="address" class="text" maxlength="100" readonly/>
                 </td>
             </tr>
             <tr>
@@ -49,7 +48,7 @@
                     상세주소
                 </th>
                 <td style="display : flex">
-                    <input type="text" id="detail" class="text" th:field="*{detail}" maxlength="50" required/>
+                    <input type="text" id="detail" class="text" maxlength="50" required/>
                 </td>
             </tr>
             <tr>
@@ -57,7 +56,6 @@
                     기본 배송지 설정
                 </th>
                 <td style="display: flex; align-items: center;">
-                    <input type="hidden" id="isDefault" th:field="*{isDefault}">
                     <input type="radio" id="isDefaultYes" name="isDefault" value="true"> 예
                     <input type="radio" id="isDefaultNo" name="isDefault" value="false" checked> 아니오
                 </td>
@@ -68,7 +66,6 @@
 
         <div style="margin-bottom: 20px;"></div>
         <button class="btn btn-primary" onclick="saveAddressButton()">등록</button>
-    </form>
     <script src="/static/js/mypage/address.js"></script>
 </div>
 </body>

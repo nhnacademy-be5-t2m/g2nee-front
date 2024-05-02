@@ -91,22 +91,23 @@ function postAddress() {
 
 
 function saveAddressButton() {
-    let address = document.querySelector('#address').value;
+        let address = document.querySelector('#address').value;
     let zipcode = document.querySelector('#zipcode').value;
     if (address === '' || zipcode === '') {
         Swal.fire({
             icon: 'warning',
             title: '배송지 입력 오류',
             text: '우편번호찾기를 통해 주소를 입력해주십시오.'
-        })
-        return false;
-    } else {
+        });
+        return;
+    }else{
         saveAddress()
             .then(() => {
                 opener.parent.reload();
                 window.close(); // 팝업 창 닫기
             });
     }
+    return true;
 }
 
 
