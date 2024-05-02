@@ -91,7 +91,7 @@ function postAddress() {
 
 
 function saveAddressButton() {
-        let address = document.querySelector('#address').value;
+    let address = document.querySelector('#address').value;
     let zipcode = document.querySelector('#zipcode').value;
     if (address === '' || zipcode === '') {
         Swal.fire({
@@ -100,7 +100,7 @@ function saveAddressButton() {
             text: '우편번호찾기를 통해 주소를 입력해주십시오.'
         });
         return;
-    }else{
+    } else {
         saveAddress()
             .then(() => {
                 opener.parent.reload();

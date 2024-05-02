@@ -102,8 +102,10 @@
             <div class="card product-item border-0 mb-4">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <a th:href="@{'/books/' + ${book.bookId}}">
-                        <img class="img-fluid w-100 h-100"
-                             th:src="${book.thumbnailImageUrl}" alt="썸네일">
+                        <div class="image-wrapper">
+                            <img
+                                 th:src="${book.thumbnailImageUrl}" alt="썸네일">
+                        </div>
                     </a>
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
