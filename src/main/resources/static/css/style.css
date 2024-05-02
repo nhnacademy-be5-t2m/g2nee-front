@@ -4669,8 +4669,6 @@ input[type="button"].btn-block {
     background-color: rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     height: 45vh;
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
 }
 
 .card-footer {
