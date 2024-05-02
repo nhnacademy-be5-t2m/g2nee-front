@@ -1,9 +1,7 @@
 package com.t2m.g2nee.front.orderset.packageType.controller;
 
 import com.t2m.g2nee.front.orderset.packageType.dto.request.PackageSaveDto;
-import com.t2m.g2nee.front.orderset.packageType.dto.response.PackageInfoDto;
 import com.t2m.g2nee.front.orderset.packageType.service.PackageTypeService;
-import com.t2m.g2nee.front.utils.PageResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

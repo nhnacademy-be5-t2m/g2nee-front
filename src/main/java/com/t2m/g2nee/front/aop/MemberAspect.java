@@ -4,7 +4,6 @@ import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.findCookie;
 
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
-import java.util.Arrays;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

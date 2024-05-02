@@ -2,7 +2,6 @@ package com.t2m.g2nee.front.bookset.role.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
