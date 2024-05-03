@@ -1,13 +1,17 @@
 package com.t2m.g2nee.front.order.controller;
 
 
+import com.t2m.g2nee.front.order.dto.request.AddressInfoDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
+import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 주문과 관련된 controller 입니다.
@@ -44,4 +48,20 @@ public class OrderController {
         //TODO : shop server의 order쪽으로 보내기
         return "member/customerLogin";
     }
+
+    /**
+     * 바로구매시 bookID, 구매수량과 함께 주문페이지를 띄워주는 메소드
+     *
+     * @param bookId 구매할 책의 id
+     * @param bookCount 구매할 책의 수량
+     * @param model 주문 form 에 필요한 dto 객체를 저장할 model
+     * @return 주문페이지를 보여준다.
+     */
+    @GetMapping("/buyNow")
+    public String buyNowOrderForm(@RequestParam("bookId") Long bookId,@RequestParam("bookCount") Long bookCount, Model model){
+        model.addAttribute("ordererInfo",new OrdererInfoDto());
+        model.addAttribute("addressInfo",new AddressInfoDto());
+        return "order/orderForm";
+    }
+
 }

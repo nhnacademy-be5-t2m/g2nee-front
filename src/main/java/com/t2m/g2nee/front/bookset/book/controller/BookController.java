@@ -64,6 +64,7 @@ public class BookController {
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("reviewPage", reviewPage);
+        model.addAttribute("bookCount",1);
 
         return "book/bookDetail";
     }
