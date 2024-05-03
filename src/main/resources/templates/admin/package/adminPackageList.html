@@ -13,6 +13,7 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
+            <th></th>
             <th>포장지 명</th>
             <th>가격</th>
             <th>상태</th>
@@ -22,6 +23,9 @@
 
         <tbody th:each="package : ${packages.data}">
         <tr>
+            <td>
+                <img class="w-30 h-30" th:src="${package.url}" alt="Image">
+            </td>
             <td>
                 <span th:text="${package.name}"></span>
             </td>
