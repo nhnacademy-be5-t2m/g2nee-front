@@ -7,6 +7,8 @@ import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.review.dto.ReviewDto;
+import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +36,7 @@ public class BookController {
     private final CategoryService categoryService;
     private final MemberAspect memberAspect;
     private final BookLikeService bookLikeService;
+    private final ReviewService reviewService;
 
     /**
      * 책 하나 정보를 가져오고 해당 책 카테고리에 해당하는 추천 책 목록을 조회하는 컨트롤러 입니다.
@@ -53,11 +56,14 @@ public class BookController {
                 .collect(Collectors.toList());
         // 카테고리에 맞는 책 정보 목록을 가져옵니다.
         List<BookDto.ListResponse> bookList = bookGetService.getRecommendBooks(categoryIdList, bookId);
+        PageResponse<ReviewDto.Response> reviewPage = reviewService.getReviews(bookId, 1);
+
 
         model.addAttribute("bookList", bookList);
         model.addAttribute("book", response);
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("reviewPage", reviewPage);
 
         return "book/bookDetail";
     }
