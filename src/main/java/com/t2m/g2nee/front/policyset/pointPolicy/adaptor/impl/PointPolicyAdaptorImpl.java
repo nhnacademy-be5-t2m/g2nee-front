@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,4 +112,17 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
 
         return response.getBody();
     }
+
+    @Override
+    public PointPolicyInfoDto getPointPolicyByPolicyName(String policyName) {
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl+"/getByPolicyName")
+                .queryParam("policyName", policyName)
+                .build();
+
+        ResponseEntity<PointPolicyInfoDto> response =
+                restTemplate.exchange(url.toUriString(), HttpMethod.GET, new HttpEntity<>(makeHttpHeaders()), PointPolicyInfoDto.class);
+
+        return response.getBody();
+    }
+
 }

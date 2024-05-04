@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.mypage.address.controller;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.mypage.address.dto.request.AddressRequestDto;
 import com.t2m.g2nee.front.mypage.address.dto.response.AddressResponseDto;
 import com.t2m.g2nee.front.mypage.address.service.MyPageService;
@@ -29,7 +30,11 @@ public class AddressController {
     @Member
     @GetMapping
     public String myPageAddress(Model model) {
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         List<AddressResponseDto> addressList = mypageService.getAddressListByMemberId(memberId);
         model.addAttribute("addressList", addressList);
         return "mypage/addressPage";

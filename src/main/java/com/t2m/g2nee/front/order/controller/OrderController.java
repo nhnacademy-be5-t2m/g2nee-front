@@ -1,9 +1,20 @@
 package com.t2m.g2nee.front.order.controller;
 
 
+import com.t2m.g2nee.front.annotation.Member;
+import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.bookset.book.dto.BookDto;
+import com.t2m.g2nee.front.bookset.book.service.BookGetService;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.request.AddressInfoDto;
+import com.t2m.g2nee.front.order.dto.request.BookOrderDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
+import com.t2m.g2nee.front.policyset.pointPolicy.dto.response.PointPolicyInfoDto;
+import com.t2m.g2nee.front.policyset.pointPolicy.service.PointPolicyService;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +32,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/order")
+@RequiredArgsConstructor
 public class OrderController {
-
+    private final MemberAspect memberAspect;
+    private final BookGetService bookGetService;
+    private final PointPolicyService pointPolicyService;
     /**
      * 비회원의 주문조회 정보를 받는 페이지
      *
@@ -58,9 +72,36 @@ public class OrderController {
      * @return 주문페이지를 보여준다.
      */
     @GetMapping("/buyNow")
+    @Member
     public String buyNowOrderForm(@RequestParam("bookId") Long bookId,@RequestParam("bookCount") Long bookCount, Model model){
         model.addAttribute("ordererInfo",new OrdererInfoDto());
         model.addAttribute("addressInfo",new AddressInfoDto());
+        BigDecimal rewardRate = BigDecimal.valueOf(0);
+        if(memberAspect.getThreadLocal().get()!=null){
+            MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+            Long memberId = null;
+            if(member!=null){
+                memberId = member.getMemberId();
+            }
+            model.addAttribute("memberId",memberId);
+            PointPolicyInfoDto pointPolicyInfoDto = pointPolicyService.getPointPolicyByPolicyName(member.getGrade());
+            rewardRate=new BigDecimal(pointPolicyInfoDto.getAmount());
+        }
+        ArrayList<BookOrderDto> orderList= new ArrayList<>();
+        BookDto.Response book = bookGetService.getBook(null, bookId);
+        orderList.add(new BookOrderDto(
+                book.getBookId(),
+                book.getTitle(),
+                bookCount,
+                rewardRate,
+                BigDecimal.valueOf(book.getSalePrice()).multiply(rewardRate).intValue(),
+                book.getPrice(),
+                book.getPrice()-book.getSalePrice(),
+                0,
+                book.getSalePrice()
+                ));
+        model.addAttribute("orderList",orderList);
+
         return "order/orderForm";
     }
 

@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.mypage.address.controller;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.mypage.address.dto.request.AddressRequestDto;
 import com.t2m.g2nee.front.mypage.address.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,11 @@ public class AddressRestController {
     @PostMapping("/save")
     @Member
     public ResponseEntity<Void> saveAddress(@RequestBody AddressRequestDto addressRequestDto) {
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         addressRequestDto.setMemberId(memberId);
         myPageService.saveAddress(addressRequestDto);
         return ResponseEntity.ok().build();

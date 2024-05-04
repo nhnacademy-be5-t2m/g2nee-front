@@ -11,4 +11,5 @@ public class AddressInfoDto {
     private String zipcode;
     private String address;
     private String addressDetail;
+    private String message;
 }

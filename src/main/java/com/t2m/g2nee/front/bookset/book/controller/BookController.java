@@ -7,6 +7,7 @@ import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -46,7 +47,11 @@ public class BookController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model) {
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         BookDto.Response response = bookGetService.getBook(memberId, bookId);
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
@@ -78,7 +83,11 @@ public class BookController {
     public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -106,7 +115,11 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort);
@@ -141,8 +154,11 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage =
@@ -179,7 +195,11 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        Long memberId = null;
+        if(member!=null){
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage =

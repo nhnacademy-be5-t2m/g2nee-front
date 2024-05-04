@@ -23,7 +23,7 @@ public class MemberAspect {
 
     public static final String MEMBER_INFO_KEY = "SPRING_SECURITY_CONTEXT";
     public final RedisTemplate redisTemplate;
-    private final ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    private final ThreadLocal<MemberDetailInfoResponseDto> threadLocal = new ThreadLocal<>();
 
     @Pointcut("@annotation(com.t2m.g2nee.front.annotation.Member)")
     private void member() {
@@ -42,8 +42,7 @@ public class MemberAspect {
 
         if (c != null) {
             String sessionId = c.getValue();
-            Long memberId = getMemberId(sessionId);
-            threadLocal.set(memberId);
+            setMember(sessionId);
         }
         Object result = joinPoint.proceed(args);
         threadLocal.remove();
@@ -51,12 +50,11 @@ public class MemberAspect {
     }
 
 
-    public Long getMemberId(String sessionId) {
+    public void setMember(String sessionId) {
         MemberDetailInfoResponseDto memberInfo =
                 (MemberDetailInfoResponseDto) redisTemplate.opsForHash().get(MEMBER_INFO_KEY, sessionId);
-        return memberInfo.getMemberId();
+        threadLocal.set(memberInfo);
     }
-
     public ThreadLocal getThreadLocal() {
         return this.threadLocal;
     }
