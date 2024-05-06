@@ -41,13 +41,19 @@
                     <span th:text="${book.title}"></span>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
                 </h3>
-                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
-                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                <div class="mb-3">
+                    <i class="fa-solid fa-user"></i>
+                    <span th:each="contributorRole, index : ${book.contributorRoleList}"
+                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
-                <br/>
-                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
+                <div class="mb-3">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
                 <div>
-                            <span th:each="tag : ${book.tagList}">
+                    <i class="fa-solid fa-tag"></i>
+                    <span th:each="tag : ${book.tagList}">
                                 <span th:text="${tag.tagName}"></span>
                             </span>
                 </div>
@@ -59,8 +65,14 @@
                     <small class="pt-1" th:text="${book.scoreAverage} +' ('+${book.reviewCount} +' Reivews)'"></small>
                 </div>
                 <hr/>
-                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></h4>
-                <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <h4>
+                    <i class="fa-solid fa-coins"></i>
+                    <span class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></span>
+                </h4>
+                <h5>
+                    <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
+                    <span th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></span>
+                </h5>
                 <hr/>
 
                 <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
@@ -112,7 +124,10 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">도서 정보</h4>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-book"></i>
+                            <span>도서 정보</span>
+                        </h4>
                         <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
                         <p th:text="'ISBN : ' + ${book.isbn}"></p>
                         <div th:each="categoryList : ${book.categoryList}">
@@ -123,12 +138,18 @@
                         </div>
                         <div class="info"></div>
                         <hr/>
-                        <h4 class="mb-3">책 소개</h4>
-                        <p class="mb-4" th:text="${book.description}"></p>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>책 소개</span>
+                        </h4>
+                        <p class="mb-4" th:utext="${book.description}"></p>
                        <hr/>
                         <div>
-                            <h4 class="mb-3">목차</h4>
-                            <p th:text="${book.bookIndex}"></p>
+                            <h4 class="mb-3" style="margin-left: 3px">
+                                <i class="fa-solid fa-bookmark"></i>
+                                <span>목차</span>
+                            </h4>
+                            <p th:utext="${book.bookIndex}"></p>
                         </div>
                     </div>
 
