@@ -13,6 +13,7 @@ import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,13 +46,14 @@ public class BookController {
     @Member
     @GetMapping("/{bookId}")
     public String getBook(@PathVariable("bookId") Long bookId,
-                          Model model) {
+                          Model model, HttpServletResponse httpServletResponse) {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();
         }
+        System.out.println(httpServletResponse);
         BookDto.Response response = bookGetService.getBook(memberId, bookId);
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
@@ -69,7 +71,6 @@ public class BookController {
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("reviewPage", reviewPage);
-        model.addAttribute("bookCount",1);
 
         return "book/bookDetail";
     }

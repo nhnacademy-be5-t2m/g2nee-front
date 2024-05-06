@@ -88,7 +88,7 @@
     // Product Quantity
     $('.quantity button').on('click', function () {
         let button = $(this);
-        let oldValue = document.querySelector('#bookCount').value;
+        let oldValue=document.querySelector('#bookCount').value;
         let newVal = parseFloat(oldValue);
         if (button.hasClass('btn-plus')) {
             newVal++;
@@ -108,3 +108,4 @@ function getCookie(name) {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return value ? value[2] : null;
 }
+

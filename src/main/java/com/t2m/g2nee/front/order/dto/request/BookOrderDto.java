@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class BookOrderDto {
     private Long bookId;
     private String title;
-    private Long count;
+    private int count;
     private BigDecimal rewardRate;
     private int reward;
     private int originPrice;
