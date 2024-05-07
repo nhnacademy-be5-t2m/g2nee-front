@@ -13,7 +13,7 @@ public class adminController {
         return "admin/adminMain";
     }
 
-    @GetMapping("/admin/membermanagement/")
+    @GetMapping()
     public String adminOrder(){
         return "admin/adminOrder";
     }
