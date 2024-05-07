@@ -12,6 +12,16 @@
     <div class="container">
         <h2 class="text-center mb-4">도서 목록</h2>
         <div class="row justify-content-center">
+            <form th:action="@{'/admin/books/search'}">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <div class="input-group-append">
+                                        <span class="input-group-text bg-transparent text-primary">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                    </div>
+                </div>
+            </form>
             <div th:each="book : ${bookPage.data}" class="col-md-10 mb-4">
                 <div class="card" style="width: 120%">
                     <div class="row g-0">
@@ -28,10 +38,11 @@
                                         th:text="${book.title}"></h5>
                                 </a>
                                 <p class="card-text">
-                                <div th:each="contributorRole : ${book.contributorRoleList}">
-                                    <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
-                                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
-                                    </span>
+                                <div>
+
+                                <span th:each="contributorRole, index : ${book.contributorRoleList}"
+                                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                                </span>
                                 </div>
                                 출판사: <span th:text="${book.publisherName} + ' ' + ${book.publishedDate}"></span><br>
                                 판매가: <span th:text="${book.salePrice}"></span><br>
