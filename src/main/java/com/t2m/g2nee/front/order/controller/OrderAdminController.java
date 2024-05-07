@@ -6,6 +6,7 @@ import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +18,9 @@ public class OrderAdminController {
     private final OrderGetService orderGetService;
 
     @GetMapping("/list")
-    public String orderList(@RequestParam(required = false, defaultValue = "1") int page){
+    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
         PageResponse<OrderListForAdminResponseDto> adminPage = orderGetService.getAllOrderList(page);
+        model.addAttribute("adminPage", adminPage);
 
         return "admin/adminOrder";
     }

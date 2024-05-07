@@ -60,7 +60,7 @@ public class OrderGetService {
      * @param page 현재 페이지
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    PageResponse<OrderListForAdminResponseDto> getAllOrderList(int page){
+    public PageResponse<OrderListForAdminResponseDto> getAllOrderList(int page){
         return null;
     }
 
