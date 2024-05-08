@@ -19,8 +19,8 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">포장지 이미지 첨부</label>
-            <input type="file" id="image" name="image" th:required="${#strings.isEmpty(package.url)}"
-                   class="form-control-file" accept="image/*">
+            <input type="file" id="image" name="image"
+                   class="form-control-file" accept="image/*" th:required="${#strings.isEmpty(package?.url)}">
         </div>
 
         <div class="mb-3">
