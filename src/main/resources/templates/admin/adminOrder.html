@@ -4,120 +4,51 @@
       layout:decorate="~{layouts/adminLayout}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>전체 주문 목록</title>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="container my-4">
 
-    <div class="container">
-        <h2 class="text-center mb-4">주문 목록</h2>
-        <div class="row justify-content-center">
-            <div th:each="order : ${adminPage.data}" class="col-md-10 mb-4">
-                <div class="card" style="width: 120%">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <a th:href="@{'/admin/orders/' + ${order.orderId}}"></a>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <p class="card-text"
-                                   th:href="@{'/admin/orders/' + ${order.orderId}}">
-                                    <h5 class="card-title" th:href="@{'/admin/orders/' + ${order.orderId}}"
-                                        th:text="${order.orderNumber}"></h5>
-                                </p>
-                                <p class="card-text">
-                                <div th:each="contributorRole : ${book.contributorRoleList}">
-                                    <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
-                                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
-                                    </span>
-                                </div>
-                                출판사: <span th:text="${book.publisherName} + ' ' + ${book.publishedDate}"></span><br>
-                                판매가: <span th:text="${book.salePrice}"></span><br>
-                                정가: <span th:text="${book.price}"></span><br>
-                                </p>
-                                <div class="row justify-content-end">
-                                    <div class="col-md-2">
-                                        <form th:action="@{'/admin/books/updateForm/' + ${order.orderId} + '?page=' + ${adminPage.currentPage}}"
-                                              th:method="get">
-                                            <input type="hidden" name="page" th:value="${adminPage.currentPage}">
-                                            <button type="submit" class="btn btn-primary">수정</button>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <form th:action="@{'/admin/orders/status/' + ${order.orderId}}" th:method="patch"
-                                              style="display: flex;">
-                                            <select id="statusSelect" name="bookStatus" class="form-control mr-2">
-                                                <option th:text="${order.orderState}"></option>
-                                                <option th:each="status : ${bookStatus}" th:value="${status}"
-                                                        th:text="${status.status}"
-                                                        th:unless="${status == book.bookStatus}"></option>
-                                            </select>
-                                            <input type="hidden" name="page" th:value="${adminPage.currentPage}">
-                                            <button type="submit" class="btn btn-primary">상태 변경</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        <li>
-                            <a class="page-link" th:href="@{'?page=1'}">≪</a>
-                        </li>
-                        <li th:class="${adminPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{'?page=' + ${adminPage.currentPage - 1 }}"><</a>
-                        </li>
-                        <li th:each="pageButton : ${#numbers.sequence(adminPage.startPage,adminPage.endPage)}"
-                            th:class="${adminPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
-                        </li>
-                        <li th:class="${adminPage.currentPage == adminPage.totalPage ? 'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{'?page=' + ${adminPage.currentPage + 1}}">></a>
-                        </li>
-                        <li>
-                            <a class="page-link" th:href="@{'?page=' + ${adminPage.totalPage}}">≫</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+    <h2 class="text-center">카테고리 목록</h2>
 
-    </div>
-    <table>
+    <br/><br/>
+    <form th:action="@{/admin/orders/search}" th:method="GET"
+          class="form-inline mb-3 d-flex justify-content-between">
+        <input type="text" class="form-control" placeholder="주문 검색" name="name" style="width: 70%;">
+        <input type="hidden" name="page" value="1">
+        <input type="submit" class="btn btn-primary ms-3" value="검색">
+    </form>
+
+    <br/><br/>
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>주문 번호</th>
             <th>주문 일자</th>
             <th>고객 정보</th>
-            <th>상세 주문</th>
+            <!--<th>상세 주문</th>-->
             <th>총 가격</th>
             <th>주문 상태</th>
-            <!--todo: 포인트 합계 만들 것 -->
+            <th></th>
+
         </tr>
         </thead>
+
         <tbody>
-        <tr th:each="order : ${adminPage.data}">
-            <td th:text="${order.orderId}"></td>
+        <tr th:each="order : ${orderPage.data}">
+            <td ><a th:href="@{'/admin/orders/'+ ${order.orderId} + '/details'}" th:text="${order.orderNumber}"></a></td>
             <td th:text="${order.orderDate}"></td>
-            <td th:text="${order.customer.name} + ' (' + ${order.customer.email} + ')'"></td>
-            <td>
-                <ul>
-                    <li th:each="detail : ${order['orderDetails']}"
-                        th:text="${detail['product_name']} + ' - $' + ${detail['price']}"></li>
-                </ul>
-            </td>
-            <td th:text="${order['orderAmount']}"></td>
+            <td th:text="${order.customerId}"></td>
+            <td th:text="${order.orderAmount}"></td>
+            <td th:text="${order.orderState}"></td>
             <td> th:text=<button>상태 변경</button></td>
         </tr>
         <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->
         </tbody>
+        <!-- 루트 카테고리 -->
+
     </table>
+
 </div>
 </body>
 </html>

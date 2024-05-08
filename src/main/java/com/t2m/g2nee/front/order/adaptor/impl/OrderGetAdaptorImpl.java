@@ -35,7 +35,10 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
      * @return OrderDetailDto
      */
     @Override
-    public OrderDetailDto getOrderDetail(Long orderId) {
+    public List<OrderDetailDto> getOrderDetailListByOrderId(Long orderId) {
+        HttpHeaders detailHeaders = new HttpHeaders();
+        detailHeaders.setContentType(MediaType.APPLICATION_JSON);
+
         return null;
     }
 

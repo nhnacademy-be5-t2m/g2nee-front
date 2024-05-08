@@ -19,4 +19,5 @@ public class OrderDetailDto {
     private Boolean isCancelled;
     private String bookName;
     private String packageName;
+    private String couponName;
 }
