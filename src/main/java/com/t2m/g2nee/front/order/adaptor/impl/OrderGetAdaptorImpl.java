@@ -3,7 +3,7 @@ package com.t2m.g2nee.front.order.adaptor.impl;
 import com.t2m.g2nee.front.order.adaptor.OrderGetAdaptor;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoResponseDto;
-import com.t2m.g2nee.front.order.dto.response.OrderListForAdminResponseDto;
+import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -35,23 +35,37 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
      * @return OrderDetailDto
      */
     @Override
-    public List<OrderDetailDto> getOrderDetailListByOrderId(Long orderId) {
-        HttpHeaders detailHeaders = new HttpHeaders();
-        detailHeaders.setContentType(MediaType.APPLICATION_JSON);
-
+    public List<OrderDetailDto.Response> getOrderDetailListByOrderId(Long orderId) {
+            //
         return null;
     }
 
     /**
-     *  주문 정보 조회(주문id)
+     * 주문 정보 조회(주문id)
      *
-     * @param customerId 회원ID
-     * @param orderId 주문Id
+     * @param memberId 회원ID
+     * @param orderId  주문Id
      * @return OrderInfoResponseDto
      */
     @Override
-    public OrderInfoResponseDto getOrderById(Long customerId, Long orderId) {
-        return null;
+    public OrderInfoDto.Response getOrderById(Long memberId, Long orderId) {
+        HttpHeaders orderHeaders = new HttpHeaders();
+        orderHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> orderEntity =new HttpEntity<>(orderHeaders);
+
+        String url = URLDecoder.decode(UriComponentsBuilder
+                .fromHttpUrl(gatewayUrl + "/orders/" + orderId)
+                .queryParam("memberId", memberId)
+                .toUriString());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                orderEntity,
+                new ParameterizedTypeReference<OrderInfoDto.Response>() {
+                }
+        ).getBody();
     }
 
     @Override
@@ -65,25 +79,25 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public PageResponse<OrderListForAdminResponseDto> getAllOrderList(int page) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    public PageResponse<OrderInfoDto.Response> getAllOrderList(int page) {
+        HttpHeaders listHeaders = new HttpHeaders();
+        listHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> stringHttpEntity = new HttpEntity<>(httpHeaders);
+        HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
         String url = URLDecoder.decode(UriComponentsBuilder.
                 fromHttpUrl(gatewayUrl + "admin/orders/list").
                 queryParam("page", page).
                 toUriString(), StandardCharsets.UTF_8);
 
-        PageResponse<OrderListForAdminResponseDto> adminResponse = restTemplate.exchange(
+        PageResponse<OrderInfoDto.Response> adminResponse = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 stringHttpEntity,
-                new ParameterizedTypeReference<PageResponse<OrderListForAdminResponseDto>>() {
+                new ParameterizedTypeReference<PageResponse<OrderInfoDto.Response>>() {
                 }
         ).getBody();
 
-        List<OrderListForAdminResponseDto> orderList = adminResponse.getData().stream().
+        List<OrderInfoDto.Response> orderList = adminResponse.getData().stream().
                 collect(Collectors.toList());
 
         adminResponse.setData(orderList);
@@ -91,7 +105,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public PageResponse<OrderListForAdminResponseDto> getAllOrderListByState(int page, String orderState) {
+    public PageResponse<OrderInfoDto> getAllOrderListByState(int page, String orderState) {
         return null;
     }
 }

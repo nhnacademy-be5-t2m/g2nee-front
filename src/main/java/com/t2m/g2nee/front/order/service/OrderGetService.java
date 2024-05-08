@@ -2,7 +2,7 @@ package com.t2m.g2nee.front.order.service;
 
 import com.t2m.g2nee.front.order.adaptor.OrderGetAdaptor;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoResponseDto;
-import com.t2m.g2nee.front.order.dto.response.OrderListForAdminResponseDto;
+import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,13 @@ public class OrderGetService {
     /**
      * 주문 정보 조회(주문Id)
      *
-     * @param customerId 회원번호
+     * @param memberId 회원번호
      * @param orderId 주문Id
      * @return
      */
-    OrderInfoResponseDto getOrderById(Long customerId, Long orderId){
+    public OrderInfoDto.Response getOrderById(Long memberId, Long orderId){
 
-        return orderGetAdaptor.getOrderById(customerId, orderId);
+        return orderGetAdaptor.getOrderById(memberId, orderId);
     }
 
     /**
@@ -60,7 +60,7 @@ public class OrderGetService {
      * @param page 현재 페이지
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    public PageResponse<OrderListForAdminResponseDto> getAllOrderList(int page){
+    public PageResponse<OrderInfoDto.Response> getAllOrderList(int page){
         return orderGetAdaptor.getAllOrderList(page);
     }
 
@@ -71,7 +71,7 @@ public class OrderGetService {
      * @param orderState 현재 주문 상태
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    PageResponse<OrderListForAdminResponseDto> getAllOrderListByState(int page, String orderState){
+    PageResponse<OrderInfoDto> getAllOrderListByState(int page, String orderState){
         return null;
     }
 
