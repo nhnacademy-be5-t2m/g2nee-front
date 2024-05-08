@@ -1,7 +1,7 @@
 package com.t2m.g2nee.front.bookset.category.controller;
 
-import com.t2m.g2nee.front.bookset.category.dto.request.CategorySaveDto;
 import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.bookset.category.dto.request.CategorySaveDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -102,7 +102,7 @@ public class AdminCategoryController {
         CategorySaveDto request = new CategorySaveDto(categoryName, categoryEngName, isActivated, ancestorCategoryId);
         categoryService.modifyCategory(categoryId, request);
         return "redirect:/admin/categories";
-    }
+    }//카테고리 반영속도가 느림
 
 
     /**

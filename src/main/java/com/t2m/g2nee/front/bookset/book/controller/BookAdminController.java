@@ -86,7 +86,7 @@ public class BookAdminController {
         model.addAttribute("roleList", roleList);
         model.addAttribute("contributorList", contributorList);
         model.addAttribute("tagList", tagList);
-        BookDto.Response book = bookMgmtService.getBook(bookId);
+        BookDto.Response book = bookMgmtService.getUpdateBook(bookId);
         model.addAttribute("book", book);
         model.addAttribute("page", page);
 
@@ -100,6 +100,21 @@ public class BookAdminController {
     public String getBookMain() {
 
         return "admin/book/bookMain";
+    }
+
+    /**
+     * 관리자 페이지 도서 검색 메서드
+     */
+    @GetMapping("/search")
+    public String getBookListByKeyword(Model model, @RequestParam(defaultValue = "") String keyword,
+                                   @RequestParam(required = false, defaultValue = "1") int page) {
+
+
+        PageResponse<BookDto.ListResponse> bookPage = bookMgmtService.getBookListByKeyword(keyword, page);
+        model.addAttribute("bookPage", bookPage);
+        model.addAttribute("bookStatus", BookDto.BookStatus.values());
+
+        return "admin/book/bookList";
     }
 
 

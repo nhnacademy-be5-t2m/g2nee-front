@@ -43,13 +43,19 @@
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
                     <input type="hidden" id =bookId th:value="${book.bookId}"></input>
                 </h3>
-                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
-                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                <div class="mb-3">
+                    <i class="fa-solid fa-user"></i>
+                    <span th:each="contributorRole, index : ${book.contributorRoleList}"
+                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
-                <br/>
-                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
+                <div class="mb-3">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
                 <div>
-                            <span th:each="tag : ${book.tagList}">
+                    <i class="fa-solid fa-tag"></i>
+                    <span th:each="tag : ${book.tagList}">
                                 <span th:text="${tag.tagName}"></span>
                             </span>
                 </div>
@@ -61,8 +67,14 @@
                     <small class="pt-1" th:text="${book.scoreAverage} +' ('+${book.reviewCount} +' Reivews)'"></small>
                 </div>
                 <hr/>
-                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></h4>
-                <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <h4>
+                    <i class="fa-solid fa-coins"></i>
+                    <span class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></span>
+                </h4>
+                <h5>
+                    <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
+                    <span th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></span>
+                </h5>
                 <hr/>
 
                 <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
@@ -118,7 +130,10 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">도서 정보</h4>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-book"></i>
+                            <span>도서 정보</span>
+                        </h4>
                         <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
                         <p th:text="'ISBN : ' + ${book.isbn}"></p>
                         <div th:each="categoryList : ${book.categoryList}">
@@ -129,12 +144,18 @@
                         </div>
                         <div class="info"></div>
                         <hr/>
-                        <h4 class="mb-3">책 소개</h4>
-                        <p class="mb-4" th:text="${book.description}"></p>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>책 소개</span>
+                        </h4>
+                        <p class="mb-4" th:utext="${book.description}"></p>
                        <hr/>
                         <div>
-                            <h4 class="mb-3">목차</h4>
-                            <p th:text="${book.bookIndex}"></p>
+                            <h4 class="mb-3" style="margin-left: 3px">
+                                <i class="fa-solid fa-bookmark"></i>
+                                <span>목차</span>
+                            </h4>
+                            <p th:utext="${book.bookIndex}"></p>
                         </div>
                     </div>
 
@@ -193,11 +214,11 @@
                                 <div class="d-flex my-3">
                                     <p class="mb-0 mr-2">나의 평점 :</p>
                                     <div class="text-primary">
-                                        <i class="far fa-star" id="starScore1"></i>
-                                        <i class="far fa-star" id="starScore2"></i>
-                                        <i class="far fa-star" id="starScore3"></i>
-                                        <i class="far fa-star" id="starScore4"></i>
-                                        <i class="far fa-star" id="starScore5"></i>
+                                        <i class="fas fa-star" id="starScore1"></i>
+                                        <i class="fas fa-star" id="starScore2"></i>
+                                        <i class="fas fa-star" id="starScore3"></i>
+                                        <i class="fas fa-star" id="starScore4"></i>
+                                        <i class="fas fa-star" id="starScore5"></i>
                                     </div>
                                 </div>
                                     </div>
@@ -302,82 +323,28 @@
         var scoreDecimal = [[${book.scoreAverage}]] % 1;
         const starRatingElement = document.getElementById('star-rating');
         let stars = '';
+
         for (let i = 0; i < scoreAverage; i++) {
             stars += '<small> <i class="fas fa-star"></i></small>';
         }
+
         if (scoreDecimal > 0) {
-            if (scoreDecimal <= 0.3) {
+            if (scoreDecimal <= 0.25) {
                 stars += '<small> <i class="far fa-star"></i></small>';
             } else if (scoreDecimal <= 0.75) {
                 stars += '<small> <i class="fas fa-star-half-alt"></i></small>';
-                stars += '<small> <i class="far fa-star"></i></small>';
             } else {
                 stars += '<small> <i class="fas fa-star"></i></small>';
             }
         }
+
         for (let i = 5 - Math.ceil([[${book.scoreAverage}]]); i > 0; i--) {
             stars += '<small> <i class="far fa-star"></i></small>';
         }
+
         starRatingElement.innerHTML = stars;
     }
 
-
-    // 별점 클릭 이벤트
-    let score = document.querySelector('#postScore').value = 5;
-    let modifyScore = document.querySelector('#modifyScore').value = 5;
-
-    function init() {
-        let stars = document.querySelectorAll('[id^="starScore"]');
-        stars.forEach((star, index) => {
-            star.addEventListener('click', () => {
-                score = index;  // 별의 개수를 업데이트합니다.
-                modifyScore = index;
-                document.querySelector('#postScore').value = index + 1;
-                document.querySelector('#modifyScore').value = index + 1;
-                // 모든 별을 far 클래스로 초기화합니다.
-                stars.forEach((star) => star.className = 'far fa-star');
-
-                for (let i = 0; i < score + 1; i++) {
-                    stars[i].className = "fas fa-star";
-                }
-
-            });
-        });
-    }
-
-    init();
-
-    // 비회원 리뷰 생성 막기, 리뷰 하나만 작성
-    document.querySelector('#checkReview').addEventListener('click', function (event) {
-
-        let memberId = [[${memberId}]];
-
-        //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
-        if (memberId === undefined) {
-            alert('리뷰는 회원만 작성할 수 있습니다');
-            event.preventDefault();
-            return
-        }
-        let bookId = [[${bookId}]];
-
-        fetch(`/reviews?memberId=${memberId}&bookId=${bookId}`, {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                //TODO: 나중에 주문한 횟수만큼만 리뷰 작성하도록
-                if (data === false) {
-                    alert('리뷰는 하나만 작성할 수 있습니다.')
-                    event.preventDefault();
-
-                } else {
-                    document.querySelector('#postReviewForm').submit();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-
-    })
 
     let page = [[${reviewPage.currentPage}]];
     // 리뷰 더보기
@@ -468,42 +435,103 @@
             });
     });
 
-    // 리뷰 등록 수정 //
-    document.querySelector('#postReviewForm').style.display = 'block';
-    document.querySelector('#modifyReviewForm').style.display = 'none';
 
-    // 리뷰 수정 버튼
-    document.querySelectorAll('#modifyButton').forEach(function (button) {
-        button.addEventListener('click', function () {
+    // 회원쪽 기능
+    // 별점 클릭 이벤트
 
-            let reviewId = this.dataset.reviewid
-            let reviewContent = this.dataset.reviewcontent
+        let score = document.querySelector('#postScore').value = 5;
+        let modifyScore = document.querySelector('#modifyScore').value = 5;
 
-            document.querySelector('#postReviewForm').style.display = 'none';
-            document.querySelector('#modifyReviewForm').style.display = 'block';
+        function init() {
+            let stars = document.querySelectorAll('[id^="starScore"]');
+            stars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    score = index;  // 별의 개수를 업데이트합니다.
+                    modifyScore = index;
+                    document.querySelector('#postScore').value = index + 1;
+                    document.querySelector('#modifyScore').value = index + 1;
+                    // 모든 별을 far 클래스로 초기화합니다.
+                    stars.forEach((star) => star.className = 'far fa-star');
 
-            document.getElementById('reviewTitle').textContent = '리뷰수정';
-            document.getElementById('modifyContent').textContent = reviewContent;
+                    for (let i = 0; i < score + 1; i++) {
+                        stars[i].className = "fas fa-star";
+                    }
 
-            document.querySelector('#modifyReview').addEventListener('click', function () {
-                let input = document.createElement('input');
-                input.setAttribute('type', 'hidden');
-                input.setAttribute('name', 'reviewId');
-                input.setAttribute('value', reviewId);
-                document.querySelector('#modifyReviewForm').appendChild(input);
-                document.querySelector('#modifyReviewForm').submit();
-                alert('리뷰가 수정되었습니다.');
+                });
+            });
+        }
 
+        init();
+
+        // 비회원 리뷰 생성 막기, 리뷰 하나만 작성
+        document.querySelector('#checkReview').addEventListener('click', function (event) {
+
+            let memberId = [[${memberId}]];
+
+            //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
+            if (memberId === undefined) {
+                alert('리뷰는 회원만 작성할 수 있습니다');
+                event.preventDefault();
+                return
+            }
+            let bookId = [[${bookId}]];
+
+            fetch(`/reviews?memberId=${memberId}&bookId=${bookId}`, {
+                method: 'GET'
             })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    //TODO: 나중에 주문한 횟수만큼만 리뷰 작성하도록
+                    if (data === false) {
+                        alert('리뷰는 하나만 작성할 수 있습니다.')
+                        event.preventDefault();
 
-            // 취소 버튼
-            document.querySelector('#cancelButton').addEventListener('click', function () {
+                    } else {
+                        document.querySelector('#postReviewForm').submit();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
 
-                document.querySelector('#postReviewForm').style.display = 'block';
-                document.querySelector('#modifyReviewForm').style.display = 'none';
-                document.getElementById('reviewTitle').textContent = '리뷰작성';
-            })
+        })
+
+        // 리뷰 등록 수정 //
+        document.querySelector('#postReviewForm').style.display = 'block';
+        document.querySelector('#modifyReviewForm').style.display = 'none';
+
+        // 리뷰 수정 버튼
+        document.querySelectorAll('#modifyButton').forEach(function (button) {
+            button.addEventListener('click', function () {
+
+                let reviewId = this.dataset.reviewid
+                let reviewContent = this.dataset.reviewcontent
+
+                document.querySelector('#postReviewForm').style.display = 'none';
+                document.querySelector('#modifyReviewForm').style.display = 'block';
+
+                document.getElementById('reviewTitle').textContent = '리뷰수정';
+                document.getElementById('modifyContent').textContent = reviewContent;
+
+                document.querySelector('#modifyReview').addEventListener('click', function () {
+                    let input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', 'reviewId');
+                    input.setAttribute('value', reviewId);
+                    document.querySelector('#modifyReviewForm').appendChild(input);
+                    document.querySelector('#modifyReviewForm').submit();
+                    alert('리뷰가 수정되었습니다.');
+
+                })
+
+                // 취소 버튼
+                document.querySelector('#cancelButton').addEventListener('click', function () {
+
+                    document.querySelector('#postReviewForm').style.display = 'block';
+                    document.querySelector('#modifyReviewForm').style.display = 'none';
+                    document.getElementById('reviewTitle').textContent = '리뷰작성';
+                })
+            });
         });
-    });
+
 </script>
 

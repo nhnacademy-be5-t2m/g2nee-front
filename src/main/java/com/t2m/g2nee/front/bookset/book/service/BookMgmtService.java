@@ -45,9 +45,9 @@ public class BookMgmtService {
      * @return BookDto.Response
      */
 
-    public BookDto.Response getBook(Long bookId) {
+    public BookDto.Response getUpdateBook(Long bookId) {
 
-        return bookMgmtAdaptor.getBook(bookId);
+        return bookMgmtAdaptor.getUpdateBook(bookId);
 
     }
 
@@ -91,6 +91,11 @@ public class BookMgmtService {
     public PageResponse<BookDto.ListResponse> getAllBookList(int page) {
 
         return bookMgmtAdaptor.getAllBookList(page);
+    }
+
+    public PageResponse<BookDto.ListResponse> getBookListByKeyword(String keyword, int page){
+
+        return bookMgmtAdaptor.getBookListByKeyword(keyword,page);
     }
 
 }
