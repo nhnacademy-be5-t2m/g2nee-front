@@ -14,7 +14,7 @@ public class OrderDetailGetService {
     private final OrderGetAdaptor orderGetAdaptor;
 
     OrderDetailDto getOrderDetailByOrderId(Long orderId){
-        return orderGetAdaptor.
+        return null;
     }
 
 
