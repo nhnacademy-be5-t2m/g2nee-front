@@ -22,8 +22,7 @@ document.getElementById('etcMessage').addEventListener('input', function() {
 });
 
 function packagePopUp(){
-
-
+    window.open("/order/selectPackage", "_blank", "width=600, height=700,top=200px,left=200px;");
 }
 
 function couponPopUp(){
@@ -59,3 +58,27 @@ function handleDeliveryDateSelection() {
 document.querySelectorAll('input[name="deliveryWishDate"]').forEach(function(radio) {
     radio.addEventListener('change', handleDeliveryDateSelection);
 });
+
+function pointChange(){
+    document.getElementById('finalTotalSalePrice').textContent
+        =String(parseInt(document.getElementById('finalTotalSalePrice').textContent)+parseInt(document.getElementById('pointSale').textContent))
+    document.getElementById('pointSale').textContent="0";
+
+    let point = Number(document.getElementById('quantity').value);
+    let maxPoint = document.getElementById('totalPoint').value;
+    let finalTotalSalePrice = parseInt(document.getElementById('finalTotalSalePrice').textContent);
+    if(point<0){
+        document.getElementById('quantity').value=0;
+        return;
+    }
+    if(point>=maxPoint){
+        point = maxPoint;
+    };
+    if(finalTotalSalePrice-point<0){
+        point=finalTotalSalePrice;
+    };
+    document.getElementById('pointSale').textContent=String(point);
+    document.getElementById('quantity').value=point;
+    document.getElementById('finalTotalSalePrice').textContent
+        =String(parseInt(document.getElementById('finalTotalSalePrice').textContent)-point);
+}

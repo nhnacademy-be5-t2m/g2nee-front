@@ -152,7 +152,7 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
-            <th style="width: 50%">도서 정보</th>
+            <th style="width: 40%">도서 정보</th>
             <th>수량</th>
             <th sec:authorize="isAuthenticated()">적립금</th>
             <th sec:authorize="isAuthenticated()">쿠폰 할인</th>
@@ -162,24 +162,31 @@
         </thead>
         <tbody th:each="book : ${orderList}">
         <tr>
-            <td style="width: 50%">
+            <td style="width: 40%">
                 <input type="hidden" id="bookList" th:value="${orderList}">
                 <span th:text="${book.getTitle()}"></span>
             </td>
             <td>
                 <span th:text="${book.getCount()}"></span>
             </td>
+            <td>
+                <span th:text="'+ '+${book.getPackagePrice()}"></span>
+                <input type="hidden" th:value="${book.getPackageId()}">
+                <button onclick="packagePopUp()"
+                        style="margin-left:10px" >포장 하기
+                </button>
+            </td>
             <td sec:authorize="isAuthenticated()">
                 <span th:text="${book.getReward()} + ' ('+${book.getRewardRate().toString()}+'%)'"></span>
             </td>
             <td sec:authorize="isAuthenticated()">
-                <span th:text="'-'+${book.getCouponSale()}"></span>
-                <button type="button" onclick="couponPopUp()"
-                        style="margin-left:15px" >쿠폰 선택
+                <span th:text="'- '+${book.getCouponSale()}"></span>
+                <button onclick="couponPopUp()"
+                        style="margin-left:10px" >쿠폰 사용
                 </button>
             </td>
             <td>
-                <span th:text="'-'+${book.getBookSale()}"></span>
+                <span th:text="'- '+${book.getBookSale()}"></span>
             </td>
             <td>
                 <span class="text-muted">
@@ -190,9 +197,6 @@
         </tr>
         </tbody>
     </table>
-    <button type="button" onclick="packagePopUp()"
-            class="btn btn-primary">도서 포장
-    </button>
 
     <div  style="display:none;">
         <div style="margin-bottom: 20px;"></div>
@@ -214,19 +218,20 @@
             <tr>
                 <th scope="row" for="name" class="order-word" style="width: 15%">포장지 금액</th>
                 <td style="display: flex;">
-                    <span id="packagePrice">+ 0</span>
+                    <span id="totalPackagePrice" th:text="'+ '+${totalPackagePrice}"></span>
                 </td>
             </tr>
             <tr>
                 <th scope="row" for="name" class="order-word" style="width: 15%">상품 할인</th>
                 <td style="display : flex">
-                    <span id ="totalBookSale" th:text="'- ' +${totalBookSale}"></span>
+                    <span id ="totalBookSale" th:text="${totalBookSale}"></span>
                 </td>
             </tr>
             <tr sec:authorize="isAuthenticated()">
                 <th scope="row" for="name" class="order-word" style="width: 15%">쿠폰 할인</th>
                 <td style="display : flex">
-                    <span id="totalCouponSale" th:text="'- '+${totalCouponSale}"></span>
+                    <span type="text" style="margin-right:10px">-</span>
+                    <span id="totalCouponSale" th:text="${totalCouponSale}"></span>
                     <button type="button" onclick="fullCouponPopUp()"
                             style="margin-left:15px" >쿠폰 사용
                     </button>
@@ -235,10 +240,15 @@
             <tr sec:authorize="isAuthenticated()">
                 <th scope="row" for="name" class="order-word" style="width: 15%">포인트 할인</th>
                 <td style="display : flex">
-                    <span type="text" id="pointSale">- 0</span>
-                    <button type="button" onclick="pointPopUp()"
-                            style="margin-left:15px" >포인트 사용
-                    </button>
+                    <span type="text" style="margin-right:10px">-</span>
+                    <span type="text" id="pointSale" th:text="${totalPointSale}"></span>
+                    <input type="number" id="quantity" name="quantity" min="0" style="width:100px;margin-left:10px" onchange="pointChange()">
+                    <span type="text" style="margin-left:10px" th:text="'( 잔여 포인트 : '+${totalPoint}+' )'"></span>
+                    <input type="hidden" id="totalPoint" th:value="${totalPoint}"></input>
+                    <script>
+                        let totalPoint = [[${totalPoint}]]
+                        document.getElementById('quantity').setAttribute('max', totalPoint);
+                    </script>
                 </td>
             </tr>
                 <th scope="row" for="name" class="order-word" style="width: 15%">배송비</th>
@@ -251,7 +261,7 @@
             <tr>
                 <th scope="row" for="name" class="order-word" style="width: 15%; color:red">최종 결제 금액</th>
                 <td style="display : flex">
-                    <span style="color:red" th:text="${finalTotalSalePrice}"></span>
+                    <span style="color:red" id="finalTotalSalePrice" th:text="${finalTotalSalePrice}"></span>
                 </td>
             </tr>
             </tbody>

@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
  * @since : 1.0
  */
 @Service
-public class DeliveryPolicyImpl implements DeliveryPolicyService {
+public class DeliveryPolicyServiceImpl implements DeliveryPolicyService {
 
     private final DeliveryPolicyAdaptor adaptor;
 
-    public DeliveryPolicyImpl(DeliveryPolicyAdaptor adaptor) {
+    public DeliveryPolicyServiceImpl(DeliveryPolicyAdaptor adaptor) {
         this.adaptor = adaptor;
     }
 

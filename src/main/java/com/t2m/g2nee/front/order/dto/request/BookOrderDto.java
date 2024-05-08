@@ -12,6 +12,8 @@ public class BookOrderDto {
     private Long bookId;
     private String title;
     private int count;
+    private Long packageId;
+    private int packagePrice;
     private BigDecimal rewardRate;
     private int reward;
     private int originPrice;

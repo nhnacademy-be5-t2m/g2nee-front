@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.booklike.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.booklike.dto.BookLikeDto;
@@ -31,7 +33,7 @@ public class BookLikeRestController {
     @PutMapping
     public ResponseEntity<BookLikeDto> postLike(@RequestBody BookLikeDto request) {
 
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();

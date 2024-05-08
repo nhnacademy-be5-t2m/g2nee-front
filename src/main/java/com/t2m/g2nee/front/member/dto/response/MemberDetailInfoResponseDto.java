@@ -1,5 +1,6 @@
 package com.t2m.g2nee.front.member.dto.response;
 
+import com.t2m.g2nee.front.member.dto.MemberStatus;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class MemberDetailInfoResponseDto {
     private String phoneNumber;
     private String email;
     private String grade;
+    private MemberStatus status;
     private List<String> authorities;
 //    private List<MemberAddressResponseDto> address;
 

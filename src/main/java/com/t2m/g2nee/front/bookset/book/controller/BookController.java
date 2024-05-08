@@ -1,5 +1,8 @@
 package com.t2m.g2nee.front.bookset.book.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO_KEY;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.booklike.service.BookLikeService;
@@ -48,7 +51,7 @@ public class BookController {
     public String getBook(@PathVariable("bookId") Long bookId,
                           Model model, HttpServletResponse httpServletResponse) {
 
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();
@@ -84,7 +87,7 @@ public class BookController {
     public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();
@@ -116,7 +119,7 @@ public class BookController {
             sort = "viewCount";
         }
 
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();
@@ -155,7 +158,7 @@ public class BookController {
             sort = "viewCount";
         }
 
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();
@@ -196,7 +199,7 @@ public class BookController {
             sort = "viewCount";
         }
 
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if(member!=null){
             memberId = member.getMemberId();
