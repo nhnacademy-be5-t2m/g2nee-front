@@ -61,5 +61,5 @@ public interface BookMgmtAdaptor {
      * @param page 페이지 번호
      * @return PageResponse<BookDto.ListResponse>
      */
-    PageResponse<BookDto.ListResponse> getAllBookList(int page);
+    PageResponse<BookDto.ListResponse>  getAllBookList(int page);
 }

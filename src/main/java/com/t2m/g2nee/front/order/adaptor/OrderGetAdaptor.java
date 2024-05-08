@@ -1,10 +1,18 @@
 package com.t2m.g2nee.front.order.adaptor;
 
+import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.response.OrderListForAdminResponseDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 
 public interface OrderGetAdaptor {
+    /**
+     * 상세 주문 조회
+     *
+     * @param orderId
+     * @return OrderDetailDto
+     */
+    OrderDetailDto getOrderDetail(Long orderId);
 
     /**
      * 주문 정보 조회(주문ID)

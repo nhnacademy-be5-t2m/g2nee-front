@@ -61,7 +61,7 @@ public class OrderGetService {
      * @return PageResponse<OrderListForAdminResponseDto>
      */
     public PageResponse<OrderListForAdminResponseDto> getAllOrderList(int page){
-        return null;
+        return orderGetAdaptor.getAllOrderList(page);
     }
 
     /**

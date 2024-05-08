@@ -7,24 +7,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>전체 주문 목록</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
 <div layout:fragment="content">
-<h1>전체 주문 목록</h1>
+
+    <div class="container">
+        <h2 class="text-center mb-4">주문 목록</h2>
+        <div class="row justify-content-center">
+            <div th:each="order : ${adminPage.data}" class="col-md-10 mb-4">
+                <div class="card" style="width: 120%">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a th:href="@{'/admin/orders/' + ${order.orderId}}"></a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-text"
+                                   th:href="@{'/admin/orders/' + ${order.orderId}}">
+                                    <h5 class="card-title" th:href="@{'/admin/orders/' + ${order.orderId}}"
+                                        th:text="${order.orderNumber}"></h5>
+                                </p>
+                                <p class="card-text">
+                                <div th:each="contributorRole : ${book.contributorRoleList}">
+                                    <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
+                                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                                    </span>
+                                </div>
+                                출판사: <span th:text="${book.publisherName} + ' ' + ${book.publishedDate}"></span><br>
+                                판매가: <span th:text="${book.salePrice}"></span><br>
+                                정가: <span th:text="${book.price}"></span><br>
+                                </p>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-2">
+                                        <form th:action="@{'/admin/books/updateForm/' + ${order.orderId} + '?page=' + ${adminPage.currentPage}}"
+                                              th:method="get">
+                                            <input type="hidden" name="page" th:value="${adminPage.currentPage}">
+                                            <button type="submit" class="btn btn-primary">수정</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <form th:action="@{'/admin/orders/status/' + ${order.orderId}}" th:method="patch"
+                                              style="display: flex;">
+                                            <select id="statusSelect" name="bookStatus" class="form-control mr-2">
+                                                <option th:text="${order.orderState}"></option>
+                                                <option th:each="status : ${bookStatus}" th:value="${status}"
+                                                        th:text="${status.status}"
+                                                        th:unless="${status == book.bookStatus}"></option>
+                                            </select>
+                                            <input type="hidden" name="page" th:value="${adminPage.currentPage}">
+                                            <button type="submit" class="btn btn-primary">상태 변경</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li>
+                            <a class="page-link" th:href="@{'?page=1'}">≪</a>
+                        </li>
+                        <li th:class="${adminPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${adminPage.currentPage - 1 }}"><</a>
+                        </li>
+                        <li th:each="pageButton : ${#numbers.sequence(adminPage.startPage,adminPage.endPage)}"
+                            th:class="${adminPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+                        </li>
+                        <li th:class="${adminPage.currentPage == adminPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'?page=' + ${adminPage.currentPage + 1}}">></a>
+                        </li>
+                        <li>
+                            <a class="page-link" th:href="@{'?page=' + ${adminPage.totalPage}}">≫</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
     <table>
         <thead>
         <tr>
