@@ -15,16 +15,52 @@ function setDeliveryMessage() {
     }
 }
 
-// 직접 입력 textarea 값 변경 시 message input에 설정
-document.getElementById('etcMessage').addEventListener('input', function() {
-    let messageInput = document.getElementById('message');
-    messageInput.value = this.value;
-});
 
-function packagePopUp(){
-    window.open("/order/selectPackage", "_blank", "width=600, height=700,top=200px,left=200px;");
+function setEtcMessage(){
+    let messageInput = document.getElementById('message');
+    messageInput.value =  document.getElementById('etcMessage').value;
 }
 
+function packagePopUp(button){
+    let id = button.parentElement.parentElement.id;
+    window.open("/order/selectPackage/"+id, "_blank", "width=600, height=700,top=200px,left=200px;");
+}
+function setPackageId(radio){
+    document.querySelector('#selectPackageId').value = radio.parentNode.querySelector('#packageId').value;
+    document.querySelector('#selectPackagePrice').value = radio.parentNode.querySelector('#packagePrice').value;
+}
+function setPackage(){
+    let id = document.getElementById('id').value;
+    //기존의 해당 index의 package가격
+    let originPackagePrice = parseInt(opener.document.getElementsByClassName('packagePrice')[parseInt(id)].textContent);
+
+    //package 가격 총 합 reset
+    let originTotalPackagePrice = parseInt(opener.document.querySelector('#totalPackagePrice').textContent);
+    opener.document.querySelector('#totalPackagePrice').textContent='';
+    opener.document.querySelector('#totalPackagePrice').textContent=String(originTotalPackagePrice-originPackagePrice);
+
+    //total 가격 reset
+    let originFinalTotalSalePrice = parseInt(opener.document.querySelector('#finalTotalSalePrice').textContent);
+    opener.document.querySelector('#finalTotalSalePrice').textContent='';
+    opener.document.querySelector('#finalTotalSalePrice').textContent=String(originFinalTotalSalePrice-originPackagePrice);
+
+    //선택한 값 해당 order에 넣기
+    let packageId = parseInt(document.querySelector('#selectPackageId').value);
+    let packagePrice = parseInt(document.querySelector('#selectPackagePrice').value);
+    opener.document.getElementsByClassName('packageId')[parseInt(id)].value = packageId;
+    opener.document.getElementsByClassName('packagePrice')[parseInt(id)].textContent =String(packagePrice);
+
+    //package총합 update
+    originTotalPackagePrice = parseInt(opener.document.querySelector('#totalPackagePrice').textContent);
+    opener.document.querySelector('#totalPackagePrice').textContent='';
+    opener.document.querySelector('#totalPackagePrice').textContent=String(originTotalPackagePrice+packagePrice);
+
+    //totalPrice update
+    originFinalTotalSalePrice = parseInt(opener.document.querySelector('#finalTotalSalePrice').textContent);
+    opener.document.querySelector('#finalTotalSalePrice').textContent='';
+    opener.document.querySelector('#finalTotalSalePrice').textContent=String(packagePrice+originFinalTotalSalePrice);
+    window.close();
+}
 function couponPopUp(){
 
 }

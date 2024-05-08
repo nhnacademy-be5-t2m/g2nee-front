@@ -2,7 +2,6 @@ package com.t2m.g2nee.front.order.controller;
 
 
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
-import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO_KEY;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
@@ -13,11 +12,12 @@ import com.t2m.g2nee.front.order.dto.request.AddressInfoDto;
 import com.t2m.g2nee.front.order.dto.request.BookOrderDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
+import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
 import com.t2m.g2nee.front.point.service.PointService;
-import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.response.DeliveryPolicyInfoDto;
-import com.t2m.g2nee.front.policyset.deliveryPolicy.service.DeliveryPolicyService;
-import com.t2m.g2nee.front.policyset.pointPolicy.dto.response.PointPolicyInfoDto;
-import com.t2m.g2nee.front.policyset.pointPolicy.service.PointPolicyService;
+import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
+import com.t2m.g2nee.front.policyset.deliverypolicy.service.DeliveryPolicyService;
+import com.t2m.g2nee.front.policyset.pointpolicy.dto.response.PointPolicyInfoDto;
+import com.t2m.g2nee.front.policyset.pointpolicy.service.PointPolicyService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +45,7 @@ public class OrderController {
     private final PointPolicyService pointPolicyService;
     private final DeliveryPolicyService deliveryPolicyService;
     private final PointService pointService;
+    private final PackageTypeService packageTypeService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -150,10 +151,10 @@ public class OrderController {
      * @param
      * @return 포장지 선택 페이지
      */
-    @GetMapping("/selectPackage")
-    public String customerLogin() {
-
+    @GetMapping("/selectPackage/{id}")
+    public String selectPackage(@RequestParam(defaultValue = "1") int page, @PathVariable("id") String id, Model model) {
+        model.addAttribute("packages", packageTypeService.getActivatedPackage(page));
+        model.addAttribute("id", id);
         return "order/selectPackagePage";
     }
-
 }

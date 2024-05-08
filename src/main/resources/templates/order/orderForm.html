@@ -103,7 +103,7 @@
                     </div>
                     <input type="hidden" id="message" class="order-text" maxlength="100" th:field="*{addressInfo.message}" required/>
                     <div>
-                        <textarea id="etcMessage"  class="order-text" style="width:400px; display:none;" rows="3" maxlength="50" placeholder="최대 50자까지 입력 가능합니다."></textarea>
+                        <textarea onchange="setEtcMessage()"; id="etcMessage"  class="order-text" style="width:400px; display:none;" rows="3" maxlength="50" placeholder="최대 50자까지 입력 가능합니다."></textarea>
                     </div>
                 </td>
             </tr>
@@ -154,6 +154,7 @@
         <tr>
             <th style="width: 40%">도서 정보</th>
             <th>수량</th>
+            <th>포장 금액</th>
             <th sec:authorize="isAuthenticated()">적립금</th>
             <th sec:authorize="isAuthenticated()">쿠폰 할인</th>
             <th>도서 할인</th>
@@ -161,7 +162,7 @@
         </tr>
         </thead>
         <tbody th:each="book : ${orderList}">
-        <tr>
+        <tr th:id="${bookStat.index}">
             <td style="width: 40%">
                 <input type="hidden" id="bookList" th:value="${orderList}">
                 <span th:text="${book.getTitle()}"></span>
@@ -170,9 +171,10 @@
                 <span th:text="${book.getCount()}"></span>
             </td>
             <td>
-                <span th:text="'+ '+${book.getPackagePrice()}"></span>
-                <input type="hidden" th:value="${book.getPackageId()}">
-                <button onclick="packagePopUp()"
+                <span>+</span>
+                <span type="number" class="packagePrice" id="packagePrice" th:text="${book.getPackagePrice()}"></span>
+                <input class="packageId" type="hidden" id="packageId" th:value="${book.getPackageId()}">
+                <button onclick="packagePopUp(this)"
                         style="margin-left:10px" >포장 하기
                 </button>
             </td>
@@ -218,12 +220,14 @@
             <tr>
                 <th scope="row" for="name" class="order-word" style="width: 15%">포장지 금액</th>
                 <td style="display: flex;">
-                    <span id="totalPackagePrice" th:text="'+ '+${totalPackagePrice}"></span>
+                    <span>+</span>
+                    <span id="totalPackagePrice" th:text="${totalPackagePrice}"></span>
                 </td>
             </tr>
             <tr>
                 <th scope="row" for="name" class="order-word" style="width: 15%">상품 할인</th>
                 <td style="display : flex">
+                    <span>-</span>
                     <span id ="totalBookSale" th:text="${totalBookSale}"></span>
                 </td>
             </tr>

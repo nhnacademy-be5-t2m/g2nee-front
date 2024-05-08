@@ -8,65 +8,83 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- Libraries Stylesheet -->
     <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
+    <link href="/static/css/order.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body>
 <div>
-    <h3> 새 주소 등록 </h3>
-    <table border="1" summary>
-        <colgroup>
-            <col style="width:150px;">
-            <col style="width:450px;">
-        </colgroup>
-        <tbody>
+    <h2 class="text-center">포장지 목록</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
         <tr>
-            <th scope="row" for="alias">
-                주소별칭
-            </th>
-            <td style="display : flex">
-                <input type="text" id="alias" class="text" maxlength="20" required/>
-            </td>
-        <tr>
-            <th scope="row" for="zipcode">
-                우편번호
-            </th>
-            <td style="display : flex">
-                <input type="text" id="zipcode" class="text" readonly/>
-                <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
-            </td>
+            <th></th>
+            <th>포장지 사진</th>
+            <th>포장지 명</th>
+            <th>가격</th>
         </tr>
-        <tr>
-            <th scope="row" for="address">
-                주소
-            </th>
-            <td style="display : flex">
-                <input type="text" id="address" class="text" maxlength="100" readonly/>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" for="detail">
-                상세주소
-            </th>
-            <td style="display : flex">
-                <input type="text" id="detail" class="text" maxlength="50" required/>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" for="isDefault">
-                기본 배송지 설정
-            </th>
-            <td style="display: flex; align-items: center;">
-                <input type="radio" id="isDefaultYes" name="isDefault" value="true"> 예
-                <input type="radio" id="isDefaultNo" name="isDefault" value="false" checked> 아니오
-            </td>
+        </thead>
 
+        <input type="hidden" id="selectPackageId" th:value="1"/>
+        <input type="hidden" id="selectPackagePrice" th:value="0"/>
+        <tbody th:each="package : ${packages.data}">
+        <tr>
+            <td>
+                <input type="hidden" id="packageId" th:value="${package.getPackageId()}"/>
+                <input type="hidden" id="packagePrice" th:value="${package.getPrice()}"/>
+                <input type="radio" th:name="selectedPackage"  th:value="${package.getPackageId()}" th:checked="${package.name=='미포장'}" onclick="setPackageId(this)">
+            </td>
+            <span th:if="${package.name == '미포장'}">
+                <td></td>
+                <td>
+                    <span th:text="${package.name}"></span>
+                </td>
+                <td>
+                    <span th:text="${package.price}"></span>
+                </td>
+            </span>
+
+            <span th:if="${package.name != '미포장'}">
+                <td>
+                    <img  height="100" width="100" th:src="${package.url}" alt="포장지 사진">
+                </td>
+
+                <td>
+                    <span th:text="${package.name}"></span>
+                </td>
+                <td>
+                    <span th:text="${package.price}"></span>
+                </td>
+            </span>
         </tr>
         </tbody>
     </table>
-
     <div style="margin-bottom: 20px;"></div>
-    <button class="btn btn-primary" onclick="saveAddressButton()">등록</button>
-    <script src="/static/js/mypage/address.js"></script>
+    <input type="hidden" id="id" th:value="${id}">
+    <button class="btn btn-primary" onclick="setPackage()">포장지 선택</button>
+
+    <br/><br/>
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${packages.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${packages.currentPage - 1 }}"><</a>
+            </li>
+            <li th:each="pageButton : ${#numbers.sequence(packages.startPage,packages.endPage)}"
+                th:class="${packages.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${packages.currentPage == packages.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${packages.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${packages.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+
+    <script src="/static/js/order/order.js"></script>
 </div>
 </body>
 </html>
