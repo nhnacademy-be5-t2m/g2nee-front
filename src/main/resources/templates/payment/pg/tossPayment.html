@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>tossPayments 결제</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="/static/css/bulma.min.css">
+    <script src="https://js.tosspayments.com/v1"></script>
+    <script src="/static/js/payment/toss.js"></script>
+</head>
+
+<body>
+
+<section class="hero is-link">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                tossPayments 결제
+            </h1>
+
+        </div>
+    </div>
+</section>
+<section class="section ">
+    <div class="container">
+        <button class="button is-link" onclick="pay('카드',jsons.card);">일반결제창</button>
+        <button class="button is-link" onclick="pay('계좌이체',jsons.transfer);">계좌이체</button>
+        <button class="button is-link" onclick="pay('휴대폰',jsons.phone);">휴대폰</button>
+        <button class="button is-link" onclick="pay('문화상품권',jsons.certificate);">문화상품권</button>
+        <button class="button is-link" onclick="pay('도서문화상품권',jsons.bookcert);">도서문화상품권</button>
+        <button class="button is-link" onclick="pay('게임문화상품권',jsons.gamecert);">게임문화상품권</button>
+    </div>
+</section>
+</body>
+<script th:inline="javascript">
+    let order = { // 임시로 사용할 order 객체 생성: 실제로는 order객체를 받아와서 사용합니다
+        "amount": 20000,
+        "orderId": "sample-023457",
+        "orderName": "테스트 주문",
+        "customerName": "정지은"
+    };
+
+    setTossApiKey(/*[[${tossClientApiKey}]]*/); // 토스 API 키 설정
+    initTossPayments(); // 토스 결제 인스턴스 초기화
+    initPaymentData(order); // 임시 객체를 사용하여 결제 정보 초기화
+
+    //initPaymentData(/*[[${order}]]*/); // 결제 정보 초기화
+</script>
+</html>

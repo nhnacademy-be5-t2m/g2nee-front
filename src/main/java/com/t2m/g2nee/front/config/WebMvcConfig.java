@@ -19,7 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(categoryInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/static/**")
-                .excludePathPatterns("/error");
+                .excludePathPatterns("/error")
+                .excludePathPatterns("/orders/payments/**");
         registry.addInterceptor(tokenCheckInterceptor)
                 .addPathPatterns("/mypage/**")
                 .addPathPatterns("/admin/**")

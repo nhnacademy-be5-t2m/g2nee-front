@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>G2nee Book 결제</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <script src="/static/js/payment/paymentSelect.js"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <!--TODO: 주문 내역 정보-->
+    <h5>주문 내역</h5>
+    <p>주문번호: </p>
+    <br/>
+    <p>주문자: </p>
+    <p>주소: </p>
+    <p>수령인: </p>
+    <br/>
+    <p>주문 상세: 리스트 쭉 보여주기 </p>
+    <p>총합: n원 </p>
+    <p>할인: n원 </p>
+    <p>결제: n원 </p>
+
+    <br/><br/>
+
+
+<!--
+<span id="order-number" th:text="${order.orderNumber}"/>
+<span id="order-amount" th:text="${order.amount}"/>
+-->
+
+
+    <!--결제 수단 선택-->
+    <h5>결제수단</h5>
+
+    <button id="toss-button" class="btn" onclick="selectPaymentMethod('toss')">토스</button>
+    <button id="naver-button" class="btn" onclick="selectPaymentMethod('naver')">네이버페이</button>
+    <button id="kakao-button" class="btn" onclick="selectPaymentMethod('kakao')">카카오페이</button>
+
+    <br/><br/>
+
+    <!-- 결제 버튼 -->
+    <button class="btn btn-primary" onclick="openPaymentWindow()">결제하기</button>
+
+</div>
+</body>
+</html>
