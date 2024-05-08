@@ -22,7 +22,7 @@ public class OrderInfoDto {
     @AllArgsConstructor
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Response {
+    public static class ListResponse {
         private Long orderId;
         private String orderNumber;
         private Long customerId;

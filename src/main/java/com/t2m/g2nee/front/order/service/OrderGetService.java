@@ -25,9 +25,9 @@ public class OrderGetService {
      *
      * @param memberId 회원번호
      * @param orderId 주문Id
-     * @return
+     * @return OrderInfoDto.ListResponse
      */
-    public OrderInfoDto.Response getOrderById(Long memberId, Long orderId){
+    public OrderInfoDto.ListResponse getOrderById(Long memberId, Long orderId){
 
         return orderGetAdaptor.getOrderById(memberId, orderId);
     }
@@ -60,7 +60,7 @@ public class OrderGetService {
      * @param page 현재 페이지
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    public PageResponse<OrderInfoDto.Response> getAllOrderList(int page){
+    public PageResponse<OrderInfoDto.ListResponse> getAllOrderList(int page){
         return orderGetAdaptor.getAllOrderList(page);
     }
 

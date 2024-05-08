@@ -22,7 +22,7 @@ public interface OrderGetAdaptor {
      * @param orderId  주문Id
      * @return OrderInfoResponseDto
      */
-    OrderInfoDto.Response getOrderById(Long memberId, Long orderId);
+    OrderInfoDto.ListResponse getOrderById(Long memberId, Long orderId);
 
     /**
      * 주문 정보 조회(주문 번호)
@@ -48,7 +48,7 @@ public interface OrderGetAdaptor {
      * @param page 현재 페이지
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    PageResponse<OrderInfoDto.Response> getAllOrderList(int page);
+    PageResponse<OrderInfoDto.ListResponse> getAllOrderList(int page);
 
     /**
      * 주문상태별로 정렬한 전체 주문 목록(Admin)

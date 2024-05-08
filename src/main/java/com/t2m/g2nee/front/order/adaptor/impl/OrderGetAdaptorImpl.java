@@ -6,9 +6,7 @@ import com.t2m.g2nee.front.order.dto.response.OrderInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,6 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,7 +24,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     private final RestTemplate restTemplate;
-
     @Value("${g2nee.gateway}")
     private String gatewayUrl;
 
@@ -48,7 +47,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
      * @return OrderInfoResponseDto
      */
     @Override
-    public OrderInfoDto.Response getOrderById(Long memberId, Long orderId) {
+    public OrderInfoDto.ListResponse getOrderById(Long memberId, Long orderId) {
         HttpHeaders orderHeaders = new HttpHeaders();
         orderHeaders.setContentType(MediaType.APPLICATION_JSON);
 
@@ -63,7 +62,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
                 url,
                 HttpMethod.GET,
                 orderEntity,
-                new ParameterizedTypeReference<OrderInfoDto.Response>() {
+                new ParameterizedTypeReference<OrderInfoDto.ListResponse>() {
                 }
         ).getBody();
     }
@@ -79,29 +78,23 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public PageResponse<OrderInfoDto.Response> getAllOrderList(int page) {
+    public PageResponse<OrderInfoDto.ListResponse> getAllOrderList(int page) {
+
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("page", String.valueOf(page));
 
-        HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
-        String url = URLDecoder.decode(UriComponentsBuilder.
-                fromHttpUrl(gatewayUrl + "admin/orders/list").
-                queryParam("page", page).
-                toUriString(), StandardCharsets.UTF_8);
+        HttpEntity<MultiValueMap<String, String>> stringHttpEntity = new HttpEntity<>(parameters, listHeaders);
+        String url = gatewayUrl + "/orders/list?page=" + page;
 
-        PageResponse<OrderInfoDto.Response> adminResponse = restTemplate.exchange(
+        return restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 stringHttpEntity,
-                new ParameterizedTypeReference<PageResponse<OrderInfoDto.Response>>() {
+                new ParameterizedTypeReference<PageResponse<OrderInfoDto.ListResponse>>() {
                 }
         ).getBody();
-
-        List<OrderInfoDto.Response> orderList = adminResponse.getData().stream().
-                collect(Collectors.toList());
-
-        adminResponse.setData(orderList);
-        return adminResponse;
     }
 
     @Override

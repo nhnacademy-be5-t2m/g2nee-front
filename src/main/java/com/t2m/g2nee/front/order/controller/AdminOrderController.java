@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class AdminOrderController {
     private final OrderGetService orderGetService;
-    private final MemberService memberService;
+//    private final MemberService memberService;
 
     @GetMapping("/list")
     public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
-        PageResponse<OrderInfoDto.Response> orderPage = orderGetService.getAllOrderList(page);
+        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
         model.addAttribute("orderPage", orderPage);
 
         return "admin/order/adminOrder";
@@ -30,8 +30,8 @@ public class AdminOrderController {
     @GetMapping("/{orderId}")
     public String getOrder(@PathVariable("orderId") Long orderId, Model model){
 
-        OrderInfoDto.Response response = orderGetService.getOrderById(null, orderId);
-        model.addAttribute("book", response);
+        OrderInfoDto.ListResponse listResponse = orderGetService.getOrderById(null, orderId);
+        model.addAttribute("book", listResponse);
         return "admin/order/orderDetail";
     }
 

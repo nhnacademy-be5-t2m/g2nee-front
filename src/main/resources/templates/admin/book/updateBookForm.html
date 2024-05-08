@@ -184,11 +184,11 @@
     //TODO: url 바꾸기
     function fetchChildrenCategories(categoryId, callback) {
         fetch(url + `/categories/${categoryId}/children`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(listResponse => {
+                if (!listResponse.ok) {
+                    throw new Error('Network listResponse was not ok');
                 }
-                return response.json();
+                return listResponse.json();
             })
             .then(data => {
                 callback(data);
@@ -200,11 +200,11 @@
 
     function fetchRootCategories(callback) {
         fetch(url + '/categories')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(listResponse => {
+                if (!listResponse.ok) {
+                    throw new Error('Network listResponse was not ok');
                 }
-                return response.json();
+                return listResponse.json();
             })
             .then(data => {
                 callback(data);

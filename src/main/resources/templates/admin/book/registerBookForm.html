@@ -169,11 +169,11 @@
 
     function fetchChildrenCategories(categoryId, callback) {
         fetch(`/categories/${categoryId}/children`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(listResponse => {
+                if (!listResponse.ok) {
+                    throw new Error('Network listResponse was not ok');
                 }
-                return response.json();
+                return listResponse.json();
             })
             .then(data => {
                 callback(data);
@@ -185,11 +185,11 @@
 
     function fetchRootCategories(callback) {
         fetch(`/categories`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(listResponse => {
+                if (!listResponse.ok) {
+                    throw new Error('Network listResponse was not ok');
                 }
-                return response.json();
+                return listResponse.json();
             })
             .then(data => {
                 callback(data);
