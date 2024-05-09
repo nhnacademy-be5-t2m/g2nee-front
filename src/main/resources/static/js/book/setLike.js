@@ -1,12 +1,16 @@
 let liked;
 const url = '/likes';
 
-document.querySelectorAll('.btn.btn-sm.text-dark.p-0').forEach(button => {
+document.querySelectorAll('#likes').forEach(button => {
     button.addEventListener('click', function (event) {
 
         let memberId = this.dataset.memberid;
         if (memberId === undefined) {
-            alert('찜은 회원만 가능합니다');
+            Swal.fire({
+                icon: 'warning',
+                title: '찜은 회원만 가능합니다',
+                text: '로그인을 해주세요'
+            })
             event.preventDefault();
             return
         }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
           crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>G2nee Book shop</title>
 </head>
 
@@ -89,20 +90,22 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
+                        <input id="quantity" type="text" class="form-control bg-secondary text-center" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3" style="margin-right: 10px"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
+                    <button id="cartButton" type="button" class="btn btn-primary px-3" style="margin-right: 10px"><i
+                            class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
+                    </button>
                     <a class="btn btn-sm text-dark p-0"
-                                                            th:data-bookId="${book.bookId}"
-                                                            th:data-liked="${book.isLiked().toString()}"
-                                                            th:data-likesNum="${likesNum}"
-                                                            th:data-memberId="${memberId}">
-                        <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                       th:data-bookId="${book.bookId}"
+                       th:data-liked="${book.isLiked().toString()}"
+                       th:data-likesNum="${likesNum}"
+                       th:data-memberId="${memberId}">
+                        <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                            th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                            th:data-memberId="${memberId}">
                             <i class="fa-regular fa-heart text-primary" style="font-size: 24px"
@@ -143,7 +146,7 @@
                             <span>책 소개</span>
                         </h4>
                         <p class="mb-4" th:utext="${book.description}"></p>
-                       <hr/>
+                        <hr/>
                         <div>
                             <h4 class="mb-3" style="margin-left: 3px">
                                 <i class="fa-solid fa-bookmark"></i>
@@ -187,6 +190,7 @@
                                                 th:data-reviewContent="${review.content}"
                                                 th:data-reviewId="${review.reviewId}"
                                                 th:data-reviewScore="${review.score}"
+                                                th:data-memberId="${memberId}"
                                                 th:if="${review.memberId == memberId}"
                                                 type="button">수정
                                         </button>
@@ -205,40 +209,41 @@
                                 <h4 class="mb-4" id="reviewTitle">리뷰작성</h4>
                                 <div th:if="${memberId != null}">
                                     <div class="form-group">
-                                <div class="d-flex my-3">
-                                    <p class="mb-0 mr-2">나의 평점 :</p>
-                                    <div class="text-primary">
-                                        <i class="fas fa-star" id="starScore1"></i>
-                                        <i class="fas fa-star" id="starScore2"></i>
-                                        <i class="fas fa-star" id="starScore3"></i>
-                                        <i class="fas fa-star" id="starScore4"></i>
-                                        <i class="fas fa-star" id="starScore5"></i>
-                                    </div>
-                                </div>
+                                        <div class="d-flex my-3">
+                                            <p class="mb-0 mr-2">나의 평점 :</p>
+                                            <div class="text-primary">
+                                                <i class="fas fa-star" id="starScore1"></i>
+                                                <i class="fas fa-star" id="starScore2"></i>
+                                                <i class="fas fa-star" id="starScore3"></i>
+                                                <i class="fas fa-star" id="starScore4"></i>
+                                                <i class="fas fa-star" id="starScore5"></i>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <form enctype="multipart/form-data" id="postReviewForm"
                                           th:action="@{'/reviews'}"
                                           th:method="post">
-                                    <div class="form-group">
-                                        <label class="form-label" for="image">리뷰 이미지</label>
-                                        <input accept="image/*" class="form-control-file" id="image" name="image"
-                                               type="file">
-                                    </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="image">리뷰 이미지</label>
+                                            <input accept="image/*" class="form-control-file" id="image" name="image"
+                                                   type="file">
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="content">리뷰 내용</label>
-                                        <textarea class="form-control" cols="30" id="content" name="content" required
-                                                  rows="5"></textarea>
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input id="postScore" name="score" type="hidden">
-                                        <input name="memberId" th:value="${memberId}" type="hidden">
-                                        <input name="bookId" th:value="${bookId}" type="hidden">
-                                        <button class="btn btn-primary px-3" id="checkReview" type="button">리뷰 작성
-                                        </button>
-                                    </div>
-                                </form>
+                                        <div class="form-group">
+                                            <label for="content">리뷰 내용</label>
+                                            <textarea class="form-control" cols="30" id="content" name="content"
+                                                      required
+                                                      rows="5"></textarea>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <input id="postScore" name="score" type="hidden">
+                                            <input name="memberId" th:value="${memberId}" type="hidden">
+                                            <input name="bookId" th:value="${bookId}" type="hidden">
+                                            <button class="btn btn-primary px-3" id="checkReview" type="button">리뷰 작성
+                                            </button>
+                                        </div>
+                                    </form>
                                     <form enctype="multipart/form-data" id="modifyReviewForm"
                                           th:action="@{'/reviews'}"
                                           th:method="patch">
@@ -338,6 +343,49 @@
         starRatingElement.innerHTML = stars;
     }
 
+    // 장바구니 담기
+    document.querySelector('#cartButton').addEventListener('click', function () {
+        let bookId = [[${book.bookId}]];
+        let quantity = document.querySelector('#quantity').value;
+        let bookQuantity = [[${book.quantity}]];
+        let bookTitle = [[${book.title}]];
+
+        console.log(bookId)
+        console.log(quantity)
+        console.log(bookQuantity)
+        console.log(bookTitle)
+
+        if (quantity > bookQuantity) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: '재고가 부족합니다.',
+                text: '현재 재고 : ' + bookQuantity
+            })
+            return;
+        }
+
+        fetch('/carts', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                bookId: bookId,
+                quantity: bookQuantity
+            })
+        })
+            .then(
+                Swal.fire({
+                    position: "middle",
+                    icon: "success",
+                    title: bookTitle + " 을(를) 장바구니에 담았습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            )
+    });
+
 
     let page = [[${reviewPage.currentPage}]];
     // 리뷰 더보기
@@ -415,6 +463,28 @@
                     p.textContent = review.content;
                     reviewBodyDiv.appendChild(p);
 
+                    var modifyButton = document.createElement('button');
+                    modifyButton.className = 'btn btn-outline-primary btn-sm';
+                    modifyButton.id = 'modifyButton';
+                    modifyButton.textContent = '수정';
+
+                    let reviewContent = review.content;
+                    let reviewId = review.reviewId;
+                    let reviewScore = review.score;
+                    modifyButton.dataset.reviewContent = reviewContent;
+                    modifyButton.dataset.reviewId = reviewId;
+                    modifyButton.dataset.reviewScore = reviewScore;
+
+                    modifyButton.onclick = function() {
+                            modifyReview(reviewId, reviewContent);
+                    }
+
+                    let memberId = [[${memberId}]];
+                    if (review.memberId === memberId) {
+                        modifyButton.type = 'button';
+                        reviewBodyDiv.appendChild(modifyButton);
+                    }
+
                     // 'media' div 요소에 'media-body' div 요소를 추가합니다.
                     reviewDiv.appendChild(reviewBodyDiv);
 
@@ -432,99 +502,150 @@
     // 회원쪽 기능
     // 별점 클릭 이벤트
 
-        let score = document.querySelector('#postScore').value = 5;
-        let modifyScore = document.querySelector('#modifyScore').value = 5;
+    let score = document.querySelector('#postScore').value = 5;
+    let modifyScore = document.querySelector('#modifyScore').value = 5;
 
-        function init() {
-            let stars = document.querySelectorAll('[id^="starScore"]');
-            stars.forEach((star, index) => {
-                star.addEventListener('click', () => {
-                    score = index;  // 별의 개수를 업데이트합니다.
-                    modifyScore = index;
-                    document.querySelector('#postScore').value = index + 1;
-                    document.querySelector('#modifyScore').value = index + 1;
-                    // 모든 별을 far 클래스로 초기화합니다.
-                    stars.forEach((star) => star.className = 'far fa-star');
+    function init() {
+        let stars = document.querySelectorAll('[id^="starScore"]');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                score = index;  // 별의 개수를 업데이트합니다.
+                modifyScore = index;
+                document.querySelector('#postScore').value = index + 1;
+                document.querySelector('#modifyScore').value = index + 1;
+                // 모든 별을 far 클래스로 초기화합니다.
+                stars.forEach((star) => star.className = 'far fa-star');
 
-                    for (let i = 0; i < score + 1; i++) {
-                        stars[i].className = "fas fa-star";
-                    }
+                for (let i = 0; i < score + 1; i++) {
+                    stars[i].className = "fas fa-star";
+                }
 
-                });
             });
-        }
+        });
+    }
 
-        init();
+    init();
 
-        // 비회원 리뷰 생성 막기, 리뷰 하나만 작성
-        document.querySelector('#checkReview').addEventListener('click', function (event) {
+    // 비회원 리뷰 생성 막기, 리뷰 하나만 작성
+    document.querySelector('#checkReview').addEventListener('click', function (event) {
 
-            let memberId = [[${memberId}]];
+        let memberId = [[${memberId}]];
 
-            //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
-            if (memberId === undefined) {
-                alert('리뷰는 회원만 작성할 수 있습니다');
-                event.preventDefault();
-                return
-            }
-            let bookId = [[${bookId}]];
-
-            fetch(`/reviews?memberId=${memberId}&bookId=${bookId}`, {
-                method: 'GET'
+        //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
+        if (memberId === undefined) {
+            Swal.fire({
+                icon: 'warning',
+                title: '도서를 구매한 만큼 리뷰만 작성할 수 있습니다.',
+                text: '구입한 도서 수  : '
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    //TODO: 나중에 주문한 횟수만큼만 리뷰 작성하도록
-                    if (data === false) {
-                        alert('리뷰는 하나만 작성할 수 있습니다.')
-                        event.preventDefault();
+            return
+        }
+        let bookId = [[${bookId}]];
 
-                    } else {
-                        document.querySelector('#postReviewForm').submit();
-                    }
+        fetch(`/reviews?memberId=${memberId}&bookId=${bookId}`, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                //TODO: 나중에 주문한 횟수만큼만 리뷰 작성하도록
+                if (data === false) {
+                    alert('리뷰는 하나만 작성할 수 있습니다.')
+                    event.preventDefault();
+
+                } else {
+                    document.querySelector('#postReviewForm').submit();
+                    Swal.fire({
+                        position: "middle",
+                        icon: "success",
+                        title: "리뷰를 작성했습니다.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+    })
+
+    // 리뷰 등록 수정 //
+    document.querySelector('#postReviewForm').style.display = 'block';
+    document.querySelector('#modifyReviewForm').style.display = 'none';
+
+    // 리뷰 수정 버튼
+    document.querySelectorAll('#modifyButton').forEach(function (button) {
+        button.addEventListener('click', function () {
+
+            let reviewId = this.dataset.reviewid
+            let reviewContent = this.dataset.reviewcontent
+
+            document.querySelector('#postReviewForm').style.display = 'none';
+            document.querySelector('#modifyReviewForm').style.display = 'block';
+
+            document.getElementById('reviewTitle').textContent = '리뷰수정';
+            document.getElementById('modifyContent').textContent = reviewContent;
+
+            document.querySelector('#modifyReview').addEventListener('click', function () {
+                let input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', 'reviewId');
+                input.setAttribute('value', reviewId);
+                document.querySelector('#modifyReviewForm').appendChild(input);
+                document.querySelector('#modifyReviewForm').submit();
+
+                Swal.fire({
+                    position: "middle",
+                    icon: "success",
+                    title: "리뷰가 수정되었습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
                 })
-                .catch(error => console.error('Error:', error));
+
+            })
+
+            // 취소 버튼
+            document.querySelector('#cancelButton').addEventListener('click', function () {
+
+                document.querySelector('#postReviewForm').style.display = 'block';
+                document.querySelector('#modifyReviewForm').style.display = 'none';
+                document.getElementById('reviewTitle').textContent = '리뷰작성';
+            })
+        });
+    });
+
+
+    function modifyReview(reviewId, reviewContent) {
+
+        document.querySelector('#postReviewForm').style.display = 'none';
+        document.querySelector('#modifyReviewForm').style.display = 'block';
+
+        document.getElementById('reviewTitle').textContent = '리뷰수정';
+        document.getElementById('modifyContent').textContent = reviewContent;
+
+        document.querySelector('#modifyReview').addEventListener('click', function () {
+            let input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', 'reviewId');
+            input.setAttribute('value', reviewId);
+            document.querySelector('#modifyReviewForm').appendChild(input);
+            document.querySelector('#modifyReviewForm').submit();
+
+            Swal.fire({
+                position: "middle",
+                icon: "success",
+                title: "리뷰가 수정되었습니다.",
+                showConfirmButton: false,
+                timer: 1500
+            })
 
         })
 
-        // 리뷰 등록 수정 //
-        document.querySelector('#postReviewForm').style.display = 'block';
-        document.querySelector('#modifyReviewForm').style.display = 'none';
+        // 취소 버튼
+        document.querySelector('#cancelButton').addEventListener('click', function () {
 
-        // 리뷰 수정 버튼
-        document.querySelectorAll('#modifyButton').forEach(function (button) {
-            button.addEventListener('click', function () {
-
-                let reviewId = this.dataset.reviewid
-                let reviewContent = this.dataset.reviewcontent
-
-                document.querySelector('#postReviewForm').style.display = 'none';
-                document.querySelector('#modifyReviewForm').style.display = 'block';
-
-                document.getElementById('reviewTitle').textContent = '리뷰수정';
-                document.getElementById('modifyContent').textContent = reviewContent;
-
-                document.querySelector('#modifyReview').addEventListener('click', function () {
-                    let input = document.createElement('input');
-                    input.setAttribute('type', 'hidden');
-                    input.setAttribute('name', 'reviewId');
-                    input.setAttribute('value', reviewId);
-                    document.querySelector('#modifyReviewForm').appendChild(input);
-                    document.querySelector('#modifyReviewForm').submit();
-                    alert('리뷰가 수정되었습니다.');
-
-                })
-
-                // 취소 버튼
-                document.querySelector('#cancelButton').addEventListener('click', function () {
-
-                    document.querySelector('#postReviewForm').style.display = 'block';
-                    document.querySelector('#modifyReviewForm').style.display = 'none';
-                    document.getElementById('reviewTitle').textContent = '리뷰작성';
-                })
-            });
-        });
-
+            document.querySelector('#postReviewForm').style.display = 'block';
+            document.querySelector('#modifyReviewForm').style.display = 'none';
+            document.getElementById('reviewTitle').textContent = '리뷰작성';
+        })
+    }
 </script>
-
