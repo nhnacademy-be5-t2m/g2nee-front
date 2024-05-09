@@ -1,13 +1,15 @@
 package com.t2m.g2nee.front.shoppingcart.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -46,8 +48,10 @@ public class ShoppingCartRestController {
 
 
         String customerId = null;
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-        if(memberId != null) customerId = memberId.toString();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        if (member != null) {
+            customerId = member.getMemberId().toString();
+        }
 
         ShoppingCartDto.Response response =
                 shoppingCartService.addBookInCart(customerId, request, httpServletRequest, httpServletResponse);
@@ -69,8 +73,10 @@ public class ShoppingCartRestController {
 
                                                                    ) {
         String customerId = null;
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-        if(memberId != null) customerId = memberId.toString();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        if (member != null) {
+            customerId = member.getMemberId().toString();
+        }
 
         ShoppingCartDto.Response response =
                 shoppingCartService.pullBookInCart(customerId, bookId, httpServletRequest,
@@ -94,8 +100,10 @@ public class ShoppingCartRestController {
                                                                         HttpServletRequest httpServletRequest,
                                                                         HttpServletResponse httpServletResponse){
         String customerId = null;
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-        if(memberId != null) customerId = memberId.toString();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        if (member != null) {
+            customerId = member.getMemberId().toString();
+        }
 
         ShoppingCartDto.Response response =
                 shoppingCartService.updateCartQuantity(customerId, request, httpServletRequest, httpServletResponse);

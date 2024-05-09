@@ -37,15 +37,12 @@
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
                                     <button id="minusButton" th:data-bookId="${cart.bookId}"
-                                            th:data-customerId="${cart.customerId}"
                                             class="btn btn-sm btn-primary btn-minus">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input id="quantity" type="text"
-                                       th:data-bookId="${cart.bookId}"
-                                       class="form-control form-control-sm bg-secondary text-center"
-                                       th:value="${cart.quantity}">
+                                <input id="quantity" th:data-bookId="${cart.bookId}" th:value="${cart.quantity}" type="text" class="form-control form-control-sm bg-secondary text-center"
+                                       value="1">
                                 <div class="input-group-btn">
                                     <button id="plusButton" th:data-bookId="${cart.bookId}"
                                             class="btn btn-sm btn-primary btn-plus">
@@ -83,7 +80,7 @@
                       th:text="'배송비 : ₩ ' +${deliveryPolicy.deliveryFee}"></span>
                 <hr>
                 <span id="totalAmount" style="font-weight: bold; font-size: 1.4em;"
-                      th:text="' = ₩ ' + ${totalPrice + deliveryPolicy.deliveryFee}"></span>
+                      th:text="'합계 : ₩ ' + ${totalPrice + deliveryPolicy.deliveryFee}"></span>
             </div>
         </div>
         <button class="btn btn-block btn-primary">주문하기</button>
@@ -143,7 +140,7 @@
                         deliveryFeeFreeTag.style.display = "none";
                         deliveryFeeTag.style.display = "block";
                     }
-                    totalAmountTag.textContent = " = ₩ " + (totalPrice + deliveryFee);
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
                 })
         });
     });
@@ -188,7 +185,7 @@
                         deliveryFeeFreeTag.style.display = "none";
                         deliveryFeeTag.style.display = "block";
                     }
-                    totalAmountTag.textContent = " = ₩ " + (totalPrice + deliveryFee);
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
                 })
         });
     });
@@ -219,7 +216,7 @@
                         deliveryFeeFreeTag.style.display = "none";
                         deliveryFeeTag.style.display = "block";
                     }
-                    totalAmountTag.textContent = " = ₩ " + (totalPrice + deliveryFee);
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
                 })
         });
     });
@@ -244,7 +241,7 @@
                         deliveryFeeFreeTag.style.display = "none";
                         deliveryFeeTag.style.display = "block";
                     }
-                    totalAmountTag.textContent = " = ₩ " + (totalPrice + deliveryFee);
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
                     this.closest('tr').remove();
                 });
         });

@@ -1,10 +1,15 @@
 package com.t2m.g2nee.front.shoppingcart.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.CART_ITEM_NUM;
+import static com.t2m.g2nee.front.aop.MemberAspect.LIKE_NUM;
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.booklike.service.BookLikeService;
-import com.t2m.g2nee.front.policyset.deliveryPolicy.dto.response.DeliveryPolicyInfoDto;
-import com.t2m.g2nee.front.policyset.deliveryPolicy.service.DeliveryPolicyService;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
+import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
+import com.t2m.g2nee.front.policyset.deliverypolicy.service.DeliveryPolicyService;
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import java.util.List;
@@ -29,7 +34,6 @@ public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
     private final MemberAspect memberAspect;
-    private final BookLikeService bookLikeService;
     private final DeliveryPolicyService deliveryPolicyService;
 
     /**
@@ -43,9 +47,12 @@ public class ShoppingCartController {
                                   HttpServletResponse httpServletResponse) {
 
         String customerId = null;
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-        if(memberId != null) customerId = memberId.toString();
-        Long likesNum = bookLikeService.getMemberLikesNum(memberId);
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        if (member != null) {
+            customerId = member.getMemberId().toString();
+        }
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
         List<ShoppingCartDto.Response> cartList = shoppingCartService.getCartByMember(customerId,httpServletRequest,httpServletResponse);
 
         int totalPrice = cartList.stream()
@@ -56,6 +63,7 @@ public class ShoppingCartController {
 
         model.addAttribute("cartList", cartList);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("deliveryPolicy", deliveryPolicy);
 

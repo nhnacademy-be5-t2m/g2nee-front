@@ -27,42 +27,6 @@ public class ShoppingCartAdaptorImpl implements ShoppingCartAdaptor {
     @Value("${g2nee.gateway}")
     private String gatewayUrl;
 
-    @Override
-    public ShoppingCartDto.Response addBookInCart(ShoppingCartDto.Request request) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<ShoppingCartDto.Request> requestEntity = new HttpEntity<>(request,headers);
-
-        String url = gatewayUrl + "/carts";
-
-        return restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<ShoppingCartDto.Response>() {
-                }
-        ).getBody();
-
-
-    }
-
-    @Override
-    public List<ShoppingCartDto.Response> getCartByMember(String customerId) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-
-        String url = gatewayUrl + "/carts/member/" + customerId;
-
-        return restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<List<ShoppingCartDto.Response>>() {
-                }
-        ).getBody();
-    }
 
     @Override
     public ShoppingCartDto.Response getBookForCart(String bookId, int quantity) {

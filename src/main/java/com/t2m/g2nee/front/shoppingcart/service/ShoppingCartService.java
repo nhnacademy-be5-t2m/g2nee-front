@@ -100,7 +100,7 @@ public class ShoppingCartService {
      * @param bookId              책 아이디
      * @param httpServletRequest
      * @param httpServletResponse
-     * @return
+     * @return ShoppingCartDto.Response
      */
     public ShoppingCartDto.Response pullBookInCart(String customerId, String bookId,
                                                    HttpServletRequest httpServletRequest,
@@ -131,11 +131,35 @@ public class ShoppingCartService {
     }
 
     /**
+     * @param memberId           회원 아이디
+     * @param httpServletRequest httpServletRequest
+     * @return int
+     */
+    public int getCartItemNum(Long memberId, HttpServletRequest httpServletRequest) {
+
+        // 회원 아이디가 있으면 회원 아이디로 찾기
+        if (memberId != null) {
+            return redisTemplate.opsForHash().entries(memberId.toString()).size();
+            // 회원 아이디가 없으면 비회원으로 찾기
+        } else {
+
+            Cookie[] cookies = httpServletRequest.getCookies();
+            for (Cookie c : cookies) {
+                if (c.getName().equals("cart")) {
+                    // 비회원은 유효기간 확인용 더미 더미데이터가 존재하여 개수 1를 뺴줍니다.
+                    return redisTemplate.opsForHash().entries(c.getValue()).size() - 1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    /**
      * 고객의 아이디를 얻는 메서드
      *
      * @param customerId          회원 또는 비회원 세션 아이디
-     * @param httpServletRequest
-     * @param httpServletResponse
+     * @param httpServletRequest httpServletRequest
+     * @param httpServletResponse httpServletResponse
      * @return String
      */
     private String getCustomerId(String customerId, HttpServletRequest httpServletRequest,
@@ -169,7 +193,7 @@ public class ShoppingCartService {
     /**
      * 비회원일 경우 ( memberId == null ) 쿠키에서 세션 아이디를 얻는 메서드
      *
-     * @param httpRequest
+     * @param httpRequest httpRequest
      * @return String
      */
     private String getCartSessionId(HttpServletRequest httpRequest) {
@@ -186,8 +210,8 @@ public class ShoppingCartService {
     /**
      * 세션 아이디 쿠키 생성 메서드
      *
-     * @param httpRequest
-     * @param httpResponse
+     * @param httpRequest httpRequest
+     * @param httpResponse httpResponse
      * @return String
      */
     private String createCartCookie(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {

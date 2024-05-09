@@ -5,10 +5,6 @@ import java.util.List;
 
 public interface ShoppingCartAdaptor {
 
-    ShoppingCartDto.Response addBookInCart(ShoppingCartDto.Request request);
-
-    List<ShoppingCartDto.Response> getCartByMember(String customerId);
-
     ShoppingCartDto.Response getBookForCart(String bookId, int quantity);
 
 }
