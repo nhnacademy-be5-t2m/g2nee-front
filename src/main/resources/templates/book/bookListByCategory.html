@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
           crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+
     <title>G2nee Book shop</title>
 </head>
 
@@ -55,6 +56,10 @@
                                         <span class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
                                         </span>
+                            <span class="input-group-text bg-transparent text-primary text-muted">
+                            <i class="fa-regular fa-hand-pointer fa-rotate-270" ></i>
+                                <span th:text="' ' + '선택한 카테고리에 해당하는 책을 검색할 수 있습니다'"></span>
+                                   </span>
                         </div>
                     </div>
                 </form>
@@ -138,12 +143,12 @@
                     <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                        th:data-memberId="${memberId}">
-                        <i th:if="${book.isLiked() == false}" class="fa-regular fa-heart"></i>
-                        <span th:if="${book.isLiked() == false}">찜 하기</span>
-
-                        <i th:if="${book.isLiked() == true}" class="fa-solid fa-heart"></i>
-                        <span th:if="${book.isLiked() == true}" class="">찜 해제</span>
+                        <i class="fa-regular fa-heart text-primary" style="font-size: 20px"
+                           th:if="${book.isLiked() == false}"></i>
+                        <i class="fa-solid fa-heart text-primary" style="font-size: 20px"
+                           th:if="${book.isLiked() == true}"></i>
                     </a>
+                    <small th:text="${book.scoreAverage} + ' (' + ${book.reviewCount} +' Reviews)'"></small>
 
                     <a href="" class="btn btn-sm text-dark p-0"><i
                             class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가</a>

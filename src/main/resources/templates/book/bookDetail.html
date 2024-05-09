@@ -41,43 +41,48 @@
                     <span th:text="${book.title}"></span>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
                 </h3>
-                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
-                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                <div class="mb-3">
+                    <i class="fa-solid fa-user"></i>
+                    <span th:each="contributorRole, index : ${book.contributorRoleList}"
+                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
-                <br/>
-                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
+                <div class="mb-3">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
                 <div>
-                            <span th:each="tag : ${book.tagList}">
+                    <i class="fa-solid fa-tag"></i>
+                    <span th:each="tag : ${book.tagList}">
                                 <span th:text="${tag.tagName}"></span>
                             </span>
                 </div>
                 <div class="d-flex mb-3">
                     <!-- 평점 -->
-                    <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
+                    <div class="text-primary mr-2" id="star-rating">
                     </div>
                     <!-- 리뷰가 몇개인지 (눌렀을 때 리뷰페이지로 갈수있게) -->
-                    <small class="pt-1">(50 Reviews)</small>
+                    <small class="pt-1" th:text="${book.scoreAverage} +' ('+${book.reviewCount} +' Reivews)'"></small>
                 </div>
                 <hr/>
-                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></h4>
-                <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <h4>
+                    <i class="fa-solid fa-coins"></i>
+                    <span class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></span>
+                </h4>
+                <h5>
+                    <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
+                    <span th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></span>
+                </h5>
                 <hr/>
 
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
-                     class="d-flex align-items-center mb-4 pt-2">
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
                          style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
                     <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
                           style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
                 </div>
                 <!-- 구매할 책 갯수 설정 -->
-                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
-                     class="d-flex align-items-center mb-4 pt-2">
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus">
@@ -91,10 +96,8 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3" style="margin-right: 10px"><i
-                            class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
-                    </button>
-                    <button class="btn btn-primary px-3"><a class="btn btn-sm text-dark p-0"
+                    <button class="btn btn-primary px-3" style="margin-right: 10px"><i class="fa fa-shopping-cart mr-1"></i> 장바구니 담기</button>
+                    <a class="btn btn-sm text-dark p-0"
                                                             th:data-bookId="${book.bookId}"
                                                             th:data-liked="${book.isLiked().toString()}"
                                                             th:data-likesNum="${likesNum}"
@@ -102,14 +105,12 @@
                         <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                            th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                            th:data-memberId="${memberId}">
-                            <i th:if="${book.isLiked() == false}" class="fa-regular fa-heart"></i>
-                            <span th:if="${book.isLiked() == false}">찜 하기</span>
-
-                            <i th:if="${book.isLiked() == true}" class="fa-solid fa-heart"></i>
-                            <span th:if="${book.isLiked() == true}">찜 해제</span>
+                            <i class="fa-regular fa-heart text-primary" style="font-size: 24px"
+                               th:if="${book.isLiked() == false}"></i>
+                            <i class="fa-solid fa-heart text-primary" style="font-size: 24px"
+                               th:if="${book.isLiked() == true}"></i>
                         </a>
                     </a>
-                    </button>
                 </div>
             </div>
         </div>
@@ -118,11 +119,15 @@
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                     <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Information</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Reviews (0)</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2"
+                       th:data-bookId="${book.bookId}" th:text="'Reviews (' + ${book.reviewCount} +')'"></a>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">도서 정보</h4>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-book"></i>
+                            <span>도서 정보</span>
+                        </h4>
                         <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
                         <p th:text="'ISBN : ' + ${book.isbn}"></p>
                         <div th:each="categoryList : ${book.categoryList}">
@@ -133,12 +138,18 @@
                         </div>
                         <div class="info"></div>
                         <hr/>
-                        <h4 class="mb-3">책 소개</h4>
-                        <p class="mb-4" th:text="${book.description}"></p>
-                        <hr/>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>책 소개</span>
+                        </h4>
+                        <p class="mb-4" th:utext="${book.description}"></p>
+                       <hr/>
                         <div>
-                            <h4 class="mb-3">목차</h4>
-                            <p th:text="${book.bookIndex}"></p>
+                            <h4 class="mb-3" style="margin-left: 3px">
+                                <i class="fa-solid fa-bookmark"></i>
+                                <span>목차</span>
+                            </h4>
+                            <p th:utext="${book.bookIndex}"></p>
                         </div>
                     </div>
 
@@ -147,48 +158,114 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h4 class="mb-4">리뷰 목록</h4>
-                                <div class="media mb-4">
-                                    <!-- 리뷰 사진 등록 가능 -->
-                                    <img src="/static/img/product-1.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+                                <div class="media mb-4" th:each="review : ${reviewPage.data}"
+                                     th:if="${reviewPage.data.size() > 0}">
+                                    <img alt="Image" class="img-fluid mr-3 mt-1" th:if="${review.imageUrl != null}"
+                                         th:src="${review.imageUrl}"
                                          style="width: 45px;">
                                     <div class="media-body">
-                                        <h6>리뷰 작성자 닉네임<small> - <i>리뷰 작성 날짜</i></small></h6>
+                                        <h6>
+                                            <span th:text="${review.nickname} +' - '">  </span>
+                                            <small class="text-muted"
+                                                   th:text="${review.modifiedAt == null ? #temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm:ss') : #temporals.format(review.modifiedAt, 'yyyy-MM-dd HH:mm:ss') + ' (수정됨)'}"></small>
+                                        </h6>
                                         <div class="text-primary mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="far fa-star"></i>
+                                            <span th:each="i : ${#numbers.sequence(1, review.score)}"
+                                                  th:if="${review.score == 5}">
+                                                 <i class="fas fa-star"></i>
+                                            </span>
+                                            <span th:each="i : ${#numbers.sequence(1, review.score)}"
+                                                  th:unless="${review.score == 5}">
+                                                <i class="fas fa-star"></i></span>
+                                            <span th:each="i : ${#numbers.sequence(review.score+1, 5)}"
+                                                  th:unless="${review.score == 5}">
+                                                <i class="far fa-star"></i>
+                                            </span>
                                         </div>
-                                        <p>[리뷰내용]</p>
+                                        <p id="reviewContent" th:text="${review.content}"></p>
+                                        <button class="btn btn-outline-primary btn-sm" id="modifyButton"
+                                                th:data-reviewContent="${review.content}"
+                                                th:data-reviewId="${review.reviewId}"
+                                                th:data-reviewScore="${review.score}"
+                                                th:if="${review.memberId == memberId}"
+                                                type="button">수정
+                                        </button>
                                     </div>
                                 </div>
+                                <div class="media mb-4" th:unless="${reviewPage.data.size() > 0}">
+                                </div>
+                                <div id="reviews">
+                                </div>
+                                <button th:if="${reviewPage.totalElements > 5}" class="btn btn-primary"
+                                        id="loadMoreButton">
+                                    더보기
+                                </button>
                             </div>
                             <div class="col-md-6">
-                                <h4 class="mb-4">리뷰작성</h4>
+                                <h4 class="mb-4" id="reviewTitle">리뷰작성</h4>
+                                <div th:if="${memberId != null}">
+                                    <div class="form-group">
                                 <div class="d-flex my-3">
                                     <p class="mb-0 mr-2">나의 평점 :</p>
                                     <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                        <i class="fas fa-star" id="starScore1"></i>
+                                        <i class="fas fa-star" id="starScore2"></i>
+                                        <i class="fas fa-star" id="starScore3"></i>
+                                        <i class="fas fa-star" id="starScore4"></i>
+                                        <i class="fas fa-star" id="starScore5"></i>
                                     </div>
                                 </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="review-image">사진 등록</label>
-                                        <textarea id="review-image" cols="30" rows="5" class="form-control"></textarea>
                                     </div>
+
+                                    <form enctype="multipart/form-data" id="postReviewForm"
+                                          th:action="@{'/reviews'}"
+                                          th:method="post">
                                     <div class="form-group">
-                                        <label for="message">리뷰 내용</label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                        <label class="form-label" for="image">리뷰 이미지</label>
+                                        <input accept="image/*" class="form-control-file" id="image" name="image"
+                                               type="file">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="content">리뷰 내용</label>
+                                        <textarea class="form-control" cols="30" id="content" name="content" required
+                                                  rows="5"></textarea>
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="리뷰 작성" class="btn btn-primary px-3">
+                                        <input id="postScore" name="score" type="hidden">
+                                        <input name="memberId" th:value="${memberId}" type="hidden">
+                                        <input name="bookId" th:value="${bookId}" type="hidden">
+                                        <button class="btn btn-primary px-3" id="checkReview" type="button">리뷰 작성
+                                        </button>
                                     </div>
                                 </form>
+                                    <form enctype="multipart/form-data" id="modifyReviewForm"
+                                          th:action="@{'/reviews'}"
+                                          th:method="patch">
+                                        <div class="form-group">
+                                            <label for="content">리뷰 내용</label>
+                                            <textarea class="form-control" cols="30" id="modifyContent"
+                                                      name="content"
+                                                      required
+                                                      rows="5"></textarea>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <input id="modifyScore" name="score" type="hidden">
+                                            <input name="memberId" th:value="${memberId}" type="hidden">
+                                            <input name="bookId" th:value="${bookId}" type="hidden">
+                                            <button class="btn btn-primary px-3" id="modifyReview" type="button">리뷰
+                                                수정
+                                            </button>
+                                            <button class="btn btn-primary px-3" id="cancelButton" type="button">취소
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div th:if="${memberId == null}">
+                                    <div class="alert alert-light" role="alert">
+                                        리뷰는 회원만 작성할 수 있습니다.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -215,8 +292,7 @@
                             <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>상세보기</a>
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>상세보기</a>
                             <a href="" class="btn btn-sm text-dark p-0"><i
                                     class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</a>
                         </div>
@@ -230,4 +306,225 @@
 </body>
 
 </html>
-<script src="/static/js/book/setLike.js"></script>
+<script src="/static/js/book/setLike.js">
+</script>
+<script th:inline="javascript">
+
+    // 평균 별점
+    window.onload = function () {
+        var scoreAverage = Math.floor([[${book.scoreAverage}]]);
+        var scoreDecimal = [[${book.scoreAverage}]] % 1;
+        const starRatingElement = document.getElementById('star-rating');
+        let stars = '';
+
+        for (let i = 0; i < scoreAverage; i++) {
+            stars += '<small> <i class="fas fa-star"></i></small>';
+        }
+
+        if (scoreDecimal > 0) {
+            if (scoreDecimal <= 0.25) {
+                stars += '<small> <i class="far fa-star"></i></small>';
+            } else if (scoreDecimal <= 0.75) {
+                stars += '<small> <i class="fas fa-star-half-alt"></i></small>';
+            } else {
+                stars += '<small> <i class="fas fa-star"></i></small>';
+            }
+        }
+
+        for (let i = 5 - Math.ceil([[${book.scoreAverage}]]); i > 0; i--) {
+            stars += '<small> <i class="far fa-star"></i></small>';
+        }
+
+        starRatingElement.innerHTML = stars;
+    }
+
+
+    let page = [[${reviewPage.currentPage}]];
+    // 리뷰 더보기
+    document.getElementById('loadMoreButton').addEventListener('click', function () {
+        let bookId = [[${book.bookId}]];
+        page += 1;
+
+        fetch('/reviews/book/' + bookId + '?page=' + page)
+            .then(response => response.json())
+            .then(reviewPage => {
+                let reviewList = reviewPage.data;
+                if (reviewList.length < 5) {
+                    document.getElementById("loadMoreButton").remove();
+                }
+
+                reviewList.forEach(review => {
+
+                    // 새로운 'media' div 요소를 생성합니다.
+                    var reviewDiv = document.createElement('div');
+                    reviewDiv.className = 'media mb-4';
+
+                    // 이미지가 있는 경우, img 요소를 생성합니다.
+                    if (review.imageUrl != null) {
+                        var img = document.createElement('img');
+                        img.src = review.imageUrl;
+                        img.alt = 'Image';
+                        img.className = 'img-fluid mr-3 mt-1';
+                        img.style.width = '45px';
+                        reviewDiv.appendChild(img);
+                    }
+
+                    // 'media-body' div 요소를 생성합니다.
+                    var reviewBodyDiv = document.createElement('div');
+                    reviewBodyDiv.className = 'media-body';
+
+                    // 리뷰 작성자와 작성 시간을 표시하는 h6 요소를 생성합니다.
+                    var h6 = document.createElement('h6');
+                    var span = document.createElement('span');
+                    var small = document.createElement('small')
+                    let date = review.createdAt.slice(0, 3).join('-');
+                    let time = review.createdAt.slice(3).join(':');
+                    let formattedDate = date + ' ' + time;
+                    span.textContent = review.nickname + ' - ';
+                    small.textContent = formattedDate;
+
+                    h6.appendChild(span);
+                    h6.appendChild(small);
+
+                    reviewBodyDiv.appendChild(h6);
+
+                    // 별점을 표시하는 div 요소를 생성합니다.
+
+                    var starsDiv = document.createElement('div');
+                    starsDiv.className = 'text-primary mb-2';
+                    for (var i = 0; i < review.score; i++) {
+                        var starSpan = document.createElement('span');
+                        var star = document.createElement('i');
+                        star.className = 'fas fa-star';
+                        starSpan.style.marginRight = '5px'
+                        starSpan.appendChild(star);
+                        starsDiv.appendChild(starSpan);
+                    }
+                    for (var i = review.score; i < 5; i++) {
+                        var starSpan = document.createElement('span');
+                        var star = document.createElement('i');
+                        star.className = 'far fa-star';
+                        starSpan.style.marginRight = '5px'
+                        starSpan.appendChild(star);
+                        starsDiv.appendChild(starSpan);
+                    }
+                    reviewBodyDiv.appendChild(starsDiv);
+
+                    // 리뷰 내용을 표시하는 p 요소를 생성합니다.
+                    var p = document.createElement('p');
+                    p.textContent = review.content;
+                    reviewBodyDiv.appendChild(p);
+
+                    // 'media' div 요소에 'media-body' div 요소를 추가합니다.
+                    reviewDiv.appendChild(reviewBodyDiv);
+
+                    // 리뷰 목록에 새로운 'media' div 요소를 추가합니다.
+                    document.getElementById('reviews').appendChild(reviewDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message)
+            });
+    });
+
+
+    // 회원쪽 기능
+    // 별점 클릭 이벤트
+
+        let score = document.querySelector('#postScore').value = 5;
+        let modifyScore = document.querySelector('#modifyScore').value = 5;
+
+        function init() {
+            let stars = document.querySelectorAll('[id^="starScore"]');
+            stars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    score = index;  // 별의 개수를 업데이트합니다.
+                    modifyScore = index;
+                    document.querySelector('#postScore').value = index + 1;
+                    document.querySelector('#modifyScore').value = index + 1;
+                    // 모든 별을 far 클래스로 초기화합니다.
+                    stars.forEach((star) => star.className = 'far fa-star');
+
+                    for (let i = 0; i < score + 1; i++) {
+                        stars[i].className = "fas fa-star";
+                    }
+
+                });
+            });
+        }
+
+        init();
+
+        // 비회원 리뷰 생성 막기, 리뷰 하나만 작성
+        document.querySelector('#checkReview').addEventListener('click', function (event) {
+
+            let memberId = [[${memberId}]];
+
+            //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
+            if (memberId === undefined) {
+                alert('리뷰는 회원만 작성할 수 있습니다');
+                event.preventDefault();
+                return
+            }
+            let bookId = [[${bookId}]];
+
+            fetch(`/reviews?memberId=${memberId}&bookId=${bookId}`, {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    //TODO: 나중에 주문한 횟수만큼만 리뷰 작성하도록
+                    if (data === false) {
+                        alert('리뷰는 하나만 작성할 수 있습니다.')
+                        event.preventDefault();
+
+                    } else {
+                        document.querySelector('#postReviewForm').submit();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+        })
+
+        // 리뷰 등록 수정 //
+        document.querySelector('#postReviewForm').style.display = 'block';
+        document.querySelector('#modifyReviewForm').style.display = 'none';
+
+        // 리뷰 수정 버튼
+        document.querySelectorAll('#modifyButton').forEach(function (button) {
+            button.addEventListener('click', function () {
+
+                let reviewId = this.dataset.reviewid
+                let reviewContent = this.dataset.reviewcontent
+
+                document.querySelector('#postReviewForm').style.display = 'none';
+                document.querySelector('#modifyReviewForm').style.display = 'block';
+
+                document.getElementById('reviewTitle').textContent = '리뷰수정';
+                document.getElementById('modifyContent').textContent = reviewContent;
+
+                document.querySelector('#modifyReview').addEventListener('click', function () {
+                    let input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', 'reviewId');
+                    input.setAttribute('value', reviewId);
+                    document.querySelector('#modifyReviewForm').appendChild(input);
+                    document.querySelector('#modifyReviewForm').submit();
+                    alert('리뷰가 수정되었습니다.');
+
+                })
+
+                // 취소 버튼
+                document.querySelector('#cancelButton').addEventListener('click', function () {
+
+                    document.querySelector('#postReviewForm').style.display = 'block';
+                    document.querySelector('#modifyReviewForm').style.display = 'none';
+                    document.getElementById('reviewTitle').textContent = '리뷰작성';
+                })
+            });
+        });
+
+</script>
+

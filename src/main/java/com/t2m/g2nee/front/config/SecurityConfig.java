@@ -48,8 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/signup").permitAll()
-                .antMatchers("/mypage/**").hasAuthority("ROLE_USER")
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .csrf()
@@ -58,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .logout()
                 .disable();
+
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -1,11 +1,26 @@
 package com.t2m.g2nee.front.advice;
 
+import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
+import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
+
 import com.t2m.g2nee.front.exception.CustomException;
+import com.t2m.g2nee.front.member.service.MemberService;
+import com.t2m.g2nee.front.token.util.JwtUtil;
+import com.t2m.g2nee.front.utils.CookieUtil;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -18,6 +33,11 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class CustomExceptionAdvice {
     public static String REQUIRE_LOGIN_MESSAGE = "로그인이 필요합니다.";
+    private final RedisTemplate redisTemplate;
+
+    public CustomExceptionAdvice(RedisTemplate redisTemplate) {
+        this.redisTemplate = new RedisTemplate();
+    }
 
     /**
      * e에는 백엔드 shop서버에서 받아오는 에러 코드, 메시지를 가지고 있고
@@ -72,5 +92,24 @@ public class CustomExceptionAdvice {
         model.addAttribute("error", new CustomException(HttpStatus.FORBIDDEN, "페이지에 대한 권한이 없습니다."));
         return "/error/errorPage";
 
+    }
+
+    /**
+     * 토큰이 유효하지 않을 때 재 로그인을 요청합니다.
+     *
+     * @param model
+     * @return
+     */
+    @ExceptionHandler(HttpClientErrorException.class)
+    public String invalidToken(Model model) {
+        model.addAttribute("tokenError", "로그인 유효시간이 지났습니다. 재로그인 해주세요.");
+        ServletRequestAttributes servletRequestAttributes =
+                (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpServletResponse response = servletRequestAttributes.getResponse();
+        deleteCookie(response, JwtUtil.ACCESS_COOKIE);
+        Cookie sessionCookie = CookieUtil.findCookie(SESSION_ID);
+//        redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());
+//        deleteCookie(response, SESSION_ID);
+        return "redirect:/login";
     }
 }

@@ -20,11 +20,8 @@
             <img src="/static/img/errorImage.png" width="200" height="300"/>
             <div style="margin-left: 20px">
                 <h3>
-                    <span th:text="${error.httpStatus}"/> <br>
+                    페이지를 찾을 수 없습니다. 다시한번 시도해 주세요.
                 </h3>
-                <p>
-                    <span th:text="${error.message}"/> <br><br>
-                </p>
                 <a style="color:red" href="javascript:history.back();">이전 페이지로 돌아가기</a>
             </div>
 

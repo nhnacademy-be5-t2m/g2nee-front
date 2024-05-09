@@ -25,37 +25,33 @@ public class ReviewService {
 
     /**
      * 리뷰 작성 메서드
-     *
-     * @param image   이미지
+     * @param image 이미지
      * @param request 리뷰 정보 객체
      */
     public void postReview(MultipartFile image, ReviewDto.Request request) {
-        reviewAdaptor.postReview(image, request);
+       reviewAdaptor.postReview(image,request);
     }
 
     /**
      * 리뷰 수정 메서드
-     *
-     * @param image   이미지
      * @param request 리뷰 정보 객체
      */
-    public void updateReview(MultipartFile image, ReviewDto.Request request) {
-        reviewAdaptor.updateReview(image, request);
+    public void updateReview(ReviewDto.Request request) {
+        reviewAdaptor.updateReview(request);
     }
 
     /**
      * 리뷰 조회 메서드
-     *
      * @param bookId 책 아이디
      */
 
-    public PageResponse<ReviewDto.Response> getReviews(Long bookId) {
+    public PageResponse<ReviewDto.Response> getReviews(Long bookId, int page) {
 
-        return reviewAdaptor.getReviews(bookId);
+        return reviewAdaptor.getReviews(bookId, page);
     }
 
-    public ReviewDto.Response getReview(ReviewDto.Request request) {
+    public ReviewDto.Response getReview(Long memberId, Long bookId) {
 
-        return reviewAdaptor.getReview(request);
+        return reviewAdaptor.getReview(memberId, bookId);
     }
 }

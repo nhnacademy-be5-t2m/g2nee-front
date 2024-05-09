@@ -3,19 +3,16 @@ const url = '/likes';
 
 document.querySelectorAll('.btn.btn-sm.text-dark.p-0').forEach(button => {
     button.addEventListener('click', function (event) {
-        event.preventDefault();
-
 
         let memberId = this.dataset.memberid;
-        let bookId = this.dataset.bookid;
-        var icon = this.querySelector('i');
-        var text = this.querySelector('span');
-        var badge = document.querySelector('.badge')
-
         if (memberId === undefined) {
             alert('찜은 회원만 가능합니다');
-            return;
+            event.preventDefault();
+            return
         }
+        let bookId = this.dataset.bookid;
+        var icon = this.querySelector('i');
+        var badge = document.querySelector('.badge')
 
         fetch(url, {
             method: 'PUT',
@@ -37,12 +34,10 @@ document.querySelectorAll('.btn.btn-sm.text-dark.p-0').forEach(button => {
 
                 console.log(liked)
                 if (liked) {
-                    icon.className = 'fa-solid fa-heart';
-                    text.textContent = '찜 해제';
+                    icon.className = "fa-solid fa-heart text-primary";
                     likesNum++;
                 } else {
-                    icon.className = "fa-regular fa-heart";
-                    text.textContent = '찜 하기';
+                    icon.className = "fa-regular fa-heart text-primary";
                     likesNum--;
                 }
                 badge.textContent = likesNum;

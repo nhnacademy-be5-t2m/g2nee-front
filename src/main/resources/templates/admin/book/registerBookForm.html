@@ -3,7 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/adminLayout}" xmlns="http://www.w3.org/1999/html">
 <head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <title>도서 등록</title>
 </head>
 
@@ -11,7 +12,7 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-9 offset-md-2">
                 <h2>도서 등록</h2>
 
                 <form id="registerForm" th:action="@{/admin/books}" th:method="post" enctype="multipart/form-data">
@@ -28,15 +29,19 @@
                                required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="bookIndex" class="form-label">목차</label>
-                        <textarea id="bookIndex" name="bookIndex" class="form-control" required></textarea>
+                    <div>목차
+                    <div id="indexEditor">
                     </div>
+                        <textarea id="bookIndex" name="bookIndex" style="display: none"></textarea>
+                    </div>
+                    <br>
 
-                    <div class="form-group">
-                        <label for="description" class="form-label">설명</label>
-                        <textarea id="description" name="description" class="form-control" required></textarea>
+                    <div>책 소개
+                    <div id="descriptionEditor">
                     </div>
+                        <textarea id="description" name="description" style="display: none"></textarea>
+                    </div>
+                    <br>
 
                     <div class="form-group">
                         <label for="thumbnail" class="form-label">썸네일 이미지</label>
@@ -139,7 +144,7 @@
                         </button>
                     </div>
                     <br>
-                    <input class="btn btn-primary" type="submit" th:value="등록">
+                    <button id="registerButton" class="btn btn-primary" type="button">등록</button>
                 </form>
             </div>
         </div>
@@ -147,6 +152,41 @@
 </div>
 </body>
 </html>
+<script>
+
+</script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js">
+</script>
+<script>
+    const indexEditor = new toastui.Editor({
+        el: document.querySelector('#indexEditor'),
+        height: '350px',
+        width : '500px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical'
+    });
+
+
+    const descriptionEditor = new toastui.Editor({
+        el: document.querySelector('#descriptionEditor'),
+        height: '350px',
+        width : '500px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical'
+    });
+
+
+    document.querySelector('#registerButton').addEventListener('click',function () {
+        const indexMarkdown = indexEditor.getMarkdown();
+        const descriptionMarkdown = descriptionEditor.getMarkdown();
+
+        document.getElementById('bookIndex').value = indexMarkdown;
+        document.getElementById('description').value = descriptionMarkdown;
+
+        document.querySelector('#registerForm').submit();
+
+    });
+</script>
 <script th:inline="javascript">
 
     function addSelection(select, addSelection) {

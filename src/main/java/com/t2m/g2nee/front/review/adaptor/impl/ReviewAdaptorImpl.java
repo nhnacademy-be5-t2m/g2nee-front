@@ -37,7 +37,9 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("request", request);
-        body.add("image", image.getResource());
+        if (image != null) {
+            body.add("image", image.getResource());
+        }
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
@@ -57,37 +59,33 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
      * @param request 리뷰 정보 객체
      */
     @Override
-    public void updateReview(MultipartFile image, ReviewDto.Request request) {
+    public void updateReview(ReviewDto.Request request) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("request", request);
-        body.add("image", image.getResource());
-
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        String url = gatewayUrl + "/reviews/" + request.getReviewId();
+        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        String url = gatewayUrl + "/reviews";
 
         restTemplate.exchange(
                 url,
                 HttpMethod.PATCH,
                 requestEntity,
-                String.class
-        );
+                String.class);
     }
 
     @Override
-    public ReviewDto.Response getReview(ReviewDto.Request request) {
+    public ReviewDto.Response getReview(Long memberId, Long bookId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 
-        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, headers);
-        String url = gatewayUrl + "/reviews/" + request.getReviewId();
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String url = gatewayUrl + "/reviews?memberId=" + memberId + "&bookId=" + bookId;
 
         return restTemplate.exchange(
                 url,
-                HttpMethod.PATCH,
+                HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<ReviewDto.Response>() {
                 }
@@ -95,14 +93,14 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
     }
 
     @Override
-    public PageResponse<ReviewDto.Response> getReviews(Long bookId) {
+    public PageResponse<ReviewDto.Response> getReviews(Long bookId, int page) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/reviews/book/" + bookId;
+        String url = gatewayUrl + "/reviews/book/" + bookId + "?page=" + page;
 
         return restTemplate.exchange(
                 url,
