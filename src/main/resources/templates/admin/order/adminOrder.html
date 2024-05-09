@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <title>전체 주문 목록</title>
@@ -11,6 +12,7 @@
 
     <h2 class="text-center">주문 목록</h2>
 
+    <!-- 주문번호로 검색 기능
     <br/><br/>
     <form th:action="@{/admin/orders/search}" th:method="GET"
           class="form-inline mb-3 d-flex justify-content-between">
@@ -18,7 +20,7 @@
         <input type="hidden" name="page" value="1">
         <input type="submit" class="btn btn-primary ms-3" value="검색">
     </form>
-
+    -->
     <br/><br/>
     <table class="table table-bordered table-hover">
         <thead>

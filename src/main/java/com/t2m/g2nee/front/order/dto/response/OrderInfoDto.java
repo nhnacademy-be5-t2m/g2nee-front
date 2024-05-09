@@ -28,7 +28,7 @@ public class OrderInfoDto {
         private Long customerId;
         private LocalDateTime orderDate;
         private List<OrderDetailDto.Response> orderDetailList;
-        private String orderState;
+        private OrderState orderState;
         private BigDecimal orderAmount;
         private String receiverName;
         private String receiverPhoneNumber;
@@ -37,5 +37,21 @@ public class OrderInfoDto {
         private String detailAddress;
         private String message;
         private String couponName;
+    }
+
+    @Getter
+    public enum OrderState{
+        WAITING("배송준비"), DELIVERING("배송중"), DELIVERED("배송완료"),
+        RETURNING("반품대기"), RETURNED("반품완료"), CANCEL("주문취소"),
+        PAYWAITING("결제대기"), ABORTED("결제실패");
+        private final String name;
+
+        OrderState(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

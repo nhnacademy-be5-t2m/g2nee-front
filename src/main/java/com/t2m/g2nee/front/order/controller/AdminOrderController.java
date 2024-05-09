@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.order.controller;
 
 import com.t2m.g2nee.front.member.service.MemberService;
+import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.utils.PageResponse;
