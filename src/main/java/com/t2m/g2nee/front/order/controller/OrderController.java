@@ -3,9 +3,7 @@ package com.t2m.g2nee.front.order.controller;
 
 
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
-import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
-import com.t2m.g2nee.front.utils.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 주문과 관련된 controller 입니다.
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
-    private final OrderGetService orderGetService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지

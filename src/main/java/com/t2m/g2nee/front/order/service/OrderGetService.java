@@ -46,7 +46,7 @@ public class OrderGetService {
     /**
      * 회원의 주문 목록 조회
      *
-     * @param page
+     * @param page 페이지
      * @param customerId
      * @return PageResponse<OrderInfoResponseDto
      */

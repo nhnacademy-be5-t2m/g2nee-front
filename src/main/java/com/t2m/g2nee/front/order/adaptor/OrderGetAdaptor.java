@@ -10,7 +10,7 @@ public interface OrderGetAdaptor {
     /**
      * 상세 주문 목록 조회
      *
-     * @param orderId
+     * @param orderId 주문Id
      * @return OrderDetailDto
      */
     List<OrderDetailDto.Response> getOrderDetailListByOrderId(Long orderId);
@@ -36,8 +36,8 @@ public interface OrderGetAdaptor {
     /**
      * 회원의 주문 목록 조회
      *
-     * @param page
-     * @param customerId
+     * @param page 페이지
+     * @param customerId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
     PageResponse<OrderInfoResponseDto> getOrderListForMembers(int page, Long customerId);

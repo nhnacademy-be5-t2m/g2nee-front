@@ -1,7 +1,5 @@
 package com.t2m.g2nee.front.order.controller;
 
-import com.t2m.g2nee.front.member.service.MemberService;
-import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class AdminOrderController {
     private final OrderGetService orderGetService;
-//    private final MemberService memberService;
 
     @GetMapping("/list")
     public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
