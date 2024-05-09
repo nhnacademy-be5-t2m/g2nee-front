@@ -21,7 +21,7 @@ public interface OrderGetAdaptor {
      * @param orderId  주문Id
      * @return OrderInfoResponseDto
      */
-    OrderInfoDto.ListResponse getOrderById(Long memberId, Long orderId);
+    OrderInfoDto.Response getOrderById(Long memberId, Long orderId);
 
     /**
      * 주문 정보 조회(주문 번호)

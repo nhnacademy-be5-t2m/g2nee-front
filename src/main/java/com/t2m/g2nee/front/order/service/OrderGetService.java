@@ -41,7 +41,7 @@ public class OrderGetService {
      * @param orderId 주문Id
      * @return OrderInfoDto.ListResponse
      */
-    public OrderInfoDto.ListResponse getOrderById(Long memberId, Long orderId){
+    public OrderInfoDto.Response getOrderById(Long memberId, Long orderId){
 
         return orderGetAdaptor.getOrderById(memberId, orderId);
     }
