@@ -31,7 +31,8 @@
             <td>
                 <input type="hidden" id="packageId" th:value="${package.getPackageId()}"/>
                 <input type="hidden" id="packagePrice" th:value="${package.getPrice()}"/>
-                <input type="radio" th:name="selectedPackage"  th:value="${package.getPackageId()}" th:checked="${package.name=='미포장'}" onclick="setPackageId(this)">
+                <input type="radio" th:name="selectedPackage" th:value="${package.getPackageId()}"
+                       th:checked="${package.name=='미포장'}" onclick="setPackageId(this)">
             </td>
             <span th:if="${package.name == '미포장'}">
                 <td></td>
@@ -45,7 +46,7 @@
 
             <span th:if="${package.name != '미포장'}">
                 <td>
-                    <img  height="100" width="100" th:src="${package.url}" alt="포장지 사진">
+                    <img height="100" width="100" th:src="${package.url}" alt="포장지 사진">
                 </td>
 
                 <td>

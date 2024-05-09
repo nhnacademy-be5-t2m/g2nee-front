@@ -8,7 +8,8 @@
     padding-top: 10px;
     padding-bottom: 10px
 }
-.order-word{
+
+.order-word {
     margin-left: 10px;
     align-content: center;
 }
@@ -19,7 +20,8 @@
     margin-top: 10px;
     margin-bottom: 10px
 }
-.order-text{
+
+.order-text {
     height: 30px;
     margin-left: 10px;
 }
@@ -28,7 +30,8 @@
     margin-left: 10px;
     height: 30px;
 }
-.order-postButton{
+
+.order-postButton {
     height: 30px;
 }
 

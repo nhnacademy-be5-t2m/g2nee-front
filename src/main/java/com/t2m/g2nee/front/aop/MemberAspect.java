@@ -25,7 +25,7 @@ public class MemberAspect {
 
     public static final String MEMBER_INFO_KEY = "SPRING_SECURITY_CONTEXT";
     public final RedisTemplate redisTemplate;
-    private final ThreadLocal<Map<String,Object>> threadLocal = new ThreadLocal<>();
+    private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
     public static final String MEMBER_INFO = "memberInfo";
     public static final String LIKE_NUM = "likeNum";
 
@@ -57,13 +57,14 @@ public class MemberAspect {
     public void addMemberInfo(String sessionId) {
         MemberDetailInfoResponseDto memberInfo =
                 (MemberDetailInfoResponseDto) redisTemplate.opsForHash().get(MEMBER_INFO_KEY, sessionId);
-        if(threadLocal.get()==null){
+        if (threadLocal.get() == null) {
             threadLocal.set(new HashMap<>());
         }
-        threadLocal.get().put(MEMBER_INFO,memberInfo);
+        threadLocal.get().put(MEMBER_INFO, memberInfo);
     }
+
     public Object getThreadLocal(String key) {
-        if(this.threadLocal.get()==null){
+        if (this.threadLocal.get() == null) {
             return null;
         }
         return this.threadLocal.get().get(key);

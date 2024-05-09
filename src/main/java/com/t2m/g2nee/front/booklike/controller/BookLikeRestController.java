@@ -35,7 +35,7 @@ public class BookLikeRestController {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         request.setMemberId(memberId);

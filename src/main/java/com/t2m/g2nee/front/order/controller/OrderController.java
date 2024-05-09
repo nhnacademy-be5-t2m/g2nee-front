@@ -76,43 +76,43 @@ public class OrderController {
     /**
      * 바로구매시 bookID, 구매수량과 함께 주문페이지를 띄워주는 메소드
      *
-     * @param bookId 구매할 책의 id
+     * @param bookId    구매할 책의 id
      * @param bookCount 구매할 책의 수량
-     * @param model 주문 form 에 필요한 dto 객체를 저장할 model
+     * @param model     주문 form 에 필요한 dto 객체를 저장할 model
      * @return 주문페이지를 보여준다.
      */
     @GetMapping("/buyNow")
     @Member
-    public String buyNowOrderForm(@RequestParam("bookId") Long bookId,@RequestParam("bookCount") int bookCount, Model model){
-        model.addAttribute("ordererInfo",new OrdererInfoDto());
-        model.addAttribute("addressInfo",new AddressInfoDto());
+    public String buyNowOrderForm(@RequestParam("bookId") Long bookId, @RequestParam("bookCount") int bookCount,
+                                  Model model) {
+        model.addAttribute("ordererInfo", new OrdererInfoDto());
+        model.addAttribute("addressInfo", new AddressInfoDto());
         BigDecimal rewardRate = BigDecimal.valueOf(0);
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         //회원주문인지 비회원주문인지 확인
         //회원이라면 그 회원의 적립률을 저장한다.
-        if(member!=null){
+        if (member != null) {
             Long memberId = null;
-            if(member!=null){
+            if (member != null) {
                 memberId = member.getMemberId();
             }
-            model.addAttribute("memberId",memberId);
+            model.addAttribute("memberId", memberId);
             PointPolicyInfoDto pointPolicyInfoDto = pointPolicyService.getPointPolicyByPolicyName(member.getGrade());
-            rewardRate=new BigDecimal(pointPolicyInfoDto.getAmount());
+            rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount());
 
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
-            model.addAttribute("totalPoint",totalPoint==null?0:totalPoint);
+            model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
-        model.addAttribute("freeDeliveryStandard",deliveryInfo.getFreeDeliveryStandard());
-        model.addAttribute("deliveryFeePolicy",deliveryInfo.getDeliveryFee());
-
+        model.addAttribute("freeDeliveryStandard", deliveryInfo.getFreeDeliveryStandard());
+        model.addAttribute("deliveryFeePolicy", deliveryInfo.getDeliveryFee());
 
 
         //주문할 책의 정보
-        ArrayList<BookOrderDto> orderList= new ArrayList<>();
+        ArrayList<BookOrderDto> orderList = new ArrayList<>();
         BookDto.Response book = bookGetService.getBook(null, bookId);
         BookOrderDto bookOrderDto = new BookOrderDto(
                 book.getBookId(),
@@ -121,27 +121,28 @@ public class OrderController {
                 1L,
                 0,
                 rewardRate,
-                BigDecimal.valueOf(book.getSalePrice()).multiply(rewardRate).multiply(BigDecimal.valueOf(bookCount)).intValue(),
-                book.getPrice()*bookCount,
-                (book.getPrice()-book.getSalePrice())*bookCount,
+                BigDecimal.valueOf(book.getSalePrice()).multiply(rewardRate).multiply(BigDecimal.valueOf(bookCount))
+                        .intValue(),
+                book.getPrice() * bookCount,
+                (book.getPrice() - book.getSalePrice()) * bookCount,
                 0,
-                book.getSalePrice()*bookCount
+                book.getSalePrice() * bookCount
         );
         orderList.add(bookOrderDto);
-        model.addAttribute("finalTotalOriginPrice",bookOrderDto.getOriginPrice());
-        model.addAttribute("totalBookSale",bookOrderDto.getBookSale());
-        model.addAttribute("totalPointSale",0);
-        model.addAttribute("totalCouponSale",bookOrderDto.getCouponSale());
-        model.addAttribute("orderList",orderList);
-        model.addAttribute("totalPackagePrice",0);
+        model.addAttribute("finalTotalOriginPrice", bookOrderDto.getOriginPrice());
+        model.addAttribute("totalBookSale", bookOrderDto.getBookSale());
+        model.addAttribute("totalPointSale", 0);
+        model.addAttribute("totalCouponSale", bookOrderDto.getCouponSale());
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("totalPackagePrice", 0);
         int deliveryFee;
-        if(bookOrderDto.getFinalPrice()>deliveryInfo.getFreeDeliveryStandard()){
+        if (bookOrderDto.getFinalPrice() >= deliveryInfo.getFreeDeliveryStandard()) {
             deliveryFee = 0;
-        }else{
-            deliveryFee=deliveryInfo.getDeliveryFee();
+        } else {
+            deliveryFee = deliveryInfo.getDeliveryFee();
         }
-        model.addAttribute("deliveryFee",deliveryFee);
-        model.addAttribute("finalTotalSalePrice",bookOrderDto.getFinalPrice()+deliveryFee);
+        model.addAttribute("deliveryFee", deliveryFee);
+        model.addAttribute("finalTotalSalePrice", bookOrderDto.getFinalPrice() + deliveryFee);
         return "order/orderForm";
     }
 
@@ -152,7 +153,8 @@ public class OrderController {
      * @return 포장지 선택 페이지
      */
     @GetMapping("/selectPackage/{id}")
-    public String selectPackage(@RequestParam(defaultValue = "1") int page, @PathVariable("id") String id, Model model) {
+    public String selectPackage(@RequestParam(defaultValue = "1") int page, @PathVariable("id") String id,
+                                Model model) {
         model.addAttribute("packages", packageTypeService.getActivatedPackage(page));
         model.addAttribute("id", id);
         return "order/selectPackagePage";

@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/adminLayout}" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <title>도서 수정</title>
 </head>
 
@@ -15,7 +15,8 @@
             <div class="col-md-9 offset-md-2">
                 <h2>도서 수정</h2>
 
-                <form id="updateForm" th:action="@{'/admin/books/' + ${book.bookId} + '?page=' +${page}}" th:method="patch"
+                <form id="updateForm" th:action="@{'/admin/books/' + ${book.bookId} + '?page=' +${page}}"
+                      th:method="patch"
                       enctype="multipart/form-data">
 
                     <p>이미지, 출판사, 기여자, 역할, 태그는 수정할 사항이 없으면 그대로 두시면 됩니다.</p>
@@ -170,14 +171,14 @@
     const indexEditor = new toastui.Editor({
         el: document.querySelector('#indexEditor'),
         height: '350px',
-        width : '500px',
+        width: '500px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical'
     });
     const descriptionEditor = new toastui.Editor({
         el: document.querySelector('#descriptionEditor'),
         height: '350px',
-        width : '500px',
+        width: '500px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical'
     });
@@ -189,7 +190,7 @@
     descriptionEditor.setMarkdown(description);
 
 
-    document.querySelector('#updateButton').addEventListener('click',function () {
+    document.querySelector('#updateButton').addEventListener('click', function () {
         const indexMarkdown = indexEditor.getMarkdown();
         const descriptionMarkdown = descriptionEditor.getMarkdown();
 

@@ -1,7 +1,6 @@
 package com.t2m.g2nee.front.mypage.address.controller;
 
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
-import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO_KEY;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
@@ -45,7 +44,7 @@ public class AddressRestController {
     public ResponseEntity<Void> saveAddress(@RequestBody AddressRequestDto addressRequestDto) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         addressRequestDto.setMemberId(memberId);

@@ -1,7 +1,6 @@
 package com.t2m.g2nee.front.bookset.book.controller;
 
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
-import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO_KEY;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
@@ -53,7 +52,7 @@ public class BookController {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         System.out.println(httpServletResponse);
@@ -89,7 +88,7 @@ public class BookController {
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
@@ -121,7 +120,7 @@ public class BookController {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
@@ -160,7 +159,7 @@ public class BookController {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
@@ -201,7 +200,7 @@ public class BookController {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
-        if(member!=null){
+        if (member != null) {
             memberId = member.getMemberId();
         }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);

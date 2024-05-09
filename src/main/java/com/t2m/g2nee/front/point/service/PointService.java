@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,9 +29,9 @@ public class PointService {
      * @param memberId 포인트 정보를 불러올 memberId
      * @return member의 포인트 합계
      */
-    public Integer getTotalPoint(Long memberId){
+    public Integer getTotalPoint(Long memberId) {
         return restTemplate.exchange(
-                gatewayToShopUrl + "/point/totalAmount/"+memberId,
+                gatewayToShopUrl + "/point/totalAmount/" + memberId,
                 HttpMethod.GET,
                 new HttpEntity<>(makeHttpHeaders()),
                 Integer.class

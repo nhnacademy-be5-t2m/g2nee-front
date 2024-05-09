@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/adminLayout}" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <title>도서 등록</title>
 </head>
 
@@ -30,15 +30,15 @@
                     </div>
 
                     <div>목차
-                    <div id="indexEditor">
-                    </div>
+                        <div id="indexEditor">
+                        </div>
                         <textarea id="bookIndex" name="bookIndex" style="display: none"></textarea>
                     </div>
                     <br>
 
                     <div>책 소개
-                    <div id="descriptionEditor">
-                    </div>
+                        <div id="descriptionEditor">
+                        </div>
                         <textarea id="description" name="description" style="display: none"></textarea>
                     </div>
                     <br>
@@ -161,7 +161,7 @@
     const indexEditor = new toastui.Editor({
         el: document.querySelector('#indexEditor'),
         height: '350px',
-        width : '500px',
+        width: '500px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical'
     });
@@ -170,13 +170,13 @@
     const descriptionEditor = new toastui.Editor({
         el: document.querySelector('#descriptionEditor'),
         height: '350px',
-        width : '500px',
+        width: '500px',
         initialEditType: 'wysiwyg',
         previewStyle: 'vertical'
     });
 
 
-    document.querySelector('#registerButton').addEventListener('click',function () {
+    document.querySelector('#registerButton').addEventListener('click', function () {
         const indexMarkdown = indexEditor.getMarkdown();
         const descriptionMarkdown = descriptionEditor.getMarkdown();
 

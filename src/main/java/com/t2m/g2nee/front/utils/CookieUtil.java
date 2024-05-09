@@ -2,7 +2,6 @@ package com.t2m.g2nee.front.utils;
 
 import java.util.Arrays;
 import java.util.Objects;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

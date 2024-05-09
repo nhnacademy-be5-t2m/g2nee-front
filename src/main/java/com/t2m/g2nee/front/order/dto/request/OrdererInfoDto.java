@@ -4,14 +4,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrdererInfoDto {
-    @NotEmpty(message="이름을 작성하여 주십시오.")
+    @NotEmpty(message = "이름을 작성하여 주십시오.")
     private String name;
     @Pattern(regexp = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "올바른 email 형식으로 작성하여 주십시오.")
     private String email;

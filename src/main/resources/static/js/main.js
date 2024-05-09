@@ -88,7 +88,7 @@
     // Product Quantity
     $('.quantity button').on('click', function () {
         let button = $(this);
-        let oldValue=document.querySelector('#bookCount').value;
+        let oldValue = document.querySelector('#bookCount').value;
         let newVal = parseFloat(oldValue);
         if (button.hasClass('btn-plus')) {
             newVal++;
@@ -99,7 +99,7 @@
                 newVal = 0;
             }
         }
-        document.querySelector('#bookCount').value=newVal;
+        document.querySelector('#bookCount').value = newVal;
     });
 
 })(jQuery);

@@ -93,9 +93,9 @@ public class BookMgmtService {
         return bookMgmtAdaptor.getAllBookList(page);
     }
 
-    public PageResponse<BookDto.ListResponse> getBookListByKeyword(String keyword, int page){
+    public PageResponse<BookDto.ListResponse> getBookListByKeyword(String keyword, int page) {
 
-        return bookMgmtAdaptor.getBookListByKeyword(keyword,page);
+        return bookMgmtAdaptor.getBookListByKeyword(keyword, page);
     }
 
 }

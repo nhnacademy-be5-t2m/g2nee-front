@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class    PointPolicyInfoDto {
+public class PointPolicyInfoDto {
     /**
      * 포인트 정책 id
      */
