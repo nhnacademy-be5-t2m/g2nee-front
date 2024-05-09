@@ -1,20 +1,19 @@
 package com.t2m.g2nee.front.mypage.address.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.mypage.address.dto.request.AddressRequestDto;
 import com.t2m.g2nee.front.mypage.address.dto.response.AddressResponseDto;
 import com.t2m.g2nee.front.mypage.address.service.MyPageService;
-import groovyjarjarpicocli.CommandLine;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -33,7 +32,11 @@ public class AddressController {
     @Member
     @GetMapping
     public String myPageAddress(Model model) {
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         List<AddressResponseDto> addressList = mypageService.getAddressListByMemberId(memberId);
         model.addAttribute("addressList", addressList);
         return "mypage/addressPage";

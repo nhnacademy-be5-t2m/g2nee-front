@@ -15,7 +15,7 @@ let inputEmailDomain = document.querySelector('#emailDomain');
 let inputDate = document.querySelector('#date');
 
 function setEmailDomain() {
-    let selectElement = document.querySelector('.select.text');
+    let selectElement = document.querySelector('#selectEmail');
     let selectedOption = selectElement.options[selectElement.selectedIndex].value;
     document.getElementById('emailDomain').value = selectedOption;
 }

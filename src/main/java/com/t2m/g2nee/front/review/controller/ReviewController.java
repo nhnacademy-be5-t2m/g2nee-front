@@ -28,7 +28,7 @@ public class ReviewController {
     public String postReview(@RequestPart(required = false) MultipartFile image,
                              @ModelAttribute ReviewDto.Request request) {
 
-        reviewService.postReview(image,request);
+        reviewService.postReview(image, request);
         return "redirect:/books/" + request.getBookId();
     }
 

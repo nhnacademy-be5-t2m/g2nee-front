@@ -44,7 +44,7 @@
                 <div class="mb-3">
                     <i class="fa-solid fa-user"></i>
                     <span th:each="contributorRole, index : ${book.contributorRoleList}"
-                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
                 </div>
                 <div class="mb-3">
@@ -53,7 +53,7 @@
                 </div>
                 <div>
                     <i class="fa-solid fa-tag"></i>
-                            <span th:each="tag : ${book.tagList}">
+                    <span th:each="tag : ${book.tagList}">
                                 <span th:text="${tag.tagName}"></span>
                             </span>
                 </div>
@@ -99,7 +99,7 @@
                     <div class="tab-pane fade show active" id="tab-pane-1">
                         <h4 class="mb-3">
                             <i class="fa-solid fa-book"></i>
-                        <span>도서 정보</span>
+                            <span>도서 정보</span>
                         </h4>
                         <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
                         <p th:text="'ISBN : ' + ${book.isbn}"></p>

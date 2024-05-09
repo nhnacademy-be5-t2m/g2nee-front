@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <!-- 다른 페이지에 포함시킬 영역을 th:fragment로 선언해준다.-->
 <div th:fragment="categoryNav">
     <div class="container-fluid">
@@ -56,7 +55,7 @@
             <a href="/admin/contributors/list" class="nav-item nav-link">기여자 관리</a>
             <a href="/admin/roles/list" class="nav-item nav-link">역할 관리</a>
             <a href="/admin/categories" class="nav-item nav-link">카테고리 관리</a>
-            <a href="/admin/packages/list" class="nav-item nav-link">포장지 관리</a>
+            <a href="/admin/packages" class="nav-item nav-link">포장지 관리</a>
         </form>
     </div>
     <div class="border-bottom mb-4 pb-4">
@@ -69,9 +68,9 @@
     <div class="border-bottom mb-4 pb-4">
         <h5 class="font-weight-semi-bold mb-4">정책 관리</h5>
         <form>
-            <a href="/admin/pointPolicies/list" class="nav-item nav-link">포인트 관리</a>
+            <a href="/admin/pointPolicies" class="nav-item nav-link">포인트 관리</a>
             <a href="#" class="nav-item nav-link">쿠폰 관리</a>
-            <a href="/admin/deliveryPolicies/list" class="nav-item nav-link">배송비 관리</a>
+            <a href="/admin/deliveryPolicies" class="nav-item nav-link">배송비 관리</a>
         </form>
     </div>
 

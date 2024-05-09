@@ -1,11 +1,9 @@
 package com.t2m.g2nee.front.interceptor;
 
-import static com.t2m.g2nee.front.advice.CustomExceptionAdvice.REQUIRE_LOGIN_MESSAGE;
 import static com.t2m.g2nee.front.token.util.JwtUtil.ACCESS_COOKIE;
 import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.token.util.JwtUtil.getExpireTime;
 
-import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

@@ -15,7 +15,14 @@
 
     <form id="packageForm"
           th:action="${package != null ? '/admin/packages/modify/' + package.packageId : '/admin/packages/save'}"
-          th:method="${package != null ? 'PUT' : 'POST'}">
+          th:method="${package != null ? 'PUT' : 'POST'}" enctype="multipart/form-data">
+
+        <div class="mb-3">
+            <label for="image" class="form-label">포장지 이미지 첨부</label>
+            <input type="file" id="image" name="image"
+                   class="form-control-file" accept="image/*" th:required="${#strings.isEmpty(package?.url)}">
+        </div>
+
         <div class="mb-3">
             <label for="name" class="form-label">포장지 명: </label>
             <input type="text" class="form-control" name="name" id="name"

@@ -2,19 +2,10 @@ package com.t2m.g2nee.front.bookset.contributor.service;
 
 import com.t2m.g2nee.front.bookset.contributor.adaptor.ContributorAdaptor;
 import com.t2m.g2nee.front.bookset.contributor.dto.ContributorDto;
-import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 
 /**

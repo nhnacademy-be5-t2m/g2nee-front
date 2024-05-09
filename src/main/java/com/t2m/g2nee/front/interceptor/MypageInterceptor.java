@@ -3,7 +3,6 @@ package com.t2m.g2nee.front.interceptor;
 import static com.t2m.g2nee.front.token.util.JwtUtil.ACCESS_COOKIE;
 
 import com.t2m.g2nee.front.utils.CookieUtil;
-import java.io.IOException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
