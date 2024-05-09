@@ -107,7 +107,7 @@ public class BookAdminController {
      */
     @GetMapping("/search")
     public String getBookListByKeyword(Model model, @RequestParam(defaultValue = "") String keyword,
-                                   @RequestParam(required = false, defaultValue = "1") int page) {
+                                       @RequestParam(required = false, defaultValue = "1") int page) {
 
 
         PageResponse<BookDto.ListResponse> bookPage = bookMgmtService.getBookListByKeyword(keyword, page);

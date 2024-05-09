@@ -527,7 +527,19 @@ mark,
 
 .img-fluid {
     max-width: 100%;
-    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.image-wrapper {
+    overflow: hidden; /* 이미지를 넘치지 않도록 설정 */
+}
+
+.image-wrapper img {
+    width: 100%; /* 이미지의 너비를 부모 요소에 맞게 설정 */
+    height: 100%; /* 이미지의 높이를 부모 요소에 맞게 설정 */
+    object-fit: contain; /* 이미지를 부모 요소의 크기에 맞게 조정 */
+    background-position: center center;
 }
 
 .img-thumbnail {
@@ -4656,6 +4668,7 @@ input[type="button"].btn-block {
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    height: 45vh;
 }
 
 .card-footer {
@@ -10241,6 +10254,7 @@ a.text-dark:hover, a.text-dark:focus {
     .table th {
         background-color: #fff !important;
     }
+
 
     .table-bordered th,
     .table-bordered td {

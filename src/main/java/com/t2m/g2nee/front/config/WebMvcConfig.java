@@ -1,8 +1,8 @@
 package com.t2m.g2nee.front.config;
 
+import com.t2m.g2nee.front.interceptor.AuthorityCheckInterceptor;
 import com.t2m.g2nee.front.interceptor.CategoryInterceptor;
 import com.t2m.g2nee.front.interceptor.MypageInterceptor;
-import com.t2m.g2nee.front.interceptor.AuthorityCheckInterceptor;
 import com.t2m.g2nee.front.interceptor.TokenExpireCheckInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

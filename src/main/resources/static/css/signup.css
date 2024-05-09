@@ -9,6 +9,11 @@
     padding-bottom: 10px
 }
 
+.order-word {
+    margin-left: 10px;
+    align-content: center;
+}
+
 .text {
     height: 30px;
     margin-left: 10px;
@@ -16,9 +21,18 @@
     margin-bottom: 10px
 }
 
+.order-text {
+    height: 30px;
+    margin-left: 10px;
+}
+
 .postButton {
-    height: 33px;
-    margin: 10px;
+    margin-left: 10px;
+    height: 30px;
+}
+
+.order-postButton {
+    height: 30px;
 }
 
 .form_btn {

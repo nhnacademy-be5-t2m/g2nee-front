@@ -46,4 +46,10 @@ public class PointPolicyServiceImpl implements PointPolicyService {
     public PageResponse<PointPolicyInfoDto> getAllPointPolicies(int page) {
         return adaptor.getAllPointPolicies(page);
     }
+
+    @Override
+    public PointPolicyInfoDto getPointPolicyByPolicyName(String policyName) {
+        return adaptor.getPointPolicyByPolicyName(policyName);
+    }
+
 }

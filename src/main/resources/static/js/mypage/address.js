@@ -98,8 +98,8 @@ function saveAddressButton() {
             icon: 'warning',
             title: '배송지 입력 오류',
             text: '우편번호찾기를 통해 주소를 입력해주십시오.'
-        })
-        return false;
+        });
+        return;
     } else {
         saveAddress()
             .then(() => {
@@ -107,6 +107,7 @@ function saveAddressButton() {
                 window.close(); // 팝업 창 닫기
             });
     }
+    return true;
 }
 
 
