@@ -49,9 +49,5 @@ public class OrderInfoDto {
         OrderState(String name) {
             this.name = name;
         }
-
-        public String getName() {
-            return name;
-        }
     }
 }

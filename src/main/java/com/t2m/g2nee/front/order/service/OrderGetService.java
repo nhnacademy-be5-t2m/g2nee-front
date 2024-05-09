@@ -15,10 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @since: 1.0
  */
 @Service
-@Transactional(readOnly = true)
-@RequiredArgsConstructor
+@Transactional
 public class OrderGetService {
     private final OrderGetAdaptor orderGetAdaptor;
+
+    public OrderGetService(OrderGetAdaptor orderGetAdaptor){
+        this.orderGetAdaptor = orderGetAdaptor;
+    }
 
     /**
      * 주문 정보 조회(주문Id)

@@ -19,8 +19,8 @@ public class AdminOrderController {
 
     @GetMapping("/list")
     public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
-        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
-        model.addAttribute("orderPage", orderPage);
+//        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
+//        model.addAttribute("orderPage", orderPage);
 
         return "admin/order/adminOrder";
     }

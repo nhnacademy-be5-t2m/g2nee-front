@@ -5,6 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
+    <meta charset="UTF-8">
     <title>전체 주문 목록</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
 
     <h2 class="text-center">주문 목록</h2>
 
-    <!-- 주문번호로 검색 기능
+    <!-- 주문번호로 검색 기능-->
     <br/><br/>
     <form th:action="@{/admin/orders/search}" th:method="GET"
           class="form-inline mb-3 d-flex justify-content-between">
@@ -20,7 +21,7 @@
         <input type="hidden" name="page" value="1">
         <input type="submit" class="btn btn-primary ms-3" value="검색">
     </form>
-    -->
+
     <br/><br/>
     <table class="table table-bordered table-hover">
         <thead>
@@ -36,7 +37,7 @@
 
         <!-- 주문 목록 -->
         <tbody>
-        <!--<tr th:each="order : ${orderPage.data}" class="col-md-10 mb-4">
+        <tr th:each="order : ${orderPage.data}">
             <td ><a th:href="@{'/admin/orders/'+ ${order.orderId}}" th:text="${order.orderNumber}"></a></td>
             <td th:text="${order.orderDate}"></td>
             <td th:text="${order.customerId}"></td>
@@ -44,8 +45,9 @@
             <td th:text="${order.orderState}"></td>
             <td><button>상태 변경</button></td>
         </tr>
-        -->
+
         <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->
+
         </tbody>
     </table>
 
