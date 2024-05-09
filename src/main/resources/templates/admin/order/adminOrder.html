@@ -51,6 +51,28 @@
         </tbody>
     </table>
 
+    <div>
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li>
+                    <a class="page-link" th:href="@{'?page=1'}">≪</a>
+                </li>
+                <li th:class="${orderPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${orderPage.currentPage - 1 }}"><</a>
+                </li>
+                <li th:each="pageButton : ${#numbers.sequence(orderPage.startPage,orderPage.endPage)}"
+                    th:class="${orderPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+                </li>
+                <li th:class="${orderPage.currentPage == orderPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${orderPage.currentPage + 1}}">></a>
+                </li>
+                <li>
+                    <a class="page-link" th:href="@{'?page=' + ${bookPage.totalPage}}">≫</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 </body>
 </html>

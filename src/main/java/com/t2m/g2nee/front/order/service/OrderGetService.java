@@ -1,10 +1,10 @@
 package com.t2m.g2nee.front.order.service;
 
 import com.t2m.g2nee.front.order.adaptor.OrderGetAdaptor;
-import com.t2m.g2nee.front.order.dto.response.OrderInfoResponseDto;
+import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +21,17 @@ public class OrderGetService {
 
     public OrderGetService(OrderGetAdaptor orderGetAdaptor){
         this.orderGetAdaptor = orderGetAdaptor;
+    }
+
+    /**
+     * 주문 상세 조회(주문Id)
+     *
+     * @param orderId 주문Id
+     * @return List<OrderDetailDto.Response>
+     */
+    public List<OrderDetailDto.Response> getOrderDetailListByOrderId(Long orderId){
+
+        return orderGetAdaptor.getOrderDetailListByOrderId(orderId);
     }
 
     /**
@@ -42,7 +53,7 @@ public class OrderGetService {
      * @param orderNumber 주문번호
      * @return OrderInfoResponseDto
      */
-    OrderInfoResponseDto getOrderByNumber(Long customerId, String orderNumber){
+    OrderInfoDto.Response getOrderByNumber(Long customerId, String orderNumber){
         return null;
     }
 
@@ -50,10 +61,10 @@ public class OrderGetService {
      * 회원의 주문 목록 조회
      *
      * @param page 페이지
-     * @param customerId
+     * @param customerId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
-    PageResponse<OrderInfoResponseDto> getOrderListForMembers(int page, Long customerId){
+    PageResponse<OrderInfoDto.Response> getOrderListForMembers(int page, Long customerId){
         return null;
     }
 

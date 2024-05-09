@@ -1,7 +1,6 @@
 package com.t2m.g2nee.front.order.adaptor;
 
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
-import com.t2m.g2nee.front.order.dto.response.OrderInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
@@ -31,7 +30,7 @@ public interface OrderGetAdaptor {
      * @param orderNumber 주문번호
      * @return OrderInfoResponseDto
      */
-    OrderInfoResponseDto getOrderByNumber(Long customerId, String orderNumber);
+    OrderInfoDto.Response getOrderByNumber(Long customerId, String orderNumber);
 
     /**
      * 회원의 주문 목록 조회
@@ -40,7 +39,7 @@ public interface OrderGetAdaptor {
      * @param customerId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
-    PageResponse<OrderInfoResponseDto> getOrderListForMembers(int page, Long customerId);
+    PageResponse<OrderInfoDto.Response> getOrderListForMembers(int page, Long customerId);
 
     /**
      * 전체 주문 목록 조회(Admin용)

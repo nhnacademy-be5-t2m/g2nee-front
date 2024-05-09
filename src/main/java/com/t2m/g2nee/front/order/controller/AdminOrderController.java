@@ -1,8 +1,10 @@
 package com.t2m.g2nee.front.order.controller;
 
+import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,8 @@ public class AdminOrderController {
 
     @GetMapping("/list")
     public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
-//        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
-//        model.addAttribute("orderPage", orderPage);
+        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
+        model.addAttribute("orderPage", orderPage);
 
         return "admin/order/adminOrder";
     }
@@ -29,7 +31,10 @@ public class AdminOrderController {
     public String getOrder(@PathVariable("orderId") Long orderId, Model model){
 
         OrderInfoDto.ListResponse listResponse = orderGetService.getOrderById(null, orderId);
-        model.addAttribute("book", listResponse);
+//        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
+        model.addAttribute("order", listResponse);
+//        model.addAttribute("detail", detailResponse);
+
         return "admin/order/orderDetail";
     }
 

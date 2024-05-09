@@ -38,6 +38,28 @@ public class OrderInfoDto {
         private String message;
         private String couponName;
     }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Response {
+        private Long orderId;
+        private String orderNumber;
+        private Long customerId;
+        private LocalDateTime orderDate;
+        private List<OrderDetailDto.Response> orderDetailList;
+        private OrderState orderState;
+        private BigDecimal orderAmount;
+        private String receiverName;
+        private String receiverPhoneNumber;
+        private String receiveAddress;
+        private String zipcode;
+        private String detailAddress;
+        private String message;
+        private String couponName;
+    }
 
     @Getter
     public enum OrderState{

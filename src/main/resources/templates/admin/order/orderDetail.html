@@ -17,6 +17,7 @@
                 <tr>
                     <th>주문 번호</th>
                     <th>주문 일자</th>
+                    <th>배송 희망 일자</th>
                     <th>고객 정보</th>
                     <th>총 가격</th>
                     <th>주문 상태</th>
@@ -26,7 +27,7 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="order : ${orderPage.data}">
+                <tr th:each="order : ${order.data}">
                     <td ><a th:href="@{'/admin/orders/'+ ${order.orderId} + '/details'}" th:text="${order.orderNumber}"></a></td>
                     <td th:text="${order.orderDate}"></td>
                     <td th:text="${order.customerId}"></td>
@@ -36,11 +37,17 @@
                 </tr>
                 <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->
                 </tbody>
-                <!-- 루트 카테고리 -->
-
             </table>
-            <!-- 주문 세부 내용 start -->
 
+            <!-- 배송 세부 내용 start -->
+            <hr/>
+            <h3>배송 정보</h3>
+            <p th:text="'수령인: ' + ${order.receiverName}"></p>
+            <p th:text="'우편번호: ' + ${order.zipcode}"></p>
+            <p th:text="'배송지: ' + ${order.receiveAddress}"></p>
+            <p th:text="'상세주소: ' + ${order.detailAddress}"></p>
+            <p th:text="'배송 요청사항: ' + ${order.message}"></p>
+            </hr>
         </div>
     </div>
 </div>
