@@ -43,15 +43,17 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
         detailHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> detailEntity = new HttpEntity<> (detailHeaders);
-        String url = gatewayUrl + "/orders/orderDetails/" + orderId;
-//orders/orderDetails/{orderId}
-        return restTemplate.exchange(
+        String url = orderUrl + "/orderDetails/" + orderId;
+
+        ResponseEntity<List<OrderDetailDto.Response>> detailResponse = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 detailEntity,
-                new ParameterizedTypeReference<List<OrderDetailDto.Response>>() {
+                new ParameterizedTypeReference<>() {
                 }
-        ).getBody();
+        );
+
+        return detailResponse.getBody();
     }
 
     /**

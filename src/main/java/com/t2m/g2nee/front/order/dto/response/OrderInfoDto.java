@@ -51,6 +51,7 @@ public class OrderInfoDto {
         private Long customerId;
         private String customerName;
         private LocalDateTime orderDate;
+        private LocalDateTime deliveryWishDate;
         private List<OrderDetailDto.Response> orderDetailList;
         private OrderState orderState;
         private BigDecimal deliveryFee;

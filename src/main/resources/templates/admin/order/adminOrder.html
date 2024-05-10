@@ -42,7 +42,7 @@
             <td th:text="${order.orderDate}"></td>
             <td th:text="${order.customerId}"></td>
             <td th:text="${order.orderAmount}"></td>
-            <td th:text="${order.orderState}"></td>
+            <td th:text="${order.orderState.name()}"></td>
             <td><button>상태 변경</button></td>
         </tr>
 
