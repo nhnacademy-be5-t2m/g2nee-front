@@ -57,23 +57,21 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     /**
      * 주문 정보 조회(주문Id)
      *
-     * @param memberId 회원Id
      * @param orderId  주문Id
      * @return OrderInfoResponseDto
      */
     @Override
-    public OrderInfoDto.ListResponse getOrderById(Long memberId, Long orderId) {
+    public OrderInfoDto.Response getOrderById(Long orderId) {
         HttpHeaders orderHeaders = new HttpHeaders();
         orderHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> orderEntity = new HttpEntity<> (orderHeaders);
 
-        String url = orderUrl + "/members/" + memberId + "/order/" + orderId;
-
-        ResponseEntity<OrderInfoDto.ListResponse> responseEntity = restTemplate.exchange(
+        String url = orderUrl + "/order/" + orderId;
+        ResponseEntity<OrderInfoDto.Response> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 orderEntity,
-                new ParameterizedTypeReference<OrderInfoDto.ListResponse>() {
+                new ParameterizedTypeReference<>() {
                 }
         );
         return responseEntity.getBody();

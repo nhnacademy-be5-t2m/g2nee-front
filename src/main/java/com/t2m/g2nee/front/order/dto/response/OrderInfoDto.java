@@ -29,6 +29,7 @@ public class OrderInfoDto {
         private LocalDateTime orderDate;
         private List<OrderDetailDto.Response> orderDetailList;
         private OrderState orderState;
+        private BigDecimal deliveryFee;
         private BigDecimal orderAmount;
         private String receiverName;
         private String receiverPhoneNumber;
@@ -48,9 +49,11 @@ public class OrderInfoDto {
         private Long orderId;
         private String orderNumber;
         private Long customerId;
+        private String customerName;
         private LocalDateTime orderDate;
         private List<OrderDetailDto.Response> orderDetailList;
         private OrderState orderState;
+        private BigDecimal deliveryFee;
         private BigDecimal orderAmount;
         private String receiverName;
         private String receiverPhoneNumber;

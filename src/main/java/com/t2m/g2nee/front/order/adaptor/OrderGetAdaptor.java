@@ -17,11 +17,10 @@ public interface OrderGetAdaptor {
     /**
      * 주문 정보 조회(주문ID)
      *
-     * @param memberId 회원ID
      * @param orderId  주문Id
      * @return OrderInfoResponseDto
      */
-    OrderInfoDto.Response getOrderById(Long memberId, Long orderId);
+    OrderInfoDto.Response getOrderById(Long orderId);
 
     /**
      * 주문 정보 조회(주문 번호)

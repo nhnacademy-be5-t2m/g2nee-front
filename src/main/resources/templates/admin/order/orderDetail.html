@@ -27,8 +27,8 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="order : ${order.data}">
-                    <td ><a th:href="@{'/admin/orders/'+ ${order.orderId} + '/details'}" th:text="${order.orderNumber}"></a></td>
+                <tr>
+                    <td th:text="${order.orderNumber}"></td>
                     <td th:text="${order.orderDate}"></td>
                     <td th:text="${order.customerId}"></td>
                     <td th:text="${order.orderAmount}"></td>

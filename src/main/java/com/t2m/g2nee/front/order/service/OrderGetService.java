@@ -37,13 +37,12 @@ public class OrderGetService {
     /**
      * 주문 정보 조회(주문Id)
      *
-     * @param memberId 회원번호
      * @param orderId 주문Id
      * @return OrderInfoDto.ListResponse
      */
-    public OrderInfoDto.Response getOrderById(Long memberId, Long orderId){
+    public OrderInfoDto.Response getOrderById(Long orderId){
 
-        return orderGetAdaptor.getOrderById(memberId, orderId);
+        return orderGetAdaptor.getOrderById(orderId);
     }
 
     /**

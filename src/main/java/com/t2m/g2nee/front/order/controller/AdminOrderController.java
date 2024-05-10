@@ -30,7 +30,7 @@ public class AdminOrderController {
     @GetMapping("/{orderId}")
     public String getOrder(@PathVariable("orderId") Long orderId, Model model){
 
-        OrderInfoDto.Response orderResponse = orderGetService.getOrderById(null, orderId);
+        OrderInfoDto.Response orderResponse = orderGetService.getOrderById(orderId);
 //        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
         model.addAttribute("order", orderResponse);
 //        model.addAttribute("detail", detailResponse);
