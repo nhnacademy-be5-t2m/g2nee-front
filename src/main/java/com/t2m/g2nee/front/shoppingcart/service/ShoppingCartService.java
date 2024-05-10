@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,7 @@ public class ShoppingCartService {
                                                   HttpServletRequest httpServletRequest,
                                                   HttpServletResponse httpServletResponse) {
 
+        // 회원 또는 비회원 UUID를 가져옵니다.
         customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
 
         // 이미 장바구니에 있는 책이면 객체를 가져옵니다.
@@ -106,7 +108,7 @@ public class ShoppingCartService {
                                                    HttpServletRequest httpServletRequest,
                                                    HttpServletResponse httpServletResponse) {
 
-        // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 sessionId를 설정
+        // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 UUID 설정
         customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
         ShoppingCartDto.Response cart =
                 (ShoppingCartDto.Response) redisTemplate.opsForHash().get(customerId, bookId);
@@ -165,13 +167,14 @@ public class ShoppingCartService {
     private String getCustomerId(String customerId, HttpServletRequest httpServletRequest,
                                  HttpServletResponse httpServletResponse) {
 
-        // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 sessionId를 설정
+        // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 UUID를 설정
         if (customerId == null) {
-            customerId = getCartSessionId(httpServletRequest);
-            generateCart(customerId);
+            customerId = getCartUUID(httpServletRequest);
 
             if (!StringUtils.hasText(customerId)) {
-                customerId = createCartCookie(httpServletRequest, httpServletResponse);
+                customerId = createCartCookie(httpServletResponse);
+                // 비회원은 cartUUID가 없으면 장바구니가 없는 것이기 때문에 장바구니를 생성
+                generateCart(customerId);
             }
         }
         return customerId;
@@ -196,7 +199,7 @@ public class ShoppingCartService {
      * @param httpRequest httpRequest
      * @return String
      */
-    private String getCartSessionId(HttpServletRequest httpRequest) {
+    private String getCartUUID(HttpServletRequest httpRequest) {
         Cookie[] cookies = httpRequest.getCookies();
 
         for (Cookie c : cookies) {
@@ -208,16 +211,14 @@ public class ShoppingCartService {
     }
 
     /**
-     * 세션 아이디 쿠키 생성 메서드
-     *
-     * @param httpRequest httpRequest
-     * @param httpResponse httpResponse
+     * UUID 아이디 쿠키 생성 메서드
      * @return String
      */
-    private String createCartCookie(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
-        String sessionId = httpRequest.getSession().getId();
-        Cookie cookie = new Cookie("cart", sessionId);
+    private String createCartCookie(HttpServletResponse httpResponse) {
+        String uuid = UUID.randomUUID().toString();
+        Cookie cookie = new Cookie("cart", uuid);
+        cookie.setPath("/");
         httpResponse.addCookie(cookie);
-        return sessionId;
+        return uuid;
     }
 }
