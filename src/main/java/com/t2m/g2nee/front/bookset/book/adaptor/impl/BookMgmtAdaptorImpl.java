@@ -3,6 +3,8 @@ package com.t2m.g2nee.front.bookset.book.adaptor.impl;
 import com.t2m.g2nee.front.bookset.book.adaptor.BookMgmtAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RequiredArgsConstructor
 @Component
@@ -68,13 +71,13 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
      * @return BookDto.Response
      */
     @Override
-    public BookDto.Response getBook(Long bookId) {
+    public BookDto.Response getUpdateBook(Long bookId) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
-        String url = gatewayUrl + "/books/" + bookId;
+        String url = gatewayUrl + "/books/" + bookId + "/update";
 
         return restTemplate.exchange(
                 url,
@@ -186,6 +189,30 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
                 new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
                 }
         ).getBody();
+    }
+
+    @Override
+    public PageResponse<BookDto.ListResponse> getBookListByKeyword(String keyword, int page) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        String url = URLDecoder.decode(UriComponentsBuilder
+                .fromHttpUrl(gatewayUrl + "/books/search")
+                .queryParam("page", page)
+                .queryParam("keyword", keyword)
+                .toUriString(), StandardCharsets.UTF_8);
+
+        return restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
     }
 
 }

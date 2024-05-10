@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>주소 등록 창</title>
+    <link href="/static/css/signup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- Libraries Stylesheet -->
+    <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div>
+    <h3> 새 주소 등록 </h3>
+    <table border="1" summary>
+        <colgroup>
+            <col style="width:150px;">
+            <col style="width:450px;">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row" for="alias">
+                주소별칭
+            </th>
+            <td style="display : flex">
+                <input type="text" id="alias" class="text" maxlength="20" required/>
+            </td>
+        <tr>
+            <th scope="row" for="zipcode">
+                우편번호
+            </th>
+            <td style="display : flex">
+                <input type="text" id="zipcode" class="text" readonly/>
+                <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="address">
+                주소
+            </th>
+            <td style="display : flex">
+                <input type="text" id="address" class="text" maxlength="100" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="detail">
+                상세주소
+            </th>
+            <td style="display : flex">
+                <input type="text" id="detail" class="text" maxlength="50" required/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="isDefault">
+                기본 배송지 설정
+            </th>
+            <td style="display: flex; align-items: center;">
+                <input type="radio" id="isDefaultYes" name="isDefault" value="true"> 예
+                <input type="radio" id="isDefaultNo" name="isDefault" value="false" checked> 아니오
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-bottom: 20px;"></div>
+    <button class="btn btn-primary" onclick="saveAddressButton()">등록</button>
+    <script src="/static/js/mypage/address.js"></script>
+</div>
+</body>
+</html>

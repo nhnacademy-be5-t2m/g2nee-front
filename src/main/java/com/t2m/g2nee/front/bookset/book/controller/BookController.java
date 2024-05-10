@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.book.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.booklike.service.BookLikeService;
@@ -7,9 +9,13 @@ import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.bookset.category.service.CategoryService;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
+import com.t2m.g2nee.front.review.dto.ReviewDto;
+import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +40,7 @@ public class BookController {
     private final CategoryService categoryService;
     private final MemberAspect memberAspect;
     private final BookLikeService bookLikeService;
+    private final ReviewService reviewService;
 
     /**
      * 책 하나 정보를 가져오고 해당 책 카테고리에 해당하는 추천 책 목록을 조회하는 컨트롤러 입니다.
@@ -41,9 +48,14 @@ public class BookController {
     @Member
     @GetMapping("/{bookId}")
     public String getBook(@PathVariable("bookId") Long bookId,
-                          Model model) {
+                          Model model, HttpServletResponse httpServletResponse) {
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+        System.out.println(httpServletResponse);
         BookDto.Response response = bookGetService.getBook(memberId, bookId);
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
@@ -53,11 +65,14 @@ public class BookController {
                 .collect(Collectors.toList());
         // 카테고리에 맞는 책 정보 목록을 가져옵니다.
         List<BookDto.ListResponse> bookList = bookGetService.getRecommendBooks(categoryIdList, bookId);
+        PageResponse<ReviewDto.Response> reviewPage = reviewService.getReviews(bookId, 1);
+
 
         model.addAttribute("bookList", bookList);
         model.addAttribute("book", response);
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("reviewPage", reviewPage);
 
         return "book/bookDetail";
     }
@@ -71,7 +86,11 @@ public class BookController {
     public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -99,7 +118,11 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort);
@@ -134,8 +157,11 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage =
@@ -172,7 +198,11 @@ public class BookController {
             sort = "viewCount";
         }
 
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         Long likesNum = bookLikeService.getMemberLikesNum(memberId);
 
         PageResponse<BookDto.ListResponse> bookPage =

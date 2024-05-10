@@ -1,7 +1,9 @@
 package com.t2m.g2nee.front.config;
 
+import com.t2m.g2nee.front.interceptor.AuthorityCheckInterceptor;
 import com.t2m.g2nee.front.interceptor.CategoryInterceptor;
-import com.t2m.g2nee.front.interceptor.TokenCheckInterceptor;
+import com.t2m.g2nee.front.interceptor.MypageInterceptor;
+import com.t2m.g2nee.front.interceptor.TokenExpireCheckInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -11,8 +13,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final TokenCheckInterceptor tokenCheckInterceptor;
+    private final AuthorityCheckInterceptor authorityCheckInterceptor;
     private final CategoryInterceptor categoryInterceptor;
+    private final MypageInterceptor mypageInterceptor;
+    private final TokenExpireCheckInterceptor tokenExpireCheckInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -20,12 +24,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/static/**")
                 .excludePathPatterns("/error")
-                .excludePathPatterns("/orders/payments/**");
-        registry.addInterceptor(tokenCheckInterceptor)
-                .addPathPatterns("/mypage/**")
-                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/orders/payments/**");;
+        registry.addInterceptor(tokenExpireCheckInterceptor)
+                .addPathPatterns("/**")
                 .excludePathPatterns("/static/**")
                 .excludePathPatterns("/error");
+        registry.addInterceptor(authorityCheckInterceptor)
+                .addPathPatterns("/admin/**");
+        registry.addInterceptor(mypageInterceptor)
+                .addPathPatterns("/mypage/**")
+                .addPathPatterns("/mypage");
     }
 
     @Override

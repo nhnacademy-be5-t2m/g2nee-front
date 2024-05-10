@@ -3,6 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/adminLayout}">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
     <title>admin 도서 조회</title>
 </head>
 
@@ -38,31 +41,32 @@
                     <span th:text="${book.title}"></span>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
                 </h3>
-                <span class="mb-3" th:each="contributorRole, index : ${book.contributorRoleList}"
-                      th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
+                <div class="mb-3">
+                    <i class="fa-solid fa-user"></i>
+                    <span th:each="contributorRole, index : ${book.contributorRoleList}"
+                          th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + (${index.last} ? '' : ', ')">
                 </span>
-                <br/>
-                <span class="mb-3" th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
+                <div class="mb-3">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span th:text="${book.publisherName + ' | ' + book.publishedDate}"></span>
+                </div>
                 <div>
-                            <span th:each="tag : ${book.tagList}">
+                    <i class="fa-solid fa-tag"></i>
+                    <span th:each="tag : ${book.tagList}">
                                 <span th:text="${tag.tagName}"></span>
                             </span>
                 </div>
-                <div class="d-flex mb-3">
-                    <!-- 평점 -->
-                    <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
-                    </div>
-                    <!-- 리뷰가 몇개인지 (눌렀을 때 리뷰페이지로 갈수있게) -->
-                    <small class="pt-1">(50 Reviews)</small>
-                </div>
                 <hr/>
-                <h4 class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></h4>
-                <h5 th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></h5>
+                <h4>
+                    <i class="fa-solid fa-coins"></i>
+                    <span class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${book.salePrice}"></span>
+                </h4>
+
+                <h5>
+                    <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
+                    <span th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></span>
+                </h5>
                 <hr/>
 
                 <!-- 구매할 책 갯수 설정 -->
@@ -80,7 +84,7 @@
                             </button>
                         </div>
                     </div>
-                    <span th:text="'수량 : ' + ${book.quantity}"></span>
+                    <span style="margin-right: 10px" th:text="'수량 : ' + ${book.quantity}"></span>
                     <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 재고 추가</button>
                 </div>
             </div>
@@ -89,12 +93,14 @@
         <div class="row px-xl-5">
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Information</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Reviews (0)</a>
+                    <a class="nav-item nav-link active" data-toggle="tab">Information</a>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">도서 정보</h4>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-book"></i>
+                            <span>도서 정보</span>
+                        </h4>
                         <p th:text="'페이지 수 : ' + ${book.pages} + '쪽'"></p>
                         <p th:text="'ISBN : ' + ${book.isbn}"></p>
                         <div th:each="categoryList : ${book.categoryList}">
@@ -105,12 +111,18 @@
                         </div>
                         <div class="info"></div>
                         <hr/>
-                        <h4 class="mb-3">책 소개</h4>
-                        <p class="mb-4" th:text="${book.description}"></p>
+                        <h4 class="mb-3">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>책 소개</span>
+                        </h4>
+                        <p class="mb-4" th:utext="${book.description}"></p>
                         <hr/>
                         <div>
-                            <h4 class="mb-3">목차</h4>
-                            <p th:text="${book.bookIndex}"></p>
+                            <h4 class="mb-3" style="margin-left: 3px">
+                                <i class="fa-solid fa-bookmark"></i>
+                                <span>목차</span>
+                            </h4>
+                            <p th:utext="${book.bookIndex}"></p>
                         </div>
                     </div>
                 </div>

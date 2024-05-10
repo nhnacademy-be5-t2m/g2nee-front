@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypageLayout}">
+<head>
+    <title>나의 주소 페이지</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>주소 별칭</th>
+            <th>우편 번호</th>
+            <th>주소</th>
+            <th></th>
+        </tr>
+        </thead>
+        <input type="hidden" id="changeAddressId">
+        <input type="hidden" id="addressLength" th:value="${addressList.size()}">
+        <tbody th:each="address : ${addressList}">
+        <tr>
+            <td>
+                <input type="hidden" id="addressId" th:value="${address.getAddressId()}"/>
+                <input type="radio" th:name="selectedAddress" th:value="${address.getAddressId()}"
+                       th:checked="${address.getIsDefault()}" onclick="setDefaultAddress(this)">
+            </td>
+            <td>
+                <span th:text="${address.getAlias()}"></span>
+                <span th:if="${address.getIsDefault()}">
+                        <a>(기본 배송지)</a>
+                </span>
+            </td>
+            <td>
+                <span th:text="${address.getZipcode()}"></span>
+            </td>
+            <td>
+                <span th:text="${address.getAddress} +' '+ ${address.getDetail()}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/mypage/address/delete/' + ${address.getAddressId()}}"
+                   class="btn btn-sm btn-primary">삭제</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button type="button" onclick="saveAddressPopUp()"
+            class="btn btn-primary">새 주소 등록
+    </button>
+    <button type="button" onclick="changeDefaultAddress()"
+            class="btn btn-primary">기본 배송지 변경
+    </button>
+
+    <script src="/static/js/mypage/address.js"></script>
+</div>
+
+</body>
+</html>

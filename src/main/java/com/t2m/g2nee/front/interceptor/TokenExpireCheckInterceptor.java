@@ -1,10 +1,9 @@
 package com.t2m.g2nee.front.interceptor;
 
-import static com.t2m.g2nee.front.advice.CustomExceptionAdvice.REQUIRE_LOGIN_MESSAGE;
 import static com.t2m.g2nee.front.token.util.JwtUtil.ACCESS_COOKIE;
+import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.token.util.JwtUtil.getExpireTime;
 
-import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
@@ -17,21 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-/**
- * 토큰의 기간을 체크해주는 인터셉터입니다.
- *
- * @author : 정지은
- * @since : 1.0
- **/
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class TokenCheckInterceptor implements HandlerInterceptor {
+public class TokenExpireCheckInterceptor implements HandlerInterceptor {
     private static final Long RENEW_TIME = Duration.ofMinutes(10).toSeconds();
     private static final String ERROR_MESSAGE = "X-MESSAGE";
     private final MemberService memberService;
@@ -50,9 +42,16 @@ public class TokenCheckInterceptor implements HandlerInterceptor {
                              HttpServletResponse response, Object handler) throws IOException {
 
         Cookie accessTokenCookie = CookieUtil.findCookie(ACCESS_COOKIE);
+        Cookie authSessionCookie = CookieUtil.findCookie(SESSION_ID);
 
-        if (Objects.isNull(accessTokenCookie)) {
-            throw new CustomException(HttpStatus.FORBIDDEN, REQUIRE_LOGIN_MESSAGE);
+        if (Objects.isNull(accessTokenCookie) || Objects.isNull(authSessionCookie)) {
+            if (!Objects.isNull(accessTokenCookie)) {
+                CookieUtil.deleteCookie(response, ACCESS_COOKIE);
+            }
+            if (!Objects.isNull(authSessionCookie)) {
+                CookieUtil.deleteCookie(response, SESSION_ID);
+            }
+            return true;
         }
 
         String accessTokenCookieValue = Objects.requireNonNull(accessTokenCookie).getValue();

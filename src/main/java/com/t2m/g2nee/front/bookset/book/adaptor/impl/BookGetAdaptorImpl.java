@@ -57,6 +57,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         ).getBody();
     }
 
+
     /**
      * 최신 발매된 책 6권을 조회하는 메서드
      *

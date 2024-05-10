@@ -4,6 +4,8 @@ package com.t2m.g2nee.front.bookset.book.controller;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.bookset.book.service.BookMgmtService;
+import com.t2m.g2nee.front.bookset.category.adaptor.CategoryAdaptor;
+import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
 import com.t2m.g2nee.front.bookset.contributor.dto.ContributorDto;
 import com.t2m.g2nee.front.bookset.contributor.service.ContributorService;
 import com.t2m.g2nee.front.bookset.publisher.dto.PublisherDto;
@@ -12,10 +14,7 @@ import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
 import com.t2m.g2nee.front.bookset.role.service.RoleService;
 import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import com.t2m.g2nee.front.bookset.tag.service.TagService;
-import com.t2m.g2nee.front.bookset.category.adaptor.CategoryAdaptor;
-import com.t2m.g2nee.front.bookset.category.dto.response.CategoryHierarchyDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -87,7 +86,7 @@ public class BookAdminController {
         model.addAttribute("roleList", roleList);
         model.addAttribute("contributorList", contributorList);
         model.addAttribute("tagList", tagList);
-        BookDto.Response book = bookMgmtService.getBook(bookId);
+        BookDto.Response book = bookMgmtService.getUpdateBook(bookId);
         model.addAttribute("book", book);
         model.addAttribute("page", page);
 
@@ -101,6 +100,21 @@ public class BookAdminController {
     public String getBookMain() {
 
         return "admin/book/bookMain";
+    }
+
+    /**
+     * 관리자 페이지 도서 검색 메서드
+     */
+    @GetMapping("/search")
+    public String getBookListByKeyword(Model model, @RequestParam(defaultValue = "") String keyword,
+                                       @RequestParam(required = false, defaultValue = "1") int page) {
+
+
+        PageResponse<BookDto.ListResponse> bookPage = bookMgmtService.getBookListByKeyword(keyword, page);
+        model.addAttribute("bookPage", bookPage);
+        model.addAttribute("bookStatus", BookDto.BookStatus.values());
+
+        return "admin/book/bookList";
     }
 
 
@@ -131,15 +145,8 @@ public class BookAdminController {
                            @RequestPart MultipartFile thumbnail,
                            @RequestPart MultipartFile[] details) {
 
-        List<Long> categoryList = new ArrayList<>();
-        // 최하위 카테고리만 추출
-        for (int i = 2; i < categoryIdList.size(); i += 3) {
-            Long categoryId = categoryIdList.get(i);
-            categoryList.add(categoryId);
-        }
-
         request.setContributorIdList(contributorIdList);
-        request.setCategoryIdList(categoryList);
+        request.setCategoryIdList(categoryIdList);
         request.setRoleIdList(roleIdList);
         request.setTagIdList(tagIdList);
         bookMgmtService.registerBook(request, thumbnail, details);

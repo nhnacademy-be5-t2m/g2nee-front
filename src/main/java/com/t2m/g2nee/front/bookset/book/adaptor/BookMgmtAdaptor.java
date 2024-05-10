@@ -16,13 +16,12 @@ public interface BookMgmtAdaptor {
     void registerBook(BookDto.Request request, MultipartFile thumbnail, MultipartFile[] details);
 
     /**
-     * 책 정보를 가져오는 메서드
+     * 수정할 책 하나 정보를 가져오는 메서드
      *
-     * @param bookId 책 아이디
+     * @param bookId 책 아이이
      * @return BookDto.Response
      */
-
-    BookDto.Response getBook(Long bookId);
+    BookDto.Response getUpdateBook(Long bookId);
 
     /**
      * 책을 수정하는 메서드 입니다.
@@ -62,4 +61,14 @@ public interface BookMgmtAdaptor {
      * @return PageResponse<BookDto.ListResponse>
      */
     PageResponse<BookDto.ListResponse> getAllBookList(int page);
+
+    /**
+     * 책 정보들을 검색을 통해 조회하는 메서드입니다.
+     *
+     * @param keyword 검색 키워드
+     * @param page    페이지 번호
+     * @return PageResponse<BookDto.ListResponse>
+     */
+    PageResponse<BookDto.ListResponse> getBookListByKeyword(String keyword, int page);
+
 }

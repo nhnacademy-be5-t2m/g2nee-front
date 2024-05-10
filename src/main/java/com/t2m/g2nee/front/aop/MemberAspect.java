@@ -4,7 +4,8 @@ import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.findCookie;
 
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,9 @@ public class MemberAspect {
 
     public static final String MEMBER_INFO_KEY = "SPRING_SECURITY_CONTEXT";
     public final RedisTemplate redisTemplate;
-    private final ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
+    public static final String MEMBER_INFO = "memberInfo";
+    public static final String LIKE_NUM = "likeNum";
 
     @Pointcut("@annotation(com.t2m.g2nee.front.annotation.Member)")
     private void member() {
@@ -43,8 +46,7 @@ public class MemberAspect {
 
         if (c != null) {
             String sessionId = c.getValue();
-            Long memberId = getMemberId(sessionId);
-            threadLocal.set(memberId);
+            addMemberInfo(sessionId);
         }
         Object result = joinPoint.proceed(args);
         threadLocal.remove();
@@ -52,13 +54,19 @@ public class MemberAspect {
     }
 
 
-    public Long getMemberId(String sessionId) {
+    public void addMemberInfo(String sessionId) {
         MemberDetailInfoResponseDto memberInfo =
                 (MemberDetailInfoResponseDto) redisTemplate.opsForHash().get(MEMBER_INFO_KEY, sessionId);
-        return memberInfo.getMemberId();
+        if (threadLocal.get() == null) {
+            threadLocal.set(new HashMap<>());
+        }
+        threadLocal.get().put(MEMBER_INFO, memberInfo);
     }
 
-    public ThreadLocal getThreadLocal() {
-        return this.threadLocal;
+    public Object getThreadLocal(String key) {
+        if (this.threadLocal.get() == null) {
+            return null;
+        }
+        return this.threadLocal.get().get(key);
     }
 }

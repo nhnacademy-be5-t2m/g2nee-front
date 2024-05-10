@@ -23,6 +23,7 @@ public class JavaConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         objectMapper.registerModule(new JavaTimeModule());
+
         return objectMapper;
     }
 
@@ -47,5 +48,4 @@ public class JavaConfig {
     public CustomExceptionHandler customExceptionHandler() {
         return new CustomExceptionHandler(objectMapper());
     }
-
 }

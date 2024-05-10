@@ -3,15 +3,8 @@ package com.t2m.g2nee.front.bookset.book.service;
 import com.t2m.g2nee.front.bookset.book.adaptor.BookMgmtAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -52,9 +45,9 @@ public class BookMgmtService {
      * @return BookDto.Response
      */
 
-    public BookDto.Response getBook(Long bookId) {
+    public BookDto.Response getUpdateBook(Long bookId) {
 
-        return bookMgmtAdaptor.getBook(bookId);
+        return bookMgmtAdaptor.getUpdateBook(bookId);
 
     }
 
@@ -98,6 +91,11 @@ public class BookMgmtService {
     public PageResponse<BookDto.ListResponse> getAllBookList(int page) {
 
         return bookMgmtAdaptor.getAllBookList(page);
+    }
+
+    public PageResponse<BookDto.ListResponse> getBookListByKeyword(String keyword, int page) {
+
+        return bookMgmtAdaptor.getBookListByKeyword(keyword, page);
     }
 
 }

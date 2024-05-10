@@ -57,16 +57,16 @@ public class CookieUtil {
 
 
     /**
-     * 쿠키를 삭제하기 위한 메소드
+     * response의 쿠키를 삭제하기 위한 메소드
      *
      * @param response
      * @param key      쿠키 이름
      */
     public static void deleteCookie(HttpServletResponse response, String key) {
         Cookie cookie = findCookie(key);
+        cookie.setPath("/");
         Objects.requireNonNull(cookie).setMaxAge(0);
         response.addCookie(cookie);
     }
-
 
 }

@@ -52,4 +52,12 @@ public interface PointPolicyService {
      * @return
      */
     PageResponse<PointPolicyInfoDto> getAllPointPolicies(int page);
+
+    /**
+     * 포인트 이름으로 특정 포인트 정책을 가져옵니다.
+     *
+     * @param policyName
+     * @return
+     */
+    PointPolicyInfoDto getPointPolicyByPolicyName(String policyName);
 }

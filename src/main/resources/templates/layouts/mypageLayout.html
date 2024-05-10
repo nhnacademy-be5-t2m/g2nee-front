@@ -3,17 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>main layout</title>
 
-    <th:block layout:fragment="script"></th:block>
-    <th:block layout:fragment="css"></th:block>
-
+    <link href="/static/img/favicon.ico" rel="icon">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
-    <!-- Favicon -->
-    <link href="/static/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -43,7 +37,7 @@
     <!-- Page Header End -->
     <div class="row px-xl-5">
         <div class="col-lg-3 col-md-12">
-            <div th:replace="fragments/categoryLayout::mypageCategory"></div>
+            <div th:replace="fragments/navigator::mypage-navigator"></div>
         </div>
         <!-- layout에서 변경되는 영역을 fragment로 설정. -->
         <div class="col-lg-9 col-md-12">
