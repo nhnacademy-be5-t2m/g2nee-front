@@ -6,7 +6,6 @@ import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
-import com.t2m.g2nee.front.booklike.service.BookLikeService;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
 import com.t2m.g2nee.front.policyset.deliverypolicy.service.DeliveryPolicyService;
@@ -53,7 +52,8 @@ public class ShoppingCartController {
         }
         Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
-        List<ShoppingCartDto.Response> cartList = shoppingCartService.getCartByMember(customerId,httpServletRequest,httpServletResponse);
+        List<ShoppingCartDto.Response> cartList =
+                shoppingCartService.getCartByCustomer(customerId, httpServletRequest, httpServletResponse);
 
         int totalPrice = cartList.stream()
                 .mapToInt(c -> c.getPrice() * c.getQuantity())
