@@ -4,6 +4,9 @@
       layout:decorate="~{layouts/categoryLayout}">
 
 <head>
+    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>쇼핑 카트</title>
 </head>
@@ -25,7 +28,16 @@
                         <th>삭제</th>
                     </tr>
                     </thead>
-                    <tbody class="align-middle">
+                    <tbody class="align-middle" th:if="${cartList == null || cartList.size() == 0}">
+                    <tr>
+                        <td>
+                            <i class="fa-regular fa-face-sad-tear"></i>
+                            장바구니가 비어있습니다.
+                        </td>
+
+                    </tr>
+                    </tbody>
+                    <tbody class="align-middle" th:unless="${cartList == null || cartList.size() == 0}">
                     <tr th:each="cart : ${cartList}">
                         <td id="cart" style="text-align: left;">
                             <img th:src="${cart.imageUrl}" alt="image" style="width: 70px;">
@@ -41,7 +53,9 @@
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input id="quantity" th:data-bookId="${cart.bookId}" th:value="${cart.quantity}" type="text" class="form-control form-control-sm bg-secondary text-center"
+                                <input class="cartQuantity form-control form-control-sm bg-secondary text-center" id="quantity" th:data-bookId="${cart.bookId}"
+                                       th:value="${cart.quantity}"
+                                       type="text"
                                        value="1">
                                 <div class="input-group-btn">
                                     <button id="plusButton" th:data-bookId="${cart.bookId}"
@@ -64,7 +78,7 @@
         </div>
     </div>
 
-    <div style="float: right">
+    <div style="float: right" th:unless="${cartList == null || cartList.size() == 0}">
         <div style="font-weight: bold; font-size: 1.4em;"
              th:text="'₩ ' + ${deliveryPolicy.freeDeliveryStandard} + ' 이상 구매 시 배송비 무료!'">
         </div>
@@ -91,6 +105,7 @@
 </html>
 <script th:inline="javascript">
 
+    let cartItemNum = [[${cartItemNum}]];
     let totalPriceTag = document.querySelector('#totalPrice');
     let totalAmountTag = document.querySelector('#totalAmount');
     let deliveryFeeFreeTag = document.querySelector('#deliveryFeeFree');
@@ -105,11 +120,11 @@
         button.addEventListener('click', function () {
 
             let bookId = this.dataset.bookid;
-            let quantity = document.querySelector('#quantity').value;
+            let quantity = button.parentElement.parentElement.querySelector('#quantity').value
 
             if (quantity < 1) {
                 quantity = 1;
-                document.querySelector('#quantity').value = quantity;
+                button.parentElement.parentElement.querySelector('#quantity').value = quantity;
 
                 Swal.fire({
                     icon: 'warning',
@@ -151,11 +166,11 @@
 
             let bookId = this.dataset.bookid;
             console.log(bookId);
-            let quantity = document.querySelector('#quantity').value;
+            let quantity = input.parentElement.parentElement.querySelector('#quantity').value;
 
             if (quantity < 1) {
                 quantity = 1;
-                document.querySelector('#quantity').value = quantity;
+                input.parentElement.parentElement.querySelector('#quantity').value = quantity;
                 Swal.fire({
                     icon: 'warning',
                     title: '0개 보다 적게 담을 수 없습니다.',
@@ -193,7 +208,7 @@
     document.querySelectorAll('#plusButton').forEach(function (button) {
         button.addEventListener('click', function () {
             let bookId = this.dataset.bookid;
-            let quantity = document.querySelector('#quantity').value;
+            let quantity = button.parentElement.parentElement.querySelector('#quantity').value
 
             fetch('/carts', {
                 method: "PATCH",
@@ -225,6 +240,7 @@
     document.querySelectorAll('#deleteButton').forEach(function (button) {
         button.addEventListener('click', function () {
             let bookId = this.dataset.bookid;
+            var cartItemNumElement = document.querySelector('#cartItemNum');
 
             fetch(`/carts/book/${bookId}`, {
                 method: "DELETE"
@@ -243,6 +259,8 @@
                     }
                     totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
                     this.closest('tr').remove();
+                    cartItemNum -= 1;
+                    cartItemNumElement.textContent = cartItemNum;
                 });
         });
     });

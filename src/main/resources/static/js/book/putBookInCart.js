@@ -1,15 +1,19 @@
 // 책 리스트에서 장바구니 담기
 document.querySelectorAll('#cartButton').forEach(button => {
-    button.addEventListener('click', function (event) {
+    button.addEventListener('click', function () {
         let bookId = this.dataset.bookid;
         let quantityElement = document.querySelector('#quantity')
+        let cartItemNum = parseInt(this.dataset.cartitemnum);
+        var cartItemNumElement = document.querySelector('#cartItemNum');
+
         let quantity;
         if(quantityElement === null){
             quantity = 1;
         } else {
-            quantity = quantityElement.value;
+            quantity = parseInt(quantityElement.value);
         }
-        let bookQuantity = this.dataset.bookquantity;
+
+        let bookQuantity = parseInt(this.dataset.bookquantity);
         let bookTitle = this.dataset.booktitle;
 
         if (quantity > bookQuantity) {
@@ -40,6 +44,9 @@ document.querySelectorAll('#cartButton').forEach(button => {
                     showConfirmButton: false,
                     timer: 1500
                 })
+
             )
+        cartItemNum += 1;
+        cartItemNumElement.textContent = cartItemNum.toString();
     });
 });
