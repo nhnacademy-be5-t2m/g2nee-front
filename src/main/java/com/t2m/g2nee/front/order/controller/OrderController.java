@@ -6,6 +6,7 @@ import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
+import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 주문과 관련된 controller 입니다.
@@ -53,6 +55,14 @@ public class OrderController {
         //TODO : shop server의 order쪽으로 보내기
         return "member/customerLogin";
     }
+
+//    @GetMapping("/list")
+//    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
+//        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
+//        model.addAttribute("orderPage", orderPage);
+//
+//        return "admin/order/adminOrder";
+//    }
     @GetMapping("/{orderId}")
     public String getOrder(@PathVariable("orderId") Long orderId, Model model){
 
@@ -62,7 +72,14 @@ public class OrderController {
         List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
         model.addAttribute("orderDetails", detailResponse);
 
-        return "adminOrderDetail";
+        return "admin/order/adminOrderDetail";
     }
 
+    @GetMapping("/{orderNumber}")
+    public String getOrderForNonMember(@PathVariable("orderNumber") String orderNumber, Model model){
+        OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(orderNumber);
+        model.addAttribute("order", orderResponse);
+
+        return "order/orderDetail";
+    }
 }

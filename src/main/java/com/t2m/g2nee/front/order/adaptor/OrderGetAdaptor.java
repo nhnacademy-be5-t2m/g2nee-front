@@ -25,11 +25,10 @@ public interface OrderGetAdaptor {
     /**
      * 주문 정보 조회(주문 번호)
      *
-     * @param customerId 고객Id
      * @param orderNumber 주문번호
      * @return OrderInfoResponseDto
      */
-    OrderInfoDto.Response getOrderByNumber(Long customerId, String orderNumber);
+    OrderInfoDto.Response getOrderByNumber(String orderNumber);
 
     /**
      * 회원의 주문 목록 조회

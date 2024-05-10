@@ -123,7 +123,7 @@ public class BookDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class statusResponse {
+    public static class StatusResponse {
         private BookStatus status;
     }
 

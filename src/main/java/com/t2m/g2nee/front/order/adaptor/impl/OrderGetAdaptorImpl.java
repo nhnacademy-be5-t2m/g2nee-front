@@ -80,8 +80,21 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public OrderInfoDto.Response getOrderByNumber(Long customerId, String orderNumber) {
-        return null;
+    public OrderInfoDto.Response getOrderByNumber(String orderNumber) {
+        HttpHeaders orderHeaders = new HttpHeaders();
+        orderHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> orderEntity = new HttpEntity<> (orderHeaders);
+
+        String url = orderUrl + "/nonmembers/" + orderNumber;
+
+        ResponseEntity<OrderInfoDto.Response> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                orderEntity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        return responseEntity.getBody();
     }
 
     @Override
