@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class TossPaymentRequestDto extends PaymentRequestDto{
+public class TossPaymentRequestDto extends PaymentRequestDto {
     private String paymentKey;
 
     public TossPaymentRequestDto(String orderId, BigDecimal amount, Long customerId, String paymentKey) {

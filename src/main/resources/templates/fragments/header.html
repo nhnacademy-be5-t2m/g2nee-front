@@ -6,33 +6,33 @@
         <div class="row bg-secondary py-2 px-xl-5">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
-                    <a href="/books" class="nav-item nav-link active">Home</a>
+                    <a class="nav-item nav-link active" href="/books">Home</a>
                     <span class="text-muted px-2"> | </span>
-                    <a href="/cart" class="nav-item nav-link">Cart</a>
+                    <a class="nav-item nav-link" href="/cart">Cart</a>
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <div class="d-inline-flex" sec:authorize="isAnonymous()">
-                        <a href="/login" class="nav-item nav-link">로그인</a>
-                        <a href="/signup" class="nav-item nav-link">회원가입</a>
-                        <a href="/order/customLogin" class="nav-item nav-link">비회원 주문조회</a>
+                        <a class="nav-item nav-link" href="/login">로그인</a>
+                        <a class="nav-item nav-link" href="/signup">회원가입</a>
+                        <a class="nav-item nav-link" href="/order/customLogin">비회원 주문조회</a>
                     </div>
                     <div class="d-inline-flex" sec:authorize="isAuthenticated()">
                         <a class="nav-item nav-link"
                            th:text="${#request.getSession().getAttribute('username')+' 님 안녕하세요!'}"/>
-                        <a href="/logout" class="nav-item nav-link">로그아웃</a>
-                        <a href="/admin" sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item nav-link"> Admin Page
+                        <a class="nav-item nav-link" href="/logout">로그아웃</a>
+                        <a class="nav-item nav-link" href="/admin" sec:authorize="hasRole('ROLE_ADMIN')"> Admin Page
                             접속 </a>
                     </div>
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">마이페이지</a>
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">마이페이지</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="" class="dropdown-item">나의 정보</a>
-                            <a href="/mypage/address" class="dropdown-item">나의 주소</a>
-                            <a href="" class="dropdown-item">주문/배송조회</a>
-                            <a href="" class="dropdown-item">결제내역</a>
+                            <a class="dropdown-item" href="">나의 정보</a>
+                            <a class="dropdown-item" href="/mypage/address">나의 주소</a>
+                            <a class="dropdown-item" href="">주문/배송조회</a>
+                            <a class="dropdown-item" href="">결제내역</a>
 
                         </div>
                     </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-13 d-none d-lg-block">
-                <a href="/" class="text-decoration-none">
+                <a class="text-decoration-none" href="/">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span
                             class="text-primary font-weight-bold border px-3 mr-1">g</span>2nee shop</h1>
                 </a>
@@ -49,9 +49,9 @@
             <div class="col-lg-6 col-6 text-left">
                 <form th:action="@{/books/search}" th:method="get">
                     <div class="input-group">
-                        <input id="keyword" type="text" class="form-control" name="keyword"
-                               placeholder="Search for products">
-                        <input type="hidden" name="page" value="1">
+                        <input class="form-control" id="keyword" name="keyword" placeholder="Search for products"
+                               type="text">
+                        <input name="page" type="hidden" value="1">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -61,11 +61,11 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="like.html" class="btn border">
+                <a class="btn border" href="like.html">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge" th:text="${likesNum}"></span>
                 </a>
-                <a href="/cart" class="btn border">
+                <a class="btn border" href="/cart">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
@@ -80,18 +80,18 @@
         <div class="row bg-secondary py-2 px-xl-5">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
-                    <a href="/" class="nav-item nav-link active">Home</a>
+                    <a class="nav-item nav-link active" href="/">Home</a>
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a href="/logout" class="nav-item nav-link">로그아웃</a>
+                    <a class="nav-item nav-link" href="/logout">로그아웃</a>
                 </div>
             </div>
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-13 d-none d-lg-block">
-                <a href="/admin" class="text-decoration-none">
+                <a class="text-decoration-none" href="/admin">
                     <h1 class="m-0 display-5 font-weight-semi-bold">
                         <span class="text-primary font-weight-bold border px-3 mr-1">g</span>2nee admin
                     </h1>

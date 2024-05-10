@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <style>
 
@@ -50,24 +50,24 @@
     <div class="container">
         <div class="d-flex justify-content-start mb-3">
             <!-- 등록 버튼 -->
-            <button type="button" class="btn btn-outline-primary" onclick="toggleRegisterFields()">등록</button>
+            <button class="btn btn-outline-primary" onclick="toggleRegisterFields()" type="button">등록</button>
         </div>
 
         <!-- 등록 필드 -->
         <div id="registerFields" style="display: none;">
             <form th:action="@{/admin/publishers}" th:method="post">
                 <div class="mb-3">
-                    <label for="publisherName" class="form-label">출판사 이름</label>
-                    <input type="text" class="form-control-sm" id="publisherName" name="publisherName"
-                           pattern="^[가-힣0-9a-zA-Z\s]+$" required>
+                    <label class="form-label" for="publisherName">출판사 이름</label>
+                    <input class="form-control-sm" id="publisherName" name="publisherName" pattern="^[가-힣0-9a-zA-Z\s]+$"
+                           required type="text">
                 </div>
                 <div class="mb-3">
-                    <label for="publisherEngName" class="form-label">출판사 영문 이름</label>
-                    <input type="text" class="form-control-sm" id="publisherEngName" name="publisherEngName"
-                           pattern="^[0-9a-zA-Z\s]+$" required>
+                    <label class="form-label" for="publisherEngName">출판사 영문 이름</label>
+                    <input class="form-control-sm" id="publisherEngName" name="publisherEngName" pattern="^[0-9a-zA-Z\s]+$"
+                           required type="text">
                 </div>
                 <div class="d-flex justify-content-start mb-3">
-                    <button type="submit" class="btn btn-primary">등록</button>
+                    <button class="btn btn-primary" type="submit">등록</button>
                 </div>
             </form>
         </div>
@@ -83,33 +83,33 @@
                 </thead>
                 <tbody>
                 <tr th:each="publisher : ${publisherPage.data}">
-                    <td th:text="${publisher.publisherName}" class="align-middle"></td>
-                    <td th:text="${publisher.publisherEngName}" class="align-middle"></td>
+                    <td class="align-middle" th:text="${publisher.publisherName}"></td>
+                    <td class="align-middle" th:text="${publisher.publisherEngName}"></td>
                     <td class="text-center align-middle">
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary btn-sm"
-                                    th:onclick="'toggleModifyFields('+${publisher.publisherId}+')'">수정
+                        <div aria-label="Basic outlined example" class="btn-group" role="group">
+                            <button class="btn btn-outline-primary btn-sm" th:onclick="'toggleModifyFields('+${publisher.publisherId}+')'"
+                                    type="button">수정
                             </button>
-                            <div th:id="'modifyFields-'+${publisher.publisherId}" style="display: none;">
+                            <div style="display: none;" th:id="'modifyFields-'+${publisher.publisherId}">
                                 <form th:action="@{'/admin/publishers/' + ${publisher.publisherId} +'?page='+${publisherPage.currentPage}}"
                                       th:method="patch">
                                     <div class="mb-3">
-                                        <label for="publisherModifyName" class="form-label">출판사 이름</label>
-                                        <input type="text" class="form-control form-control-sm" id="publisherModifyName"
-                                               name="publisherName" pattern="^[가-힣0-9]+$" required>
+                                        <label class="form-label" for="publisherModifyName">출판사 이름</label>
+                                        <input class="form-control form-control-sm" id="publisherModifyName" name="publisherName"
+                                               pattern="^[가-힣0-9]+$" required type="text">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="publisherModifyEngName" class="form-label">출판사 영문 이름</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                               id="publisherModifyEngName"
-                                               name="publisherEngName" pattern="^[A-Za-z0-9]+$">
+                                        <label class="form-label" for="publisherModifyEngName">출판사 영문 이름</label>
+                                        <input class="form-control form-control-sm" id="publisherModifyEngName"
+                                               name="publisherEngName"
+                                               pattern="^[A-Za-z0-9]+$" type="text">
                                     </div>
-                                    <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
+                                    <button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
                                 </form>
                             </div>
                             <form th:action="@{'/admin/publishers/'+${publisher.publisherId} + '?page='+${publisherPage.currentPage}}"
                                   th:method="delete">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">삭제</button>
+                                <button class="btn btn-outline-danger btn-sm" type="submit">삭제</button>
                             </form>
                         </div>
                     </td>
@@ -125,8 +125,8 @@
                         <li th:class="${publisherPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                             <a class="page-link" th:href="@{'?page=' + ${publisherPage.currentPage - 1 }}"><</a>
                         </li>
-                        <li th:each="pageButton : ${#numbers.sequence(publisherPage.startPage,publisherPage.endPage)}"
-                            th:class="${publisherPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                        <li th:class="${publisherPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}"
+                            th:each="pageButton : ${#numbers.sequence(publisherPage.startPage,publisherPage.endPage)}">
                             <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
                         </li>
                         <li th:class="${publisherPage.currentPage == publisherPage.totalPage ? 'page-item disabled' : 'page-item'}">

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PaymentRequestDto implements PaymentRequest{
+public class PaymentRequestDto implements PaymentRequest {
 
     /**
      * 주문 번호
@@ -26,6 +26,7 @@ public class PaymentRequestDto implements PaymentRequest{
     private Long customerId;
 
     private String payType;
+
     @Override
     public String getPayType() {
         return this.payType;

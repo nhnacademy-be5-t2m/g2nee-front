@@ -83,7 +83,7 @@ public class PaymentAdaptorImpl implements PaymentAdaptor {
     public PaymentInfoDto getPayment(Long orderId) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/order")
-                .path("/"+orderId)
+                .path("/" + orderId)
                 .build();
 
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());

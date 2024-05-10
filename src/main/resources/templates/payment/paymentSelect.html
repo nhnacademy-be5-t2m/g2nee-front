@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/categoryLayout}">
+      layout:decorate="~{layouts/categoryLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>G2nee Book 결제</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
 
     <script src="/static/js/payment/paymentSelect.js"></script>
 </head>
@@ -33,18 +33,18 @@
     <br/><br/>
 
 
-<!--
-<span id="order-number" th:text="${order.orderNumber}"/>
-<span id="order-amount" th:text="${order.amount}"/>
--->
+    <!--
+    <span id="order-number" th:text="${order.orderNumber}"/>
+    <span id="order-amount" th:text="${order.amount}"/>
+    -->
 
 
     <!--결제 수단 선택-->
     <h5>결제수단</h5>
 
-    <button id="toss-button" class="btn" onclick="selectPaymentMethod('toss')">토스</button>
-    <button id="naver-button" class="btn" onclick="selectPaymentMethod('naver')">네이버페이</button>
-    <button id="kakao-button" class="btn" onclick="selectPaymentMethod('kakao')">카카오페이</button>
+    <button class="btn" id="toss-button" onclick="selectPaymentMethod('toss')">토스</button>
+    <button class="btn" id="naver-button" onclick="selectPaymentMethod('naver')">네이버페이</button>
+    <button class="btn" id="kakao-button" onclick="selectPaymentMethod('kakao')">카카오페이</button>
 
     <br/><br/>
 

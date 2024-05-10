@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}" xmlns="http://www.w3.org/1999/html">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" rel="stylesheet"/>
+    <link href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" rel="stylesheet"/>
     <title>도서 등록</title>
 </head>
 
@@ -15,18 +15,18 @@
             <div class="col-md-9 offset-md-2">
                 <h2>도서 등록</h2>
 
-                <form id="registerForm" th:action="@{/admin/books}" th:method="post" enctype="multipart/form-data">
+                <form enctype="multipart/form-data" id="registerForm" th:action="@{/admin/books}" th:method="post">
 
                     <div class="form-group">
-                        <label for="title" class="form-label">제목 (한글)</label>
-                        <input type="text" id="title" name="title" class="form-control" pattern="^[가-힣0-9a-zA-Z\s]+$"
-                               required>
+                        <label class="form-label" for="title">제목 (한글)</label>
+                        <input class="form-control" id="title" name="title" pattern="^[가-힣0-9a-zA-Z\s]+$" required
+                               type="text">
                     </div>
 
                     <div class="form-group">
-                        <label for="engTitle" class="form-label">제목 (영어)</label>
-                        <input type="text" id="engTitle" name="engTitle" class="form-control" pattern="^[A-Za-z0-9\s]+$"
-                               required>
+                        <label class="form-label" for="engTitle">제목 (영어)</label>
+                        <input class="form-control" id="engTitle" name="engTitle" pattern="^[A-Za-z0-9\s]+$" required
+                               type="text">
                     </div>
 
                     <div>목차
@@ -44,82 +44,82 @@
                     <br>
 
                     <div class="form-group">
-                        <label for="thumbnail" class="form-label">썸네일 이미지</label>
-                        <input type="file" id="thumbnail" name="thumbnail" class="form-control-file" accept="image/*"
-                               required>
+                        <label class="form-label" for="thumbnail">썸네일 이미지</label>
+                        <input accept="image/*" class="form-control-file" id="thumbnail" name="thumbnail" required
+                               type="file">
                     </div>
 
                     <div class="form-group">
-                        <label for="details" class="form-label">세부 이미지</label>
-                        <input type="file" id="details" name="details" class="form-control-file" accept="image/*"
-                               multiple required>
+                        <label class="form-label" for="details">세부 이미지</label>
+                        <input accept="image/*" class="form-control-file" id="details" multiple name="details"
+                               required type="file">
                     </div>
 
                     <div class="form-group">
-                        <label for="publishedDate" class="form-label">출판일</label>
-                        <input type="date" id="publishedDate" name="publishedDate" class="form-control" required>
+                        <label class="form-label" for="publishedDate">출판일</label>
+                        <input class="form-control" id="publishedDate" name="publishedDate" required type="date">
                     </div>
 
                     <div class="form-group">
-                        <label for="price" class="form-label">가격</label>
-                        <input type="number" id="price" name="price" class="form-control" pattern="\d+" required>
+                        <label class="form-label" for="price">가격</label>
+                        <input class="form-control" id="price" name="price" pattern="\d+" required type="number">
                     </div>
 
                     <div class="form-group">
-                        <label for="salePrice" class="form-label">할인 가격</label>
-                        <input type="number" id="salePrice" name="salePrice" class="form-control" pattern="\d+"
-                               required>
+                        <label class="form-label" for="salePrice">할인 가격</label>
+                        <input class="form-control" id="salePrice" name="salePrice" pattern="\d+" required
+                               type="number">
                     </div>
 
                     <div class="form-group">
-                        <label for="isbn" class="form-label">ISBN</label>
-                        <input type="text" id="isbn" name="isbn" class="form-control" required>
+                        <label class="form-label" for="isbn">ISBN</label>
+                        <input class="form-control" id="isbn" name="isbn" required type="text">
                     </div>
 
                     <div class="form-group">
-                        <label for="pages" class="form-label">페이지 수</label>
-                        <input type="number" id="pages" name="pages" class="form-control" pattern="\d+" required>
+                        <label class="form-label" for="pages">페이지 수</label>
+                        <input class="form-control" id="pages" name="pages" pattern="\d+" required type="number">
                     </div>
 
                     <div class="form-group">
-                        <label for="quantity" class="form-label">수량</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control" pattern="\d+" required>
+                        <label class="form-label" for="quantity">수량</label>
+                        <input class="form-control" id="quantity" name="quantity" pattern="\d+" required type="number">
                     </div>
 
                     <div class="form-group">
-                        <label for="publisherSelect" class="form-label">출판사 선택</label>
-                        <select id="publisherSelect" name="publisherId" class="form-control" required>
+                        <label class="form-label" for="publisherSelect">출판사 선택</label>
+                        <select class="form-control" id="publisherSelect" name="publisherId" required>
                             <option value="">출판사를 선택해주세요</option>
                             <option th:each="publisher : ${publisherList}"
-                                    th:value="${publisher.getPublisherId()}"
-                                    th:text="${publisher.getPublisherName()}"></option>
+                                    th:text="${publisher.getPublisherName()}"
+                                    th:value="${publisher.getPublisherId()}"></option>
                         </select>
                     </div>
                     <br>
 
                     <div id="categoryContainer">
                     </div>
-                    <button class="btn btn-primary btn-sm float-right" type="button" id="removeButton">-</button>
-                    <button class="btn btn-primary btn-sm float-right" type="button" id="addButton">+</button>
+                    <button class="btn btn-primary btn-sm float-right" id="removeButton" type="button">-</button>
+                    <button class="btn btn-primary btn-sm float-right" id="addButton" type="button">+</button>
 
                     <br>
 
                     <div class="form-group">
-                        <label for="contributorSelect" class="form-label">기여자 선택</label>
+                        <label class="form-label" for="contributorSelect">기여자 선택</label>
                         <div id="addContributorSelection">
-                            <select id="contributorSelect" name="contributorIdList" class="form-control" required>
+                            <select class="form-control" id="contributorSelect" name="contributorIdList" required>
                                 <option value="">기여자를 선택해주세요</option>
                                 <option th:each="contributor : ${contributorList}"
-                                        th:value="${contributor.getContributorId()}"
-                                        th:text="${contributor.getContributorName()}"></option>
+                                        th:text="${contributor.getContributorName()}"
+                                        th:value="${contributor.getContributorId()}"></option>
                             </select>
 
-                            <label for="roleSelect" class="form-label">역할 선택</label>
-                            <select id="roleSelect" name="roleIdList" class="form-control" required>
+                            <label class="form-label" for="roleSelect">역할 선택</label>
+                            <select class="form-control" id="roleSelect" name="roleIdList" required>
                                 <option value="">역할을 선택해주세요</option>
                                 <option th:each="role : ${roleList}"
-                                        th:value="${role.getRoleId()}"
-                                        th:text="${role.getRoleName()}">
+                                        th:text="${role.getRoleName()}"
+                                        th:value="${role.getRoleId()}">
                                 </option>
                             </select>
                         </div>
@@ -130,13 +130,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tagSelect" class="form-label">태그 선택</label>
+                        <label class="form-label" for="tagSelect">태그 선택</label>
                         <div id="addTagSelection">
-                            <select id="tagSelect" name="tagIdList" class="form-control" required>
+                            <select class="form-control" id="tagSelect" name="tagIdList" required>
                                 <option value="">태그를 선택해주세요</option>
                                 <option th:each="tag : ${tagList}"
-                                        th:value="${tag.getTagId()}"
-                                        th:text="${tag.getTagName()}"></option>
+                                        th:text="${tag.getTagName()}"
+                                        th:value="${tag.getTagId()}"></option>
                             </select>
                         </div>
                         <button class="btn btn-primary btn-sm float-right"
@@ -144,7 +144,7 @@
                         </button>
                     </div>
                     <br>
-                    <button id="registerButton" class="btn btn-primary" type="button">등록</button>
+                    <button class="btn btn-primary" id="registerButton" type="button">등록</button>
                 </form>
             </div>
         </div>

@@ -25,6 +25,33 @@ public class BookDto {
     }
 
     @Getter
+    public enum BookStatus {
+
+
+        ONSALE("정상판매"), SOLDOUT("매진"), OUTOFPRINT("절판"), DELETED("삭제");
+
+        private final String status;
+
+        BookStatus(String status) {
+            this.status = status;
+        }
+    }
+
+    @Getter
+    public enum Sort {
+
+        VIEWCOUNT("인기도 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
+        SALEPRICEDESC("가격 높은 순"),
+        SCORE("평점 순"), REVIEW("리뷰 순");
+
+        private final String value;
+
+        Sort(String value) {
+            this.value = value;
+        }
+    }
+
+    @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -123,35 +150,8 @@ public class BookDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class statusResponse {
+    public static class StatusResponse {
         private BookStatus status;
-    }
-
-    @Getter
-    public enum BookStatus {
-
-
-        ONSALE("정상판매"), SOLDOUT("매진"), OUTOFPRINT("절판"), DELETED("삭제");
-
-        private final String status;
-
-        BookStatus(String status) {
-            this.status = status;
-        }
-    }
-
-    @Getter
-    public enum Sort {
-
-        VIEWCOUNT("인기도 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
-        SALEPRICEDESC("가격 높은 순"),
-        SCORE("평점 순"), REVIEW("리뷰 순");
-
-        private final String value;
-
-        Sort(String value) {
-            this.value = value;
-        }
     }
 }
 

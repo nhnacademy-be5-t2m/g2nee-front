@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>도서 목록</title>
 </head>
@@ -14,7 +14,7 @@
         <div class="row justify-content-center">
             <form th:action="@{'/admin/books/search'}">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by name" name="keyword">
+                    <input class="form-control" name="keyword" placeholder="Search by name" type="text">
                     <div class="input-group-append">
                                         <span class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
@@ -22,13 +22,13 @@
                     </div>
                 </div>
             </form>
-            <div th:each="book : ${bookPage.data}" class="col-md-10 mb-4">
+            <div class="col-md-10 mb-4" th:each="book : ${bookPage.data}">
                 <div class="card" style="width: 120%">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <a th:href="@{'/admin/books/' + ${book.bookId}}">
-                                <img th:src="${book.thumbnailImageUrl}" class="card-img-left img-fluid w-100 h-100"
-                                     alt="thumbnail">
+                                <img alt="thumbnail" class="card-img-left img-fluid w-100 h-100"
+                                     th:src="${book.thumbnailImageUrl}">
                             </a>
                         </div>
                         <div class="col-md-8">
@@ -52,21 +52,21 @@
                                     <div class="col-md-2">
                                         <form th:action="@{'/admin/books/updateForm/' + ${book.bookId} + '?page=' + ${bookPage.currentPage}}"
                                               th:method="get">
-                                            <input type="hidden" name="page" th:value="${bookPage.currentPage}">
-                                            <button type="submit" class="btn btn-primary">수정</button>
+                                            <input name="page" th:value="${bookPage.currentPage}" type="hidden">
+                                            <button class="btn btn-primary" type="submit">수정</button>
                                         </form>
                                     </div>
                                     <div class="col-md-5">
-                                        <form th:action="@{'/admin/books/status/' + ${book.bookId}}" th:method="patch"
-                                              style="display: flex;">
-                                            <select id="statusSelect" name="bookStatus" class="form-control mr-2">
+                                        <form style="display: flex;" th:action="@{'/admin/books/status/' + ${book.bookId}}"
+                                              th:method="patch">
+                                            <select class="form-control mr-2" id="statusSelect" name="bookStatus">
                                                 <option th:text="${book.bookStatus.status}"></option>
-                                                <option th:each="status : ${bookStatus}" th:value="${status}"
-                                                        th:text="${status.status}"
-                                                        th:unless="${status == book.bookStatus}"></option>
+                                                <option th:each="status : ${bookStatus}" th:text="${status.status}"
+                                                        th:unless="${status == book.bookStatus}"
+                                                        th:value="${status}"></option>
                                             </select>
-                                            <input type="hidden" name="page" th:value="${bookPage.currentPage}">
-                                            <button type="submit" class="btn btn-primary">상태 변경</button>
+                                            <input name="page" th:value="${bookPage.currentPage}" type="hidden">
+                                            <button class="btn btn-primary" type="submit">상태 변경</button>
                                         </form>
                                     </div>
                                 </div>
@@ -84,8 +84,8 @@
                         <li th:class="${bookPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                             <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage - 1 }}"><</a>
                         </li>
-                        <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}"
-                            th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                        <li th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}"
+                            th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}">
                             <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
                         </li>
                         <li th:class="${bookPage.currentPage == bookPage.totalPage ? 'page-item disabled' : 'page-item'}">

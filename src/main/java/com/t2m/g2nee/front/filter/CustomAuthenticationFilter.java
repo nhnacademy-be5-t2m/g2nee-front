@@ -37,6 +37,63 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper;
 
     /**
+     * 로그인 정보가 있는지 세션에서 확인하는 메소드
+     *
+     * @param request
+     * @param response
+     * @param filterChain
+     * @param member      로그인 한 유저의 정보.
+     * @return 정보의 존재 여부를 boolean으로 반환
+     * @throws IOException
+     * @throws ServletException
+     */
+    private static boolean notExistLoginData(HttpServletRequest request,
+                                             HttpServletResponse response,
+                                             FilterChain filterChain,
+                                             MemberDetailInfoResponseDto member)
+            throws IOException, ServletException {
+
+        if (Objects.isNull(member)) {
+            filterChain.doFilter(request, response);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 쿠키의 존재 여부를 확인하는 메소드
+     *
+     * @param request
+     * @param response
+     * @param filterChain
+     * @param cookie      확인할 cookie
+     * @return 쿠키의 존재 여부를 boolean으로 반환
+     * @throws IOException
+     * @throws ServletException
+     */
+    private static boolean notExistCookie(HttpServletRequest request,
+                                          HttpServletResponse response,
+                                          FilterChain filterChain,
+                                          Cookie cookie) throws IOException, ServletException {
+        if (Objects.isNull(cookie)) {
+            filterChain.doFilter(request, response);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * filter에 들어오지 않아도 되는 요청
+     *
+     * @param request request.
+     * @return 들어오면 안되는 요청일 때 true 반환
+     */
+    private static boolean notControllerUri(HttpServletRequest request) {
+        return request.getRequestURI().equals("/error")
+                || request.getRequestURI().equals("/static");
+    }
+
+    /**
      * 인증된 사용자면 로그인 상태 유지.
      *
      * @param request     요청 정보 객체.
@@ -93,63 +150,6 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
         } finally {
             SecurityContextHolder.clearContext();
         }
-    }
-
-    /**
-     * 로그인 정보가 있는지 세션에서 확인하는 메소드
-     *
-     * @param request
-     * @param response
-     * @param filterChain
-     * @param member      로그인 한 유저의 정보.
-     * @return 정보의 존재 여부를 boolean으로 반환
-     * @throws IOException
-     * @throws ServletException
-     */
-    private static boolean notExistLoginData(HttpServletRequest request,
-                                             HttpServletResponse response,
-                                             FilterChain filterChain,
-                                             MemberDetailInfoResponseDto member)
-            throws IOException, ServletException {
-
-        if (Objects.isNull(member)) {
-            filterChain.doFilter(request, response);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 쿠키의 존재 여부를 확인하는 메소드
-     *
-     * @param request
-     * @param response
-     * @param filterChain
-     * @param cookie      확인할 cookie
-     * @return 쿠키의 존재 여부를 boolean으로 반환
-     * @throws IOException
-     * @throws ServletException
-     */
-    private static boolean notExistCookie(HttpServletRequest request,
-                                          HttpServletResponse response,
-                                          FilterChain filterChain,
-                                          Cookie cookie) throws IOException, ServletException {
-        if (Objects.isNull(cookie)) {
-            filterChain.doFilter(request, response);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * filter에 들어오지 않아도 되는 요청
-     *
-     * @param request request.
-     * @return 들어오면 안되는 요청일 때 true 반환
-     */
-    private static boolean notControllerUri(HttpServletRequest request) {
-        return request.getRequestURI().equals("/error")
-                || request.getRequestURI().equals("/static");
     }
 
 }

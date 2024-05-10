@@ -16,10 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/orders/payments")
 public class PaymentController {
 
+    private final PaymentService paymentService;
     @Value("${toss.client.api.key}")
     private String tossClientApiKey;
-
-    private final PaymentService paymentService;
 
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
@@ -28,8 +27,9 @@ public class PaymentController {
     /**
      * 결제 선택 창
      * ("/{orderId}")
-     * @PathVariable("orderId") Long orderId
+     *
      * @return
+     * @PathVariable("orderId") Long orderId
      */
     @GetMapping
     public String paymentSelect(Model model) {
@@ -41,11 +41,12 @@ public class PaymentController {
     /**
      * toss payment
      * ("/{orderId}")
+     *
      * @PathVariable("orderId") Long orderId
      */
 
     @GetMapping("/toss")
-    public String tossPayments(Model model){
+    public String tossPayments(Model model) {
         //TODO: 주문 정보 넘겨주기 필요
 
         model.addAttribute("tossClientApiKey", tossClientApiKey);
@@ -57,10 +58,10 @@ public class PaymentController {
      */
     @GetMapping("/toss/request")
     public String requestTossPayment(RedirectAttributes redirectAttributes,
-                                 @RequestParam(value = "orderId") String orderId,
-                                 @RequestParam(value = "paymentKey") String paymentKey,
-                                 @RequestParam(value = "amount") BigDecimal amount
-                                 ){
+                                     @RequestParam(value = "orderId") String orderId,
+                                     @RequestParam(value = "paymentKey") String paymentKey,
+                                     @RequestParam(value = "amount") BigDecimal amount
+    ) {
         TossPaymentRequestDto request = new TossPaymentRequestDto(
                 orderId, amount, 7L, paymentKey
         );
@@ -76,7 +77,7 @@ public class PaymentController {
      * 결제 성공
      */
     @GetMapping("/success")
-    public String requestPayment(){
+    public String requestPayment() {
         return "payment/paymentSuccess";
     }
 
@@ -88,7 +89,7 @@ public class PaymentController {
     public String paymentResult(Model model,
                                 @RequestParam(value = "message") String message,
                                 @RequestParam(value = "code") Integer code
-    ){
+    ) {
         model.addAttribute("code", code);
         model.addAttribute("message", message);
 
@@ -118,8 +119,6 @@ public class PaymentController {
 //    public String paymentCancel(){
 //        return "";
 //    }
-
-
 
 
 }

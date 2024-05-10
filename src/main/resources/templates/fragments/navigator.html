@@ -17,14 +17,14 @@
                         <!--root category 반복-->
                         <div class="nav-item dropdown" th:each="rootCategory : ${rootCategories}">
                             <div th:if="${rootCategory.isActivated}">
-                                <a th:href="@{'/books/category/' + ${rootCategory.categoryId}}" class="nav-link"
-                                   data-toggle="dropdown">
+                                <a class="nav-link" data-toggle="dropdown"
+                                   th:href="@{'/books/category/' + ${rootCategory.categoryId}}">
                                     <span th:text="${rootCategory.categoryName}"/>
                                     <i class="fa fa-angle-down float-right mt-1"></i></a>
 
                                 <!--sub category 반복-->
-                                <div th:if="${rootCategory.children}"
-                                     class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0"
+                                     th:if="${rootCategory.children}">
                                     <div th:each="child : ${rootCategory.children}">
                                         <a class="dropdown-item"
                                            th:href="@{'/books/category/' + ${child.categoryId}}">
@@ -49,28 +49,28 @@
     <div class="border-bottom mb-4 pb-4">
         <h5 class="font-weight-semi-bold mb-4">상품 관리</h5>
         <form>
-            <a href="/admin/books/main" class="nav-item nav-link">도서 관리</a>
-            <a href="/admin/publishers/list" class="nav-item nav-link">출판사 관리</a>
-            <a href="/admin/tags/list" class="nav-item nav-link">태그 관리</a>
-            <a href="/admin/contributors/list" class="nav-item nav-link">기여자 관리</a>
-            <a href="/admin/roles/list" class="nav-item nav-link">역할 관리</a>
-            <a href="/admin/categories" class="nav-item nav-link">카테고리 관리</a>
-            <a href="/admin/packages" class="nav-item nav-link">포장지 관리</a>
+            <a class="nav-item nav-link" href="/admin/books/main">도서 관리</a>
+            <a class="nav-item nav-link" href="/admin/publishers/list">출판사 관리</a>
+            <a class="nav-item nav-link" href="/admin/tags/list">태그 관리</a>
+            <a class="nav-item nav-link" href="/admin/contributors/list">기여자 관리</a>
+            <a class="nav-item nav-link" href="/admin/roles/list">역할 관리</a>
+            <a class="nav-item nav-link" href="/admin/categories">카테고리 관리</a>
+            <a class="nav-item nav-link" href="/admin/packages">포장지 관리</a>
         </form>
     </div>
     <div class="border-bottom mb-4 pb-4">
         <h5 class="font-weight-semi-bold mb-4">회원 관리</h5>
         <form>
-            <a href="" class="nav-item nav-link">회원 관리</a>
-            <a href="" class="nav-item nav-link">주문 관리</a>
+            <a class="nav-item nav-link" href="">회원 관리</a>
+            <a class="nav-item nav-link" href="">주문 관리</a>
         </form>
     </div>
     <div class="border-bottom mb-4 pb-4">
         <h5 class="font-weight-semi-bold mb-4">정책 관리</h5>
         <form>
-            <a href="/admin/pointPolicies" class="nav-item nav-link">포인트 관리</a>
-            <a href="#" class="nav-item nav-link">쿠폰 관리</a>
-            <a href="/admin/deliveryPolicies" class="nav-item nav-link">배송비 관리</a>
+            <a class="nav-item nav-link" href="/admin/pointPolicies">포인트 관리</a>
+            <a class="nav-item nav-link" href="#">쿠폰 관리</a>
+            <a class="nav-item nav-link" href="/admin/deliveryPolicies">배송비 관리</a>
         </form>
     </div>
 
@@ -82,7 +82,7 @@
     <div class="border-bottom mb-4 pb-4">
         <h5 class="font-weight-semi-bold mb-4">나의 G2nee</h5>
         <form>
-            <a href="/mypage/address" class="nav-item nav-link">나의 주소</a>
+            <a class="nav-item nav-link" href="/mypage/address">나의 주소</a>
         </form>
     </div>
 

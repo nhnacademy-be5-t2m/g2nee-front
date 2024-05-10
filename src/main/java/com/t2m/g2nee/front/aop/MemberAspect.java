@@ -24,10 +24,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class MemberAspect {
 
     public static final String MEMBER_INFO_KEY = "SPRING_SECURITY_CONTEXT";
-    public final RedisTemplate redisTemplate;
-    private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
     public static final String MEMBER_INFO = "memberInfo";
     public static final String LIKE_NUM = "likeNum";
+    public final RedisTemplate redisTemplate;
+    private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
 
     @Pointcut("@annotation(com.t2m.g2nee.front.annotation.Member)")
     private void member() {
