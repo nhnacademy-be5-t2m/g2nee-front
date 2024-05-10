@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.shoppingcart.service;
 
 import com.t2m.g2nee.front.shoppingcart.adaptor.ShoppingCartAdaptor;
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
+import com.t2m.g2nee.front.utils.CookieUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,14 +180,12 @@ public class ShoppingCartService {
             // 회원 아이디가 없으면 비회원으로 찾기
         } else {
 
-            Cookie[] cookies = httpServletRequest.getCookies();
-            for (Cookie c : cookies) {
-                if (c.getName().equals("cart")) {
+            Cookie cookie = CookieUtil.findCookie("cart");
+                if (cookie != null) {
                     // 비회원은 유효기간 확인용 더미 더미데이터가 존재하여 개수 1를 뺴줍니다.
-                    return redisTemplate.opsForHash().entries(c.getValue()).size() - 1;
+                    return redisTemplate.opsForHash().entries(cookie.getValue()).size() - 1;
                 }
             }
-        }
         return 0;
     }
 
