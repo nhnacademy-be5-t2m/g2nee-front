@@ -109,6 +109,7 @@ public class BookDto {
         private int price;
         private int salePrice;
         private int viewCount;
+        private int quantity;
         private String publisherName;
         private String publisherEngName;
         private BookStatus bookStatus;
