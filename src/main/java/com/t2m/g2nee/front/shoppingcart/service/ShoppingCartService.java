@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.shoppingcart.service;
 
 import com.t2m.g2nee.front.shoppingcart.adaptor.ShoppingCartAdaptor;
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
+import com.t2m.g2nee.front.utils.CookieUtil;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,7 +78,8 @@ public class ShoppingCartService {
      * @param customerId 회원 아이디 또는 비회원의 세션아이디
      * @return List<ShoppingCartDto.Response>
      */
-    public List<ShoppingCartDto.Response> getCartByMember(String customerId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+    public List<ShoppingCartDto.Response> getCartByCustomer(String customerId, HttpServletRequest httpServletRequest,
+                                                            HttpServletResponse httpServletResponse) {
 
         customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
 
@@ -93,6 +96,29 @@ public class ShoppingCartService {
             bookListInCart.add((ShoppingCartDto.Response) cart);
         }
         return bookListInCart;
+    }
+
+    /**
+     * 로그아웃, 토큰 만료 시 DB에 장바구니 정보를 옮겨주는 메서드
+     * @param memberId 회원 아이디
+     */
+    public void migrateCartRedisToDB(String memberId) {
+
+        Map<Object, Object> cartList = redisTemplate.opsForHash().entries(memberId);
+
+        List<ShoppingCartDto.Response> bookListInCart = new ArrayList<>();
+
+        for (Object cart : cartList.values()) {
+            bookListInCart.add((ShoppingCartDto.Response) cart);
+        }
+        List<ShoppingCartDto.Request> requestList = bookListInCart.stream()
+                .map(sc -> ShoppingCartDto.Request.builder()
+                        .bookId(String.valueOf(sc.getBookId()))
+                        .quantity(sc.getQuantity())
+                        .customerId(sc.getCustomerId())
+                        .build()).collect(Collectors.toList());
+
+        shoppingCartAdaptor.migrateCartRedisToDB(memberId, requestList);
     }
 
     /**
@@ -117,6 +143,15 @@ public class ShoppingCartService {
 
     }
 
+    /**
+     * 장바구니 내 책 수량을 변경하는 메서드
+     *
+     * @param customerId          회원 아이디 또는 비회원의 세션아이디
+     * @param request             장바구니 정보 객체
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @return ShoppingCartDto.Response
+     */
     public ShoppingCartDto.Response updateCartQuantity(String customerId, ShoppingCartDto.Request request,
                                                        HttpServletRequest httpServletRequest,
                                                        HttpServletResponse httpServletResponse) {
@@ -145,14 +180,12 @@ public class ShoppingCartService {
             // 회원 아이디가 없으면 비회원으로 찾기
         } else {
 
-            Cookie[] cookies = httpServletRequest.getCookies();
-            for (Cookie c : cookies) {
-                if (c.getName().equals("cart")) {
+            Cookie cookie = CookieUtil.findCookie("cart");
+                if (cookie != null) {
                     // 비회원은 유효기간 확인용 더미 더미데이터가 존재하여 개수 1를 뺴줍니다.
-                    return redisTemplate.opsForHash().entries(c.getValue()).size() - 1;
+                    return redisTemplate.opsForHash().entries(cookie.getValue()).size() - 1;
                 }
             }
-        }
         return 0;
     }
 
