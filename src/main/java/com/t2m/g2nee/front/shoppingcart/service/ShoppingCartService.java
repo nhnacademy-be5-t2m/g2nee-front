@@ -38,16 +38,14 @@ public class ShoppingCartService {
     /**
      * @param customerId          회원 아이디 또는 비회원의 세션아이디
      * @param request             장바구니 요청 객체
-     * @param httpServletRequest  getBookForCart
      * @param httpServletResponse httpServletResponse
      * @return ShoppingCartDto.Response
      */
     public ShoppingCartDto.Response addBookInCart(String customerId, ShoppingCartDto.Request request,
-                                                  HttpServletRequest httpServletRequest,
                                                   HttpServletResponse httpServletResponse) {
 
         // 회원 또는 비회원 UUID를 가져옵니다.
-        customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
+        customerId = getCustomerId(customerId, httpServletResponse);
 
         // 이미 장바구니에 있는 책이면 객체를 가져옵니다.
         ShoppingCartDto.Response cart =
@@ -81,7 +79,7 @@ public class ShoppingCartService {
     public List<ShoppingCartDto.Response> getCartByCustomer(String customerId, HttpServletRequest httpServletRequest,
                                                             HttpServletResponse httpServletResponse) {
 
-        customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
+        customerId = getCustomerId(customerId, httpServletResponse);
 
         Map<Object, Object> cartList = redisTemplate.opsForHash().entries(customerId);
 
@@ -126,16 +124,14 @@ public class ShoppingCartService {
      *
      * @param customerId          회원 아이디 또는 비회원의 세션아이디
      * @param bookId              책 아이디
-     * @param httpServletRequest
      * @param httpServletResponse
      * @return ShoppingCartDto.Response
      */
     public ShoppingCartDto.Response pullBookInCart(String customerId, String bookId,
-                                                   HttpServletRequest httpServletRequest,
                                                    HttpServletResponse httpServletResponse) {
 
         // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 UUID 설정
-        customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
+        customerId = getCustomerId(customerId,httpServletResponse);
         ShoppingCartDto.Response cart =
                 (ShoppingCartDto.Response) redisTemplate.opsForHash().get(customerId, bookId);
         redisTemplate.opsForHash().delete(customerId, bookId);
@@ -148,15 +144,13 @@ public class ShoppingCartService {
      *
      * @param customerId          회원 아이디 또는 비회원의 세션아이디
      * @param request             장바구니 정보 객체
-     * @param httpServletRequest
      * @param httpServletResponse
      * @return ShoppingCartDto.Response
      */
     public ShoppingCartDto.Response updateCartQuantity(String customerId, ShoppingCartDto.Request request,
-                                                       HttpServletRequest httpServletRequest,
                                                        HttpServletResponse httpServletResponse) {
         // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 sessionId를 설정
-        customerId = getCustomerId(customerId, httpServletRequest, httpServletResponse);
+        customerId = getCustomerId(customerId, httpServletResponse);
 
         ShoppingCartDto.Response cart =
                 (ShoppingCartDto.Response) redisTemplate.opsForHash().get(customerId, request.getBookId());
@@ -169,10 +163,9 @@ public class ShoppingCartService {
 
     /**
      * @param memberId           회원 아이디
-     * @param httpServletRequest httpServletRequest
      * @return int
      */
-    public int getCartItemNum(Long memberId, HttpServletRequest httpServletRequest) {
+    public int getCartItemNum(Long memberId) {
 
         // 회원 아이디가 있으면 회원 아이디로 찾기
         if (memberId != null) {
@@ -193,16 +186,15 @@ public class ShoppingCartService {
      * 고객의 아이디를 얻는 메서드
      *
      * @param customerId          회원 또는 비회원 세션 아이디
-     * @param httpServletRequest httpServletRequest
      * @param httpServletResponse httpServletResponse
      * @return String
      */
-    private String getCustomerId(String customerId, HttpServletRequest httpServletRequest,
+    private String getCustomerId(String customerId,
                                  HttpServletResponse httpServletResponse) {
 
         // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 UUID를 설정
         if (customerId == null) {
-            customerId = getCartUUID(httpServletRequest);
+            customerId = getCartUUID();
 
             if (!StringUtils.hasText(customerId)) {
                 customerId = createCartCookie(httpServletResponse);
@@ -228,17 +220,13 @@ public class ShoppingCartService {
 
     /**
      * 비회원일 경우 ( memberId == null ) 쿠키에서 세션 아이디를 얻는 메서드
-     *
-     * @param httpRequest httpRequest
      * @return String
      */
-    private String getCartUUID(HttpServletRequest httpRequest) {
-        Cookie[] cookies = httpRequest.getCookies();
+    private String getCartUUID() {
+        Cookie cookie = CookieUtil.findCookie("cart");
 
-        for (Cookie c : cookies) {
-            if (c.getName().equals("cart")) {
-                return c.getValue();
-            }
+        if (cookie != null) {
+            return cookie.getValue();
         }
         return null;
     }

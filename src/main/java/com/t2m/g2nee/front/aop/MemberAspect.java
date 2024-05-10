@@ -57,7 +57,7 @@ public final ShoppingCartService shoppingCartService;
             memberId = addMemberInfo(sessionId);
         }
         addLikeNum(memberId);
-        addCartItemNum(memberId,request);
+        addCartItemNum(memberId);
 
         Object result = joinPoint.proceed(args);
         threadLocal.remove();
@@ -80,8 +80,8 @@ public final ShoppingCartService shoppingCartService;
         threadLocal.get().put(LIKE_NUM, likeNum);
     }
 
-    private void addCartItemNum(Long memberId,HttpServletRequest httpServletRequest){
-        int cartItemNum = shoppingCartService.getCartItemNum(memberId, httpServletRequest);
+    private void addCartItemNum(Long memberId){
+        int cartItemNum = shoppingCartService.getCartItemNum(memberId);
         threadLocal.get().put(CART_ITEM_NUM, cartItemNum);
     }
 

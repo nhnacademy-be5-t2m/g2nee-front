@@ -36,14 +36,12 @@ public class ShoppingCartRestController {
     /**
      * 레디스 DB에 장바구니 객체를 추가하는 컨트롤러
      * @param request 회원아이디, 책아이디, 수량 이 담긴 객체
-     * @param httpServletRequest
      * @param httpServletResponse
      * @return ResponseEntity<ShoppingCartDto.Response>
      */
     @Member
     @PostMapping
     public ResponseEntity<ShoppingCartDto.Response> addBookInCart(@RequestBody ShoppingCartDto.Request request,
-                                                                  HttpServletRequest httpServletRequest,
                                                                   HttpServletResponse httpServletResponse) {
 
 
@@ -54,21 +52,19 @@ public class ShoppingCartRestController {
         }
 
         ShoppingCartDto.Response response =
-                shoppingCartService.addBookInCart(customerId, request, httpServletRequest, httpServletResponse);
+                shoppingCartService.addBookInCart(customerId, request,httpServletResponse);
 
         return ResponseEntity.ok(response);
     }
     /**
      * 레디스 DB에 장바구니 객체를 삭제하는 컨트롤러
      * @param bookId 책아이디
-     * @param httpServletRequest
      * @param httpServletResponse
      * @return ResponseEntity<ShoppingCartDto.Response>
      */
     @Member
     @DeleteMapping("/book/{bookId}")
     public ResponseEntity<ShoppingCartDto.Response> pullBookInCart(@PathVariable String bookId,
-                                                                   HttpServletRequest httpServletRequest,
                                                                    HttpServletResponse httpServletResponse
 
                                                                    ) {
@@ -79,7 +75,7 @@ public class ShoppingCartRestController {
         }
 
         ShoppingCartDto.Response response =
-                shoppingCartService.pullBookInCart(customerId, bookId, httpServletRequest,
+                shoppingCartService.pullBookInCart(customerId, bookId,
                         httpServletResponse);
 
         return ResponseEntity.ok(response);
@@ -89,7 +85,6 @@ public class ShoppingCartRestController {
     /**
      * 책 수량을 변경하는 컨트롤러
      * @param request 책아이디와 수량이 담긴 객체
-     * @param httpServletRequest
      * @param httpServletResponse
      * @return ResponseEntity<ShoppingCartDto.Response>
      *
@@ -97,7 +92,6 @@ public class ShoppingCartRestController {
     @Member
     @PatchMapping
     public ResponseEntity<ShoppingCartDto.Response> updateCartQuantity(@RequestBody ShoppingCartDto.Request request,
-                                                                        HttpServletRequest httpServletRequest,
                                                                         HttpServletResponse httpServletResponse){
         String customerId = null;
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
@@ -106,7 +100,7 @@ public class ShoppingCartRestController {
         }
 
         ShoppingCartDto.Response response =
-                shoppingCartService.updateCartQuantity(customerId, request, httpServletRequest, httpServletResponse);
+                shoppingCartService.updateCartQuantity(customerId, request,httpServletResponse);
 
         return ResponseEntity.ok(response);
     }
