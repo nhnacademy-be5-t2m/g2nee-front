@@ -50,11 +50,12 @@ public class BookGetService {
      * @param page     페이지 번호
      * @param keyword  검색 키워드
      * @param sort     정렬 조건
+     * @param condition 검색 조건
      * @return PageResponse<BookDto.ListResponse>
      */
-    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort) {
+    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort,String condition) {
 
-        return bookGetAdaptor.getBooksBySearch(page, memberId, keyword, sort);
+        return bookGetAdaptor.getBooksBySearch(page, memberId, keyword, sort,condition);
 
     }
 

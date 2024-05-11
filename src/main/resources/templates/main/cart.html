@@ -41,8 +41,10 @@
                     <tr th:each="cart : ${cartList}">
                         <td id="cart" style="text-align: left;">
                             <img th:src="${cart.imageUrl}" alt="image" style="width: 70px;">
+                            <a th:href="@{'/books/' + ${cart.bookId}}">
                             <span style="margin-left: 30px" th:text="${cart.title} + ' - ' + ${cart.engTitle}">
                             </span>
+                            </a>
                         </td>
                         <td class="align-middle" th:text="'₩ ' + ${cart.price}"></td>
                         <td class="align-middle">

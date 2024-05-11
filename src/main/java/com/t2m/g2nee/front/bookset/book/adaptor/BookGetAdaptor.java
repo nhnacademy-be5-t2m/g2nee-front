@@ -31,9 +31,10 @@ public interface BookGetAdaptor {
      * @param page     페이지 번호
      * @param keyword  검색 키워드
      * @param sort     정렬 조건
+     * @param condition 검색 조건
      * @return PageResponse<BookDto.ListResponse>
      */
-    PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort);
+    PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort, String condition);
 
     /**
      * 카테고리별 책 조회 메서드

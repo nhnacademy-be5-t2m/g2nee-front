@@ -47,6 +47,12 @@
             <div class="col-lg-6 col-6 text-left">
                 <form th:action="@{/books/search}" th:method="get">
                     <div class="input-group">
+                        <select name="condition" class="form-select" aria-label="검색 조건">
+                            <option value="INTEGRATION">통합검색</option>
+                            <option value="PUBLISHER">출판사</option>
+                            <option value="CONTRIBUTOR">참여자</option>
+                            <option value="TAG">태그</option>
+                        </select>
                         <input id="keyword" type="text" class="form-control" name="keyword"
                                placeholder="Search for products">
                         <input type="hidden" name="page" value="1">

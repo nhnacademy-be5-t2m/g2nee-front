@@ -154,5 +154,17 @@ public class BookDto {
             this.value = value;
         }
     }
+
+    @Getter
+    public enum SearchCondition {
+
+        INTEGRATION("통합검색"), PUBLISHER("출판사"), CONTRIBUTOR("참여자"), TAG("태그");
+
+        private final String value;
+
+        SearchCondition(String value) {
+            this.value = value;
+        }
+    }
 }
 
