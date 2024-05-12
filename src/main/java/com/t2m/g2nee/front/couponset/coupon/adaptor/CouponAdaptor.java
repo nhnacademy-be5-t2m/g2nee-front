@@ -1,15 +1,15 @@
-package com.t2m.g2nee.front.couponset.coupon.service;
+package com.t2m.g2nee.front.couponset.coupon.adaptor;
 
 import com.t2m.g2nee.front.couponset.coupon.dto.request.CouponDownloadDto;
 import com.t2m.g2nee.front.couponset.coupon.dto.request.CouponIssueDto;
 import com.t2m.g2nee.front.couponset.coupon.dto.response.CouponInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 
-public interface CouponService {
+public interface CouponAdaptor {
 
-    CouponInfoDto issueCoupon(CouponIssueDto request);
+    CouponInfoDto requestIssueCoupon(CouponIssueDto request);
 
-    CouponInfoDto downloadCoupon(CouponDownloadDto request);
+    CouponInfoDto requestDownloadCoupon(CouponDownloadDto request);
 
     PageResponse<CouponInfoDto> getMyCoupons(Long customerId, int page);
 

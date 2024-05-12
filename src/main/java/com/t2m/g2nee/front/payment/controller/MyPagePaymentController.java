@@ -1,9 +1,11 @@
 package com.t2m.g2nee.front.payment.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class MypagePaymentController {
+@RequestMapping("/mypage/payments")
+public class MyPagePaymentController {
 
 //    private final MemberAspect memberAspect;
 //
