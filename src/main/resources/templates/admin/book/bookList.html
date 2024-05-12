@@ -57,7 +57,8 @@
                                         </form>
                                     </div>
                                     <div class="col-md-5">
-                                        <form style="display: flex;" th:action="@{'/admin/books/status/' + ${book.bookId}}"
+                                        <form style="display: flex;"
+                                              th:action="@{'/admin/books/status/' + ${book.bookId}}"
                                               th:method="patch">
                                             <select class="form-control mr-2" id="statusSelect" name="bookStatus">
                                                 <option th:text="${book.bookStatus.status}"></option>

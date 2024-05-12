@@ -63,7 +63,8 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="publisherEngName">출판사 영문 이름</label>
-                    <input class="form-control-sm" id="publisherEngName" name="publisherEngName" pattern="^[0-9a-zA-Z\s]+$"
+                    <input class="form-control-sm" id="publisherEngName" name="publisherEngName"
+                           pattern="^[0-9a-zA-Z\s]+$"
                            required type="text">
                 </div>
                 <div class="d-flex justify-content-start mb-3">
@@ -87,7 +88,8 @@
                     <td class="align-middle" th:text="${publisher.publisherEngName}"></td>
                     <td class="text-center align-middle">
                         <div aria-label="Basic outlined example" class="btn-group" role="group">
-                            <button class="btn btn-outline-primary btn-sm" th:onclick="'toggleModifyFields('+${publisher.publisherId}+')'"
+                            <button class="btn btn-outline-primary btn-sm"
+                                    th:onclick="'toggleModifyFields('+${publisher.publisherId}+')'"
                                     type="button">수정
                             </button>
                             <div style="display: none;" th:id="'modifyFields-'+${publisher.publisherId}">
@@ -95,7 +97,8 @@
                                       th:method="patch">
                                     <div class="mb-3">
                                         <label class="form-label" for="publisherModifyName">출판사 이름</label>
-                                        <input class="form-control form-control-sm" id="publisherModifyName" name="publisherName"
+                                        <input class="form-control form-control-sm" id="publisherModifyName"
+                                               name="publisherName"
                                                pattern="^[가-힣0-9]+$" required type="text">
                                     </div>
                                     <div class="mb-3">

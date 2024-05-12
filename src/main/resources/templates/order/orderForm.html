@@ -95,7 +95,8 @@
                 <th class="order-word" for="message" scope="row" style="width: 20%">배송요청사항(선택)</th>
                 <td style="display : flex">
                     <div>
-                        <select class="select order-text" id="selectMessage" onchange="setDeliveryMessage()" style="width:300px"
+                        <select class="select order-text" id="selectMessage" onchange="setDeliveryMessage()"
+                                style="width:300px"
                                 title="배송 요청사항 선택">
                             <option value="">--배송 시 요청사항을 선택해주세요--</option>
                             <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
@@ -258,7 +259,8 @@
                 <td style="display : flex">
                     <span type="text">-</span>
                     <span id="totalPointSale" th:text="${totalPointSale}" type="text"></span>
-                    <input id="quantity" min="0" name="quantity" onchange="pointChange()" style="width:100px;margin-left:10px"
+                    <input id="quantity" min="0" name="quantity" onchange="pointChange()"
+                           style="width:100px;margin-left:10px"
                            type="number">
                     <span style="margin-left:10px" th:text="'( 잔여 포인트 : '+${totalPoint}+' )'" type="text"></span>
                     <input id="totalPoint" th:value="${totalPoint}" type="hidden"></input>

@@ -80,7 +80,8 @@
                     <td class="align-middle" th:text="${role.roleName}"></td>
                     <td class="text-center align-middle">
                         <div aria-label="Basic outlined example" class="btn-group" role="group">
-                            <button class="btn btn-outline-primary btn-sm" th:onclick="'toggleModifyFields('+${role.roleId}+')'"
+                            <button class="btn btn-outline-primary btn-sm"
+                                    th:onclick="'toggleModifyFields('+${role.roleId}+')'"
                                     type="button">수정
                             </button>
                             <div style="display: none;" th:id="'modifyFields-'+${role.roleId}">

@@ -15,7 +15,8 @@
 
     <form enctype="multipart/form-data"
           id="packageForm"
-          th:action="${package != null ? '/admin/packages/modify/' + package.packageId : '/admin/packages/save'}" th:method="${package != null ? 'PUT' : 'POST'}">
+          th:action="${package != null ? '/admin/packages/modify/' + package.packageId : '/admin/packages/save'}"
+          th:method="${package != null ? 'PUT' : 'POST'}">
 
         <div class="mb-3">
             <label class="form-label" for="image">포장지 이미지 첨부</label>
@@ -36,11 +37,13 @@
         </div>
 
         <div class="mb-3 form-check form-check-inline">
-            <input class="form-check-input" id="activateYes" name="isActivated" th:checked="${package != null and package.isActivated != null and package.isActivated}" type="radio"
+            <input class="form-check-input" id="activateYes" name="isActivated"
+                   th:checked="${package != null and package.isActivated != null and package.isActivated}" type="radio"
                    value="true">
             <label class="form-check-label" for="activateYes">활성화</label>
 
-            <input class="form-check-input ms-5" id="activateNo" name="isActivated" th:checked="${package != null and package.isActivated == null and !package.isActivated}" type="radio"
+            <input class="form-check-input ms-5" id="activateNo" name="isActivated"
+                   th:checked="${package != null and package.isActivated == null and !package.isActivated}" type="radio"
                    value="false">
             <label class="form-check-label" for="activateNo">비활성화</label>
         </div>

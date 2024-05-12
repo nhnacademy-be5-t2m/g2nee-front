@@ -57,7 +57,8 @@
                             <a class="cat-img position-relative overflow-hidden mb-3"
                                style="flex: 1; display: flex; justify-content: center; align-items: center; max-width: 100%; max-height: 300px;"
                                th:href="@{'/books/' + ${book.bookId}}">
-                                <img alt="thumbnail" class="img-fluid" style="max-width: 100%; max-height: 100%; object-fit: contain;"
+                                <img alt="thumbnail" class="img-fluid"
+                                     style="max-width: 100%; max-height: 100%; object-fit: contain;"
                                      th:src="${book.thumbnailImageUrl}">
                             </a>
                             <h5 class="mb-2 text-center" th:text="${book.title}"></h5>
@@ -70,9 +71,11 @@
                                th:text="${book.publisherName} +' | ' + ${book.publishedDate}"></p>
                             <div class="d-flex align-items-center mb-4 pt-2"
                                  th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}">
-                   <span class="btn-primary px-4" style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;"
+                   <span class="btn-primary px-4"
+                         style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;"
                          th:if="${book.bookStatus.name() == 'SOLDOUT'}">매진</span>
-                                <span class="btn-primary px-4" style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;"
+                                <span class="btn-primary px-4"
+                                      style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;"
                                       th:if="${book.bookStatus.name() == 'OUTOFPRINT'}">절판</span>
                             </div>
                         </div>

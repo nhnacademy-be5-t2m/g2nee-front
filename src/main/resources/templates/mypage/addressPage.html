@@ -25,7 +25,8 @@
         <tr>
             <td>
                 <input id="addressId" th:value="${address.getAddressId()}" type="hidden"/>
-                <input onclick="setDefaultAddress(this)" th:checked="${address.getIsDefault()}" th:name="selectedAddress"
+                <input onclick="setDefaultAddress(this)" th:checked="${address.getIsDefault()}"
+                       th:name="selectedAddress"
                        th:value="${address.getAddressId()}" type="radio">
             </td>
             <td>

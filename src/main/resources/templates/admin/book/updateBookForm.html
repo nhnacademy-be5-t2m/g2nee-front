@@ -65,37 +65,43 @@
 
                     <div class="form-group">
                         <label for="publishedDate">출판일</label>
-                        <input class="form-control" id="publishedDate" name="publishedDate" required th:value="${book != null ? book.publishedDate : ''}"
+                        <input class="form-control" id="publishedDate" name="publishedDate" required
+                               th:value="${book != null ? book.publishedDate : ''}"
                                type="date">
                     </div>
 
                     <div class="form-group">
                         <label for="price">가격</label>
-                        <input class="form-control" id="price" name="price" pattern="\d+" required th:value="${book != null ? book.price : ''}"
+                        <input class="form-control" id="price" name="price" pattern="\d+" required
+                               th:value="${book != null ? book.price : ''}"
                                type="number">
                     </div>
 
                     <div class="form-group">
                         <label for="salePrice">할인 가격</label>
-                        <input class="form-control" id="salePrice" name="salePrice" pattern="\d+" required th:value="${book != null ? book.salePrice : ''}"
+                        <input class="form-control" id="salePrice" name="salePrice" pattern="\d+" required
+                               th:value="${book != null ? book.salePrice : ''}"
                                type="number">
                     </div>
 
                     <div class="form-group">
                         <label for="isbn">ISBN</label>
-                        <input class="form-control" id="isbn" name="isbn" required th:value="${book != null ? book.isbn : ''}"
+                        <input class="form-control" id="isbn" name="isbn" required
+                               th:value="${book != null ? book.isbn : ''}"
                                type="text">
                     </div>
 
                     <div class="form-group">
                         <label for="pages">페이지 수</label>
-                        <input class="form-control" id="pages" name="pages" pattern="\d+" required th:value="${book != null ? book.pages : ''}"
+                        <input class="form-control" id="pages" name="pages" pattern="\d+" required
+                               th:value="${book != null ? book.pages : ''}"
                                type="number">
                     </div>
 
                     <div class="form-group">
                         <label for="quantity">수량</label>
-                        <input class="form-control" id="quantity" name="quantity" pattern="\d+" required th:value="${book != null ? book.quantity : ''}"
+                        <input class="form-control" id="quantity" name="quantity" pattern="\d+" required
+                               th:value="${book != null ? book.quantity : ''}"
                                type="number">
                     </div>
 

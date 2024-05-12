@@ -80,7 +80,8 @@
                     <td class="align-middle" th:text="${tag.tagName}"></td>
                     <td class="text-center align-middle">
                         <div aria-label="Basic outlined example" class="btn-group" role="group">
-                            <button class="btn btn-outline-primary btn-sm" th:onclick="'toggleModifyFields('+${tag.tagId}+')'"
+                            <button class="btn btn-outline-primary btn-sm"
+                                    th:onclick="'toggleModifyFields('+${tag.tagId}+')'"
                                     type="button">수정
                             </button>
                             <div style="display: none;" th:id="'modifyFields-'+${tag.tagId}">

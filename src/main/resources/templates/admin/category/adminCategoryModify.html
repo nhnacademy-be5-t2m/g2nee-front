@@ -22,16 +22,19 @@
 
         <div class="mb-3">
             <label class="form-label" for="categoryEngName">카테고리 영문이름:</label>
-            <input class="form-control" id="categoryEngName" name="categoryEngName" th:value="${category.categoryEngName}"
+            <input class="form-control" id="categoryEngName" name="categoryEngName"
+                   th:value="${category.categoryEngName}"
                    type="text">
         </div>
 
         <div class="mb-3 form-check form-check-inline">
-            <input class="form-check-input" id="activateYes" name="isActivated" onclick="show(this);" th:checked="${category.isActivated}"
+            <input class="form-check-input" id="activateYes" name="isActivated" onclick="show(this);"
+                   th:checked="${category.isActivated}"
                    type="radio" value="true">
             <label class="form-check-label" for="activateYes">활성화</label>
 
-            <input class="form-check-input ms-5" id="activateNo" name="isActivated" onclick="show(this);" th:checked="${!category.isActivated}"
+            <input class="form-check-input ms-5" id="activateNo" name="isActivated" onclick="show(this);"
+                   th:checked="${!category.isActivated}"
                    type="radio" value="false">
             <label class="form-check-label" for="activateNo">비활성화</label>
         </div>

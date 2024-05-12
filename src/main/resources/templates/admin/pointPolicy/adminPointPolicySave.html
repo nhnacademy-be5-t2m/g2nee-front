@@ -14,7 +14,8 @@
     <h2 class="text-center"> 포인트 정책 저장</h2>
 
     <form id="pointPolicyForm"
-          th:action="${pointPolicy != null ? '/admin/pointPolicies/modify/' + pointPolicy.pointPolicyId : '/admin/pointPolicies/save'}" th:method="${pointPolicy != null ? 'PUT' : 'POST'}">
+          th:action="${pointPolicy != null ? '/admin/pointPolicies/modify/' + pointPolicy.pointPolicyId : '/admin/pointPolicies/save'}"
+          th:method="${pointPolicy != null ? 'PUT' : 'POST'}">
 
         <div class="mb-3">
             <label class="form-label" for="policyName">포인트 정책 명: </label>
