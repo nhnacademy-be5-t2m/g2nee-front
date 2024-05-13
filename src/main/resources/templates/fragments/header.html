@@ -7,8 +7,6 @@
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center">
                     <a href="/books" class="nav-item nav-link active">Home</a>
-                    <span class="text-muted px-2"> | </span>
-                    <a href="/cart" class="nav-item nav-link">Cart</a>
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
@@ -65,9 +63,9 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge" th:text="${likesNum}"></span>
                 </a>
-                <a href="/cart" class="btn border">
+                <a href="/carts/customer" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge" id="cartItemNum" th:text="${cartItemNum}"></span>
                 </a>
             </div>
         </div>

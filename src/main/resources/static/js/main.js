@@ -88,7 +88,7 @@
     // Product Quantity
     $('.quantity button').on('click', function () {
         let button = $(this);
-        let oldValue = document.querySelector('#bookCount').value;
+        let oldValue = button.parent().parent().find('input').val();
         let newVal = parseFloat(oldValue);
         if (button.hasClass('btn-plus')) {
             newVal++;
@@ -99,13 +99,7 @@
                 newVal = 0;
             }
         }
-        document.querySelector('#bookCount').value = newVal;
+        button.parent().parent().find('input').val(newVal);
     });
 
 })(jQuery);
-
-function getCookie(name) {
-    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return value ? value[2] : null;
-}
-

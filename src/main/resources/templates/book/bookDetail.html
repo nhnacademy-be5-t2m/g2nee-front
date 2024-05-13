@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
           crossOrigin="anonymous" referrerpolicy="no-referrer"/>
-    <title>G2nee Book shop</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>G2nee Book shop</title>
 </head>
 
 <body>
@@ -41,7 +41,6 @@
                 <h3 class="font-weight-semi-bold">
                     <span th:text="${book.title}"></span>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
-                    <input type="hidden" id=bookId th:value="${book.bookId}"></input>
                 </h3>
                 <div class="mb-3">
                     <i class="fa-solid fa-user"></i>
@@ -77,44 +76,41 @@
                 </h5>
                 <hr/>
 
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
-                     class="d-flex align-items-center mb-4 pt-2">
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
                          style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
                     <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
                           style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
                 </div>
                 <!-- 구매할 책 갯수 설정 -->
-                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
-                     class="d-flex align-items-center mb-4 pt-2">
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" id="bookCount" value="1">
+                        <input id="quantity" type="text" class="form-control bg-secondary text-center" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3" style="margin-right: 10px"><i
+                    <button id="cartButton"
+                            th:data-bookId="${book.bookId}"
+                            th:data-bookTitle="${book.title}"
+                            th:data-bookQuantity="${book.quantity}"
+                            th:data-cartItemNum="${cartItemNum}"
+                            type="button" class="btn btn-primary px-3" style="margin-right: 10px"><i
                             class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
                     </button>
-                    <a>
-                        <button onclick="buyNowButton()" class="btn btn-primary px-3" style="margin-right: 10px"><i
-                                class="fa fa-check-circle mr-1"></i>바로 구매
-                        </button>
-                    </a>
-
                     <a class="btn btn-sm text-dark p-0"
                        th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}"
                        th:data-likesNum="${likesNum}"
                        th:data-memberId="${memberId}">
-                        <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                        <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                            th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                            th:data-memberId="${memberId}">
                             <i class="fa-regular fa-heart text-primary" style="font-size: 24px"
@@ -199,6 +195,7 @@
                                                 th:data-reviewContent="${review.content}"
                                                 th:data-reviewId="${review.reviewId}"
                                                 th:data-reviewScore="${review.score}"
+                                                th:data-memberId="${memberId}"
                                                 th:if="${review.memberId == memberId}"
                                                 type="button">수정
                                         </button>
@@ -305,8 +302,7 @@
                             <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>상세보기</a>
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>상세보기</a>
                             <a href="" class="btn btn-sm text-dark p-0"><i
                                     class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</a>
                         </div>
@@ -320,10 +316,11 @@
 </body>
 
 </html>
-<script src="/static/js/book/setLike.js"></script>
-<script src="/static/js/order/order.js"></script>
+<script src="/static/js/book/setLike.js">
+</script>
+<script src="/static/js/book/putBookInCart.js">
+</script>
 <script th:inline="javascript">
-
 
     // 평균 별점
     window.onload = function () {
@@ -352,6 +349,7 @@
 
         starRatingElement.innerHTML = stars;
     }
+
 
 
     let page = [[${reviewPage.currentPage}]];
@@ -430,6 +428,28 @@
                     p.textContent = review.content;
                     reviewBodyDiv.appendChild(p);
 
+                    var modifyButton = document.createElement('button');
+                    modifyButton.className = 'btn btn-outline-primary btn-sm';
+                    modifyButton.id = 'modifyButton';
+                    modifyButton.textContent = '수정';
+
+                    let reviewContent = review.content;
+                    let reviewId = review.reviewId;
+                    let reviewScore = review.score;
+                    modifyButton.dataset.reviewContent = reviewContent;
+                    modifyButton.dataset.reviewId = reviewId;
+                    modifyButton.dataset.reviewScore = reviewScore;
+
+                    modifyButton.onclick = function() {
+                            modifyReview(reviewId, reviewContent);
+                    }
+
+                    let memberId = [[${memberId}]];
+                    if (review.memberId === memberId) {
+                        modifyButton.type = 'button';
+                        reviewBodyDiv.appendChild(modifyButton);
+                    }
+
                     // 'media' div 요소에 'media-body' div 요소를 추가합니다.
                     reviewDiv.appendChild(reviewBodyDiv);
 
@@ -478,8 +498,11 @@
 
         //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
         if (memberId === undefined) {
-            alert('리뷰는 회원만 작성할 수 있습니다');
-            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: '도서를 구매한 만큼 리뷰만 작성할 수 있습니다.',
+                text: '구입한 도서 수  : '
+            })
             return
         }
         let bookId = [[${bookId}]];
@@ -497,6 +520,13 @@
 
                 } else {
                     document.querySelector('#postReviewForm').submit();
+                    Swal.fire({
+                        position: "middle",
+                        icon: "success",
+                        title: "리뷰를 작성했습니다.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -527,7 +557,14 @@
                 input.setAttribute('value', reviewId);
                 document.querySelector('#modifyReviewForm').appendChild(input);
                 document.querySelector('#modifyReviewForm').submit();
-                alert('리뷰가 수정되었습니다.');
+
+                Swal.fire({
+                    position: "middle",
+                    icon: "success",
+                    title: "리뷰가 수정되었습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
             })
 
@@ -541,5 +578,39 @@
         });
     });
 
-</script>
 
+    function modifyReview(reviewId, reviewContent) {
+
+        document.querySelector('#postReviewForm').style.display = 'none';
+        document.querySelector('#modifyReviewForm').style.display = 'block';
+
+        document.getElementById('reviewTitle').textContent = '리뷰수정';
+        document.getElementById('modifyContent').textContent = reviewContent;
+
+        document.querySelector('#modifyReview').addEventListener('click', function () {
+            let input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', 'reviewId');
+            input.setAttribute('value', reviewId);
+            document.querySelector('#modifyReviewForm').appendChild(input);
+            document.querySelector('#modifyReviewForm').submit();
+
+            Swal.fire({
+                position: "middle",
+                icon: "success",
+                title: "리뷰가 수정되었습니다.",
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        })
+
+        // 취소 버튼
+        document.querySelector('#cancelButton').addEventListener('click', function () {
+
+            document.querySelector('#postReviewForm').style.display = 'block';
+            document.querySelector('#modifyReviewForm').style.display = 'none';
+            document.getElementById('reviewTitle').textContent = '리뷰작성';
+        })
+    }
+</script>

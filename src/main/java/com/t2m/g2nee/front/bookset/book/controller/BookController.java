@@ -1,10 +1,11 @@
 package com.t2m.g2nee.front.bookset.book.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.CART_ITEM_NUM;
+import static com.t2m.g2nee.front.aop.MemberAspect.LIKE_NUM;
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
-import com.t2m.g2nee.front.booklike.service.BookLikeService;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.dto.CategoryInfoDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
@@ -15,7 +16,7 @@ import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +40,6 @@ public class BookController {
     private final BookGetService bookGetService;
     private final CategoryService categoryService;
     private final MemberAspect memberAspect;
-    private final BookLikeService bookLikeService;
     private final ReviewService reviewService;
 
     /**
@@ -48,16 +48,17 @@ public class BookController {
     @Member
     @GetMapping("/{bookId}")
     public String getBook(@PathVariable("bookId") Long bookId,
-                          Model model, HttpServletResponse httpServletResponse) {
+                          Model model) {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if (member != null) {
             memberId = member.getMemberId();
         }
-        System.out.println(httpServletResponse);
+
         BookDto.Response response = bookGetService.getBook(memberId, bookId);
-        Long likesNum = bookLikeService.getMemberLikesNum(memberId);
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
         // 책의 카테고리 정보를 가져옵니다.
         List<Long> categoryIdList = response.getCategoryList().stream()
@@ -72,6 +73,7 @@ public class BookController {
         model.addAttribute("book", response);
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
         model.addAttribute("reviewPage", reviewPage);
 
         return "book/bookDetail";
@@ -83,19 +85,17 @@ public class BookController {
      */
     @Member
     @GetMapping
-    public String getNewBooks(Model model) {
+    public String getNewBooks(Model model, HttpServletRequest request) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
-        Long memberId = null;
-        if (member != null) {
-            memberId = member.getMemberId();
-        }
-        Long likesNum = bookLikeService.getMemberLikesNum(memberId);
+
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("bookList", bookList);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
 
         return "main/index";
     }
@@ -123,7 +123,8 @@ public class BookController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        Long likesNum = bookLikeService.getMemberLikesNum(memberId);
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
         PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort);
         model.addAttribute("keyword", keyword);
@@ -132,6 +133,7 @@ public class BookController {
         model.addAttribute("sort", sort);
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
 
 
         return "book/bookList";
@@ -162,7 +164,8 @@ public class BookController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        Long likesNum = bookLikeService.getMemberLikesNum(memberId);
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksBySearchByCategory(page, memberId, sort, keyword, categoryId);
@@ -174,6 +177,7 @@ public class BookController {
         model.addAttribute("category", categoryService.getCategory(categoryId));
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
 
         return "book/bookListByCategory";
 
@@ -203,7 +207,8 @@ public class BookController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        Long likesNum = bookLikeService.getMemberLikesNum(memberId);
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksByCategory(page, memberId, sort, categoryId);
@@ -214,6 +219,7 @@ public class BookController {
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
 
 
         return "book/bookListByCategory";
