@@ -418,11 +418,18 @@ function submitOrderForm() {
         passwordField.setAttribute("value", passwordInput);
         form.appendChild(passwordField);
     } else {
-        let couponIdField = document.createElement("input");
-        couponIdField.setAttribute("type", "hidden");
-        couponIdField.setAttribute("name", "couponId");
-        couponIdField.setAttribute("value", document.querySelector('#totalCouponId').value);
-        form.appendChild(couponIdField);
+        if(document.querySelector('#totalCouponId').textContent !== ''){
+            let couponIdField = document.createElement("input");
+            couponIdField.setAttribute("type", "hidden");
+            couponIdField.setAttribute("name", "couponId");
+            couponIdField.setAttribute("value", document.querySelector('#totalCouponId').textContent);
+            form.appendChild(couponIdField);
+        }
+        let pointField = document.createElement("input");
+        pointField.setAttribute("type", "hidden");
+        pointField.setAttribute("name", "point");
+        pointField.setAttribute("value", document.querySelector('#totalPointSale').textContent);
+        form.appendChild(pointField);
     }
 
 

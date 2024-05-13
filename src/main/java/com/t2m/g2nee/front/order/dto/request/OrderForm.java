@@ -62,6 +62,8 @@ public class OrderForm {
     private Long customerId;
 
     private Long couponId;//null가능
+
+    private Long point;//null가능
 }
 
 

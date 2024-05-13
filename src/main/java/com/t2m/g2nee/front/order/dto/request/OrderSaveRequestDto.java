@@ -57,4 +57,6 @@ public class OrderSaveRequestDto {
     private Long customerId;
 
     private Long couponId;//null가능
+
+
 }
