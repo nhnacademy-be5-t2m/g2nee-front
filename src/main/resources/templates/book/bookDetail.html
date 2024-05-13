@@ -205,8 +205,8 @@
                                 </div>
                                 <div id="reviews">
                                 </div>
-                                <button th:if="${reviewPage.totalElements > 5}" class="btn btn-primary"
-                                        id="loadMoreButton">
+                                <button class="btn btn-primary"
+                                        id="loadMoreButton" th:style="'display:'+ ${reviewPage.totalElements > 5 ? 'block' : 'none'}">
                                     더보기
                                 </button>
                             </div>
