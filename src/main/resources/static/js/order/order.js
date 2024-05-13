@@ -237,7 +237,7 @@ let phoneNumberReg = /^\d{3}-\d{3,4}-\d{4}$/;
 function submitOrderForm() {
     const form = document.createElement('form');
     form.method = 'post';
-    form.action = '/order/submit';
+    form.action = '/order/payment';
 
     const receiverName = String(document.getElementById('name').value);
     if (validCheck(receiverName, nameReg) === false) {

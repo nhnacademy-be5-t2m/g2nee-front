@@ -17,27 +17,57 @@
 
 <body>
 <div layout:fragment="content">
-    <!--TODO: 주문 내역 정보-->
+
     <h5>주문 내역</h5>
-    <p>주문번호: </p>
+    <p>주문: <span id="orderName" th:text="${order.orderName}"/></p>
+    <p>주문번호: <span id="orderNumber" th:text="${order.orderNumber}"/></p>
     <br/>
-    <p>주문자: </p>
-    <p>주소: </p>
-    <p>수령인: </p>
+    <h6>주문자 정보</h6>
+    <p>이름: <span id="name" th:text="${order.name}"/></p>
+    <p>이메일: <span id="email" th:text="${order.email}"/></p>
+    <p>휴대전화: <span id="phoneNumber" th:text="${order.phoneNumber}"/></p>
     <br/>
-    <p>주문 상세: 리스트 쭉 보여주기 </p>
-    <p>총합: n원 </p>
-    <p>할인: n원 </p>
-    <p>결제: n원 </p>
+
+    <h6>수령인 정보</h6>
+    <p>수령인: <span id="receiverName" th:text="${order.receiverName}"/></p>
+    <p>휴대전화: <span id="receiverPhoneNumber" th:text="${order.receiverPhoneNumber}"/></p>
+    <p>주소: <span id="receiveAddress" th:text="'['+${order.zipcode}+']'+${order.receiveAddress}+${order.detailAddress}"/></p>
+    <p>배송 메시지: <span id="message" th:text="${order?.message}"/></p>
+    <br/>
+    <h6>주문 상세</h6>
+        <div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>도서 정보</th>
+                    <th>수량</th>
+                    <th>가격</th>
+                </tr>
+                </thead>
+
+                <tbody th:each="orderDetail : ${order.orderDetails}">
+                <tr>
+                    <td>
+                        <span th:text="${orderDetail.bookName}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${orderDetail.quantity}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${orderDetail.price}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <br/>
+    <p>총합:  <span id="netAmount" th:text="${order.netAmount}"/> 원</p>
+    <p>할인:  <span id="discount" th:text="${order.netAmount} - ${order.amount}"/> 원</p>
+    <p>결제:  <span id="amount" th:text="${order.amount}"/> 원</p>
+    <input type="hidden" id="point" th:value="${point}"/>
+    <input type="hidden" id="customerId" th:value="${order.customerId}"/>
 
     <br/><br/>
-
-
-    <!--
-    <span id="order-number" th:text="${order.orderNumber}"/>
-    <span id="order-amount" th:text="${order.amount}"/>
-    -->
-
 
     <!--결제 수단 선택-->
     <h5>결제수단</h5>

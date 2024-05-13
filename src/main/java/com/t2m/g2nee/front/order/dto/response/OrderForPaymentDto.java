@@ -28,4 +28,7 @@ public class OrderForPaymentDto {
     private String detailAddress;
     private String message;
     private String couponName;
+    private String email;
+    private String phoneNumber;
+    private String name;
 }

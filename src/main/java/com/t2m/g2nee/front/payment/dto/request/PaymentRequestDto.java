@@ -30,7 +30,7 @@ public class PaymentRequestDto implements PaymentRequest {
     /**
      * 사용 포인트
      */
-    private int point;
+    private Integer point;
 
     @Override
     public String getPayType() {

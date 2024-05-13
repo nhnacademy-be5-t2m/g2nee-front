@@ -35,17 +35,18 @@
 </section>
 </body>
 <script th:inline="javascript">
-    let order = { // 임시로 사용할 order 객체 생성: 실제로는 order객체를 받아와서 사용합니다
-        "amount": 20000,
-        "orderId": "sample-023457",
-        "orderName": "테스트 주문",
-        "customerName": "정지은"
+    var order = {
+        "amount": window.opener.document.getElementById("amount").textContent,
+        "orderId": window.opener.document.getElementById("orderNumber").textContent,
+        "orderName": window.opener.document.getElementById("orderName").textContent,
+        "customerId": window.opener.document.getElementById("customerId").value,
+        "customerName": window.opener.document.getElementById("name").textContent,
+        "point": window.opener.document.getElementById("point").value
     };
 
+    initPaymentData(order);
     setTossApiKey(/*[[${tossClientApiKey}]]*/); // 토스 API 키 설정
     initTossPayments(); // 토스 결제 인스턴스 초기화
-    initPaymentData(order); // 임시 객체를 사용하여 결제 정보 초기화
 
-    //initPaymentData(/*[[${order}]]*/); // 결제 정보 초기화
 </script>
 </html>

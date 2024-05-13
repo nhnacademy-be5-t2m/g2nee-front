@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 주문과 관련된 controller 입니다.
@@ -151,16 +152,15 @@ public class OrderController {
     }
 
     @Member
-    @PostMapping("/submit")
-    public String submitOrder(@ModelAttribute("form") OrderForm request) {
+    @PostMapping("/payment")
+    public String submitOrder(@ModelAttribute("form") OrderForm request,
+                              Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         //회원주문인지 비회원주문인지 확인
         //비회원이라면 비회원을 생성한 후 customerId저장
         if (member != null) {
-            Long memberId = null;
-            if (member != null) {
-                request.setCustomerId(memberId);
-            }
+            request.setCustomerId(member.getMemberId());
+
         } else {
             SignUpNonMemberRequestDto signUpNonMemberRequestDto
                     = new SignUpNonMemberRequestDto(
@@ -189,9 +189,12 @@ public class OrderController {
                 request.getCouponId()
         );
         OrderForPaymentDto orderForPaymentDto = orderService.saveOrder(order);
+        Integer point = request.getPoint();
 
-        Long point = request.getPoint();
-        return "/"; //TODO : 결제페이지로
+        model.addAttribute("order", orderForPaymentDto);
+        model.addAttribute("point", point);
+
+        return "payment/paymentSelect";
     }
 
 

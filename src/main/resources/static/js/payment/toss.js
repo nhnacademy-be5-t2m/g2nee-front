@@ -17,9 +17,11 @@ function initPaymentData(order) {
     let orderId = order.orderId;
     let orderName = order.orderName;
     let customerName = order.customerName;
+    let customerId = order.customerId;
+    let point = order.point;
 
-    let path = "/orders/payments";
-    let successUrl = window.location.origin + path + "/toss/request";
+    let path = "/order/payment/toss/success";
+    let successUrl = window.location.origin + path + "?point="+point+"&customerId="+customerId+"&";
     let failUrl = window.location.origin + path + "/fail";
 
     jsons = {

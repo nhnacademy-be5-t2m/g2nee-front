@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/orders/payments")
+@RequestMapping("/order/payment")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -25,30 +25,12 @@ public class PaymentController {
     }
 
     /**
-     * 결제 선택 창
-     * ("/{orderId}")
-     *
+     * toss payment 결제
+     * @param model
      * @return
-     * @PathVariable("orderId") Long orderId
      */
-    @GetMapping
-    public String paymentSelect(Model model) {
-        //TODO: 주문 정보 + 주문 세부 정보 넘겨주기 필요
-
-        return "payment/paymentSelect";
-    }
-
-    /**
-     * toss payment
-     * ("/{orderId}")
-     *
-     * @PathVariable("orderId") Long orderId
-     */
-
     @GetMapping("/toss")
     public String tossPayments(Model model) {
-        //TODO: 주문 정보 넘겨주기 필요
-
         model.addAttribute("tossClientApiKey", tossClientApiKey);
         return "payment/pg/tossPayment";
     }
@@ -56,28 +38,21 @@ public class PaymentController {
     /**
      * 결제 승인 요청
      */
-    @GetMapping("/toss/request")
+    @GetMapping("/toss/success")
     public String requestTossPayment(RedirectAttributes redirectAttributes,
                                      @RequestParam(value = "orderId") String orderId,
                                      @RequestParam(value = "paymentKey") String paymentKey,
-                                     @RequestParam(value = "amount") BigDecimal amount
+                                     @RequestParam(value = "amount") BigDecimal amount,
+                                     @RequestParam(value = "customerId") String customerId,
+                                     @RequestParam(value = "point") String point
     ) {
         TossPaymentRequestDto request = new TossPaymentRequestDto(
-                orderId, amount, 7L, paymentKey,
+                orderId, amount, Long.valueOf(customerId), paymentKey, Integer.valueOf(point)
         );
-        //TODO: 정보 받아올 수 있는 id 얻는 방법 있는지 물어보기
 
         PaymentInfoDto result = paymentService.requestPayment(request);
         redirectAttributes.addFlashAttribute("paymentSuccess", result);
 
-        return "redirect:/orders/payments/success";
-    }
-
-    /**
-     * 결제 성공
-     */
-    @GetMapping("/success")
-    public String requestPayment() {
         return "payment/paymentSuccess";
     }
 

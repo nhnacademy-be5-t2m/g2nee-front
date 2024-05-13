@@ -18,12 +18,13 @@ function selectPaymentMethod(method) {
     document.getElementById("kakao-button").style.color = "darkgray";
 
     // 선택한 버튼에 스타일 적용
-    document.getElementById(`${method}-button`).style.backgroundColor = "#89cff0"; // 파란색 배경
-    document.getElementById(`${method}-button`).style.color = "black"; // 흰색 글자
+    document.getElementById(`${method}-button`).style.backgroundColor = "#89cff0";
+    document.getElementById(`${method}-button`).style.color = "black";
 
     // 선택된 결제 방법 설정
     selectedPaymentMethod = method;
 }
+
 
 function openPaymentWindow() {
     if (selectedPaymentMethod === null) {
@@ -39,7 +40,12 @@ function openPaymentWindow() {
     let top = (screen.height / 2) - (windowHeight / 2);
 
     // 선택된 결제 방법에 따라 새 창을 엽니다.
-    let url = `/orders/payments/${selectedPaymentMethod}`;
+    let url = `/order/payment/${selectedPaymentMethod}`;
+
+
+
     let windowOptions = `width=${windowWidth},height=${windowHeight},top=${top},left=${left},menubar=no,toolbar=no,status=no,scrollbars=yes,location=no`;
-    window.open(url, "_blank", windowOptions);
+    let paymentWindow =  window.open(url, "_blank", windowOptions);
+
+    paymentWindow.postMessage(order, '*');
 }
