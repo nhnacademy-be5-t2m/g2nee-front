@@ -66,5 +66,4 @@ public class AddressController {
         return "redirect:/mypage/address";
     }
 
-
 }
