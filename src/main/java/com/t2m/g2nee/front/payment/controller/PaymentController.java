@@ -63,7 +63,7 @@ public class PaymentController {
                                      @RequestParam(value = "amount") BigDecimal amount
     ) {
         TossPaymentRequestDto request = new TossPaymentRequestDto(
-                orderId, amount, 7L, paymentKey
+                orderId, amount, 7L, paymentKey,
         );
         //TODO: 정보 받아올 수 있는 id 얻는 방법 있는지 물어보기
 

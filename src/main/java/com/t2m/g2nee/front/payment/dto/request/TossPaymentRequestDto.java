@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 public class TossPaymentRequestDto extends PaymentRequestDto {
     private String paymentKey;
 
-    public TossPaymentRequestDto(String orderId, BigDecimal amount, Long customerId, String paymentKey) {
-        super(orderId, amount, customerId, "toss");
+    public TossPaymentRequestDto(String orderId, BigDecimal amount, Long customerId, String paymentKey, int point) {
+        super(orderId, amount, customerId, "toss", point);
         this.paymentKey = paymentKey;
     }
 

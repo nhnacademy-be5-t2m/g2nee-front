@@ -27,6 +27,11 @@ public class PaymentRequestDto implements PaymentRequest {
 
     private String payType;
 
+    /**
+     * 사용 포인트
+     */
+    private int point;
+
     @Override
     public String getPayType() {
         return this.payType;
