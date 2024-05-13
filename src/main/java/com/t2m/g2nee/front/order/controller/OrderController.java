@@ -151,7 +151,7 @@ public class OrderController {
     }
 
     @Member
-    @PostMapping("/submit")
+    @PostMapping("/payment")
     public String submitOrder(@ModelAttribute("form") OrderForm request) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         //회원주문인지 비회원주문인지 확인
@@ -164,10 +164,10 @@ public class OrderController {
         } else {
             SignUpNonMemberRequestDto signUpNonMemberRequestDto
                     = new SignUpNonMemberRequestDto(
-                    request.getReceiverName(),
+                    request.getName(),
                     request.getPassword(),
-                    request.getReceiverEmail(),
-                    request.getReceiverPhoneNumber()
+                    request.getEmail(),
+                    request.getPhoneNumber()
             );
             request.setCustomerId(memberService.nonMemberSignUp(signUpNonMemberRequestDto));
         }

@@ -7,7 +7,6 @@ import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,8 @@ public class ShoppingCartRestController {
 
     /**
      * 레디스 DB에 장바구니 객체를 추가하는 컨트롤러
-     * @param request 회원아이디, 책아이디, 수량 이 담긴 객체
+     *
+     * @param request             회원아이디, 책아이디, 수량 이 담긴 객체
      * @param httpServletResponse
      * @return ResponseEntity<ShoppingCartDto.Response>
      */
@@ -52,13 +52,15 @@ public class ShoppingCartRestController {
         }
 
         ShoppingCartDto.Response response =
-                shoppingCartService.addBookInCart(customerId, request,httpServletResponse);
+                shoppingCartService.addBookInCart(customerId, request, httpServletResponse);
 
         return ResponseEntity.ok(response);
     }
+
     /**
      * 레디스 DB에 장바구니 객체를 삭제하는 컨트롤러
-     * @param bookId 책아이디
+     *
+     * @param bookId              책아이디
      * @param httpServletResponse
      * @return ResponseEntity<ShoppingCartDto.Response>
      */
@@ -67,7 +69,7 @@ public class ShoppingCartRestController {
     public ResponseEntity<ShoppingCartDto.Response> pullBookInCart(@PathVariable String bookId,
                                                                    HttpServletResponse httpServletResponse
 
-                                                                   ) {
+    ) {
         String customerId = null;
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         if (member != null) {
@@ -84,15 +86,15 @@ public class ShoppingCartRestController {
 
     /**
      * 책 수량을 변경하는 컨트롤러
-     * @param request 책아이디와 수량이 담긴 객체
+     *
+     * @param request             책아이디와 수량이 담긴 객체
      * @param httpServletResponse
      * @return ResponseEntity<ShoppingCartDto.Response>
-     *
      */
     @Member
     @PatchMapping
     public ResponseEntity<ShoppingCartDto.Response> updateCartQuantity(@RequestBody ShoppingCartDto.Request request,
-                                                                        HttpServletResponse httpServletResponse){
+                                                                       HttpServletResponse httpServletResponse) {
         String customerId = null;
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         if (member != null) {
@@ -100,7 +102,7 @@ public class ShoppingCartRestController {
         }
 
         ShoppingCartDto.Response response =
-                shoppingCartService.updateCartQuantity(customerId, request,httpServletResponse);
+                shoppingCartService.updateCartQuantity(customerId, request, httpServletResponse);
 
         return ResponseEntity.ok(response);
     }

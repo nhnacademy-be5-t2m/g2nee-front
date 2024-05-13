@@ -11,63 +11,89 @@
 <body>
 <div layout:fragment="content">
     <div style="margin-bottom: 20px;"></div>
-    <h5 class="font-weight-semi-bold">주문자 정보</h5>
+    <div sec:authorize="isAnonymous()">
+        <h5 class="font-weight-semi-bold">비회원 정보</h5>
+        <div>
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr>
+                    <th scope="row" for="name" class="order-word" style="width: 15%">이름</th>
+                    <td style="display : flex">
+                        <input type="text" id="name" class="order-text" placeholder="이름"
+                               required/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="order-word" style="width: 15%">이메일</th>
+                    <td style="display : flex">
+                        <input type="hidden" id="email" name="email" for="email"/>
+                        <input type="text" id="emailId" class="order-text" style="margin-right: 10px;" required/>
+                        <div style="padding-top: 2px;padding-bottom: 2px"> @</div>
+                        <input type="text" id="emailDomain" class="order-text" required/>
+                        <select id="selectEmail" class="select order-text" title="이메일 도메인 주소 선택"
+                                onchange="setEmailDomain()">
+                            <option value="">--선택--</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="hanmail.com">hanmail.com</option>
+                            <option value="korea.com"> korea.com</option>
+                            <option value="nate.com">nate.com</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="password" class="word">비밀번호</th>
+                    <td style="display : flex">
+                        <input type="password" id="password" class="text" placeholder="비밀번호"
+                               required/>
+                        <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
+                        <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="passwordCheck" class="word">비밀번호 재확인</th>
+                    <td style="display : flex">
+                        <input type="password" id="passwordCheck" class="text" placeholder="비밀번호" required/>
+                        <div class="password-incorrect hide word" style="color:red;"> 비밀번호가 일치하지 않습니다.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="phoneNumber" class="order-word" style="width: 10%">전화번호</th>
+                    <td style="display : flex">
+                        <input type="text" id="phoneNumber" class="order-text"
+                               placeholder="전화번호"
+                               required/>
+                        <div style="color:gray;" class="order-word"> (ex.010-1234-5678)</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div>
-        <table class="table table-bordered table-hover">
-            <tbody>
-            <tr>
-                <th scope="row" for="name" class="order-word" style="width: 10%">이름</th>
-                <td style="display : flex">
-                    <input type="text" id="name" class="order-text" placeholder="이름"
-                           required/>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="order-word" style="width: 10%">이메일</th>
-                <td style="display : flex">
-                    <input type="hidden" id="email" name="email" for="email"/>
-                    <input type="text" id="emailId" class="order-text" style="margin-right: 10px;" required/>
-                    <div style="padding-top: 2px;padding-bottom: 2px"> @</div>
-                    <input type="text" id="emailDomain" class="order-text" required/>
-                    <select id="selectEmail" class="select order-text" title="이메일 도메인 주소 선택"
-                            onchange="setEmailDomain()">
-                        <option value="">--선택--</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="hanmail.com">hanmail.com</option>
-                        <option value="korea.com"> korea.com</option>
-                        <option value="nate.com">nate.com</option>
-                    </select>
-                </td>
-            </tr>
-            <tr sec:authorize="isAnonymous()">
-                <th scope="row" for="password" class="word">비밀번호</th>
-                <td style="display : flex">
-                    <input type="password" id="password" class="text" placeholder="비밀번호"
-                           required/>
-                    <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
-                    <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
-                </td>
-            </tr>
-            <tr sec:authorize="isAnonymous()">
-                <th scope="row" for="passwordCheck" class="word">비밀번호 재확인</th>
-                <td style="display : flex">
-                    <input type="password" id="passwordCheck" class="text" placeholder="비밀번호" required/>
-                    <div class="password-incorrect hide word" style="color:red;"> 비밀번호가 일치하지 않습니다.</div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" for="phoneNumber" class="order-word" style="width: 10%">전화번호</th>
-                <td style="display : flex">
-                    <input type="text" id="phoneNumber" class="order-text"
-                           placeholder="전화번호"
-                           required/>
-                    <div class="phoneNumber-invalid hide order-word" style="color:red;"> 형식에 맞춰 작성해주십시오.</div>
-                    <div style="color:gray;" class="order-word"> (ex.010-1234-5678)</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h5 class="font-weight-semi-bold">수령인 정보</h5>
+        <div>
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr>
+                    <th scope="row" for="receiverName" class="order-word" style="width: 10%">이름</th>
+                    <td style="display : flex">
+                        <input type="text" id="receiverName" class="order-text" placeholder="이름"
+                               required/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="receiverPhoneNumber" class="order-word" style="width: 10%">전화번호</th>
+                    <td style="display : flex">
+                        <input type="text" id="receiverPhoneNumber" class="order-text"
+                               placeholder="전화번호"
+                               required/>
+                        <div style="color:gray;" class="order-word"> (ex.010-1234-5678)</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div style="margin-bottom: 20px;"></div>
     <h5 class="font-weight-semi-bold">배송지 정보</h5>
@@ -299,7 +325,7 @@
             </tbody>
         </table>
     </div>
-    <button type="button" class="pink-button" onclick="submitOrderForm()">주문 하기</button>
+    <button type="button" class="btn btn-primary px-3" onclick="submitOrderForm()">결제 하기</button>
 
     <script src="/static/js/order/order.js"></script>
 </div>
