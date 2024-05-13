@@ -98,8 +98,21 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public PageResponse<OrderInfoDto.Response> getOrderListForMembers(int page, Long customerId) {
-        return null;
+    public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long customerId, int page) {
+        HttpHeaders listHeaders = new HttpHeaders();
+        listHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> stringHttpEntity = new HttpEntity<> (listHeaders);
+
+        String url = orderUrl + "/members/" + customerId + "?page=" + page;
+        ResponseEntity<PageResponse<OrderInfoDto.ListResponse>> orderListEntity
+                = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                stringHttpEntity,
+                new ParameterizedTypeReference<PageResponse<OrderInfoDto.ListResponse>>() {
+                }
+        );
+        return orderListEntity.getBody();
     }
 
     @Override

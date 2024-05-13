@@ -58,12 +58,12 @@ public class OrderGetService {
     /**
      * 회원의 주문 목록 조회
      *
-     * @param page 페이지
+     * @param page       페이지
      * @param customerId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
-    PageResponse<OrderInfoDto.Response> getOrderListForMembers(int page, Long customerId){
-        return null;
+    public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long customerId, int page){
+        return orderGetAdaptor.getOrderListForMembers(customerId, page);
     }
 
     /**

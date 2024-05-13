@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/adminLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>admin 주문 조회</title>
+    <title> 주문 조회</title>
 </head>
 
 <body>
@@ -31,14 +31,13 @@
                     <td th:text="${order.orderNumber}"></td>
                     <td th:text="${order.orderDate}"></td>
                     <td th:text="${order.deliveryWishDate}"></td>
-                    <td th:text="${order.customerId}"></td>
+                    <td th:text="${order.customerId} + ':' + ${order.customerName}"></td>
                     <td th:text="${order.orderAmount}"></td>
                     <td th:text="${order.orderState.getName()}"></td>
                     <td><button>상태 변경</button></td>
                 </tr>
                 </tbody>
             </table>
-
             <div>
                 <h3>주문 상세</h3>
                 <!-- 주문 세부 내용 -->
@@ -66,6 +65,34 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div>
+            <h3>주문 상세</h3>
+            <!-- 주문 세부 내용 -->
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>주문 도서</th>
+                    <th>주문 수량</th>
+                    <th>포장 정보</th>
+                    <th>쿠폰 정보</th>
+                    <th>총 가격</th>
+                    <th>취소 여부</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="orderDetail : ${orderDetails}">
+                    <td th:text="${orderDetail.bookName}"></td>
+                    <td th:text="${orderDetail.quantity}"></td>
+                    <td th:text="${orderDetail.packageName}"></td>
+                    <td th:text="${orderDetail.couponName}"></td>
+                    <td th:text="${orderDetail.price}"></td>
+                    <td th:text="${orderDetail.isCancelled}"></td>
+                </tr>
+                </tbody>
+            </table>
             </div>
 
             <div class="col">

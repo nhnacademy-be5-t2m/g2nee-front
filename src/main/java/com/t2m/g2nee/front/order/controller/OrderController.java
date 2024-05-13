@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @since : 1.0
  */
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/mypage/order")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderGetService orderGetService;
@@ -56,13 +57,14 @@ public class OrderController {
         return "member/customerLogin";
     }
 
-//    @GetMapping("/list")
-//    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
-//        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
-//        model.addAttribute("orderPage", orderPage);
-//
-//        return "admin/order/adminOrder";
-//    }
+    @GetMapping("/{customerId}/list")
+    public String orderList(Model model, @PathVariable Long customerId, @RequestParam(required = false, defaultValue = "1") int page){
+        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getOrderListForMembers(customerId, page);
+        model.addAttribute("orderPage", orderPage);
+
+        return "mypage/order/orderList";
+    }
+
     @GetMapping("/{orderId}")
     public String getOrder(@PathVariable("orderId") Long orderId, Model model){
 
@@ -72,14 +74,18 @@ public class OrderController {
         List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
         model.addAttribute("orderDetails", detailResponse);
 
-        return "admin/order/adminOrderDetail";
+        return "mypage/order/orderDetail";
     }
 
-    @GetMapping("/{orderNumber}")
-    public String getOrderForNonMember(@PathVariable("orderNumber") String orderNumber, Model model){
+    @GetMapping("/nonmembers/")
+    public String getOrderForNonMember(@RequestParam("orderNumber") String orderNumber, Model model){
         OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(orderNumber);
         model.addAttribute("order", orderResponse);
 
-        return "order/orderDetail";
+        Long orderId = orderResponse.getOrderId();
+        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
+        model.addAttribute("orderDetails", detailResponse);
+
+        return "mypage/order/orderDetail";
     }
 }
