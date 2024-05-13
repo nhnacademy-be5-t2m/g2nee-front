@@ -206,4 +206,19 @@ public class MemberService {
         );
         return response.getBody();
     }
+
+    /**
+     * 회원을 탈퇴하는 메소드
+     *
+     * @param memberId 탈퇴할 회원의 memberId
+     */
+    public void quitMember(Long memberId) {
+        HttpEntity<String> requestEntity = new HttpEntity<>("QUIT", makeHttpHeaders());
+        restTemplate.exchange(
+                gatewayToShopUrl + "/member/" + memberId + "/changeStatus",
+                HttpMethod.POST,
+                requestEntity,
+                String.class
+        );
+    }
 }
