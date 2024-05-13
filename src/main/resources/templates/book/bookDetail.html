@@ -39,7 +39,8 @@
             <!-- 책 세부 내용 start -->
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">
-                    <input type="hidden" id =bookId th:value="${book.bookId}">
+                    <input type="hidden" id="bookId" th:value="${book.bookId}">
+                    <input type="hidden" id="bookStock" th:value="${book.quantity}">
                     <span th:text="${book.title}"></span>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
                 </h3>
@@ -77,21 +78,24 @@
                 </h5>
                 <hr/>
 
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
+                     class="d-flex align-items-center mb-4 pt-2">
                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
                          style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
                     <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
                           style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
                 </div>
                 <!-- 구매할 책 갯수 설정 -->
-                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}"
+                     class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input id="quantity" type="text" class="form-control bg-secondary text-center" value=1>
+                        <input id="quantity" type="text" class="form-control bg-secondary text-center" value=1
+                               onchange="changeBookCount()">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
@@ -107,7 +111,9 @@
                             class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
                     </button>
                     <input type="hidden" id="bookCount" th:value="${bookCount}">
-                    <button class="btn btn-primary px-3" style="margin-right: 10px" onclick="buyNowButton()"><i class="fa fa-check-circle mr-1"></i>바로 구매</button>
+                    <button class="btn btn-primary px-3" style="margin-right: 10px" onclick="buyNowButton()"><i
+                            class="fa fa-check-circle mr-1"></i>바로 구매
+                    </button>
                     <a class="btn btn-sm text-dark p-0"
                        th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}"
@@ -305,7 +311,8 @@
                             <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>상세보기</a>
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i
+                                    class="fas fa-eye text-primary mr-1"></i>상세보기</a>
                             <a href="" class="btn btn-sm text-dark p-0"><i
                                     class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</a>
                         </div>
@@ -354,7 +361,6 @@
 
         starRatingElement.innerHTML = stars;
     }
-
 
 
     let page = [[${reviewPage.currentPage}]];
@@ -445,8 +451,8 @@
                     modifyButton.dataset.reviewId = reviewId;
                     modifyButton.dataset.reviewScore = reviewScore;
 
-                    modifyButton.onclick = function() {
-                            modifyReview(reviewId, reviewContent);
+                    modifyButton.onclick = function () {
+                        modifyReview(reviewId, reviewContent);
                     }
 
                     let memberId = [[${memberId}]];

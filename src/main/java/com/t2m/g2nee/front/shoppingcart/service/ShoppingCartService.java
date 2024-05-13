@@ -84,7 +84,7 @@ public class ShoppingCartService {
         Map<Object, Object> cartList = redisTemplate.opsForHash().entries(customerId);
 
         // 비회원일 경우 더미 데이터가 있기 때문에 제외하고 장바구니 객체를 조회
-        if(cartList.get("expire") != null) {
+        if (cartList.get("expire") != null) {
             cartList.remove("expire");
         }
 
@@ -98,6 +98,7 @@ public class ShoppingCartService {
 
     /**
      * 로그아웃, 토큰 만료 시 DB에 장바구니 정보를 옮겨주는 메서드
+     *
      * @param memberId 회원 아이디
      */
     public void migrateCartRedisToDB(String memberId) {
@@ -131,7 +132,7 @@ public class ShoppingCartService {
                                                    HttpServletResponse httpServletResponse) {
 
         // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 UUID 설정
-        customerId = getCustomerId(customerId,httpServletResponse);
+        customerId = getCustomerId(customerId, httpServletResponse);
         ShoppingCartDto.Response cart =
                 (ShoppingCartDto.Response) redisTemplate.opsForHash().get(customerId, bookId);
         redisTemplate.opsForHash().delete(customerId, bookId);
@@ -162,7 +163,7 @@ public class ShoppingCartService {
     }
 
     /**
-     * @param memberId           회원 아이디
+     * @param memberId 회원 아이디
      * @return int
      */
     public int getCartItemNum(Long memberId) {
@@ -174,11 +175,11 @@ public class ShoppingCartService {
         } else {
 
             Cookie cookie = CookieUtil.findCookie("cart");
-                if (cookie != null) {
-                    // 비회원은 유효기간 확인용 더미 더미데이터가 존재하여 개수 1를 뺴줍니다.
-                    return redisTemplate.opsForHash().entries(cookie.getValue()).size() - 1;
-                }
+            if (cookie != null) {
+                // 비회원은 유효기간 확인용 더미 더미데이터가 존재하여 개수 1를 뺴줍니다.
+                return redisTemplate.opsForHash().entries(cookie.getValue()).size() - 1;
             }
+        }
         return 0;
     }
 
@@ -207,6 +208,7 @@ public class ShoppingCartService {
 
     /**
      * 비회원 장바구니 생성 // 유효기간 설정을 위함
+     *
      * @param customerId 회원 또는 비회원 세션 아이디
      */
     private void generateCart(String customerId) {
@@ -220,6 +222,7 @@ public class ShoppingCartService {
 
     /**
      * 비회원일 경우 ( memberId == null ) 쿠키에서 세션 아이디를 얻는 메서드
+     *
      * @return String
      */
     private String getCartUUID() {
@@ -233,6 +236,7 @@ public class ShoppingCartService {
 
     /**
      * UUID 아이디 쿠키 생성 메서드
+     *
      * @return String
      */
     private String createCartCookie(HttpServletResponse httpResponse) {

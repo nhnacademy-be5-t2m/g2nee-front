@@ -130,9 +130,24 @@ function fullCouponPopUp() {
 
 }
 
+function changeBookCount() {
+    let bookCount = parseInt(document.getElementById('quantity').value);
+    document.getElementById('bookCount').value = bookCount;
+}
+
+
 function buyNowButton() {
+    let bookCount = parseInt(document.getElementById('bookCount').value);
+    let bookQuantity = parseInt(document.getElementById('bookStock').value);
+    if (bookCount > bookQuantity) {
+        Swal.fire({
+            icon: 'warning',
+            title: '재고가 부족합니다.',
+            text: '현재 재고 : ' + bookQuantity
+        })
+        return;
+    }
     let bookId = document.getElementById('bookId').value;
-    let bookCount = document.getElementById('bookCount').value;
     let url = '/order/buyNow?bookId=' + bookId + '&bookCount=' + bookCount;
     window.location.href = url;
 };
@@ -239,33 +254,6 @@ function submitOrderForm() {
     form.method = 'post';
     form.action = '/order/payment';
 
-    const receiverName = String(document.getElementById('name').value);
-    if (validCheck(receiverName, nameReg) === false) {
-        Swal.fire({
-            icon: 'warning',
-            title: '이름 입력 오류',
-            text: '이름을 다시 입력하여 주십시오.'
-        })
-        return;
-    }
-    const receiverPhoneNumber = String(document.getElementById('phoneNumber').value);
-    if (validCheck(receiverPhoneNumber, phoneNumberReg) === false) {
-        Swal.fire({
-            icon: 'warning',
-            title: '전화번호 입력 오류',
-            text: '전화번호를 다시 입력하여 주십시오.'
-        })
-        return;
-    }
-    const receiverEmail = String(document.getElementById('emailId').value) + '@' + String(document.getElementById('emailDomain').value);
-    if (validCheck(receiverEmail, emailReg) === false) {
-        Swal.fire({
-            icon: 'warning',
-            title: '이메일 입력 오류',
-            text: '이메일을 다시 입력하여 주십시오.'
-        })
-        return;
-    }
 
     const receiveAddress = String(document.getElementById('address').value);
     const zipcode = String(document.getElementById('zipcode').value);
@@ -275,6 +263,25 @@ function submitOrderForm() {
             icon: 'warning',
             title: '주소정보 입력 오류',
             text: '주소정보를 다시 입력하여 주십시오.'
+        })
+        return;
+    }
+    const receiverName = document.getElementById('receiverName').value;
+    if (receiverName === '') {
+        Swal.fire({
+            icon: 'warning',
+            title: '수령인 이름 입력 오류',
+            text: '수령인 이름을 다시 입력하여 주십시오.'
+        })
+        return;
+    }
+
+    const receiverPhoneNumber = document.getElementById('receiverPhoneNumber').value;
+    if (validCheck(receiverPhoneNumber, phoneNumberReg) === false) {
+        Swal.fire({
+            icon: 'warning',
+            title: '수령인 전화번호 입력 오류',
+            text: '수령인 전화번호를 다시 입력하여 주십시오.'
         })
         return;
     }
@@ -363,12 +370,6 @@ function submitOrderForm() {
     receiverPhoneNumberField.setAttribute("value", receiverPhoneNumber);
     form.appendChild(receiverPhoneNumberField);
 
-    let emailField = document.createElement("input");
-    emailField.setAttribute("type", "hidden");
-    emailField.setAttribute("name", "receiverEmail");
-    emailField.setAttribute("value", receiverEmail);
-    form.appendChild(emailField);
-
     let addressField = document.createElement("input");
     addressField.setAttribute("type", "hidden");
     addressField.setAttribute("name", "receiverAddress");
@@ -411,14 +412,60 @@ function submitOrderForm() {
             })
             return;
         }
+        const name = String(document.getElementById('name').value);
+        if (validCheck(name, nameReg) === false) {
+            Swal.fire({
+                icon: 'warning',
+                title: '이름 입력 오류',
+                text: '이름을 다시 입력하여 주십시오.'
+            })
+            return;
+        }
+        const phoneNumber = String(document.getElementById('phoneNumber').value);
+        if (validCheck(phoneNumber, phoneNumberReg) === false) {
+            Swal.fire({
+                icon: 'warning',
+                title: '전화번호 입력 오류',
+                text: '전화번호를 다시 입력하여 주십시오.'
+            })
+            return;
+        }
+        const email = String(document.getElementById('emailId').value) + '@' + String(document.getElementById('emailDomain').value);
+        if (validCheck(email, emailReg) === false) {
+            Swal.fire({
+                icon: 'warning',
+                title: '이메일 입력 오류',
+                text: '이메일을 다시 입력하여 주십시오.'
+            })
+            return;
+        }
 
         let passwordField = document.createElement("input");
         passwordField.setAttribute("type", "hidden");
         passwordField.setAttribute("name", "password");
         passwordField.setAttribute("value", passwordInput);
         form.appendChild(passwordField);
+
+        let emailField = document.createElement("input");
+        emailField.setAttribute("type", "hidden");
+        emailField.setAttribute("name", "email");
+        emailField.setAttribute("value", email);
+        form.appendChild(emailField);
+
+        let phoneNumberField = document.createElement("input");
+        phoneNumberField.setAttribute("type", "hidden");
+        phoneNumberField.setAttribute("name", "phoneNumber");
+        phoneNumberField.setAttribute("value", phoneNumber);
+        form.appendChild(phoneNumberField);
+
+        let nameField = document.createElement("input");
+        nameField.setAttribute("type", "hidden");
+        nameField.setAttribute("name", "name");
+        nameField.setAttribute("value", name);
+        form.appendChild(nameField);
+
     } else {
-        if(document.querySelector('#totalCouponId').textContent !== ''){
+        if (document.querySelector('#totalCouponId').textContent !== '') {
             let couponIdField = document.createElement("input");
             couponIdField.setAttribute("type", "hidden");
             couponIdField.setAttribute("name", "couponId");
@@ -448,4 +495,32 @@ function validCheck(input, reg) {
     } else {
         return false;
     }
+}
+
+function buyCartButton() {
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = '/order/buyCart';
+
+    const cartDetails = document.querySelectorAll('.cartList');
+    cartDetails.forEach((cartDetail, index) => {
+        const bookId = cartDetail.querySelector('#cartBookId').value;
+        const quantity = cartDetail.querySelector('#quantity').value;
+
+        const bookIdField = document.createElement('input');
+        bookIdField.type = 'hidden';
+        bookIdField.name = `bookOrderList[${index}].bookId`;
+        bookIdField.value = bookId;
+        form.appendChild(bookIdField);
+
+        const quantityField = document.createElement("input");
+        quantityField.type = 'hidden';
+        quantityField.name = `bookOrderList[${index}].bookCount`;
+        quantityField.value = quantity;
+        form.appendChild(quantityField);
+
+    });
+    document.body.appendChild(form);
+    form.submit();
+    return true;
 }
