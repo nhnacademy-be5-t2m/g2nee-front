@@ -38,7 +38,9 @@
                     </tr>
                     </tbody>
                     <tbody class="align-middle" th:unless="${cartList == null || cartList.size() == 0}">
-                    <tr th:each="cart : ${cartList}">
+                    <input type="hidden" id="cartSize" th:value="${cartList.size()}">
+                    <tr class="cartList" id="index" th:id="${cartStat.index}" th:each="cart : ${cartList}">
+                        <input type="hidden" id="cartBookId" th:value="${cart.bookId}">
                         <td id="cart" style="text-align: left;">
                             <img th:src="${cart.imageUrl}" alt="image" style="width: 70px;">
                             <span style="margin-left: 30px" th:text="${cart.title} + ' - ' + ${cart.engTitle}">
@@ -98,12 +100,14 @@
                       th:text="'합계 : ₩ ' + ${totalPrice + deliveryPolicy.deliveryFee}"></span>
             </div>
         </div>
-        <button class="btn btn-block btn-primary">주문하기</button>
+        <button onclick="buyCartButton()" class="btn btn-block btn-primary">주문하기</button>
     </div>
 
+    <script src="/static/js/order/order.js"></script>
 </div>
 </body>
 </html>
+
 <script th:inline="javascript">
 
     let cartItemNum = [[${cartItemNum}]];
