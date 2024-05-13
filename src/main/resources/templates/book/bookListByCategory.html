@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/categoryLayout}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
 <head>
-    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-          referrerpolicy="no-referrer" rel="stylesheet"/>
-
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>G2nee Book shop</title>
 </head>
 
@@ -51,7 +51,7 @@
                 <!-- 검색 부분 start -->
                 <form th:action="@{'/books/search/category/' + ${categoryId}}">
                     <div class="input-group">
-                        <input class="form-control" name="keyword" placeholder="Search by name" type="text">
+                        <input type="text" class="form-control" placeholder="Search by name" name="keyword">
                         <div class="input-group-append">
                                         <span class="input-group-text bg-transparent text-primary">
                                             <i class="fa fa-search"></i>
@@ -67,12 +67,12 @@
 
                 <!-- sort 버튼 start -->
                 <div class="dropdown ml-4">
-                    <button aria-expanded="false" aria-haspopup="true" class="btn border dropdown-toggle"
-                            data-toggle="dropdown" id="triggerId"
-                            th:text="${sortName}" type="button">
+                    <button class="btn border dropdown-toggle" type="button" id="triggerId"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" th:text="${sortName}">
                         Sort by
                     </button>
-                    <div aria-labelledby="triggerId" class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
                         <a class="dropdown-item"
                            th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=viewCount' : '?sort=viewCount'}}"
                         >인기도
@@ -109,7 +109,7 @@
                     <a th:href="@{'/books/' + ${book.bookId}}">
                         <div class="image-wrapper">
                             <img
-                                    alt="썸네일" th:src="${book.thumbnailImageUrl}">
+                                    th:src="${book.thumbnailImageUrl}" alt="썸네일">
                         </div>
                     </a>
                 </div>
@@ -119,8 +119,8 @@
                             th:text="${book.title}"></h6>
                     </a>
                     <span th:with="contributorRole = ${book.contributorRoleList[0]}">
-                     <span style="text-align: center"
-                           th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + ' '"></span>
+                     <span th:text="${contributorRole.contributorName} + '(' + ${contributorRole.roleName} + ')' + ' '"
+                           style="text-align: center"></span>
                          <span th:if="${book.contributorRoleList.size() > 1}"
                                th:text="'외 ' + ${book.contributorRoleList.size() - 1} + '명'"></span>
                       </span>
@@ -134,15 +134,15 @@
                         <p style="text-align: center;"
                            th:text="${book.publisherName} +' | ' + ${book.publishedDate}"></p>
                     </div>
-                    <span class="badge rounded-pill bg-danger"
-                          style="color: white; font-size: 1.1em;" th:if="${book.bookStatus.name() == 'SOLDOUT'}"
+                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}"
+                          class="badge rounded-pill bg-danger" style="color: white; font-size: 1.1em;"
                           th:text="매진"></span>
-                    <span class="badge rounded-pill bg-dark"
-                          style="color: white; font-size: 1.1em;" th:if="${book.bookStatus.name() == 'OUTOFPRINT'}"
+                    <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}"
+                          class="badge rounded-pill bg-dark" style="color: white; font-size: 1.1em;"
                           th:text="절판"></span>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                    <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                        th:data-memberId="${memberId}">
                         <i class="fa-regular fa-heart text-primary" style="font-size: 20px"
@@ -152,8 +152,14 @@
                     </a>
                     <small th:text="${book.scoreAverage} + ' (' + ${book.reviewCount} +' Reviews)'"></small>
 
-                    <a class="btn btn-sm text-dark p-0" href=""><i
-                            class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가</a>
+                    <button id="cartButton"
+                            th:data-bookId="${book.bookId}"
+                            th:data-bookQuantity="${book.quantity}"
+                            th:data-bookTitle="${book.title}"
+                            th:data-cartItemNum="${cartItemNum}"
+                            class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가
+                    </button>
                 </div>
             </div>
         </div>
@@ -171,8 +177,8 @@
                         <a class="page-link"
                            th:href="@{'?page=' + ${bookPage.currentPage - 1 } +'&sort=' +${sort} + ${keyword != null ? '&keyword=' + keyword : ''}}"><</a>
                     </li>
-                    <li th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}"
-                        th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}">
+                    <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}"
+                        th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
                         <a class="page-link"
                            th:href="@{'?page=' + ${pageButton}+'&sort=' +${sort} + ${keyword != null ? '&keyword=' + keyword : ''}}"
                            th:text="${pageButton}"></a>
@@ -194,4 +200,6 @@
 </body>
 </html>
 <script src="/static/js/book/setLike.js"></script>
+<script src="/static/js/book/putBookInCart.js">
+</script>
 

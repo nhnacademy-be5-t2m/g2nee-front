@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/categoryLayout}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
 
 <head>
-    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-          referrerpolicy="no-referrer" rel="stylesheet"/>
-    <title>G2nee Book shop</title>
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>G2nee Book shop</title>
 </head>
 
 <body>
@@ -19,17 +19,17 @@
         <div class="row px-xl-5">
             <!-- 책 사진 설정 (여러개 가능) start -->
             <div class="col-lg-5 pb-5">
-                <div class="carousel slide" data-ride="carousel" id="product-carousel">
+                <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
-                        <div th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'"
-                             th:each="image, index : ${book.detailImageUrl}">
-                            <img alt="Image" class="w-100 h-100" th:src="${image}">
+                        <div th:each="image, index : ${book.detailImageUrl}"
+                             th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                            <img class="w-100 h-100" th:src="${image}" alt="Image">
                         </div>
                     </div>
-                    <a class="carousel-control-prev" data-slide="prev" href="#product-carousel">
+                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
                     </a>
-                    <a class="carousel-control-next" data-slide="next" href="#product-carousel">
+                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
                         <i class="fa fa-2x fa-angle-right text-dark"></i>
                     </a>
                 </div>
@@ -39,9 +39,9 @@
             <!-- 책 세부 내용 start -->
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">
+                    <input type="hidden" id =bookId th:value="${book.bookId}">
                     <span th:text="${book.title}"></span>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
-                    <input id=bookId th:value="${book.bookId}" type="hidden"></input>
                 </h3>
                 <div class="mb-3">
                     <i class="fa-solid fa-user"></i>
@@ -73,50 +73,47 @@
                 </h4>
                 <h5>
                     <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
-                    <span style="color: gray; text-decoration: line-through;" th:text="'정가 : ₩' + ${book.price}"></span>
+                    <span th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></span>
                 </h5>
                 <hr/>
 
-                <div class="d-flex align-items-center mb-4 pt-2"
-                     th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}">
-                   <span class="btn-primary px-4"
-                         style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;"
-                         th:if="${book.bookStatus.name() == 'SOLDOUT'}">매진</span>
-                    <span class="btn-primary px-4"
-                          style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;"
-                          th:if="${book.bookStatus.name() == 'OUTOFPRINT'}">절판</span>
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                   <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
+                         style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
+                    <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
+                          style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
                 </div>
                 <!-- 구매할 책 갯수 설정 -->
-                <div class="d-flex align-items-center mb-4 pt-2"
-                     th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}">
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input class="form-control bg-secondary text-center" id="bookCount" type="text" value="1">
+                        <input id="quantity" type="text" class="form-control bg-secondary text-center" value=1>
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3" style="margin-right: 10px"><i
+                    <button id="cartButton"
+                            th:data-bookId="${book.bookId}"
+                            th:data-bookTitle="${book.title}"
+                            th:data-bookQuantity="${book.quantity}"
+                            th:data-cartItemNum="${cartItemNum}"
+                            type="button" class="btn btn-primary px-3" style="margin-right: 10px"><i
                             class="fa fa-shopping-cart mr-1"></i> 장바구니 담기
                     </button>
-                    <a>
-                        <button class="btn btn-primary px-3" onclick="buyNowButton()" style="margin-right: 10px"><i
-                                class="fa fa-check-circle mr-1"></i>바로 구매
-                        </button>
-                    </a>
-
+                    <input type="hidden" id="bookCount" th:value="${bookCount}">
+                    <button class="btn btn-primary px-3" style="margin-right: 10px" onclick="buyNowButton()"><i class="fa fa-check-circle mr-1"></i>바로 구매</button>
                     <a class="btn btn-sm text-dark p-0"
                        th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}"
                        th:data-likesNum="${likesNum}"
                        th:data-memberId="${memberId}">
-                        <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                        <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                            th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                            th:data-memberId="${memberId}">
                             <i class="fa-regular fa-heart text-primary" style="font-size: 24px"
@@ -174,9 +171,9 @@
                                 <h4 class="mb-4">리뷰 목록</h4>
                                 <div class="media mb-4" th:each="review : ${reviewPage.data}"
                                      th:if="${reviewPage.data.size() > 0}">
-                                    <img alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;"
-                                         th:if="${review.imageUrl != null}"
-                                         th:src="${review.imageUrl}">
+                                    <img alt="Image" class="img-fluid mr-3 mt-1" th:if="${review.imageUrl != null}"
+                                         th:src="${review.imageUrl}"
+                                         style="width: 45px;">
                                     <div class="media-body">
                                         <h6>
                                             <span th:text="${review.nickname} +' - '">  </span>
@@ -201,6 +198,7 @@
                                                 th:data-reviewContent="${review.content}"
                                                 th:data-reviewId="${review.reviewId}"
                                                 th:data-reviewScore="${review.score}"
+                                                th:data-memberId="${memberId}"
                                                 th:if="${review.memberId == memberId}"
                                                 type="button">수정
                                         </button>
@@ -210,8 +208,8 @@
                                 </div>
                                 <div id="reviews">
                                 </div>
-                                <button class="btn btn-primary" id="loadMoreButton"
-                                        th:if="${reviewPage.totalElements > 5}">
+                                <button th:if="${reviewPage.totalElements > 5}" class="btn btn-primary"
+                                        id="loadMoreButton">
                                     더보기
                                 </button>
                             </div>
@@ -299,17 +297,16 @@
         <div class="row px-xl-5">
             <div class="col">
                 <div class="owl-carousel related-carousel">
-                    <div class="card product-item border-0" th:each="book : ${bookList}">
+                    <div th:each="book : ${bookList}" class="card product-item border-0">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img alt="thumbnail" class="img-fluid w-100" th:src="${book.thumbnailImageUrl}">
+                            <img class="img-fluid w-100" th:src="${book.thumbnailImageUrl}" alt="thumbnail">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3" th:text="${book.title}"></h6>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a class="btn btn-sm text-dark p-0" th:href="@{'/books/' + ${book.bookId}}"><i
-                                    class="fas fa-eye text-primary mr-1"></i>상세보기</a>
-                            <a class="btn btn-sm text-dark p-0" href=""><i
+                            <a th:href="@{'/books/' + ${book.bookId}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>상세보기</a>
+                            <a href="" class="btn btn-sm text-dark p-0"><i
                                     class="fas fa-shopping-cart text-primary mr-1"></i>장바구니 담기</a>
                         </div>
                     </div>
@@ -322,10 +319,13 @@
 </body>
 
 </html>
-<script src="/static/js/book/setLike.js"></script>
-<script src="/static/js/order/order.js"></script>
+<script src="/static/js/book/setLike.js">
+</script>
+<script src="/static/js/order/order.js">
+</script>
+<script src="/static/js/book/putBookInCart.js">
+</script>
 <script th:inline="javascript">
-
 
     // 평균 별점
     window.onload = function () {
@@ -354,6 +354,7 @@
 
         starRatingElement.innerHTML = stars;
     }
+
 
 
     let page = [[${reviewPage.currentPage}]];
@@ -432,6 +433,28 @@
                     p.textContent = review.content;
                     reviewBodyDiv.appendChild(p);
 
+                    var modifyButton = document.createElement('button');
+                    modifyButton.className = 'btn btn-outline-primary btn-sm';
+                    modifyButton.id = 'modifyButton';
+                    modifyButton.textContent = '수정';
+
+                    let reviewContent = review.content;
+                    let reviewId = review.reviewId;
+                    let reviewScore = review.score;
+                    modifyButton.dataset.reviewContent = reviewContent;
+                    modifyButton.dataset.reviewId = reviewId;
+                    modifyButton.dataset.reviewScore = reviewScore;
+
+                    modifyButton.onclick = function() {
+                            modifyReview(reviewId, reviewContent);
+                    }
+
+                    let memberId = [[${memberId}]];
+                    if (review.memberId === memberId) {
+                        modifyButton.type = 'button';
+                        reviewBodyDiv.appendChild(modifyButton);
+                    }
+
                     // 'media' div 요소에 'media-body' div 요소를 추가합니다.
                     reviewDiv.appendChild(reviewBodyDiv);
 
@@ -480,8 +503,11 @@
 
         //TODO: orderId 추가해서 주문한 회원만 리뷰쓸 수 있도록
         if (memberId === undefined) {
-            alert('리뷰는 회원만 작성할 수 있습니다');
-            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: '도서를 구매한 만큼 리뷰만 작성할 수 있습니다.',
+                text: '구입한 도서 수  : '
+            })
             return
         }
         let bookId = [[${bookId}]];
@@ -499,6 +525,13 @@
 
                 } else {
                     document.querySelector('#postReviewForm').submit();
+                    Swal.fire({
+                        position: "middle",
+                        icon: "success",
+                        title: "리뷰를 작성했습니다.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -529,7 +562,14 @@
                 input.setAttribute('value', reviewId);
                 document.querySelector('#modifyReviewForm').appendChild(input);
                 document.querySelector('#modifyReviewForm').submit();
-                alert('리뷰가 수정되었습니다.');
+
+                Swal.fire({
+                    position: "middle",
+                    icon: "success",
+                    title: "리뷰가 수정되었습니다.",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
             })
 
@@ -543,5 +583,39 @@
         });
     });
 
-</script>
 
+    function modifyReview(reviewId, reviewContent) {
+
+        document.querySelector('#postReviewForm').style.display = 'none';
+        document.querySelector('#modifyReviewForm').style.display = 'block';
+
+        document.getElementById('reviewTitle').textContent = '리뷰수정';
+        document.getElementById('modifyContent').textContent = reviewContent;
+
+        document.querySelector('#modifyReview').addEventListener('click', function () {
+            let input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', 'reviewId');
+            input.setAttribute('value', reviewId);
+            document.querySelector('#modifyReviewForm').appendChild(input);
+            document.querySelector('#modifyReviewForm').submit();
+
+            Swal.fire({
+                position: "middle",
+                icon: "success",
+                title: "리뷰가 수정되었습니다.",
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        })
+
+        // 취소 버튼
+        document.querySelector('#cancelButton').addEventListener('click', function () {
+
+            document.querySelector('#postReviewForm').style.display = 'block';
+            document.querySelector('#modifyReviewForm').style.display = 'none';
+            document.getElementById('reviewTitle').textContent = '리뷰작성';
+        })
+    }
+</script>

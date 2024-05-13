@@ -190,6 +190,7 @@ public class OrderController {
         );
         OrderForPaymentDto orderForPaymentDto = orderService.saveOrder(order);
 
+        Long point = request.getPoint();
         return "/"; //TODO : 결제페이지로
     }
 

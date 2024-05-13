@@ -3,7 +3,9 @@ package com.t2m.g2nee.front.aop;
 import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.findCookie;
 
+import com.t2m.g2nee.front.booklike.service.BookLikeService;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
+import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.Cookie;
@@ -24,11 +26,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class MemberAspect {
 
     public static final String MEMBER_INFO_KEY = "SPRING_SECURITY_CONTEXT";
-    public static final String MEMBER_INFO = "memberInfo";
-    public static final String LIKE_NUM = "likeNum";
     public final RedisTemplate redisTemplate;
     private final ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
-
+    public static final String MEMBER_INFO = "memberInfo";
+    public static final String LIKE_NUM = "likeNum";
+    public static final String CART_ITEM_NUM = "cartItemNum";
+    public final BookLikeService bookLikeService;
+public final ShoppingCartService shoppingCartService;
     @Pointcut("@annotation(com.t2m.g2nee.front.annotation.Member)")
     private void member() {
     }
@@ -44,23 +48,41 @@ public class MemberAspect {
 
         Cookie c = findCookie(SESSION_ID);
 
+        if (threadLocal.get() == null) {
+            threadLocal.set(new HashMap<>());
+        }
+        Long memberId = null;
         if (c != null) {
             String sessionId = c.getValue();
-            addMemberInfo(sessionId);
+            memberId = addMemberInfo(sessionId);
         }
+        addLikeNum(memberId);
+        addCartItemNum(memberId);
+
         Object result = joinPoint.proceed(args);
         threadLocal.remove();
         return result;
     }
 
 
-    public void addMemberInfo(String sessionId) {
+    public Long addMemberInfo(String sessionId) {
         MemberDetailInfoResponseDto memberInfo =
                 (MemberDetailInfoResponseDto) redisTemplate.opsForHash().get(MEMBER_INFO_KEY, sessionId);
-        if (threadLocal.get() == null) {
-            threadLocal.set(new HashMap<>());
+        if(memberInfo != null) {
+            threadLocal.get().put(MEMBER_INFO, memberInfo);
+            return memberInfo.getMemberId();
         }
-        threadLocal.get().put(MEMBER_INFO, memberInfo);
+        return null;
+    }
+
+    private void addLikeNum(Long memberId){
+        Long likeNum = bookLikeService.getMemberLikesNum(memberId);
+        threadLocal.get().put(LIKE_NUM, likeNum);
+    }
+
+    private void addCartItemNum(Long memberId){
+        int cartItemNum = shoppingCartService.getCartItemNum(memberId);
+        threadLocal.get().put(CART_ITEM_NUM, cartItemNum);
     }
 
     public Object getThreadLocal(String key) {

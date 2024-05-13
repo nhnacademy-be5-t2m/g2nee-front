@@ -1,16 +1,20 @@
 package com.t2m.g2nee.front.member.service;
 
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
+import com.t2m.g2nee.front.annotation.Member;
+import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
+import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
 import java.util.Objects;
@@ -38,13 +42,19 @@ public class MemberService {
     private final RestTemplate restTemplate;
     private final RedisTemplate<String, MemberInfoDto> redisTemplate;
 
+    private final ShoppingCartService shoppingCartService;
+    private final MemberAspect memberAspect;
+
     @Value("${gatewayToShopUrl}")
     String gatewayToShopUrl;
     @Value("${gatewayToAuthUrl}")
     String gatewayToAuthUrl;
 
-    public MemberService(RedisTemplate<String, MemberInfoDto> redisTemplate) {
+    public MemberService(RedisTemplate<String, MemberInfoDto> redisTemplate, ShoppingCartService shoppingCartService,
+                         MemberAspect memberAspect) {
         this.redisTemplate = redisTemplate;
+        this.shoppingCartService = shoppingCartService;
+        this.memberAspect = memberAspect;
         this.restTemplate = new RestTemplate();
     }
 
@@ -123,6 +133,7 @@ public class MemberService {
      *
      * @param response logout을 호출할때의 response
      */
+    @Member
     public void logout(HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -135,6 +146,10 @@ public class MemberService {
                     new HttpEntity<>(makeHttpHeaders()),
                     Void.class
             );
+            MemberDetailInfoResponseDto memberDetailInfoResponseDto =
+                    (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+            Long memberId = memberDetailInfoResponseDto.getMemberId();
+            shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
 
             deleteCookie(response, JwtUtil.ACCESS_COOKIE);
 

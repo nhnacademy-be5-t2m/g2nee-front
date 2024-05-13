@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/categoryLayout}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/categoryLayout}">
 
 <head>
+    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>쇼핑 카트</title>
 </head>
 
 <body>
 <div layout:fragment="content">
 
-
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
-        <div class="row px-xl-5">
-            <div class="col-lg-8 table-responsive mb-5">
+        <div class="row px-xl-4">
+            <div class="col-lg-14 table-responsive mb-5">
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
                     <tr>
@@ -25,124 +28,242 @@
                         <th>삭제</th>
                     </tr>
                     </thead>
-                    <tbody class="align-middle">
+                    <tbody class="align-middle" th:if="${cartList == null || cartList.size() == 0}">
                     <tr>
-                        <td class="align-middle"><img alt="" src="../../static/img/product-1.jpg" style="width: 50px;">
-                            Book name
+                        <td colspan="5">
+                            <i class="fa-regular fa-face-sad-tear"></i>
+                            장바구니가 비어있습니다.
                         </td>
-                        <td class="align-middle">가격</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input class="form-control form-control-sm bg-secondary text-center" type="text"
-                                       value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">총가격</td>
-                        <td class="align-middle">
-                            <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img alt="" src="../../static/img/product-2.jpg" style="width: 50px;">
-                            Book name
-                        </td>
-                        <td class="align-middle">가격</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input class="form-control form-control-sm bg-secondary text-center" type="text"
-                                       value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">총가격</td>
-                        <td class="align-middle">
-                            <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img alt="" src="../../static/img/product-3.jpg" style="width: 50px;">
-                            Book name
-                        </td>
-                        <td class="align-middle">가격</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input class="form-control form-control-sm bg-secondary text-center" type="text"
-                                       value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">총가격</td>
-                        <td class="align-middle">
-                            <button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
-                        </td>
-                    </tr>
 
+                    </tr>
+                    </tbody>
+                    <tbody class="align-middle" th:unless="${cartList == null || cartList.size() == 0}">
+                    <tr th:each="cart : ${cartList}">
+                        <td id="cart" style="text-align: left;">
+                            <img th:src="${cart.imageUrl}" alt="image" style="width: 70px;">
+                            <span style="margin-left: 30px" th:text="${cart.title} + ' - ' + ${cart.engTitle}">
+                            </span>
+                        </td>
+                        <td class="align-middle" th:text="'₩ ' + ${cart.price}"></td>
+                        <td class="align-middle">
+                            <div class="input-group quantity mx-auto" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <button id="minusButton" th:data-bookId="${cart.bookId}"
+                                            class="btn btn-sm btn-primary btn-minus">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input class="cartQuantity form-control form-control-sm bg-secondary text-center" id="quantity" th:data-bookId="${cart.bookId}"
+                                       th:value="${cart.quantity}"
+                                       type="text"
+                                       value="1">
+                                <div class="input-group-btn">
+                                    <button id="plusButton" th:data-bookId="${cart.bookId}"
+                                            class="btn btn-sm btn-primary btn-plus">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle" th:text="'₩ ' + ${cart.price * cart.quantity}"></td>
+                        <td class="align-middle">
+                            <button id="deleteButton" th:data-bookId="${cart.bookId}"
+                                    class="btn btn-sm btn-primary"><i
+                                    class="fa fa-times"></i></button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
 
-            <!-- 주문 가격 부분 -->
-            <div class="col-lg-4">
-
-                <div class="card border-secondary mb-5">
-                    <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">결제 금액</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-3 pt-1">
-                            <h6 class="font-weight-medium">상품 금액</h6>
-                            <h6 class="font-weight-medium">+ $ -- </h6>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">쿠폰/포인트 적용</h6>
-                            <h6 class="font-weight-medium">- $ -- </h6>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">배달료</h6>
-                            <h6 class="font-weight-medium">- $ -- </h6>
-                        </div>
-                    </div>
-                    <div class="card-footer border-secondary bg-transparent">
-                        <div class="d-flex justify-content-between mt-2">
-                            <h5 class="font-weight-bold">예상 결제금액</h5>
-                            <h5 class="font-weight-bold">$ --</h5>
-                        </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">주문하기</button>
-                    </div>
-                </div>
+    <div style="float: right" th:unless="${cartList == null || cartList.size() == 0}">
+        <div style="font-weight: bold; font-size: 1.4em;"
+             th:text="'₩ ' + ${deliveryPolicy.freeDeliveryStandard} + ' 이상 구매 시 배송비 무료!'">
+        </div>
+        <div>
+            <div style="text-align: right">
+                <span id="totalPrice" style="font-size: 1.2em; color: #555;"
+                      th:text="'총 가격 : ₩ ' + ${totalPrice}"></span>
+                <span id="deliveryFeeFree"
+                      th:style="${totalPrice >= deliveryPolicy.freeDeliveryStandard} ? 'font-size: 1.2em; color: #555;  display: block' : 'font-size: 1.2em; color: #555; display: none'"
+                      th:text="'배송비 : ₩ 0 ( 무료 배송 )'"></span>
+                <span id="deliveryFee"
+                      th:style="${totalPrice >= deliveryPolicy.freeDeliveryStandard} ? 'font-size: 1.2em; color: #555;  display: none' : 'font-size: 1.2em; color: #555; display: block'"
+                      th:text="'배송비 : ₩ ' +${deliveryPolicy.deliveryFee}"></span>
+                <hr>
+                <span id="totalAmount" style="font-weight: bold; font-size: 1.4em;"
+                      th:text="'합계 : ₩ ' + ${totalPrice + deliveryPolicy.deliveryFee}"></span>
             </div>
         </div>
-
-
+        <button class="btn btn-block btn-primary">주문하기</button>
     </div>
+
 </div>
 </body>
 </html>
+<script th:inline="javascript">
+
+    let cartItemNum = [[${cartItemNum}]];
+    let totalPriceTag = document.querySelector('#totalPrice');
+    let totalAmountTag = document.querySelector('#totalAmount');
+    let deliveryFeeFreeTag = document.querySelector('#deliveryFeeFree');
+    let deliveryFeeTag = document.querySelector('#deliveryFee');
+    let totalPrice = [[${totalPrice}]];
+    let deliveryFee = [[${deliveryPolicy.deliveryFee}]];
+    let freeDeliveryStandard = [[${deliveryPolicy.freeDeliveryStandard}]];
+
+
+    // 수량 - 버튼
+    document.querySelectorAll('#minusButton').forEach(function (button) {
+        button.addEventListener('click', function () {
+
+            let bookId = this.dataset.bookid;
+            let quantity = button.parentElement.parentElement.querySelector('#quantity').value
+
+            if (quantity < 1) {
+                quantity = 1;
+                button.parentElement.parentElement.querySelector('#quantity').value = quantity;
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: '0개 보다 적게 담을 수 없습니다.',
+                    text: '우측 X 버튼을 눌러 장바구니에서 지울 수 있습니다.'
+                })
+                return
+            }
+
+            fetch('/carts', {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    bookId: bookId,
+                    quantity: quantity
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    totalPrice -= data.price;
+                    totalPriceTag.textContent = "총 가격 : ₩ " + totalPrice;
+                    if (totalPrice >= freeDeliveryStandard) {
+                        deliveryFeeFreeTag.style.display = "block";
+                        deliveryFeeTag.style.display = "none";
+                    } else {
+                        deliveryFeeFreeTag.style.display = "none";
+                        deliveryFeeTag.style.display = "block";
+                    }
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
+                })
+        });
+    });
+
+    // 수량 - 버튼
+    document.querySelectorAll('#quantity').forEach(function (input) {
+        input.addEventListener('change', function () {
+
+            let bookId = this.dataset.bookid;
+            console.log(bookId);
+            let quantity = input.parentElement.parentElement.querySelector('#quantity').value;
+
+            if (quantity < 1) {
+                quantity = 1;
+                input.parentElement.parentElement.querySelector('#quantity').value = quantity;
+                Swal.fire({
+                    icon: 'warning',
+                    title: '0개 보다 적게 담을 수 없습니다.',
+                    text: '1 이상의 숫자를 입력해주세요.'
+                })
+                return
+            }
+
+            fetch('/carts', {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    bookId: bookId,
+                    quantity: quantity
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    totalPrice = data.price * data.quantity;
+                    totalPriceTag.textContent = "총 가격 : ₩ " + totalPrice;
+                    if (totalPrice >= freeDeliveryStandard) {
+                        deliveryFeeFreeTag.style.display = "block";
+                        deliveryFeeTag.style.display = "none";
+                    } else {
+                        deliveryFeeFreeTag.style.display = "none";
+                        deliveryFeeTag.style.display = "block";
+                    }
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
+                })
+        });
+    });
+
+    document.querySelectorAll('#plusButton').forEach(function (button) {
+        button.addEventListener('click', function () {
+            let bookId = this.dataset.bookid;
+            let quantity = button.parentElement.parentElement.querySelector('#quantity').value
+
+            fetch('/carts', {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    bookId: bookId,
+                    quantity: quantity
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    totalPrice += data.price;
+                    totalPriceTag.textContent = "총 가격 : ₩ " + totalPrice;
+                    if (totalPrice >= freeDeliveryStandard) {
+                        deliveryFeeFreeTag.style.display = "block";
+                        deliveryFeeTag.style.display = "none";
+                    } else {
+                        deliveryFeeFreeTag.style.display = "none";
+                        deliveryFeeTag.style.display = "block";
+                    }
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
+                })
+        });
+    });
+
+
+    document.querySelectorAll('#deleteButton').forEach(function (button) {
+        button.addEventListener('click', function () {
+            let bookId = this.dataset.bookid;
+            var cartItemNumElement = document.querySelector('#cartItemNum');
+
+            fetch(`/carts/book/${bookId}`, {
+                method: "DELETE"
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    totalPrice -= data.price * data.quantity;
+                    totalPriceTag.textContent = "총 가격 : ₩ " + totalPrice;
+                    if (totalPrice >= freeDeliveryStandard) {
+                        deliveryFeeFreeTag.style.display = "block";
+                        deliveryFeeTag.style.display = "none";
+                    } else {
+                        deliveryFeeFreeTag.style.display = "none";
+                        deliveryFeeTag.style.display = "block";
+                    }
+                    totalAmountTag.textContent = "합계 : ₩ " + (totalPrice + deliveryFee);
+                    this.closest('tr').remove();
+                    cartItemNum -= 1;
+                    cartItemNumElement.textContent = cartItemNum;
+                });
+        });
+    });
+
+
+</script>
