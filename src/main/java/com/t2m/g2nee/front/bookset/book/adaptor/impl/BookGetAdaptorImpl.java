@@ -266,4 +266,27 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<BookDto.ListResponse> getBookStock(List<Long> bookIdList) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String bookIds = bookIdList.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+
+        String url =
+                gatewayUrl + "/books/stock?bookIdList=" + bookIds;
+
+        return restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<List<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
+    }
 }

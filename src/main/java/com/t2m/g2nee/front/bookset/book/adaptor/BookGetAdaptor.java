@@ -67,4 +67,11 @@ public interface BookGetAdaptor {
      * @return PageResponse<BookDto.ListResponse>
      */
     List<BookDto.ListResponse> getRecommendBooks(List<Long> categoryIdList, Long bookId);
+
+    /**
+     * 책 재고를 조회하는 메서드
+     * @param bookIdList
+     * @return List<BookDto.ListResponse>
+     */
+    List<BookDto.ListResponse> getBookStock(List<Long> bookIdList);
 }
