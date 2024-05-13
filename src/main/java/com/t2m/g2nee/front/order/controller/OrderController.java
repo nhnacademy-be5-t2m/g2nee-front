@@ -7,11 +7,15 @@ import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.bookset.book.service.BookGetService;
+import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
-import com.t2m.g2nee.front.order.dto.request.AddressInfoDto;
+import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.order.dto.request.BookOrderDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
-import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
+import com.t2m.g2nee.front.order.dto.request.OrderForm;
+import com.t2m.g2nee.front.order.dto.request.OrderSaveRequestDto;
+import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
+import com.t2m.g2nee.front.order.service.OrderService;
 import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
 import com.t2m.g2nee.front.point.service.PointService;
 import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
@@ -46,6 +50,8 @@ public class OrderController {
     private final DeliveryPolicyService deliveryPolicyService;
     private final PointService pointService;
     private final PackageTypeService packageTypeService;
+    private final MemberService memberService;
+    private final OrderService orderService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -85,8 +91,6 @@ public class OrderController {
     @Member
     public String buyNowOrderForm(@RequestParam("bookId") Long bookId, @RequestParam("bookCount") int bookCount,
                                   Model model) {
-        model.addAttribute("ordererInfo", new OrdererInfoDto());
-        model.addAttribute("addressInfo", new AddressInfoDto());
         BigDecimal rewardRate = BigDecimal.valueOf(0);
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
@@ -145,6 +149,50 @@ public class OrderController {
         model.addAttribute("finalTotalSalePrice", bookOrderDto.getFinalPrice() + deliveryFee);
         return "order/orderForm";
     }
+
+    @Member
+    @PostMapping("/submit")
+    public String submitOrder(@ModelAttribute("form") OrderForm request) {
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        //회원주문인지 비회원주문인지 확인
+        //비회원이라면 비회원을 생성한 후 customerId저장
+        if (member != null) {
+            Long memberId = null;
+            if (member != null) {
+                request.setCustomerId(memberId);
+            }
+        } else {
+            SignUpNonMemberRequestDto signUpNonMemberRequestDto
+                    = new SignUpNonMemberRequestDto(
+                    request.getReceiverName(),
+                    request.getPassword(),
+                    request.getReceiverEmail(),
+                    request.getReceiverPhoneNumber()
+            );
+            request.setCustomerId(memberService.nonMemberSignUp(signUpNonMemberRequestDto));
+        }
+
+        //주문 생성
+        OrderSaveRequestDto order = new OrderSaveRequestDto(
+                request.getDeliveryWishDate(),
+                request.getNetAmount(),
+                request.getOrderAmount(),
+                request.getDeliveryFee(),
+                request.getReceiverName(),
+                request.getReceiverPhoneNumber(),
+                request.getReceiverAddress(),
+                request.getZipcode(),
+                request.getDetailAddress(),
+                request.getMessage(),
+                request.getOrderDetailList(),
+                request.getCustomerId(),
+                request.getCouponId()
+        );
+        OrderForPaymentDto orderForPaymentDto = orderService.saveOrder(order);
+
+        return "/"; //TODO : 결제페이지로
+    }
+
 
     /**
      * 포장지 선택 창을 띄워주는 메소드

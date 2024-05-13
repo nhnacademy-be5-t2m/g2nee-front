@@ -7,6 +7,7 @@ import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
+import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
@@ -188,6 +189,23 @@ public class MemberService {
                 HttpMethod.POST,
                 requestEntity,
                 Boolean.class
+        );
+        return response.getBody();
+    }
+
+    /**
+     * 비회원 회원가입을 위한 service
+     *
+     * @param request 비회원 회원가입위한 request dto
+     * @return 생성된 customerId를 반환
+     */
+    public Long nonMemberSignUp(SignUpNonMemberRequestDto request) {
+        HttpEntity<SignUpNonMemberRequestDto> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
+        ResponseEntity<Long> response = restTemplate.exchange(
+                gatewayToShopUrl + "/customer/save",
+                HttpMethod.POST,
+                requestEntity,
+                Long.class
         );
         return response.getBody();
     }
