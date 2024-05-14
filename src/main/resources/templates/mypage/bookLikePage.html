@@ -12,12 +12,13 @@
 
 <body>
 <div layout:fragment="content">
-    <div th:if="${bookPage.data.size() == 0}" class="col-lg-2.5 col-md-3">
+    <div th:if="${bookPage.data.size() == 0}" class="col-lg-6 col-md-6">
         <i class="fa-regular fa-face-sad-tear"></i>
             좋아요 목록이 비어있습니다.
     </div>
     <div th:unless="${bookPage.data.size() == 0}">
-    <div class="col-lg-3 col-md-3"
+        <div class="d-flex flex-wrap">
+            <div class="col-lg-4"
          th:each="book : ${bookPage.data}">
         <div class="card product-item border-0 mb-4">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -59,6 +60,7 @@
             </div>
         </div>
     </div>
+        </div>
     <!-- 도서 목록 end -->
 
     <!-- 페이지 넘기기 start -->

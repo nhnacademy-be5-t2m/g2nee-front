@@ -42,7 +42,7 @@ public class ShoppingCartController {
      */
     @Member
     @GetMapping("/customer")
-    public String getCartByMember(Model model, HttpServletRequest httpServletRequest,
+    public String getCartByMember(Model model,
                                   HttpServletResponse httpServletResponse) {
 
         String customerId = null;
@@ -53,7 +53,7 @@ public class ShoppingCartController {
         Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
         List<ShoppingCartDto.Response> cartList =
-                shoppingCartService.getCartByCustomer(customerId, httpServletRequest, httpServletResponse);
+                shoppingCartService.getCartByCustomer(customerId, httpServletResponse);
 
         int totalPrice = cartList.stream()
                 .mapToInt(c -> c.getPrice() * c.getQuantity())
@@ -66,6 +66,7 @@ public class ShoppingCartController {
         model.addAttribute("cartItemNum", cartItemNum);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("deliveryPolicy", deliveryPolicy);
+        model.addAttribute("memberId", customerId);
 
         return "main/cart";
     }

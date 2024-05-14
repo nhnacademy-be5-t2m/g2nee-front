@@ -14,7 +14,6 @@ import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.awt.print.Book;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import static com.t2m.g2nee.front.bookset.book.dto.BookDto.SearchCondition;
 
 /**
  * 책 관리 controller 클래스
@@ -89,6 +89,11 @@ public class BookController {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
 
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
@@ -96,6 +101,7 @@ public class BookController {
         model.addAttribute("bookList", bookList);
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("cartItemNum", cartItemNum);
+        model.addAttribute("memberId", memberId);
 
         return "main/index";
     }
@@ -131,7 +137,8 @@ public class BookController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
-        model.addAttribute("condition", BookDto.SearchCondition.valueOf(condition).getValue());
+        model.addAttribute("conditionName", SearchCondition.valueOf(condition).getValue());
+        model.addAttribute("condition", condition);
         model.addAttribute("keyword", keyword);
         model.addAttribute("sort", sort);
         model.addAttribute("memberId", memberId);
