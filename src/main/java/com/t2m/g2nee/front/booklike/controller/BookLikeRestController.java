@@ -9,6 +9,7 @@ import com.t2m.g2nee.front.booklike.service.BookLikeService;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -4,8 +4,11 @@ package com.t2m.g2nee.front.bookset.book.service;
 import com.t2m.g2nee.front.bookset.book.adaptor.BookGetAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookGetService {
 
     private final BookGetAdaptor bookGetAdaptor;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 책 하나 정보를 조회하는 서비스 입니다.
@@ -50,11 +54,12 @@ public class BookGetService {
      * @param page     페이지 번호
      * @param keyword  검색 키워드
      * @param sort     정렬 조건
+     * @param condition 검색 조건
      * @return PageResponse<BookDto.ListResponse>
      */
-    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort) {
+    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort,String condition) {
 
-        return bookGetAdaptor.getBooksBySearch(page, memberId, keyword, sort);
+        return bookGetAdaptor.getBooksBySearch(page, memberId, keyword, sort,condition);
 
     }
 
@@ -101,5 +106,30 @@ public class BookGetService {
     public List<BookDto.ListResponse> getRecommendBooks(List<Long> categoryIdList, Long bookId) {
 
         return bookGetAdaptor.getRecommendBooks(categoryIdList, bookId);
+    }
+
+    /**
+     * 재고를 초과하는 책 리스트를 조회
+     * @param bookList 책 리스트
+     * @return List<BookDto.ListResponse>
+     */
+    public List<BookDto.ListResponse> getBookExceedStock(List<BookDto.ListResponse> bookList){
+
+        List<Long> bookIdList = bookList.stream().map(BookDto.ListResponse::getBookId).collect(Collectors.toList());
+        List<BookDto.ListResponse> bookStockList = bookGetAdaptor.getBookStock(bookIdList);
+        List<BookDto.ListResponse> responses = new ArrayList<>();
+
+        for (int i = 0; i < bookList.size(); i++) {
+
+            if(bookList.get(i).getQuantity() > bookStockList.get(i).getQuantity()){
+                responses.add(bookStockList.get(i));
+            }
+        }
+        return responses;
+    }
+
+    public PageResponse<BookDto.ListResponse> getMemberLikeBook(int page,Long memberId){
+
+        return bookGetAdaptor.getMemberLikeBook(page,memberId);
     }
 }

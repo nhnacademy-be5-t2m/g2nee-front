@@ -17,6 +17,7 @@
     <div class="row pb-3">
         <div class="col-12 pb-1">
             <h5 th:if="${keyword != null}">
+                <span th:text="${condition} + ' : '"></span>
                 <span style="font-weight: bold;" th:text="${keyword}"></span>
                 <span th:text="' 검색어로 검색한 결과'"></span>
             </h5>
@@ -173,5 +174,6 @@
 <script src="/static/js/book/setLike.js"></script>
 <script src="/static/js/book/putBookInCart.js">
 </script>
+
 
 

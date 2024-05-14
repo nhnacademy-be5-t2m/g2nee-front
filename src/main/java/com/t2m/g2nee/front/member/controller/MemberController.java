@@ -80,4 +80,5 @@ public class MemberController {
         memberService.logout(response);
         return "redirect:/";
     }
+
 }
