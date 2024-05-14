@@ -76,14 +76,14 @@
                 </h5>
                 <hr/>
 
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                <div th:if="${book.bookStatus.name() == 'SOLDOUT'} or ${book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                    <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
                          style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
                     <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
                           style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
                 </div>
                 <!-- 구매할 책 갯수 설정 -->
-                <div th:unless="${book.bookStatus.name() == 'SOLDOUT' or book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT'} or ${book.bookStatus.name() == 'OUTOFPRINT'}" class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus">

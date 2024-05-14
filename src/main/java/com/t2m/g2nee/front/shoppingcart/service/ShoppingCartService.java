@@ -76,7 +76,7 @@ public class ShoppingCartService {
      * @param customerId 회원 아이디 또는 비회원의 세션아이디
      * @return List<ShoppingCartDto.Response>
      */
-    public List<ShoppingCartDto.Response> getCartByCustomer(String customerId, HttpServletRequest httpServletRequest,
+    public List<ShoppingCartDto.Response> getCartByCustomer(String customerId,
                                                             HttpServletResponse httpServletResponse) {
 
         customerId = getCustomerId(customerId, httpServletResponse);

@@ -65,10 +65,9 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a  id="memberLike" href="/books/member/likes" class="btn border"
-                    th:data-memberId="${memberId}">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge" th:text="${likesNum}"></span>
+                <a th:if="${memberId != null}" href="/books/member/likes" class="btn border">
+                    <i th:if="${memberId != null}" class="fas fa-heart text-primary"></i>
+                    <span th:if="${memberId != null}"  class="badge" th:text="${likesNum}"></span>
                 </a>
                 <a href="/carts/customer" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
@@ -107,21 +106,3 @@
 
 </div>
 </html>
-<script>
-    document.querySelector('#memberLike').addEventListener('click', function() {
-
-
-        let memberId = this.dataset.memberid;
-
-        if(memberId === null){
-
-            Swal.fire({
-                icon: 'warning',
-                title: '찜 목록은 회원만 조회 가능합니다',
-                text: '로그인을 해주세요'
-            })
-            event.preventDefault();
-        }
-    });
-
-</script>
