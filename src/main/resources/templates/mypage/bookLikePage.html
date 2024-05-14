@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypageLayout}">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>나의 좋아요 책 페이지</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div th:if="${bookPage.data.size() == 0}" class="col-lg-2.5 col-md-3">
+        <i class="fa-regular fa-face-sad-tear"></i>
+            좋아요 목록이 비어있습니다.
+    </div>
+    <div th:unless="${bookPage.data.size() == 0}">
+    <div class="col-lg-3 col-md-3"
+         th:each="book : ${bookPage.data}">
+        <div class="card product-item border-0 mb-4">
+            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                <a th:href="@{'/books/' + ${book.bookId}}">
+                    <img class="img-fluid w-100 h-100"
+                         th:src="${book.thumbnailImageUrl}" alt="썸네일">
+                </a>
+            </div>
+            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                <a th:href="@{'/books/' + ${book.bookId}}">
+                    <h6 class="text-truncate mb-3; font-weight-semi-bold;" style="font-size: 20px;"
+                        th:text="${book.title}"></h6>
+                </a>
+                <span th:if="${book.bookStatus.name() == 'SOLDOUT'}"
+                      class="badge rounded-pill bg-danger" style="color: white; font-size: 1.1em;"
+                      th:text="매진"></span>
+                <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}"
+                      class="badge rounded-pill bg-dark" style="color: white; font-size: 1.1em;"
+                      th:text="절판"></span>
+            </div>
+            <div class="card-footer d-flex justify-content-between bg-light border">
+                <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                   th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
+                   th:data-memberId="${memberId}">
+                    <i class="fa-regular fa-heart text-primary" style="font-size: 20px"
+                       th:if="${book.isLiked() == false}"></i>
+                    <i class="fa-solid fa-heart text-primary" style="font-size: 20px"
+                       th:if="${book.isLiked() == true}"></i>
+                </a>
+                <button id="cartButton"
+                        th:data-bookId="${book.bookId}"
+                        th:data-bookTitle="${book.title}"
+                        th:data-bookQuantity="${book.quantity}"
+                        th:data-cartItemNum="${cartItemNum}"
+                        class="btn btn-sm text-dark p-0">
+                    <i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가
+                </button>
+                <input id="quantity" type="hidden" value="1">
+            </div>
+        </div>
+    </div>
+    <!-- 도서 목록 end -->
+
+    <!-- 페이지 넘기기 start -->
+    <div class="col-12 pb-1">
+        <nav aria-label="...">
+            <ul class="pagination row justify-content-center">
+                <li>
+                    <a class="page-link" th:href="@{'?page=1'}">≪</a>
+                </li>
+                <li th:class="${bookPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage - 1 }}"><</a>
+                </li>
+                <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}"
+                    th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${pageButton}}"
+                       th:text="${pageButton}"></a>
+                </li>
+                <li th:class="${bookPage.currentPage == bookPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage + 1}}">></a>
+                </li>
+                <li>
+                    <a class="page-link" th:href="@{'?page=' + ${bookPage.totalPage}}">≫</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    </div>
+    <!-- 페이지 넘기기 end -->
+</div>
+
+</body>
+</html>
+<script src="/static/js/book/setLike.js"></script>
+<script src="/static/js/book/putBookInCart.js">
+</script>

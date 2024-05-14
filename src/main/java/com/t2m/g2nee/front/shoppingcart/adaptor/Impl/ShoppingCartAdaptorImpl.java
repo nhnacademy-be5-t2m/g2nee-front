@@ -29,7 +29,7 @@ public class ShoppingCartAdaptorImpl implements ShoppingCartAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = gatewayUrl + "/carts/book/" +  bookId + "?quantity=" + quantity;
+        String url = gatewayUrl + "/carts/book/" + bookId + "?quantity=" + quantity;
 
         return restTemplate.exchange(
                 url,

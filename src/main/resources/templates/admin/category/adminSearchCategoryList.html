@@ -15,11 +15,11 @@
     <h2 class="text-center">카테고리 검색</h2>
 
     <br/><br/>
-    <form th:action="@{/admin/categories/search}" th:method="GET"
-          class="form-inline mb-3 d-flex justify-content-between">
-        <input type="text" class="form-control" placeholder="카테고리 검색" name="name" style="width: 70%;">
-        <input type="hidden" name="page" value="1">
-        <input type="submit" class="btn btn-primary ms-3" value="검색">
+    <form class="form-inline mb-3 d-flex justify-content-between" th:action="@{/admin/categories/search}"
+          th:method="GET">
+        <input class="form-control" name="name" placeholder="카테고리 검색" style="width: 70%;" type="text">
+        <input name="page" type="hidden" value="1">
+        <input class="btn btn-primary ms-3" type="submit" value="검색">
     </form>
 
     <table class="table table-bordered table-hover">
@@ -42,20 +42,20 @@
                 <span th:text="${searchCategory.categoryEngName}"></span>
             </td>
             <td>
-                <a th:href="@{'/admin/categories/modify/' + ${searchCategory.categoryId}}"
-                   class="btn btn-sm btn-primary">수정</a>
+                <a class="btn btn-sm btn-primary"
+                   th:href="@{'/admin/categories/modify/' + ${searchCategory.categoryId}}">수정</a>
             </td>
             <td>
                     <span th:if="${searchCategory.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="delete"
-                              class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-success">활성</button>
+                        <form class="d-inline" th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}"
+                              th:method="delete">
+                            <button class="btn btn-sm btn-success" type="submit">활성</button>
                         </form>
                     </span>
                 <span th:unless="${searchCategory.isActivated}">
-                        <form th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}" th:method="patch"
-                              class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
+                        <form class="d-inline" th:action="@{'/admin/categories/' + ${searchCategory.categoryId}}"
+                              th:method="patch">
+                            <button class="btn btn-sm btn-secondary" type="submit">비활성</button>
                         </form>
                     </span>
             </td>
@@ -72,8 +72,8 @@
             <li th:class="${searchCategoriesPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                 <a class="page-link" th:href="@{'?page=' + ${searchCategoriesPage.currentPage - 1 }}"><</a>
             </li>
-            <li th:each="pageButton : ${#numbers.sequence(searchCategoriesPage.startPage,searchCategoriesPage.endPage)}"
-                th:class="${searchCategoriesPage.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+            <li th:class="${searchCategoriesPage.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(searchCategoriesPage.startPage,searchCategoriesPage.endPage)}">
                 <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
             </li>
             <li th:class="${searchCategoriesPage.currentPage == searchCategoriesPage.totalPage ? 'page-item disabled' : 'page-item'}">
@@ -86,7 +86,7 @@
     </nav>
 
     <br/><br/>
-    <a th:href="@{/admin/categories/save}" class="btn btn-primary">새 카테고리</a>
+    <a class="btn btn-primary" th:href="@{/admin/categories/save}">새 카테고리</a>
 
 </div>
 </body>

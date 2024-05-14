@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/categoryLayout}">
+      layout:decorate="~{layouts/categoryLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>회원 로그인 페이지</title>
     <link href="/static/css/signup.css" rel="stylesheet">
@@ -22,15 +22,15 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row" for="username" class="word">아이디</th>
+                        <th class="word" for="username" scope="row">아이디</th>
                         <td style="display : flex">
-                            <input type="text" class="text" id="username" name="username" placeholder="아이디"/>
+                            <input class="text" id="username" name="username" placeholder="아이디" type="text"/>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" for="password" class="word">비밀번호</th>
+                        <th class="word" for="password" scope="row">비밀번호</th>
                         <td style="display : flex">
-                            <input type="password" class="text" id="password" name="password" placeholder="비밀번호"/>
+                            <input class="text" id="password" name="password" placeholder="비밀번호" type="password"/>
                         </td>
                     </tr>
                     </tbody>
@@ -38,7 +38,7 @@
             </div>
 
             <div style="margin-bottom: 20px;"></div>
-            <button type="button" onclick="loginSubmit()">로그인</button>
+            <button onclick="loginSubmit()" type="button">로그인</button>
         </form>
     </div>
     <!-- Shop Detail End -->
