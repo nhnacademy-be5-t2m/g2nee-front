@@ -18,6 +18,8 @@ import com.t2m.g2nee.front.order.dto.request.OrderForm;
 import com.t2m.g2nee.front.order.dto.request.OrderSaveRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
 import com.t2m.g2nee.front.order.service.OrderService;
+import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
+import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
 import com.t2m.g2nee.front.point.service.PointService;
 import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
@@ -54,6 +56,7 @@ public class OrderController {
     private final PackageTypeService packageTypeService;
     private final MemberService memberService;
     private final OrderService orderService;
+    private final OrderGetService orderGetService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
