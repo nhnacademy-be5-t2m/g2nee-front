@@ -1,8 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>G2nee Book 결제 성공</title>
     <meta charset="UTF-8">
+    <link href="/static/css/signup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- Libraries Stylesheet -->
+    <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/static/css/order.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
     <script>
         function closeWindowAndRedirect() {
             // 새 창 닫기
@@ -20,19 +27,61 @@
                 window.opener.location.href = "/books"; // 메인 창 리다이렉트
             }
         });
+
+        function copyToClipboard() {
+            var t = document.createElement("textarea");
+            document.body.appendChild(t);
+            t.value = document.querySelector('#orderNumber').textContent;
+            t.select();
+            document.execCommand('copy');
+            document.body.removeChild(t)
+            Swal.fire({
+                icon: 'success',
+                title: '주문번호 복사완료!',
+                text: ''
+            })
+        }
     </script>
 </head>
 
 <body>
-<h4>결제 성공</h4>
-<p><span th:text="${paymentSuccess.orderName}"></span> 결제가 성공적으로 완료되었습니다.</p>
-<p>주문 번호: <span th:text="${paymentSuccess.orderNumber}"></span></p>
-<h5><span th:text="${paymentSuccess.orderName}"></span></h5>
-<p>결제 수단: <span th:text="${paymentSuccess.payType}"></span></p>
-<p>결제 금액: <span th:text="${paymentSuccess.amount}"></span></p>
-<p>승인 날짜: <span th:text="${paymentSuccess.paymentDate}"></span></p>
-
-<!-- 확인 버튼: 클릭 시 창 닫기 및 메인 창 리다이렉트 -->
-<button onclick="closeWindowAndRedirect()">확인</button>
+<div style="margin:20px">
+    <h4 style="color:red">결제가 성공적으로 완료되었습니다.</h4>
+    <table class="table table-bordered table-hover">
+        <tbody>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">주문 번호</th>
+            <td>
+                <span id="orderNumber" th:text="${paymentSuccess.orderNumber}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">결제 수단</th>
+            <td>
+                <span th:text="${paymentSuccess.payType}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">결제 금액</th>
+            <td>
+                <span th:text="${paymentSuccess.amount}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">주문 완료 날짜</th>
+            <td>
+                <span th:text="${paymentSuccess.paymentDate}"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div sec:authorize="isAnonymous()">
+        <h6 style="color:red">주문번호와 설정하신 비밀번호로 비회원 주문조회가 가능합니다.</h6>
+        <button class="btn btn-primary" onclick="copyToClipboard()">주문번호 복사</button>
+    </div>
+    </br>
+    <!-- 확인 버튼: 클릭 시 창 닫기 및 메인 창 리다이렉트 -->
+    <button class="btn btn-primary" onclick="closeWindowAndRedirect()">확인</button>
+</div>
 </body>
 </html>

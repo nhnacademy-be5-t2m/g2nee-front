@@ -25,7 +25,7 @@ public class CouponMyPageController {
 
     //쿠폰 전체 조회
     @Member
-    public String getMyCoupon(@RequestParam(defaultValue = "1") int page, Model model){
+    public String getMyCoupon(@RequestParam(defaultValue = "1") int page, Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if (member != null) {
@@ -35,10 +35,10 @@ public class CouponMyPageController {
         model.addAttribute("coupons", couponService.getMyCoupons(memberId, page));
         return "mypage/coupon/couponList";
     }
-    
+
     //책에 대해 사용할 수 있는 쿠폰 조회: couponService.getBookCoupons(customerId, bookId, page);
 
-    
+
     //전체 주문에 대해 사용할 수 있는 쿠폰 조회: couponService.getTotalCoupons(customerId, page);
 
 }

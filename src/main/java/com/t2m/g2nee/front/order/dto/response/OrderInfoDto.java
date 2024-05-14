@@ -14,7 +14,8 @@ import lombok.Setter;
 
 public class OrderInfoDto {
 
-    private OrderInfoDto(){}
+    private OrderInfoDto() {
+    }
 
     @Getter
     @Setter
@@ -49,6 +50,7 @@ public class OrderInfoDto {
         private String message;
         private String couponName;
     }
+
     @Getter
     @Setter
     @NoArgsConstructor
@@ -76,7 +78,7 @@ public class OrderInfoDto {
     }
 
     @Getter
-    public enum OrderState{
+    public enum OrderState {
         WAITING("배송준비"), DELIVERING("배송중"), DELIVERED("배송완료"),
         RETURNING("반품대기"), RETURNED("반품완료"), CANCEL("주문취소"),
         PAYWAITING("결제대기"), ABORTED("결제실패");

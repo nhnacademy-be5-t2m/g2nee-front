@@ -1,14 +1,12 @@
 package com.t2m.g2nee.front.order.controller;
 
 
-
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
-import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -17,9 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,10 +33,9 @@ public class MemberOrderController {
     private final MemberAspect memberAspect;
 
 
-
     @GetMapping("/list")
     @Member
-    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
+    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if (member != null) {
@@ -54,7 +49,7 @@ public class MemberOrderController {
 
     @GetMapping("/{orderId}")
     @Member
-    public String getOrder(@PathVariable("orderId") Long orderId, Model model){
+    public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if (member != null) {
@@ -69,7 +64,7 @@ public class MemberOrderController {
     }
 
     @GetMapping("/nonmembers/")
-    public String getOrderForNonMember(@RequestParam("orderNumber") String orderNumber, Model model){
+    public String getOrderForNonMember(@RequestParam("orderNumber") String orderNumber, Model model) {
         OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(orderNumber);
         model.addAttribute("order", orderResponse);
 

@@ -42,19 +42,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row" for="password" class="word">비밀번호</th>
+                    <th scope="row" for="password" class="order-word" style="width: 15%">비밀번호</th>
                     <td style="display : flex">
-                        <input type="password" id="password" class="text" placeholder="비밀번호"
+                        <input type="password" id="password" class="order-text" placeholder="비밀번호"
                                required/>
-                        <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
                         <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row" for="passwordCheck" class="word">비밀번호 재확인</th>
+                    <th scope="row" for="passwordCheck" class="order-word" style="width: 15%">비밀번호 재확인</th>
                     <td style="display : flex">
-                        <input type="password" id="passwordCheck" class="text" placeholder="비밀번호" required/>
-                        <div class="password-incorrect hide word" style="color:red;"> 비밀번호가 일치하지 않습니다.</div>
+                        <input type="password" id="passwordCheck" class="order-text" placeholder="비밀번호" required/>
                     </td>
                 </tr>
                 <tr>
@@ -105,7 +103,17 @@
                     배송지 선택
                 </th>
                 <td>
-                    <!--                    회원 배송지 불러오는 부분-->
+                    <span>
+                        <input type="radio" id="noSelection" name="addressSelection" value="noSelection" onclick="selectNoAdddress()" checked>
+                        <label for="noSelection">선택 안함</label>
+                    </span>
+                    <span th:id="${addressStat.index}" th:each="address : ${addressList}">
+                        <input type="radio" style="margin-left:5px" class ="selectAlias" id="selectAlias" name="addressSelection" onclick="selectAddress(this)">
+                        <input class="selectZipcode" type="hidden" th:value="${address.zipcode}">
+                        <input class="selectAddress" type="hidden" th:value="${address.address}">
+                        <input class="selectDetail" type="hidden"  th:value="${address.detail}">
+                        <label for="selectAlias" th:text="' '+${address.alias}"></label>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -124,21 +132,21 @@
                 </th>
                 <td style="display : flex">
                     <input type="text" id="address" class="order-text" maxlength="100"
-                           style="width:300px" readonly/>
+                           style="width:400px" readonly/>
                 </td>
             </tr>
             <tr>
                 <th scope="row" for="detail" class="order-word" style="width: 20%">상세주소</th>
                 <td style="display : flex">
                     <input type="text" id="detail" class="order-text" maxlength="100"
-                           style="width:300px" required/>
+                           style="width:400px" required/>
                 </td>
             </tr>
             <tr>
                 <th scope="row" for="message" class="order-word" style="width: 20%">배송요청사항(선택)</th>
                 <td style="display : flex">
                     <div>
-                        <select id="selectMessage" class="select order-text" title="배송 요청사항 선택" style="width:300px"
+                        <select id="selectMessage" class="select order-text" title="배송 요청사항 선택" style="width:400px"
                                 onchange="setDeliveryMessage()">
                             <option value="">--배송 시 요청사항을 선택해주세요--</option>
                             <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
@@ -215,7 +223,6 @@
         </thead>
         <tbody class="orderDetail" th:each="book : ${orderList}">
         <tr id="index" th:id="${bookStat.index}">
-
             <td style="width: 40%">
                 <input type="hidden" id="bookList" th:value="${orderList}">
                 <input type="hidden" id="bookId" th:value="${book.bookId}">
@@ -299,7 +306,7 @@
                 <span>+</span>
                 <span id="deliveryFee" th:text="${deliveryFee}"></span>
                 <span style="color:grey; margin-left:10px"
-                      th:text="${freeDeliveryStandard} + '원 이상 주문시 배송비 무료(결제금액 기준)'"></span>
+                      th:text="${freeDeliveryStandard} + '원 이상 주문시 배송비 무료(포장값 제외 결제금액기준)'"></span>
             </td>
             <tr sec:authorize="isAuthenticated()">
                 <th scope="row" for="name" class="order-word" style="width: 15%">포인트 할인</th>

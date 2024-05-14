@@ -12,7 +12,6 @@ import com.t2m.g2nee.front.policyset.deliverypolicy.service.DeliveryPolicyServic
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

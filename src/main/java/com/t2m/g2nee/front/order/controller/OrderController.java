@@ -10,6 +10,8 @@ import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
+import com.t2m.g2nee.front.mypage.address.dto.response.AddressResponseDto;
+import com.t2m.g2nee.front.mypage.address.service.MyPageService;
 import com.t2m.g2nee.front.order.dto.request.BookInfo;
 import com.t2m.g2nee.front.order.dto.request.BookOrderDto;
 import com.t2m.g2nee.front.order.dto.request.BookOrderListDto;
@@ -17,9 +19,8 @@ import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.request.OrderForm;
 import com.t2m.g2nee.front.order.dto.request.OrderSaveRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
-import com.t2m.g2nee.front.order.service.OrderService;
-import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
+import com.t2m.g2nee.front.order.service.OrderService;
 import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
 import com.t2m.g2nee.front.point.service.PointService;
 import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
@@ -28,6 +29,7 @@ import com.t2m.g2nee.front.policyset.pointpolicy.dto.response.PointPolicyInfoDto
 import com.t2m.g2nee.front.policyset.pointpolicy.service.PointPolicyService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +59,7 @@ public class OrderController {
     private final MemberService memberService;
     private final OrderService orderService;
     private final OrderGetService orderGetService;
+    private final MyPageService myPageService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -110,6 +113,9 @@ public class OrderController {
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
             model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
+
+            List<AddressResponseDto> addressList=myPageService.getAddressListByMemberId(memberId);
+            model.addAttribute("addressList",addressList);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
@@ -178,6 +184,9 @@ public class OrderController {
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
             model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
+
+            List<AddressResponseDto> addressList=myPageService.getAddressListByMemberId(memberId);
+            model.addAttribute("addressList",addressList);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
@@ -233,7 +242,7 @@ public class OrderController {
 
     @Member
     @PostMapping("/payment")
-    public String submitOrder(@ModelAttribute("form") OrderForm request,Model model) {
+    public String submitOrder(@ModelAttribute("form") OrderForm request, Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         //회원주문인지 비회원주문인지 확인
         //비회원이라면 비회원을 생성한 후 customerId저장

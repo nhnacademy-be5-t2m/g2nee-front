@@ -27,8 +27,8 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     private String orderUrl;
 
     @PostConstruct
-    public void orderUrl(){
-        orderUrl =gatewayUrl +"/orders";
+    public void orderUrl() {
+        orderUrl = gatewayUrl + "/orders";
     }
 
     /**
@@ -42,7 +42,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
         HttpHeaders detailHeaders = new HttpHeaders();
         detailHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> detailEntity = new HttpEntity<> (detailHeaders);
+        HttpEntity<String> detailEntity = new HttpEntity<>(detailHeaders);
         String url = orderUrl + "/orderDetails/" + orderId;
 
         ResponseEntity<List<OrderDetailDto.Response>> detailResponse = restTemplate.exchange(
@@ -59,14 +59,14 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     /**
      * 주문 정보 조회(주문Id)
      *
-     * @param orderId  주문Id
+     * @param orderId 주문Id
      * @return OrderInfoResponseDto
      */
     @Override
     public OrderInfoDto.Response getOrderById(Long orderId) {
         HttpHeaders orderHeaders = new HttpHeaders();
         orderHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> orderEntity = new HttpEntity<> (orderHeaders);
+        HttpEntity<String> orderEntity = new HttpEntity<>(orderHeaders);
 
         String url = orderUrl + "/order/" + orderId;
         ResponseEntity<OrderInfoDto.Response> responseEntity = restTemplate.exchange(
@@ -83,7 +83,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     public OrderInfoDto.Response getOrderByNumber(String orderNumber) {
         HttpHeaders orderHeaders = new HttpHeaders();
         orderHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> orderEntity = new HttpEntity<> (orderHeaders);
+        HttpEntity<String> orderEntity = new HttpEntity<>(orderHeaders);
 
         String url = orderUrl + "/nonmembers/" + orderNumber;
 
@@ -101,7 +101,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long customerId, int page) {
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> stringHttpEntity = new HttpEntity<> (listHeaders);
+        HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
 
         String url = orderUrl + "/members/" + customerId + "/list?page=" + page;
         ResponseEntity<PageResponse<OrderInfoDto.ListResponse>> orderListEntity
@@ -120,11 +120,11 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
 
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> stringHttpEntity = new HttpEntity<> (listHeaders);
+        HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
 
         String url = orderUrl + "/admin/orders/list?page=" + page;
         ResponseEntity<PageResponse<OrderInfoDto.ListResponse>> orderListEntity
-                 = restTemplate.exchange(
+                = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 stringHttpEntity,
@@ -145,7 +145,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<OrderInfoDto.OrderStateRequest> stateEntity = new HttpEntity<>(stateRequest, headers);
-        String url= orderUrl + "/state/" + orderId;
+        String url = orderUrl + "/state/" + orderId;
 
         restTemplate.exchange(
                 url,

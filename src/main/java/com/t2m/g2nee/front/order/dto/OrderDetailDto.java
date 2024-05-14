@@ -11,7 +11,8 @@ import lombok.Setter;
 
 public class OrderDetailDto {
 
-    private OrderDetailDto(){}
+    private OrderDetailDto() {
+    }
 
     @Getter
     @Setter
@@ -19,7 +20,7 @@ public class OrderDetailDto {
     @AllArgsConstructor
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Response{
+    public static class Response {
         private Long orderDetailId;
         private BigDecimal price;
         private Integer quantity;
