@@ -1,10 +1,29 @@
 package com.t2m.g2nee.front.order.controller;
 
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
+import com.t2m.g2nee.front.annotation.Member;
+import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.bookset.book.dto.BookDto;
+import com.t2m.g2nee.front.bookset.book.service.BookGetService;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
+import com.t2m.g2nee.front.order.dto.request.AddressInfoDto;
+import com.t2m.g2nee.front.order.dto.request.BookOrderDto;
 
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
+import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
+import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
+import com.t2m.g2nee.front.point.service.PointService;
+import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
+import com.t2m.g2nee.front.policyset.deliverypolicy.service.DeliveryPolicyService;
+import com.t2m.g2nee.front.policyset.pointpolicy.dto.response.PointPolicyInfoDto;
+import com.t2m.g2nee.front.policyset.pointpolicy.service.PointPolicyService;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import lombok.RequiredArgsConstructor;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -30,8 +49,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
-    private final OrderGetService orderGetService;
     private final MemberAspect memberAspect;
+    private final BookGetService bookGetService;
+    private final PointPolicyService pointPolicyService;
+    private final DeliveryPolicyService deliveryPolicyService;
+    private final PointService pointService;
+    private final PackageTypeService packageTypeService;
+    private final OrderGetService orderGetService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -59,4 +83,90 @@ public class OrderController {
         return "member/customerLogin";
     }
 
+    /**
+     * 바로구매시 bookID, 구매수량과 함께 주문페이지를 띄워주는 메소드
+     *
+     * @param bookId    구매할 책의 id
+     * @param bookCount 구매할 책의 수량
+     * @param model     주문 form 에 필요한 dto 객체를 저장할 model
+     * @return 주문페이지를 보여준다.
+     */
+    @GetMapping("/buyNow")
+    @Member
+    public String buyNowOrderForm(@RequestParam("bookId") Long bookId, @RequestParam("bookCount") int bookCount,
+                                  Model model) {
+        model.addAttribute("ordererInfo", new OrdererInfoDto());
+        model.addAttribute("addressInfo", new AddressInfoDto());
+        BigDecimal rewardRate = BigDecimal.valueOf(0);
+
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        //회원주문인지 비회원주문인지 확인
+        //회원이라면 그 회원의 적립률을 저장한다.
+        if (member != null) {
+            Long memberId = null;
+            if (member != null) {
+                memberId = member.getMemberId();
+            }
+            model.addAttribute("memberId", memberId);
+            PointPolicyInfoDto pointPolicyInfoDto = pointPolicyService.getPointPolicyByPolicyName(member.getGrade());
+            rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount());
+
+            //회원의 포인트 합계 저장
+            Integer totalPoint = pointService.getTotalPoint(memberId);
+            model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
+        }
+        //무료배송 기준 저장
+        DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
+        model.addAttribute("freeDeliveryStandard", deliveryInfo.getFreeDeliveryStandard());
+        model.addAttribute("deliveryFeePolicy", deliveryInfo.getDeliveryFee());
+
+
+        //주문할 책의 정보
+        ArrayList<BookOrderDto> orderList = new ArrayList<>();
+        BookDto.Response book = bookGetService.getBook(null, bookId);
+        BookOrderDto bookOrderDto = new BookOrderDto(
+                book.getBookId(),
+                book.getTitle(),
+                bookCount,
+                1L,
+                0,
+                rewardRate,
+                BigDecimal.valueOf(book.getSalePrice()).multiply(rewardRate).multiply(BigDecimal.valueOf(bookCount))
+                        .intValue(),
+                book.getPrice() * bookCount,
+                (book.getPrice() - book.getSalePrice()) * bookCount,
+                0,
+                book.getSalePrice() * bookCount
+        );
+        orderList.add(bookOrderDto);
+        model.addAttribute("finalTotalOriginPrice", bookOrderDto.getOriginPrice());
+        model.addAttribute("totalBookSale", bookOrderDto.getBookSale());
+        model.addAttribute("totalPointSale", 0);
+        model.addAttribute("totalCouponSale", bookOrderDto.getCouponSale());
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("totalPackagePrice", 0);
+        int deliveryFee;
+        if (bookOrderDto.getFinalPrice() >= deliveryInfo.getFreeDeliveryStandard()) {
+            deliveryFee = 0;
+        } else {
+            deliveryFee = deliveryInfo.getDeliveryFee();
+        }
+        model.addAttribute("deliveryFee", deliveryFee);
+        model.addAttribute("finalTotalSalePrice", bookOrderDto.getFinalPrice() + deliveryFee);
+        return "order/orderForm";
+    }
+
+    /**
+     * 포장지 선택 창을 띄워주는 메소드
+     *
+     * @param
+     * @return 포장지 선택 페이지
+     */
+    @GetMapping("/selectPackage/{id}")
+    public String selectPackage(@RequestParam(defaultValue = "1") int page, @PathVariable("id") String id,
+                                Model model) {
+        model.addAttribute("packages", packageTypeService.getActivatedPackage(page));
+        model.addAttribute("id", id);
+        return "order/selectPackagePage";
+    }
 }

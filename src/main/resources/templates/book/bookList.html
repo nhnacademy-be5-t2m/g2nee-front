@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
           crossOrigin="anonymous" referrerpolicy="no-referrer"/>
-<title>G2nee Book shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <title>G2nee Book shop</title>
 </head>
 
 <body>
@@ -104,17 +105,24 @@
                           th:text="절판"></span>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                    <a class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
+                    <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
                        th:data-memberId="${memberId}">
-                        <i class="fa-regular fa-heart text-primary" style="font-size: 24px"
+                        <i class="fa-regular fa-heart text-primary" style="font-size: 20px"
                            th:if="${book.isLiked() == false}"></i>
-                        <i class="fa-solid fa-heart text-primary" style="font-size: 24px"
+                        <i class="fa-solid fa-heart text-primary" style="font-size: 20px"
                            th:if="${book.isLiked() == true}"></i>
-                        <small th:text="${book.scoreAverage} + ' (' + ${book.reviewCount} +' Reviews)'"></small>
                     </a>
-                    <a href="" class="btn btn-sm text-dark p-0"><i
-                            class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가</a>
+                    <small th:text="${book.scoreAverage} + ' (' + ${book.reviewCount} +' Reviews)'"></small>
+                    <button id="cartButton"
+                            th:data-bookId="${book.bookId}"
+                            th:data-bookTitle="${book.title}"
+                            th:data-bookQuantity="${book.quantity}"
+                            th:data-cartItemNum="${cartItemNum}"
+                            class="btn btn-sm text-dark p-0">
+                        <i class="fas fa-shopping-cart text-primary mr-1"></i>장바구니에 추가
+                    </button>
+                    <input id="quantity" type="hidden" value="1">
                 </div>
             </div>
         </div>
@@ -146,9 +154,12 @@
         </div>
         <!-- 페이지 넘기기 end -->
     </div>
-    </div>
+</div>
 </body>
 
 </html>
 <script src="/static/js/book/setLike.js"></script>
+<script src="/static/js/book/putBookInCart.js">
+</script>
+
 

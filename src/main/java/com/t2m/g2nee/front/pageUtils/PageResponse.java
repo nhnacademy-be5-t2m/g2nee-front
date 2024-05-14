@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.domain.Page;
 
 /**
  * Pageing 객체를 반환 시 필요한 정보를 담기 위한 클래스 입니다.

@@ -1,7 +1,10 @@
 package com.t2m.g2nee.front.review.controller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -31,8 +34,11 @@ public class ReviewRestController {
     @Member
     @GetMapping
     public ResponseEntity<Boolean> getReview(@RequestParam Long bookId) {
-
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
 
         ReviewDto.Response review = reviewService.getReview(memberId, bookId);
 

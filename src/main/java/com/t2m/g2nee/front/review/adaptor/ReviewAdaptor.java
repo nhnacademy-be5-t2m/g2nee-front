@@ -16,6 +16,7 @@ public interface ReviewAdaptor {
 
     /**
      * 리뷰 수정 메서드
+     *
      * @param request 리뷰 정보 객체
      */
     void updateReview(ReviewDto.Request request);

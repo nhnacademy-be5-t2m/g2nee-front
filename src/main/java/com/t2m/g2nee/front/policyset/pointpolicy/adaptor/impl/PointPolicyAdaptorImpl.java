@@ -111,4 +111,18 @@ public class PointPolicyAdaptorImpl implements PointPolicyAdaptor {
 
         return response.getBody();
     }
+
+    @Override
+    public PointPolicyInfoDto getPointPolicyByPolicyName(String policyName) {
+        UriComponents url = UriComponentsBuilder.fromUriString(baseUrl + "/getByPolicyName")
+                .queryParam("policyName", policyName)
+                .build();
+
+        ResponseEntity<PointPolicyInfoDto> response =
+                restTemplate.exchange(url.toUriString(), HttpMethod.GET, new HttpEntity<>(makeHttpHeaders()),
+                        PointPolicyInfoDto.class);
+
+        return response.getBody();
+    }
+
 }

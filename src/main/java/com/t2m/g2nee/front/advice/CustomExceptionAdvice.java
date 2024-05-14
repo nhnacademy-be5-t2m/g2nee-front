@@ -1,17 +1,17 @@
 package com.t2m.g2nee.front.advice;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 
+import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.exception.CustomException;
-import com.t2m.g2nee.front.member.service.MemberService;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
+import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -34,8 +34,13 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class CustomExceptionAdvice {
     public static String REQUIRE_LOGIN_MESSAGE = "로그인이 필요합니다.";
     private final RedisTemplate redisTemplate;
+    private final ShoppingCartService shoppingCartService;
+    private final MemberAspect memberAspect;
 
-    public CustomExceptionAdvice(RedisTemplate redisTemplate) {
+    public CustomExceptionAdvice(RedisTemplate redisTemplate, ShoppingCartService shoppingCartService,
+                                 MemberAspect memberAspect) {
+        this.shoppingCartService = shoppingCartService;
+        this.memberAspect = memberAspect;
         this.redisTemplate = new RedisTemplate();
     }
 
@@ -106,6 +111,11 @@ public class CustomExceptionAdvice {
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpServletResponse response = servletRequestAttributes.getResponse();
+        // 리프레시 토큰이 만료되면 DB에 장바구니 정보를 옮깁니다.
+        MemberDetailInfoResponseDto memberDetailInfoResponseDto =
+                (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = memberDetailInfoResponseDto.getMemberId();
+        shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
         deleteCookie(response, JwtUtil.ACCESS_COOKIE);
         Cookie sessionCookie = CookieUtil.findCookie(SESSION_ID);
 //        redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());

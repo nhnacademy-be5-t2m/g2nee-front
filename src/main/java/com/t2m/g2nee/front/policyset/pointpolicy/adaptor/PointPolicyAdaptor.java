@@ -53,4 +53,6 @@ public interface PointPolicyAdaptor {
      * @return
      */
     PageResponse<PointPolicyInfoDto> getAllPointPolicies(int page);
+
+    PointPolicyInfoDto getPointPolicyByPolicyName(String policyName);
 }
