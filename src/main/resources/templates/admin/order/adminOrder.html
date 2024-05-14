@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en"
       layout:decorate="~{layouts/adminLayout}"
@@ -38,17 +37,17 @@
         <!-- 주문 목록 -->
         <tbody>
         <tr th:each="order : ${orderPage.data}">
-            <td ><a th:href="@{'/admin/orders/'+ ${order.orderId}}" th:text="${order.orderNumber}"></a></td>
+            <td><a th:href="@{'/admin/orders/'+ ${order.orderId}}" th:text="${order.orderNumber}"></a></td>
             <td th:text="${order.orderDate}"></td>
             <td th:text="${order.customerName}"></td>
             <td th:text="${order.orderAmount}"></td>
             <td>
                 <form th:action="'@{/admin/orders/status}' + '${order.orderId}'">
-                <select id="orderStateSelect" name="orderState" th:method="patch">
-                    <option th:each="orderState : ${orderStates}"
-                            th:value="${orderState}" th:text="${orderState.getName()}"
-                            th:selected="${order.orderState.name() == orderState}"></option>
-                </select>
+                    <select id="orderStateSelect" name="orderState" th:method="patch">
+                        <option th:each="orderState : ${orderStates}"
+                                th:value="${orderState}" th:text="${orderState.getName()}"
+                                th:selected="${order.orderState.name() == orderState}"></option>
+                    </select>
                 </form>
             </td>
             <td>

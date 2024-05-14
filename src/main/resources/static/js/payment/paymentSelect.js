@@ -70,7 +70,11 @@ function openPaymentWindow() {
         form.submit();
         return;
     } else if (amount > 0 && selectedPaymentMethod === null) {
-        alert("결제 방법을 선택하세요!");
+        Swal.fire({
+            icon: 'warning',
+            title: '결제수단 입력 오류',
+            text: '결제수단을 선택하여 주십시오.'
+        })
         return;
     }
 
@@ -85,7 +89,7 @@ function openPaymentWindow() {
     let url = `/order/payment/${selectedPaymentMethod}`;
 
     let windowOptions = `width=${windowWidth},height=${windowHeight},top=${top},left=${left},menubar=no,toolbar=no,status=no,scrollbars=yes,location=no`;
-    let paymentWindow =  window.open(url, "_blank", windowOptions);
+    let paymentWindow = window.open(url, "_blank", windowOptions);
 
     // paymentWindow.postMessage(order, '*');
 }

@@ -29,6 +29,7 @@
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="" class="dropdown-item">나의 정보</a>
                             <a href="/mypage/address" class="dropdown-item">나의 주소</a>
+                            <a href="/books/member/likes" class="dropdown-item">찜한 도서</a>
                             <a href="/mypage/order/list" class="dropdown-item">주문/배송조회</a>
                             <a href="" class="dropdown-item">결제내역</a>
 
@@ -67,7 +68,7 @@
             <div class="col-lg-3 col-6 text-right">
                 <a th:if="${memberId != null}" href="/books/member/likes" class="btn border">
                     <i th:if="${memberId != null}" class="fas fa-heart text-primary"></i>
-                    <span th:if="${memberId != null}"  class="badge" th:text="${likesNum}"></span>
+                    <span th:if="${memberId != null}" class="badge" th:text="${likesNum}"></span>
                 </a>
                 <a href="/carts/customer" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>

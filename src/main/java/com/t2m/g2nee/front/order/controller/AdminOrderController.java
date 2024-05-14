@@ -25,11 +25,11 @@ public class AdminOrderController {
      * admin이 보는 전체 주문 목록 페이지
      *
      * @param model model
-     * @param page 페이지
+     * @param page  페이지
      * @return 전체 주문 목록 페이지
      */
     @GetMapping("/list")
-    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
+    public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
         PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getAllOrderList(page);
         model.addAttribute("orderPage", orderPage);
         model.addAttribute("orderState", OrderInfoDto.OrderState.values());
@@ -42,11 +42,11 @@ public class AdminOrderController {
      * 주문 목록에서 단일 주문 목록 페이지
      *
      * @param orderId 주문 Id
-     * @param model model
+     * @param model   model
      * @return 단일 주문 페이지
      */
     @GetMapping("/{orderId}")
-    public String getOrder(@PathVariable("orderId") Long orderId, Model model){
+    public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
 
 
         OrderInfoDto.Response orderResponse = orderGetService.getOrderById(orderId);
@@ -61,7 +61,7 @@ public class AdminOrderController {
     @PatchMapping("/status/{orderId}")
     public String changeOrderState(@PathVariable("orderId") Long orderId,
                                    @ModelAttribute OrderInfoDto.OrderStateRequest stateRequest,
-                                   @RequestParam int page){
+                                   @RequestParam int page) {
 
         orderGetService.changeOrderStatus(orderId, stateRequest);
 

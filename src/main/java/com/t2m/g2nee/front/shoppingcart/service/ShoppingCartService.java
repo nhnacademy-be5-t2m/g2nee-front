@@ -12,7 +12,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -160,6 +159,20 @@ public class ShoppingCartService {
         redisTemplate.opsForHash().put(customerId, cart.getBookId().toString(), cart);
         return cart;
 
+    }
+
+    /**
+     * 주문 후 장바구니를 비우는 메소드
+     *
+     * @param customerId          회원 아이디 또는 비회원의 세션아이디
+     * @param httpServletResponse
+     * @return ShoppingCartDto.Response
+     */
+    public void deleteCart(String customerId, HttpServletResponse httpServletResponse) {
+        // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 sessionId를 설정
+        customerId = getCustomerId(customerId, httpServletResponse);
+
+        redisTemplate.delete(customerId);
     }
 
     /**

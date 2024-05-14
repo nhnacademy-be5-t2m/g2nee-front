@@ -37,44 +37,44 @@
             </table>
             <div>
                 <div>
-                <h3>주문 상세</h3>
-                <!-- 주문 세부 내용 -->
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>주문 도서</th>
-                        <th>주문 수량</th>
-                        <th>포장 정보</th>
-                        <th>쿠폰 정보</th>
-                        <th>총 가격</th>
-                        <th>취소 여부</th>
-                        <th></th>
-                    </tr>
-                    </thead>
+                    <h3>주문 상세</h3>
+                    <!-- 주문 세부 내용 -->
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>주문 도서</th>
+                            <th>주문 수량</th>
+                            <th>포장 정보</th>
+                            <th>쿠폰 정보</th>
+                            <th>총 가격</th>
+                            <th>취소 여부</th>
+                            <th></th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <tr th:each="orderDetail : ${orderDetails}">
-                        <td th:text="${orderDetail.bookName}"></td>
-                        <td th:text="${orderDetail.quantity}"></td>
-                        <td th:text="${orderDetail.packageName}"></td>
-                        <td th:text="${orderDetail.couponName}"></td>
-                        <td th:text="${orderDetail.price}"></td>
-                        <td th:text="${orderDetail.isCancelled}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                        <tr th:each="orderDetail : ${orderDetails}">
+                            <td th:text="${orderDetail.bookName}"></td>
+                            <td th:text="${orderDetail.quantity}"></td>
+                            <td th:text="${orderDetail.packageName}"></td>
+                            <td th:text="${orderDetail.couponName}"></td>
+                            <td th:text="${orderDetail.price}"></td>
+                            <td th:text="${orderDetail.isCancelled}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="col">
-            <!--배송 정보 내용-->
-                <div class="col">
-                    <h3>배송 정보</h3>
-                    <p th:text="'수령인: ' + ${order.receiverName}"></p>
-                    <p th:text="'우편번호: ' + ${order.zipcode}"></p>
-                    <p th:text="'배송지: ' + ${order.receiveAddress}"></p>
-                    <p th:text="'상세주소: ' + ${order.detailAddress}"></p>
-                    <p th:text="'배송 요청사항: ' + ${order.message}"></p>
-                </div>
+                    <!--배송 정보 내용-->
+                    <div class="col">
+                        <h3>배송 정보</h3>
+                        <p th:text="'수령인: ' + ${order.receiverName}"></p>
+                        <p th:text="'우편번호: ' + ${order.zipcode}"></p>
+                        <p th:text="'배송지: ' + ${order.receiveAddress}"></p>
+                        <p th:text="'상세주소: ' + ${order.detailAddress}"></p>
+                        <p th:text="'배송 요청사항: ' + ${order.message}"></p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -17,9 +17,8 @@ import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.request.OrderForm;
 import com.t2m.g2nee.front.order.dto.request.OrderSaveRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
-import com.t2m.g2nee.front.order.service.OrderService;
-import com.t2m.g2nee.front.order.dto.request.OrdererInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
+import com.t2m.g2nee.front.order.service.OrderService;
 import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
 import com.t2m.g2nee.front.point.service.PointService;
 import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
@@ -233,7 +232,7 @@ public class OrderController {
 
     @Member
     @PostMapping("/payment")
-    public String submitOrder(@ModelAttribute("form") OrderForm request,Model model) {
+    public String submitOrder(@ModelAttribute("form") OrderForm request, Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         //회원주문인지 비회원주문인지 확인
         //비회원이라면 비회원을 생성한 후 customerId저장

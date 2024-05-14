@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *주문 조회 서비스
+ * 주문 조회 서비스
  *
  * @author : 박재희
  * @since: 1.0
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderGetService {
     private final OrderGetAdaptor orderGetAdaptor;
 
-    public OrderGetService(OrderGetAdaptor orderGetAdaptor){
+    public OrderGetService(OrderGetAdaptor orderGetAdaptor) {
         this.orderGetAdaptor = orderGetAdaptor;
     }
 
@@ -29,7 +29,7 @@ public class OrderGetService {
      * @param orderId 주문Id
      * @return List<OrderDetailDto.Response>
      */
-    public List<OrderDetailDto.Response> getOrderDetailListByOrderId(Long orderId){
+    public List<OrderDetailDto.Response> getOrderDetailListByOrderId(Long orderId) {
 
         return orderGetAdaptor.getOrderDetailListByOrderId(orderId);
     }
@@ -40,7 +40,7 @@ public class OrderGetService {
      * @param orderId 주문Id
      * @return OrderInfoDto.ListResponse
      */
-    public OrderInfoDto.Response getOrderById(Long orderId){
+    public OrderInfoDto.Response getOrderById(Long orderId) {
 
         return orderGetAdaptor.getOrderById(orderId);
     }
@@ -51,18 +51,18 @@ public class OrderGetService {
      * @param orderNumber 주문번호
      * @return OrderInfoResponseDto
      */
-    public OrderInfoDto.Response getOrderByNumber(String orderNumber){
+    public OrderInfoDto.Response getOrderByNumber(String orderNumber) {
         return orderGetAdaptor.getOrderByNumber(orderNumber);
     }
 
     /**
      * 회원의 주문 목록 조회
      *
-     * @param page       페이지
+     * @param page     페이지
      * @param memberId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
-    public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long memberId, int page){
+    public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long memberId, int page) {
         return orderGetAdaptor.getOrderListForMembers(memberId, page);
     }
 
@@ -72,22 +72,22 @@ public class OrderGetService {
      * @param page 현재 페이지
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    public PageResponse<OrderInfoDto.ListResponse> getAllOrderList(int page){
+    public PageResponse<OrderInfoDto.ListResponse> getAllOrderList(int page) {
         return orderGetAdaptor.getAllOrderList(page);
     }
 
     /**
      * 주문상태별로 정렬한 전체 주문 목록(Admin)
      *
-     * @param page 현재 페이지
+     * @param page       현재 페이지
      * @param orderState 현재 주문 상태
      * @return PageResponse<OrderListForAdminResponseDto>
      */
-    PageResponse<OrderInfoDto> getAllOrderListByState(int page, String orderState){
+    PageResponse<OrderInfoDto> getAllOrderListByState(int page, String orderState) {
         return null;
     }
 
-    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest){
+    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest) {
         orderGetAdaptor.changeOrderStatus(orderId, stateRequest);
     }
 

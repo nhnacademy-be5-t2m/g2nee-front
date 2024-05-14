@@ -497,30 +497,3 @@ function validCheck(input, reg) {
     }
 }
 
-function buyCartButton() {
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.action = '/order/buyCart';
-
-    const cartDetails = document.querySelectorAll('.cartList');
-    cartDetails.forEach((cartDetail, index) => {
-        const bookId = cartDetail.querySelector('#cartBookId').value;
-        const quantity = cartDetail.querySelector('#quantity').value;
-
-        const bookIdField = document.createElement('input');
-        bookIdField.type = 'hidden';
-        bookIdField.name = `bookOrderList[${index}].bookId`;
-        bookIdField.value = bookId;
-        form.appendChild(bookIdField);
-
-        const quantityField = document.createElement("input");
-        quantityField.type = 'hidden';
-        quantityField.name = `bookOrderList[${index}].bookCount`;
-        quantityField.value = quantity;
-        form.appendChild(quantityField);
-
-    });
-    document.body.appendChild(form);
-    form.submit();
-    return true;
-}
