@@ -32,7 +32,8 @@ public class MemberAspect {
     public static final String LIKE_NUM = "likeNum";
     public static final String CART_ITEM_NUM = "cartItemNum";
     public final BookLikeService bookLikeService;
-public final ShoppingCartService shoppingCartService;
+    public final ShoppingCartService shoppingCartService;
+
     @Pointcut("@annotation(com.t2m.g2nee.front.annotation.Member)")
     private void member() {
     }
@@ -68,19 +69,19 @@ public final ShoppingCartService shoppingCartService;
     public Long addMemberInfo(String sessionId) {
         MemberDetailInfoResponseDto memberInfo =
                 (MemberDetailInfoResponseDto) redisTemplate.opsForHash().get(MEMBER_INFO_KEY, sessionId);
-        if(memberInfo != null) {
+        if (memberInfo != null) {
             threadLocal.get().put(MEMBER_INFO, memberInfo);
             return memberInfo.getMemberId();
         }
         return null;
     }
 
-    private void addLikeNum(Long memberId){
+    private void addLikeNum(Long memberId) {
         Long likeNum = bookLikeService.getMemberLikesNum(memberId);
         threadLocal.get().put(LIKE_NUM, likeNum);
     }
 
-    private void addCartItemNum(Long memberId){
+    private void addCartItemNum(Long memberId) {
         int cartItemNum = shoppingCartService.getCartItemNum(memberId);
         threadLocal.get().put(CART_ITEM_NUM, cartItemNum);
     }

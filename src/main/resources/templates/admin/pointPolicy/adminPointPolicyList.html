@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>포인트 정책 관리</title>
 </head>
@@ -35,9 +35,9 @@
             </td>
             <td>
                 <span th:if="${pointPolicy.isActivated}">
-                        <form th:action="@{'/admin/pointPolicies/' + ${pointPolicy.pointPolicyId}}" th:method="patch"
-                              class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-success">활성</button>
+                        <form class="d-inline" th:action="@{'/admin/pointPolicies/' + ${pointPolicy.pointPolicyId}}"
+                              th:method="patch">
+                            <button class="btn btn-sm btn-success" type="submit">활성</button>
                         </form>
                     </span>
                 <span th:unless="${pointPolicy.isActivated}">
@@ -45,9 +45,9 @@
                 </span>
             </td>
             <td>
-                <a th:if="${pointPolicy.isActivated}"
+                <a class="btn btn-sm btn-primary"
                    th:href="@{'/admin/pointPolicies/modify/' + ${pointPolicy.pointPolicyId}}"
-                   class="btn btn-sm btn-primary">수정</a>
+                   th:if="${pointPolicy.isActivated}">수정</a>
             </td>
             <td>
                 <span th:text="${pointPolicy.changedDate}"></span>
@@ -65,8 +65,8 @@
             <li th:class="${pointPolicies.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                 <a class="page-link" th:href="@{'?page=' + ${pointPolicies.currentPage - 1 }}"><</a>
             </li>
-            <li th:each="pageButton : ${#numbers.sequence(pointPolicies.startPage,pointPolicies.endPage)}"
-                th:class="${pointPolicies.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+            <li th:class="${pointPolicies.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(pointPolicies.startPage,pointPolicies.endPage)}">
                 <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
             </li>
             <li th:class="${pointPolicies.currentPage == pointPolicies.totalPage ? 'page-item disabled' : 'page-item'}">
@@ -79,7 +79,7 @@
     </nav>
 
     <br/><br/>
-    <a th:href="@{/admin/pointPolicies/save}" class="btn btn-primary">새 포인트 정책</a>
+    <a class="btn btn-primary" th:href="@{/admin/pointPolicies/save}">새 포인트 정책</a>
 </div>
 </body>
 </html>

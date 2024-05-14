@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/mypageLayout}">
+      layout:decorate="~{layouts/mypageLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>나의 주소 페이지</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -19,14 +19,15 @@
             <th></th>
         </tr>
         </thead>
-        <input type="hidden" id="changeAddressId">
-        <input type="hidden" id="addressLength" th:value="${addressList.size()}">
+        <input id="changeAddressId" type="hidden">
+        <input id="addressLength" th:value="${addressList.size()}" type="hidden">
         <tbody th:each="address : ${addressList}">
         <tr>
             <td>
-                <input type="hidden" id="addressId" th:value="${address.getAddressId()}"/>
-                <input type="radio" th:name="selectedAddress" th:value="${address.getAddressId()}"
-                       th:checked="${address.getIsDefault()}" onclick="setDefaultAddress(this)">
+                <input id="addressId" th:value="${address.getAddressId()}" type="hidden"/>
+                <input onclick="setDefaultAddress(this)" th:checked="${address.getIsDefault()}"
+                       th:name="selectedAddress"
+                       th:value="${address.getAddressId()}" type="radio">
             </td>
             <td>
                 <span th:text="${address.getAlias()}"></span>
@@ -41,18 +42,18 @@
                 <span th:text="${address.getAddress} +' '+ ${address.getDetail()}"></span>
             </td>
             <td>
-                <a th:href="@{'/mypage/address/delete/' + ${address.getAddressId()}}"
-                   class="btn btn-sm btn-primary">삭제</a>
+                <a class="btn btn-sm btn-primary"
+                   th:href="@{'/mypage/address/delete/' + ${address.getAddressId()}}">삭제</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <button type="button" onclick="saveAddressPopUp()"
-            class="btn btn-primary">새 주소 등록
+    <button class="btn btn-primary" onclick="saveAddressPopUp()"
+            type="button">새 주소 등록
     </button>
-    <button type="button" onclick="changeDefaultAddress()"
-            class="btn btn-primary">기본 배송지 변경
+    <button class="btn btn-primary" onclick="changeDefaultAddress()"
+            type="button">기본 배송지 변경
     </button>
 
     <script src="/static/js/mypage/address.js"></script>

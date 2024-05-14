@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>배송비 정책</title>
 </head>
 
 <body>
-<div layout:fragment="content" class="container my-4">
+<div class="container my-4" layout:fragment="content">
     <h2 class="text-center">배송비 목록</h2>
 
     <table class="table table-bordered table-hover">
@@ -52,8 +52,8 @@
             <li th:class="${deliveryPolicies.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                 <a class="page-link" th:href="@{'?page=' + ${deliveryPolicies.currentPage - 1 }}"><</a>
             </li>
-            <li th:each="pageButton : ${#numbers.sequence(deliveryPolicies.startPage,deliveryPolicies.endPage)}"
-                th:class="${deliveryPolicies.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+            <li th:class="${deliveryPolicies.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(deliveryPolicies.startPage,deliveryPolicies.endPage)}">
                 <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
             </li>
             <li th:class="${deliveryPolicies.currentPage == deliveryPolicies.totalPage ? 'page-item disabled' : 'page-item'}">
@@ -66,7 +66,7 @@
     </nav>
 
     <br/><br/>
-    <a th:href="@{/admin/deliveryPolicies/save}" class="btn btn-primary">새 배송비 정책</a>
+    <a class="btn btn-primary" th:href="@{/admin/deliveryPolicies/save}">새 배송비 정책</a>
 
 
 </div>

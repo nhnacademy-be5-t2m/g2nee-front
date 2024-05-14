@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/categoryLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>결제 성공</title>
+    <link href="/static/css/signup.css" rel="stylesheet">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h4>결제 성공</h4>
+    <p><span th:text="${paymentSuccess.orderName}"></span> 결제가 성공적으로 완료되었습니다.</p>
+    <p>주문 번호: <span th:text="${paymentSuccess.orderNumber}"></span></p>
+    <h5><span th:text="${paymentSuccess.orderName}"></span></h5>
+    <p>결제 수단: <span th:text="${paymentSuccess.payType}"></span></p>
+    <p>결제 금액: <span th:text="${paymentSuccess.amount}"></span></p>
+    <p>승인 날짜: <span th:text="${paymentSuccess.paymentDate}"></span></p>
+</div>
+
+</body>
+</html>

@@ -6,51 +6,94 @@
     <meta charset="UTF-8">
     <title>주문 페이지</title>
     <link href="/static/css/order.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div layout:fragment="content">
     <div style="margin-bottom: 20px;"></div>
-    <h5 class="font-weight-semi-bold">주문자 정보</h5>
+    <div sec:authorize="isAnonymous()">
+        <h5 class="font-weight-semi-bold">비회원 정보</h5>
+        <div>
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr>
+                    <th scope="row" for="name" class="order-word" style="width: 15%">이름</th>
+                    <td style="display : flex">
+                        <input type="text" id="name" class="order-text" placeholder="이름"
+                               required/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="order-word" style="width: 15%">이메일</th>
+                    <td style="display : flex">
+                        <input type="hidden" id="email" name="email" for="email"/>
+                        <input type="text" id="emailId" class="order-text" style="margin-right: 10px;" required/>
+                        <div style="padding-top: 2px;padding-bottom: 2px"> @</div>
+                        <input type="text" id="emailDomain" class="order-text" required/>
+                        <select id="selectEmail" class="select order-text" title="이메일 도메인 주소 선택"
+                                onchange="setEmailDomain()">
+                            <option value="">--선택--</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="hanmail.com">hanmail.com</option>
+                            <option value="korea.com"> korea.com</option>
+                            <option value="nate.com">nate.com</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="password" class="word">비밀번호</th>
+                    <td style="display : flex">
+                        <input type="password" id="password" class="text" placeholder="비밀번호"
+                               required/>
+                        <div class="password-invalid hide word" style="color:red;"> 형식이 올바르지 않습니다.</div>
+                        <div style="color:gray;" class="word"> (영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8자~20자)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="passwordCheck" class="word">비밀번호 재확인</th>
+                    <td style="display : flex">
+                        <input type="password" id="passwordCheck" class="text" placeholder="비밀번호" required/>
+                        <div class="password-incorrect hide word" style="color:red;"> 비밀번호가 일치하지 않습니다.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="phoneNumber" class="order-word" style="width: 10%">전화번호</th>
+                    <td style="display : flex">
+                        <input type="text" id="phoneNumber" class="order-text"
+                               placeholder="전화번호"
+                               required/>
+                        <div style="color:gray;" class="order-word"> (ex.010-1234-5678)</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div>
-        <table class="table table-bordered table-hover">
-            <tbody>
-            <tr>
-                <th scope="row" for="name" class="order-word" style="width: 10%">이름</th>
-                <td style="display : flex">
-                    <input type="text" id="name" class="order-text" th:field="*{ordererInfo.name}" placeholder="이름"
-                           required/>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="order-word" style="width: 10%">이메일</th>
-                <td style="display : flex">
-                    <input type="hidden" id="email" name="email" for="email" th:field="*{ordererInfo.email}"/>
-                    <input type="text" id="emailId" class="order-text" style="margin-right: 10px;" required/>
-                    <div style="padding-top: 2px;padding-bottom: 2px"> @</div>
-                    <input type="text" id="emailDomain" class="order-text" required/>
-                    <select id="selectEmail" class="select order-text" title="이메일 도메인 주소 선택"
-                            onchange="setEmailDomain()">
-                        <option value="">--선택--</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="hanmail.com">hanmail.com</option>
-                        <option value="korea.com"> korea.com</option>
-                        <option value="nate.com">nate.com</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" for="phoneNumber" class="order-word" style="width: 10%">전화번호</th>
-                <td style="display : flex">
-                    <input type="text" id="phoneNumber" class="order-text" th:field="*{ordererInfo.phoneNumber}"
-                           placeholder="전화번호"
-                           required/>
-                    <div class="phoneNumber-invalid hide order-word" style="color:red;"> 형식에 맞춰 작성해주십시오.</div>
-                    <div style="color:gray;" class="order-word"> (ex.010-1234-5678)</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h5 class="font-weight-semi-bold">수령인 정보</h5>
+        <div>
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr>
+                    <th scope="row" for="receiverName" class="order-word" style="width: 10%">이름</th>
+                    <td style="display : flex">
+                        <input type="text" id="receiverName" class="order-text" placeholder="이름"
+                               required/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" for="receiverPhoneNumber" class="order-word" style="width: 10%">전화번호</th>
+                    <td style="display : flex">
+                        <input type="text" id="receiverPhoneNumber" class="order-text"
+                               placeholder="전화번호"
+                               required/>
+                        <div style="color:gray;" class="order-word"> (ex.010-1234-5678)</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div style="margin-bottom: 20px;"></div>
     <h5 class="font-weight-semi-bold">배송지 정보</h5>
@@ -70,7 +113,7 @@
                     우편번호
                 </th>
                 <td style="display : flex">
-                    <input type="text" id="zipcode" class="order-text" th:field="*{addressInfo.zipcode}"
+                    <input type="text" id="zipcode" class="order-text"
                            style="width:100px" readonly/>
                     <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
                 </td>
@@ -80,7 +123,7 @@
                     주소
                 </th>
                 <td style="display : flex">
-                    <input type="text" id="address" class="order-text" maxlength="100" th:field="*{addressInfo.address}"
+                    <input type="text" id="address" class="order-text" maxlength="100"
                            style="width:300px" readonly/>
                 </td>
             </tr>
@@ -88,7 +131,7 @@
                 <th scope="row" for="detail" class="order-word" style="width: 20%">상세주소</th>
                 <td style="display : flex">
                     <input type="text" id="detail" class="order-text" maxlength="100"
-                           th:field="*{addressInfo.addressDetail}" style="width:300px" required/>
+                           style="width:300px" required/>
                 </td>
             </tr>
             <tr>
@@ -106,7 +149,7 @@
                         </select>
                     </div>
                     <input type="hidden" id="message" class="order-text" maxlength="100"
-                           th:field="*{addressInfo.message}" required/>
+                           required/>
                     <div>
                         <textarea onchange="setEtcMessage()" ; id="etcMessage" class="order-text"
                                   style="width:400px; display:none;" rows="3" maxlength="50"
@@ -170,19 +213,22 @@
             <th>포장 금액</th>
         </tr>
         </thead>
-        <tbody th:each="book : ${orderList}">
-        <tr th:id="${bookStat.index}">
+        <tbody class="orderDetail" th:each="book : ${orderList}">
+        <tr id="index" th:id="${bookStat.index}">
+
             <td style="width: 40%">
                 <input type="hidden" id="bookList" th:value="${orderList}">
+                <input type="hidden" id="bookId" th:value="${book.bookId}">
                 <span th:text="${book.getTitle()}"></span>
             </td>
             <td>
-                <span th:text="${book.getCount()}"></span>
+                <span id="bookCount" th:text="${book.getCount()}"></span>
             </td>
             <td sec:authorize="isAuthenticated()">
                 <span th:text="${book.getReward()} + ' ('+${book.getRewardRate().toString()}+'%)'"></span>
             </td>
             <td sec:authorize="isAuthenticated()">
+                <input type="hidden" id="couponId">
                 <span th:text="'- '+${book.getCouponSale()}"></span>
                 <button onclick="couponPopUp()"
                         style="margin-left:10px">쿠폰 사용
@@ -195,7 +241,8 @@
                 <span class="text-muted">
                     <del th:text="'₩' + ${book.getOriginPrice()}"></del>
                 </span>
-                <span th:text="'   ₩' + ${book.getFinalPrice()}"></span>
+                <span>₩</span>
+                <span id="bookFinalPrice" th:text="${book.getFinalPrice()}"></span>
             </td>
             <td>
                 <span>+</span>
@@ -239,6 +286,7 @@
                 <td style="display : flex">
                     <span type="text">-</span>
                     <span id="totalCouponSale" th:text="${totalCouponSale}"></span>
+                    <span type="hidden" id="totalCouponId"></span>
                     <button type="button" onclick="fullCouponPopUp()"
                             style="margin-left:15px">쿠폰 사용
                     </button>
@@ -277,10 +325,8 @@
             </tbody>
         </table>
     </div>
-    <button type="button" href="#"
-            class="btn btn-primary">결제 하기
-    </button>
-    <script src="/static/js/mypage/address.js"></script>
+    <button type="button" class="btn btn-primary px-3" onclick="submitOrderForm()">결제 하기</button>
+
     <script src="/static/js/order/order.js"></script>
 </div>
 </body>

@@ -29,6 +29,43 @@ public class TokenExpireCheckInterceptor implements HandlerInterceptor {
     private final MemberService memberService;
 
     /**
+     * accessToken이 갱신되었을 때 갱신된 accessToken을 cookie에 저장하는 메소드
+     *
+     * @param response         response.
+     * @param jwtCookie        로그인하면서 발급된 accessToken이 담겨있는 cookie.
+     * @param renewAccessToken 새로 갱신할 accessToken
+     * @param expireTime       만료시간
+     */
+    private static void updateAccessToken(HttpServletResponse response, Cookie jwtCookie,
+                                          String renewAccessToken, Long expireTime) {
+        jwtCookie.setValue(renewAccessToken + "." + expireTime);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(7200);
+        response.addCookie(jwtCookie);
+    }
+
+    /**
+     * 토큰의 유효시간을 계산해주는 메소드
+     *
+     * @param exp 토큰의 만료시간
+     * @return 토큰의 유효시간
+     */
+    private static boolean getValidTime(String exp) {
+        Date now = new Date(System.currentTimeMillis());
+        return (new Date(Long.parseLong(exp) * 1000).before(now));
+    }
+
+    /**
+     * request에 token의 정보를 저장하는 메소드
+     *
+     * @param request     request.
+     * @param accessToken accessToken 정보
+     */
+    private static void requestContainAccessToken(HttpServletRequest request, String accessToken) {
+        request.setAttribute(JwtUtil.ACCESS_HEADER, JwtUtil.TOKEN_TYPE + accessToken);
+    }
+
+    /**
      * 컨트롤러 진입 전에 실행하여 token이 유효하진 확인하는 메소드
      *
      * @param request  요청
@@ -73,43 +110,5 @@ public class TokenExpireCheckInterceptor implements HandlerInterceptor {
 
         requestContainAccessToken(request, accessToken);
         return true;
-    }
-
-
-    /**
-     * accessToken이 갱신되었을 때 갱신된 accessToken을 cookie에 저장하는 메소드
-     *
-     * @param response         response.
-     * @param jwtCookie        로그인하면서 발급된 accessToken이 담겨있는 cookie.
-     * @param renewAccessToken 새로 갱신할 accessToken
-     * @param expireTime       만료시간
-     */
-    private static void updateAccessToken(HttpServletResponse response, Cookie jwtCookie,
-                                          String renewAccessToken, Long expireTime) {
-        jwtCookie.setValue(renewAccessToken + "." + expireTime);
-        jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(7200);
-        response.addCookie(jwtCookie);
-    }
-
-    /**
-     * 토큰의 유효시간을 계산해주는 메소드
-     *
-     * @param exp 토큰의 만료시간
-     * @return 토큰의 유효시간
-     */
-    private static boolean getValidTime(String exp) {
-        Date now = new Date(System.currentTimeMillis());
-        return (new Date(Long.parseLong(exp) * 1000).before(now));
-    }
-
-    /**
-     * request에 token의 정보를 저장하는 메소드
-     *
-     * @param request     request.
-     * @param accessToken accessToken 정보
-     */
-    private static void requestContainAccessToken(HttpServletRequest request, String accessToken) {
-        request.setAttribute(JwtUtil.ACCESS_HEADER, JwtUtil.TOKEN_TYPE + accessToken);
     }
 }
