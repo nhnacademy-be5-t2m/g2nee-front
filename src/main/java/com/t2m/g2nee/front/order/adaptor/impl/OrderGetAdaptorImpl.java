@@ -103,7 +103,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> stringHttpEntity = new HttpEntity<> (listHeaders);
 
-        String url = orderUrl + "/members/" + customerId + "?page=" + page;
+        String url = orderUrl + "/members/" + customerId + "/list?page=" + page;
         ResponseEntity<PageResponse<OrderInfoDto.ListResponse>> orderListEntity
                 = restTemplate.exchange(
                 url,

@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.order.controller;
 
 
 
+import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
@@ -26,10 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @since : 1.0
  */
 @Controller
-@RequestMapping("/mypage/order")
+@RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderGetService orderGetService;
+    private final MemberAspect memberAspect;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -57,35 +59,4 @@ public class OrderController {
         return "member/customerLogin";
     }
 
-    @GetMapping("/{customerId}/list")
-    public String orderList(Model model, @PathVariable Long customerId, @RequestParam(required = false, defaultValue = "1") int page){
-        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getOrderListForMembers(customerId, page);
-        model.addAttribute("orderPage", orderPage);
-
-        return "mypage/order/orderList";
-    }
-
-    @GetMapping("/{orderId}")
-    public String getOrder(@PathVariable("orderId") Long orderId, Model model){
-
-
-        OrderInfoDto.Response orderResponse = orderGetService.getOrderById(orderId);
-        model.addAttribute("order", orderResponse);
-        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
-        model.addAttribute("orderDetails", detailResponse);
-
-        return "mypage/order/orderDetail";
-    }
-
-    @GetMapping("/nonmembers/")
-    public String getOrderForNonMember(@RequestParam("orderNumber") String orderNumber, Model model){
-        OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(orderNumber);
-        model.addAttribute("order", orderResponse);
-
-        Long orderId = orderResponse.getOrderId();
-        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
-        model.addAttribute("orderDetails", detailResponse);
-
-        return "mypage/order/orderDetail";
-    }
 }
