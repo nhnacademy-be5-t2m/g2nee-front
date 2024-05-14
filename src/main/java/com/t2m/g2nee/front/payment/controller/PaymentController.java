@@ -52,7 +52,7 @@ public class PaymentController {
      */
     @GetMapping("/toss/success")
     @Member
-    public String requestTossPayment(RedirectAttributes redirectAttributes,
+    public String requestTossPayment(Model model,
                                      @RequestParam(value = "orderId") String orderId,
                                      @RequestParam(value = "paymentKey") String paymentKey,
                                      @RequestParam(value = "amount") BigDecimal amount,
@@ -65,7 +65,7 @@ public class PaymentController {
         );
 
         PaymentInfoDto result = paymentService.requestPayment(request);
-        redirectAttributes.addFlashAttribute("paymentSuccess", result);
+        model.addAttribute("paymentSuccess", result);
 
         String memberId = null;
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
@@ -73,7 +73,7 @@ public class PaymentController {
             memberId = member.getMemberId().toString();
         }
         shoppingCartService.deleteCart(memberId, httpServletResponse);
-        return "redirect:/order/payment/success";
+        return "payment/paymentSuccess";
     }
 
     @PostMapping("/point")
