@@ -31,8 +31,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @RequiredArgsConstructor
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
-    private final MemberService memberService;
     private static final String LOGIN_STATUS = "X-LOGIN";
+    private final MemberService memberService;
     private String social;
 
     /**

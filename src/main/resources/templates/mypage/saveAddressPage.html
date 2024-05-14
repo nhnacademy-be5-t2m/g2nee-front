@@ -20,44 +20,44 @@
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row" for="alias">
+            <th for="alias" scope="row">
                 주소별칭
             </th>
             <td style="display : flex">
-                <input type="text" id="alias" class="text" maxlength="20" required/>
+                <input class="text" id="alias" maxlength="20" required type="text"/>
             </td>
         <tr>
-            <th scope="row" for="zipcode">
+            <th for="zipcode" scope="row">
                 우편번호
             </th>
             <td style="display : flex">
-                <input type="text" id="zipcode" class="text" readonly/>
-                <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
+                <input class="text" id="zipcode" readonly type="text"/>
+                <button class="postButton" onclick="postAddress()" type="button">우편번호 찾기</button>
             </td>
         </tr>
         <tr>
-            <th scope="row" for="address">
+            <th for="address" scope="row">
                 주소
             </th>
             <td style="display : flex">
-                <input type="text" id="address" class="text" maxlength="100" readonly/>
+                <input class="text" id="address" maxlength="100" readonly type="text"/>
             </td>
         </tr>
         <tr>
-            <th scope="row" for="detail">
+            <th for="detail" scope="row">
                 상세주소
             </th>
             <td style="display : flex">
-                <input type="text" id="detail" class="text" maxlength="50" required/>
+                <input class="text" id="detail" maxlength="50" required type="text"/>
             </td>
         </tr>
         <tr>
-            <th scope="row" for="isDefault">
+            <th for="isDefault" scope="row">
                 기본 배송지 설정
             </th>
             <td style="display: flex; align-items: center;">
-                <input type="radio" id="isDefaultYes" name="isDefault" value="true"> 예
-                <input type="radio" id="isDefaultNo" name="isDefault" value="false" checked> 아니오
+                <input id="isDefaultYes" name="isDefault" type="radio" value="true"> 예
+                <input checked id="isDefaultNo" name="isDefault" type="radio" value="false"> 아니오
             </td>
 
         </tr>

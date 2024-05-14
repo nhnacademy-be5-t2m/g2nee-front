@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/categoryLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>G2nee Book 결제</title>
+    <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+
+    <script src="/static/js/payment/paymentSelect.js"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <h5>주문 내역</h5>
+    <p>주문: <span id="orderName" th:text="${order.orderName}"/></p>
+    <p>주문번호: <span id="orderNumber" th:text="${order.orderNumber}"/></p>
+    <br/>
+    <h6>주문자 정보</h6>
+    <p>이름: <span id="name" th:text="${order.name}"/></p>
+    <p>이메일: <span id="email" th:text="${order.email}"/></p>
+    <p>휴대전화: <span id="phoneNumber" th:text="${order.phoneNumber}"/></p>
+    <br/>
+
+    <h6>수령인 정보</h6>
+    <p>수령인: <span id="receiverName" th:text="${order.receiverName}"/></p>
+    <p>휴대전화: <span id="receiverPhoneNumber" th:text="${order.receiverPhoneNumber}"/></p>
+    <p>주소: <span id="receiveAddress" th:text="'['+${order.zipcode}+']'+${order.receiveAddress}+${order.detailAddress}"/></p>
+    <p>배송 메시지: <span id="message" th:text="${order?.message}"/></p>
+    <br/>
+    <h6>주문 상세</h6>
+        <div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>도서 정보</th>
+                    <th>수량</th>
+                    <th>가격</th>
+                </tr>
+                </thead>
+
+                <tbody th:each="orderDetail : ${order.orderDetails}">
+                <tr>
+                    <td>
+                        <span th:text="${orderDetail.bookName}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${orderDetail.quantity}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${orderDetail.price}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <br/>
+    <p>총합:  <span id="netAmount" th:text="${order.netAmount}"/> 원</p>
+    <p>할인:  <span id="discount" th:text="${order.netAmount} - ${order.amount}"/> 원</p>
+    <p>배송비:  <span id="deliveryFee" th:text="'+'+${order.deliveryFee}"/> 원</p>
+    <p>결제:  <span id="amount" th:text="${order.amount}"/> 원</p>
+    <input type="hidden" id="point" th:value="${point}"/>
+    <input type="hidden" id="customerId" th:value="${order.customerId}"/>
+
+    <br/><br/>
+
+    <!--결제 수단 선택-->
+    <div th:if="${order.amount > 0}">
+        <h5>결제수단</h5>
+
+        <button class="btn" id="toss-button" onclick="selectPaymentMethod('toss')">토스</button>
+        <button class="btn" id="naver-button" onclick="selectPaymentMethod('naver')">네이버페이</button>
+        <button class="btn" id="kakao-button" onclick="selectPaymentMethod('kakao')">카카오페이</button>
+    </div>
+
+
+    <!-- 결제 버튼 -->
+    <button class="btn btn-primary" onclick="openPaymentWindow()">결제하기</button>
+
+</div>
+</body>
+</html>

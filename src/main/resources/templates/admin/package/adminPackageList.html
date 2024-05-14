@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>포장지 관리</title>
 </head>
@@ -24,7 +24,7 @@
         <tbody th:each="package : ${packages.data}">
         <tr>
             <td>
-                <img th:src="${package.url}" alt="Image" height="150" width="150">
+                <img alt="Image" height="150" th:src="${package.url}" width="150">
             </td>
             <td>
                 <span th:text="${package.name}"></span>
@@ -34,20 +34,20 @@
             </td>
             <td>
                 <span th:if="${package.isActivated}">
-                        <form th:action="@{'/admin/packages/delete/' + ${package.packageId}}" th:method="patch"
-                              class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-success">활성</button>
+                        <form class="d-inline" th:action="@{'/admin/packages/delete/' + ${package.packageId}}"
+                              th:method="patch">
+                            <button class="btn btn-sm btn-success" type="submit">활성</button>
                         </form>
                     </span>
                 <span th:unless="${package.isActivated}">
-                        <form th:action="@{'/admin/packages/activate/' + ${package.packageId}}" th:method="patch"
-                              class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-secondary">비활성</button>
+                        <form class="d-inline" th:action="@{'/admin/packages/activate/' + ${package.packageId}}"
+                              th:method="patch">
+                            <button class="btn btn-sm btn-secondary" type="submit">비활성</button>
                         </form>
                     </span>
             </td>
             <td>
-                <a th:href="@{'/admin/packages/modify/' + ${package.packageId}}" class="btn btn-sm btn-primary">수정</a>
+                <a class="btn btn-sm btn-primary" th:href="@{'/admin/packages/modify/' + ${package.packageId}}">수정</a>
             </td>
         </tr>
         </tbody>
@@ -62,8 +62,8 @@
             <li th:class="${packages.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                 <a class="page-link" th:href="@{'?page=' + ${packages.currentPage - 1 }}"><</a>
             </li>
-            <li th:each="pageButton : ${#numbers.sequence(packages.startPage,packages.endPage)}"
-                th:class="${packages.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+            <li th:class="${packages.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(packages.startPage,packages.endPage)}">
                 <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
             </li>
             <li th:class="${packages.currentPage == packages.totalPage ? 'page-item disabled' : 'page-item'}">
@@ -76,7 +76,7 @@
     </nav>
 
     <br/><br/>
-    <a th:href="@{/admin/packages/save}" class="btn btn-primary">새 포장지</a>
+    <a class="btn btn-primary" th:href="@{/admin/packages/save}">새 포장지</a>
 </div>
 </body>
 </html>
