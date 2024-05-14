@@ -10,6 +10,8 @@ import com.t2m.g2nee.front.bookset.book.service.BookGetService;
 import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
+import com.t2m.g2nee.front.mypage.address.dto.response.AddressResponseDto;
+import com.t2m.g2nee.front.mypage.address.service.MyPageService;
 import com.t2m.g2nee.front.order.dto.request.BookInfo;
 import com.t2m.g2nee.front.order.dto.request.BookOrderDto;
 import com.t2m.g2nee.front.order.dto.request.BookOrderListDto;
@@ -27,6 +29,7 @@ import com.t2m.g2nee.front.policyset.pointpolicy.dto.response.PointPolicyInfoDto
 import com.t2m.g2nee.front.policyset.pointpolicy.service.PointPolicyService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +59,7 @@ public class OrderController {
     private final MemberService memberService;
     private final OrderService orderService;
     private final OrderGetService orderGetService;
+    private final MyPageService myPageService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -109,6 +113,9 @@ public class OrderController {
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
             model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
+
+            List<AddressResponseDto> addressList=myPageService.getAddressListByMemberId(memberId);
+            model.addAttribute("addressList",addressList);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
@@ -177,6 +184,9 @@ public class OrderController {
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
             model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
+
+            List<AddressResponseDto> addressList=myPageService.getAddressListByMemberId(memberId);
+            model.addAttribute("addressList",addressList);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();

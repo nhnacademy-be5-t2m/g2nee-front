@@ -110,11 +110,11 @@
     <h5>최종 결제금액</h5>
     <h6>
         <span style="color:black" id="netAmount" th:text="${order.netAmount}"/>
-        <span th:text="'(원가) -'"></span>
-        <span style="color:blue" id="discount" th:text="${order.netAmount} - (${order.amount}-${order.deliveryFee})"/>
-        <span th:text="'(총 할인가)'"></span>
+        <span th:text="'(원가) '"></span>
         <span style="color:red" id="deliveryFee" th:text="' +'+${order.deliveryFee}"/>
-        <span th:text="'(배송비) = '"></span>
+        <span th:text="'(배송비) -'"></span>
+        <span style="color:blue" id="discount" th:text="${order.netAmount} - (${order.amount}-${order.deliveryFee})"/>
+        <span th:text="'(총 할인가) ='"></span>
         <span style="color:red" id="amount" th:text="${order.amount}"/>
     </h6>
     <input type="hidden" id="point" th:value="${point}"/>

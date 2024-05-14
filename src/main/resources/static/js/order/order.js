@@ -497,3 +497,16 @@ function validCheck(input, reg) {
     }
 }
 
+function selectAddress(radio){
+    let id = radio.parentElement.id;
+    document.querySelector('#zipcode').value=document.getElementsByClassName('selectZipcode')[parseInt(id)].value
+    document.querySelector('#address').value=document.getElementsByClassName('selectAddress')[parseInt(id)].value
+    document.querySelector('#detail').value=document.getElementsByClassName('selectDetail')[parseInt(id)].value
+
+}
+
+function selectNoAdddress(){
+    document.querySelector('#zipcode').value=null;
+    document.querySelector('#address').value=null;
+    document.querySelector('#detail').value =null;
+}
