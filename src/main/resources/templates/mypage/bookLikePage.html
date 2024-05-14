@@ -12,7 +12,13 @@
 
 <body>
 <div layout:fragment="content">
-    <div class="col-lg-2.5 col-md-3 col-sm-4 col-4 pb-1" th:each="book : ${bookPage.data}">
+    <div th:if="${bookPage.data.size() == 0}" class="col-lg-2.5 col-md-3">
+        <i class="fa-regular fa-face-sad-tear"></i>
+            좋아요 목록이 비어있습니다.
+    </div>
+    <div th:unless="${bookPage.data.size() == 0}">
+    <div class="col-lg-3 col-md-3"
+         th:each="book : ${bookPage.data}">
         <div class="card product-item border-0 mb-4">
             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                 <a th:href="@{'/books/' + ${book.bookId}}">
@@ -79,8 +85,10 @@
             </ul>
         </nav>
     </div>
+    </div>
     <!-- 페이지 넘기기 end -->
 </div>
+
 </body>
 </html>
 <script src="/static/js/book/setLike.js"></script>
