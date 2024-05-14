@@ -96,7 +96,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
      * @return PageResponse<BookDto.ListResponse>
      */
     @Override
-    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort) {
+    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort,String condition) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -110,6 +110,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .queryParam("page", page)
                 .queryParam("keyword", keyword)
                 .queryParam("sort", sort)
+                .queryParam("condition", condition)
                 .toUriString(), StandardCharsets.UTF_8);
 
 
@@ -264,5 +265,47 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<BookDto.ListResponse> getBookStock(List<Long> bookIdList) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String bookIds = bookIdList.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+
+        String url =
+                gatewayUrl + "/books/stock?bookIdList=" + bookIds;
+
+        return restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<List<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
+    }
+
+    @Override
+    public PageResponse<BookDto.ListResponse> getMemberLikeBook(int page, Long memberId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String url =
+                gatewayUrl + "/books/like/member/" + memberId + "?page=" + page;
+
+        return restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
     }
 }

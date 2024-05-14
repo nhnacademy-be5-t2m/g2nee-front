@@ -14,9 +14,9 @@ import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.awt.print.Book;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,7 +85,7 @@ public class BookController {
      */
     @Member
     @GetMapping
-    public String getNewBooks(Model model, HttpServletRequest request) {
+    public String getNewBooks(Model model) {
 
         List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
 
@@ -112,7 +112,8 @@ public class BookController {
     public String getBookBySearch(Model model,
                                   @RequestParam(defaultValue = "") String keyword,
                                   @RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(required = false) String sort) {
+                                  @RequestParam(required = false) String sort,
+                                  @RequestParam String condition) {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
@@ -125,16 +126,17 @@ public class BookController {
         }
         Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
+        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort, condition);
 
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
+        model.addAttribute("condition", BookDto.SearchCondition.valueOf(condition).getValue());
+        model.addAttribute("keyword", keyword);
         model.addAttribute("sort", sort);
         model.addAttribute("memberId", memberId);
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("cartItemNum", cartItemNum);
-
 
         return "book/bookList";
     }
@@ -169,7 +171,6 @@ public class BookController {
 
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksBySearchByCategory(page, memberId, sort, keyword, categoryId);
-
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
@@ -212,6 +213,7 @@ public class BookController {
 
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksByCategory(page, memberId, sort, categoryId);
+
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
         model.addAttribute("sort", sort);
@@ -221,8 +223,31 @@ public class BookController {
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("cartItemNum", cartItemNum);
 
-
         return "book/bookListByCategory";
+
+    }
+
+    @Member
+    @GetMapping("/member/likes")
+    public String getMemberLikeBook(Model model,@RequestParam(defaultValue = "1") int page){
+
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
+
+
+        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getMemberLikeBook(page, memberId);
+
+        model.addAttribute("bookPage", bookPage);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
+
+        return "/mypage/bookLikePage";
 
     }
 
