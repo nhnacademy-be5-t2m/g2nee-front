@@ -2,8 +2,11 @@ package com.t2m.g2nee.front.order.controller;
 
 
 
+import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
@@ -38,8 +41,11 @@ public class MemberOrderController {
     @GetMapping("/list")
     @Member
     public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page){
-        Long memberId = (Long) memberAspect.getThreadLocal().get();
-        model.addAttribute("memberId", memberId);
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getOrderListForMembers(memberId, page);
         model.addAttribute("orderPage", orderPage);
 
