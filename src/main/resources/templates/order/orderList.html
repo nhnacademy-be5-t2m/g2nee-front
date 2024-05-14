@@ -29,7 +29,7 @@
         <!-- 주문 목록 -->
         <tbody>
         <tr th:each="order : ${orderPage.data}">
-            <td ><a th:href="@{'/order/'+ ${order.orderId}}" th:text="${order.orderNumber}"></a></td>
+            <td ><a th:href="@{'/mypage/order/'+ ${order.orderId}}" th:text="${order.orderNumber}"></a></td>
             <td th:text="${order.orderDate}"></td>
             <td th:text="${order.customerId}"></td>
             <td th:text="${order.orderAmount}"></td>
