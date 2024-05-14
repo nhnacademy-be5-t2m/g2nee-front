@@ -263,11 +263,13 @@ public class OrderController {
                 request.getCustomerId(),
                 request.getCouponId()
         );
+
         OrderForPaymentDto orderForPaymentDto = orderService.saveOrder(order);
         Integer point = request.getPoint();
 
         model.addAttribute("order", orderForPaymentDto);
         model.addAttribute("point", point);
+
 
         return "payment/paymentSelect";
     }

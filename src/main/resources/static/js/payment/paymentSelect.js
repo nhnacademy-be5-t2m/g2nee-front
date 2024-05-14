@@ -27,7 +27,49 @@ function selectPaymentMethod(method) {
 
 
 function openPaymentWindow() {
-    if (selectedPaymentMethod === null) {
+    let amount = parseInt(document.getElementById("amount").textContent);
+
+    if (amount === 0 && selectedPaymentMethod === null) {
+        selectedPaymentMethod = 'point';
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = '/order/payment/point'
+
+        const amountField = document.createElement('input');
+        amountField.type = 'hidden';
+        amountField.name = 'amount';
+        amountField.value = document.getElementById("amount").textContent
+        form.appendChild(amountField);
+
+        const orderNumberField = document.createElement('input');
+        orderNumberField.type = 'hidden';
+        orderNumberField.name = 'orderNumber';
+        orderNumberField.value = document.querySelector('#orderNumber').textContent;
+        form.appendChild(orderNumberField);
+
+
+        const customerIdField = document.createElement('input');
+        customerIdField.type = 'hidden';
+        customerIdField.name = 'customerId';
+        customerIdField.value = document.querySelector('#customerId').value;
+        form.appendChild(customerIdField);
+
+        const payTypeField = document.createElement('input');
+        payTypeField.type = 'hidden';
+        payTypeField.name = 'payType';
+        payTypeField.value = 'point';
+        form.appendChild(payTypeField);
+
+        const pointField = document.createElement('input');
+        pointField.type = 'hidden';
+        pointField.name = 'point';
+        pointField.value = document.querySelector('#point').value;
+        form.appendChild(pointField);
+
+        document.body.appendChild(form);
+        form.submit();
+        return;
+    } else if (amount > 0 && selectedPaymentMethod === null) {
         alert("결제 방법을 선택하세요!");
         return;
     }
@@ -42,10 +84,8 @@ function openPaymentWindow() {
     // 선택된 결제 방법에 따라 새 창을 엽니다.
     let url = `/order/payment/${selectedPaymentMethod}`;
 
-
-
     let windowOptions = `width=${windowWidth},height=${windowHeight},top=${top},left=${left},menubar=no,toolbar=no,status=no,scrollbars=yes,location=no`;
     let paymentWindow =  window.open(url, "_blank", windowOptions);
 
-    paymentWindow.postMessage(order, '*');
+    // paymentWindow.postMessage(order, '*');
 }

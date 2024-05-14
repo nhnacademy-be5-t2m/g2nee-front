@@ -1,5 +1,6 @@
 package com.t2m.g2nee.front.payment.controller;
 
+import com.t2m.g2nee.front.payment.dto.request.PaymentRequestDto;
 import com.t2m.g2nee.front.payment.dto.request.TossPaymentRequestDto;
 import com.t2m.g2nee.front.payment.dto.response.PaymentInfoDto;
 import com.t2m.g2nee.front.payment.service.PaymentService;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -53,13 +56,20 @@ public class PaymentController {
         PaymentInfoDto result = paymentService.requestPayment(request);
         redirectAttributes.addFlashAttribute("paymentSuccess", result);
 
-        return "redirect:/order/payment/successs";
+        return "redirect:/order/payment/success";
+    }
+
+    @PostMapping("/point")
+    public String pointPayment(@ModelAttribute("form") PaymentRequestDto request, Model model) {
+        PaymentInfoDto result = paymentService.requestPayment(request);
+        model.addAttribute("paymentSuccess", result);
+
+        return "payment/pointPaySuccess";
     }
 
     @GetMapping("/success")
     public String successPayment(){
         return "payment/paymentSuccess";
-
     }
 
 

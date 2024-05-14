@@ -71,13 +71,14 @@
     <br/><br/>
 
     <!--결제 수단 선택-->
-    <h5>결제수단</h5>
+    <div th:if="${order.amount > 0}">
+        <h5>결제수단</h5>
 
-    <button class="btn" id="toss-button" onclick="selectPaymentMethod('toss')">토스</button>
-    <button class="btn" id="naver-button" onclick="selectPaymentMethod('naver')">네이버페이</button>
-    <button class="btn" id="kakao-button" onclick="selectPaymentMethod('kakao')">카카오페이</button>
+        <button class="btn" id="toss-button" onclick="selectPaymentMethod('toss')">토스</button>
+        <button class="btn" id="naver-button" onclick="selectPaymentMethod('naver')">네이버페이</button>
+        <button class="btn" id="kakao-button" onclick="selectPaymentMethod('kakao')">카카오페이</button>
+    </div>
 
-    <br/><br/>
 
     <!-- 결제 버튼 -->
     <button class="btn btn-primary" onclick="openPaymentWindow()">결제하기</button>
