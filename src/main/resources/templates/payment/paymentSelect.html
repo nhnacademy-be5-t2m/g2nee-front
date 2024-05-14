@@ -63,6 +63,7 @@
     <br/>
     <p>총합:  <span id="netAmount" th:text="${order.netAmount}"/> 원</p>
     <p>할인:  <span id="discount" th:text="${order.netAmount} - ${order.amount}"/> 원</p>
+    <p>배송비:  <span id="deliveryFee" th:text="'+'+order.deliveryFee"/> 원</p>
     <p>결제:  <span id="amount" th:text="${order.amount}"/> 원</p>
     <input type="hidden" id="point" th:value="${point}"/>
     <input type="hidden" id="customerId" th:value="${order.customerId}"/>

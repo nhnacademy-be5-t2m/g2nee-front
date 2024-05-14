@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * 주문과 관련된 controller 입니다.
@@ -167,10 +166,8 @@ public class OrderController {
         //회원주문인지 비회원주문인지 확인
         //회원이라면 그 회원의 적립률을 저장한다.
         if (member != null) {
-            Long memberId = null;
-            if (member != null) {
-                memberId = member.getMemberId();
-            }
+            Long memberId = member.getMemberId();
+
             model.addAttribute("memberId", memberId);
             PointPolicyInfoDto pointPolicyInfoDto = pointPolicyService.getPointPolicyByPolicyName(member.getGrade());
             rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount());
@@ -233,7 +230,7 @@ public class OrderController {
 
     @Member
     @PostMapping("/payment")
-    public String submitOrder(@ModelAttribute("form") OrderForm request) {
+    public String submitOrder(@ModelAttribute("form") OrderForm request,Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         //회원주문인지 비회원주문인지 확인
         //비회원이라면 비회원을 생성한 후 customerId저장

@@ -53,7 +53,13 @@ public class PaymentController {
         PaymentInfoDto result = paymentService.requestPayment(request);
         redirectAttributes.addFlashAttribute("paymentSuccess", result);
 
+        return "redirect:/order/payment/successs";
+    }
+
+    @GetMapping("/success")
+    public String successPayment(){
         return "payment/paymentSuccess";
+
     }
 
 
