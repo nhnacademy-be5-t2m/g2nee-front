@@ -127,4 +127,9 @@ public class BookGetService {
         }
         return responses;
     }
+
+    public PageResponse<BookDto.ListResponse> getMemberLikeBook(int page,Long memberId){
+
+        return bookGetAdaptor.getMemberLikeBook(page,memberId);
+    }
 }

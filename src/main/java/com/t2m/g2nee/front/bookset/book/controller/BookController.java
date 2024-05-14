@@ -14,6 +14,7 @@ import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.awt.print.Book;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -223,6 +224,30 @@ public class BookController {
         model.addAttribute("cartItemNum", cartItemNum);
 
         return "book/bookListByCategory";
+
+    }
+
+    @Member
+    @GetMapping("/member/likes")
+    public String getMemberLikeBook(Model model,@RequestParam(defaultValue = "1") int page){
+
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
+
+
+        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getMemberLikeBook(page, memberId);
+
+        model.addAttribute("bookPage", bookPage);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
+
+        return "/mypage/bookLikePage";
 
     }
 

@@ -70,8 +70,15 @@ public interface BookGetAdaptor {
 
     /**
      * 책 재고를 조회하는 메서드
-     * @param bookIdList
+     * @param bookIdList 책 아이디 리스트
      * @return List<BookDto.ListResponse>
      */
     List<BookDto.ListResponse> getBookStock(List<Long> bookIdList);
+
+    /**
+     * 회원이 좋아요한 책을 조회하는 메서드
+     * @param memberId 회원 아이디
+     * @return List<BookDto.ListResponse>
+     */
+    PageResponse<BookDto.ListResponse> getMemberLikeBook(int page, Long memberId);
 }

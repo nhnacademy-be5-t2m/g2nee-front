@@ -289,4 +289,23 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 )
                 .getBody();
     }
+
+    @Override
+    public PageResponse<BookDto.ListResponse> getMemberLikeBook(int page, Long memberId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        String url =
+                gatewayUrl + "/books/like/member/" + memberId + "?page=" + page;
+
+        return restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<PageResponse<BookDto.ListResponse>>() {
+                        }
+                )
+                .getBody();
+    }
 }
