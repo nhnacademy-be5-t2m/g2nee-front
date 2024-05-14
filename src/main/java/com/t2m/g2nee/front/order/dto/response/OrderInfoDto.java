@@ -21,11 +21,21 @@ public class OrderInfoDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
+    public static class OrderStateRequest {
+        private OrderState orderState;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ListResponse {
         private Long orderId;
         private String orderNumber;
         private Long customerId;
+        private String customerName;
         private LocalDateTime orderDate;
         private List<OrderDetailDto.Response> orderDetailList;
         private OrderState orderState;

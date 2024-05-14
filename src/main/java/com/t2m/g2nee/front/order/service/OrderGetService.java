@@ -87,4 +87,8 @@ public class OrderGetService {
         return null;
     }
 
+    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest){
+        orderGetAdaptor.changeOrderStatus(orderId, stateRequest);
+    }
+
 }

@@ -138,4 +138,20 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     public PageResponse<OrderInfoDto> getAllOrderListByState(int page, String orderState) {
         return null;
     }
+
+    @Override
+    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<OrderInfoDto.OrderStateRequest> stateEntity = new HttpEntity<>(stateRequest, headers);
+        String url= orderUrl + "/state/" + orderId;
+
+        restTemplate.exchange(
+                url,
+                HttpMethod.PATCH,
+                stateEntity,
+                String.class
+        ).getBody();
+    }
 }

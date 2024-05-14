@@ -56,5 +56,7 @@ public interface OrderGetAdaptor {
      */
     PageResponse<OrderInfoDto> getAllOrderListByState(int page, String orderState);
 
+    void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest);
+
 
 }
