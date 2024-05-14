@@ -38,8 +38,8 @@
                 </tr>
                 </tbody>
             </table>
-
             <div>
+                <div>
                 <h3>주문 상세</h3>
                 <!-- 주문 세부 내용 -->
                 <table class="table table-bordered table-hover">
@@ -66,9 +66,9 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
+                </div>
 
-            <div class="col">
+                <div class="col">
             <!--배송 정보 내용-->
                 <div class="col">
                     <h3>배송 정보</h3>
@@ -78,9 +78,8 @@
                     <p th:text="'상세주소: ' + ${order.detailAddress}"></p>
                     <p th:text="'배송 요청사항: ' + ${order.message}"></p>
                 </div>
-
+                </div>
             </div>
-
         </div>
     </div>
 </div>

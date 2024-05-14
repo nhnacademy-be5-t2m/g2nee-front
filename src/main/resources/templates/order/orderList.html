@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en"
-      layout:decorate="~{layouts/adminLayout}"
+      layout:decorate="~{layouts/mypageLayout}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
@@ -34,7 +34,7 @@
             <td th:text="${order.customerId}"></td>
             <td th:text="${order.orderAmount}"></td>
             <td th:text="${order.orderState.name()}"></td>
-            <td><button>상태 변경</button></td>
+            <td><button>반품 신청</button></td>
         </tr>
 
         <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->

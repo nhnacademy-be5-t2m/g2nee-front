@@ -53,8 +53,13 @@ public class MemberOrderController {
     }
 
     @GetMapping("/{orderId}")
+    @Member
     public String getOrder(@PathVariable("orderId") Long orderId, Model model){
-
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
         OrderInfoDto.Response orderResponse = orderGetService.getOrderById(orderId);
         model.addAttribute("order", orderResponse);
         List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
@@ -72,6 +77,6 @@ public class MemberOrderController {
         List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
         model.addAttribute("orderDetails", detailResponse);
 
-        return "mypage/order/orderDetail";
+        return "order/orderDetail";
     }
 }

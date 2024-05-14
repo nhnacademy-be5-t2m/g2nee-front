@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/mypageLayout}">
 <head>
     <meta charset="UTF-8">
     <title> 주문 조회</title>
@@ -35,7 +35,7 @@
                     <td th:text="${order.customerId} + ':' + ${order.customerName}"></td>
                     <td th:text="${order.orderAmount}"></td>
                     <td th:text="${order.orderState.getName()}"></td>
-                    <td><button>상태 변경</button></td>
+                    <td><button>반품 신청</button></td>
                 </tr>
                 </tbody>
             </table>
