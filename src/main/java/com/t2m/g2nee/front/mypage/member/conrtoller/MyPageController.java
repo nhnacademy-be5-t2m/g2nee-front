@@ -6,9 +6,11 @@ import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
+import java.math.BigDecimal;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,6 +37,24 @@ public class MyPageController {
         memberService.quitMember(memberId);
         memberService.logout(response);
         return "redirect:/";
+    }
+
+    /**
+     * 회원 등급을 보여주는 페이지
+     *
+     * @return 마이페이지의 회원페이지
+     */
+    @GetMapping("/grade")
+    @Member
+    public String getGrade(Model model) {
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+        BigDecimal totalAmount= memberService.getTotalAmountForGrade(memberId);
+        memberService.logout(response);
+        return "mypage/grade";
     }
 
 }

@@ -16,6 +16,7 @@ import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
+import java.math.BigDecimal;
 import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -220,5 +221,13 @@ public class MemberService {
                 requestEntity,
                 String.class
         );
+    }
+
+    /**
+     * 회원의 지난 3달 주문금액을 받아오는 메소드
+     *
+     * @param memberId 탈퇴할 회원의 memberId
+     */
+    public BigDecimal getTotalAmountForGrade(Long memberId) {
     }
 }
