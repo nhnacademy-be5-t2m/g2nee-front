@@ -100,6 +100,9 @@
             }
         }
         button.parent().parent().find('input').val(newVal);
+        if (document.querySelector('#bookCount') !== null) {
+            document.querySelector('#bookCount').value = newVal;
+        }
     });
 
 })(jQuery);

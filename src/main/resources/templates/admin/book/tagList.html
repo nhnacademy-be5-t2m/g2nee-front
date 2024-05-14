@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <style>
 
@@ -50,19 +50,19 @@
     <div class="container">
         <div class="d-flex justify-content-start mb-3">
             <!-- 등록 버튼 -->
-            <button type="button" class="btn btn-outline-primary" onclick="toggleRegisterFields()">등록</button>
+            <button class="btn btn-outline-primary" onclick="toggleRegisterFields()" type="button">등록</button>
         </div>
 
         <!-- 등록 필드 -->
         <div id="registerFields" style="display: none;">
             <form th:action="@{/admin/tags}" th:method="post">
                 <div class="mb-3">
-                    <label for="tagName" class="form-label">태그 이름</label>
-                    <input type="text" class="form-control-sm" id="tagName" name="tagName" pattern="^[가-힣0-9a-zA-Z\s]+$"
-                           required>
+                    <label class="form-label" for="tagName">태그 이름</label>
+                    <input class="form-control-sm" id="tagName" name="tagName" pattern="^[가-힣0-9a-zA-Z\s]+$" required
+                           type="text">
                 </div>
                 <div class="d-flex justify-content-start mb-3">
-                    <button type="submit" class="btn btn-primary">등록</button>
+                    <button class="btn btn-primary" type="submit">등록</button>
                 </div>
             </form>
         </div>
@@ -77,26 +77,27 @@
                 </thead>
                 <tbody>
                 <tr th:each="tag : ${tagPage.data}">
-                    <td th:text="${tag.tagName}" class="align-middle"></td>
+                    <td class="align-middle" th:text="${tag.tagName}"></td>
                     <td class="text-center align-middle">
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-primary btn-sm"
-                                    th:onclick="'toggleModifyFields('+${tag.tagId}+')'">수정
+                        <div aria-label="Basic outlined example" class="btn-group" role="group">
+                            <button class="btn btn-outline-primary btn-sm"
+                                    th:onclick="'toggleModifyFields('+${tag.tagId}+')'"
+                                    type="button">수정
                             </button>
-                            <div th:id="'modifyFields-'+${tag.tagId}" style="display: none;">
+                            <div style="display: none;" th:id="'modifyFields-'+${tag.tagId}">
                                 <form th:action="@{'/admin/tags/' + ${tag.tagId} +'?page='+${tagPage.currentPage}}"
                                       th:method="patch">
                                     <div class="mb-3">
-                                        <label for="tagModifyName" class="form-label">태그 이름</label>
-                                        <input type="text" class="form-control form-control-sm" id="tagModifyName"
-                                               name="tagName">
+                                        <label class="form-label" for="tagModifyName">태그 이름</label>
+                                        <input class="form-control form-control-sm" id="tagModifyName" name="tagName"
+                                               type="text">
                                     </div>
-                                    <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
+                                    <button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
                                 </form>
                             </div>
                             <form th:action="@{'/admin/tags/'+${tag.tagId} + '?page='+${tagPage.currentPage}}"
                                   th:method="delete">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">삭제</button>
+                                <button class="btn btn-outline-danger btn-sm" type="submit">삭제</button>
                             </form>
                         </div>
                     </td>
@@ -112,8 +113,8 @@
                         <li th:class="${tagPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                             <a class="page-link" th:href="@{'?page=' + ${tagPage.currentPage - 1 }}"><</a>
                         </li>
-                        <li th:each="pageButton : ${#numbers.sequence(tagPage.startPage,tagPage.endPage)}"
-                            th:class="${tagPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                        <li th:class="${tagPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}"
+                            th:each="pageButton : ${#numbers.sequence(tagPage.startPage,tagPage.endPage)}">
                             <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
                         </li>
                         <li th:class="${tagPage.currentPage == tagPage.totalPage ? 'page-item disabled' : 'page-item'}">

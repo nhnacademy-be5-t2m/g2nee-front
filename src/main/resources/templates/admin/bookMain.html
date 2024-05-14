@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>admin 메인</title>
 </head>
@@ -9,11 +9,11 @@
 <body>
 <div layout:fragment="content">
     <h2>도서 관리</h2>
-    <form th:action="@{/admin/books/bookFrom}" method="get">
-        <button type="submit" class="btn btn-primary">도서 등록</button>
+    <form method="get" th:action="@{/admin/books/bookFrom}">
+        <button class="btn btn-primary" type="submit">도서 등록</button>
     </form>
-    <form th:action="@{/admin/books/list}" method="get">
-        <button type="submit" class="btn btn-primary">도서 목록</button>
+    <form method="get" th:action="@{/admin/books/list}">
+        <button class="btn btn-primary" type="submit">도서 목록</button>
     </form>
 </div>
 </body>

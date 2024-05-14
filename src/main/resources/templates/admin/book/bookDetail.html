@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+          referrerpolicy="no-referrer" rel="stylesheet"/>
     <title>admin 도서 조회</title>
 </head>
 
@@ -16,19 +16,19 @@
         <div class="row px-xl-5">
             <!-- 책 사진 설정 (여러개 가능) start -->
             <div class="col-lg-5 pb-5">
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel slide" data-ride="carousel" id="product-carousel">
                     <div class="carousel-inner border">
                         <div class="carousel-inner border">
-                            <div th:each="image, index : ${book.detailImageUrl}"
-                                 th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'">
-                                <img class="w-100 h-100" th:src="${image}" alt="Image">
+                            <div th:classappend="${index.index == 0} ? 'carousel-item active' : 'carousel-item'"
+                                 th:each="image, index : ${book.detailImageUrl}">
+                                <img alt="Image" class="w-100 h-100" th:src="${image}">
                             </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <a class="carousel-control-prev" data-slide="prev" href="#product-carousel">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
                     </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <a class="carousel-control-next" data-slide="next" href="#product-carousel">
                         <i class="fa fa-2x fa-angle-right text-dark"></i>
                     </a>
                 </div>
@@ -65,7 +65,7 @@
 
                 <h5>
                     <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
-                    <span th:text="'정가 : ₩' + ${book.price}" style="color: gray; text-decoration: line-through;"></span>
+                    <span style="color: gray; text-decoration: line-through;" th:text="'정가 : ₩' + ${book.price}"></span>
                 </h5>
                 <hr/>
 
@@ -77,7 +77,7 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
+                        <input class="form-control bg-secondary text-center" type="text" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>

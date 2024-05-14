@@ -31,7 +31,7 @@ public class AdminPackageTypeController {
     }
 
     /**
-     * 활성화된 모든 포장지를 페이징처리하여 보여줍니다.
+     * 모든 포장지를 페이징처리하여 보여줍니다.
      *
      * @param page
      * @param model

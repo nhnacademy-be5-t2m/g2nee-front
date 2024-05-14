@@ -27,17 +27,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class DeliveryPolicyAdaptorImpl implements DeliveryPolicyAdaptor {
 
-    private final RestTemplate restTemplate;
-
-    @Value("${gatewayToShopUrl}")
-    private String gateway;
-
-    private String baseUrl;
-
     //페이징 처리를 위한 ref
     private static final ParameterizedTypeReference<PageResponse<DeliveryPolicyInfoDto>> PAGE_TYPE_REF
             = new ParameterizedTypeReference<>() {
     };
+    private final RestTemplate restTemplate;
+    @Value("${gatewayToShopUrl}")
+    private String gateway;
+    private String baseUrl;
 
     public DeliveryPolicyAdaptorImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
