@@ -104,14 +104,16 @@
                 </th>
                 <td>
                     <span>
-                        <input type="radio" id="noSelection" name="addressSelection" value="noSelection" onclick="selectNoAdddress()" checked>
+                        <input type="radio" id="noSelection" name="addressSelection" value="noSelection"
+                               onclick="selectNoAdddress()" checked>
                         <label for="noSelection">선택 안함</label>
                     </span>
                     <span th:id="${addressStat.index}" th:each="address : ${addressList}">
-                        <input type="radio" style="margin-left:5px" class ="selectAlias" id="selectAlias" name="addressSelection" onclick="selectAddress(this)">
+                        <input type="radio" style="margin-left:5px" class="selectAlias" id="selectAlias"
+                               name="addressSelection" onclick="selectAddress(this)">
                         <input class="selectZipcode" type="hidden" th:value="${address.zipcode}">
                         <input class="selectAddress" type="hidden" th:value="${address.address}">
-                        <input class="selectDetail" type="hidden"  th:value="${address.detail}">
+                        <input class="selectDetail" type="hidden" th:value="${address.detail}">
                         <label for="selectAlias" th:text="' '+${address.alias}"></label>
                     </span>
                 </td>

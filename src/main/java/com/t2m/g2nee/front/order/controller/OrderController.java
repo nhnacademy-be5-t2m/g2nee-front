@@ -114,8 +114,8 @@ public class OrderController {
             Integer totalPoint = pointService.getTotalPoint(memberId);
             model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
 
-            List<AddressResponseDto> addressList=myPageService.getAddressListByMemberId(memberId);
-            model.addAttribute("addressList",addressList);
+            List<AddressResponseDto> addressList = myPageService.getAddressListByMemberId(memberId);
+            model.addAttribute("addressList", addressList);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
@@ -185,8 +185,8 @@ public class OrderController {
             Integer totalPoint = pointService.getTotalPoint(memberId);
             model.addAttribute("totalPoint", totalPoint == null ? 0 : totalPoint);
 
-            List<AddressResponseDto> addressList=myPageService.getAddressListByMemberId(memberId);
-            model.addAttribute("addressList",addressList);
+            List<AddressResponseDto> addressList = myPageService.getAddressListByMemberId(memberId);
+            model.addAttribute("addressList", addressList);
         }
         //무료배송 기준 저장
         DeliveryPolicyInfoDto deliveryInfo = deliveryPolicyService.getDeliveryPolicy();
