@@ -20,6 +20,7 @@
             <th>최소 주문 금액</th>
             <th>최대 할인 금액</th>
             <th>쿠폰상태</th>
+            <th></th>
 
         </tr>
         </thead>
@@ -33,19 +34,27 @@
                 <span th:text="${couponType.type}"></span>
             </td>
             <td>
-                <span th:text="${couponType.period}"></span>
+                <span th:text="${couponType.period}+' 일'"></span>
             </td>
             <td>
-                <span th:text="${couponType.discount}"></span>
+                <span th:text="${couponType.type == '금액쿠폰' ? couponType.discount + ' 원' : couponType.discount + ' %'}"> </span>
             </td>
             <td>
-                <span th:text="${couponType.minimumOrderAmount}"></span>
+                <span th:text="${couponType.minimumOrderAmount}+' 원'"></span>
             </td>
             <td>
-                <span th:text="${couponType.maximumDiscount}"></span>
+                <span th:text="${couponType.maximumDiscount}+' 원'"></span>
             </td>
             <td>
                 <span th:text="${couponType.status}"></span>
+            </td>
+            <td>
+                <span th:if="${couponType.status == '일괄발급'}">
+                    <form class="d-inline" th:action="@{'/admin/couponType/issue?couponTypeId='+${couponType.couponTypeId}}"
+                          th:method="post">
+                        <button type="submit" class="btn btn-sm btn-secondary" >발급하기</button>
+                    </form>
+                </span>
             </td>
         </tr>
         </tbody>

@@ -31,7 +31,7 @@
                 <span th:text="${pointPolicy.policyType}"></span>
             </td>
             <td>
-                <span th:text="${pointPolicy.amount}"></span>
+                <span th:text="${pointPolicy.policyType == '금액적립' ? pointPolicy.amount + ' 원' : pointPolicy.amount + ' %'}"> </span>
             </td>
             <td>
                 <span th:if="${pointPolicy.isActivated}">
