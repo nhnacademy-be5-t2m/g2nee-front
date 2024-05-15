@@ -108,20 +108,24 @@ public class CustomExceptionAdvice {
      */
     @ExceptionHandler(HttpClientErrorException.class)
     @Member
-    public String invalidToken(Model model) {
-        model.addAttribute("tokenError", "로그인 유효시간이 지났습니다. 재로그인 해주세요.");
-        ServletRequestAttributes servletRequestAttributes =
-                (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpServletResponse response = servletRequestAttributes.getResponse();
-        // 리프레시 토큰이 만료되면 DB에 장바구니 정보를 옮깁니다.
-        MemberDetailInfoResponseDto memberDetailInfoResponseDto =
-                (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
-        Long memberId = memberDetailInfoResponseDto.getMemberId();
-        shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
-        deleteCookie(response, JwtUtil.ACCESS_COOKIE);
-        Cookie sessionCookie = CookieUtil.findCookie(SESSION_ID);
+    public String invalidToken(HttpClientErrorException ex,Model model) {
+        if(ex.getRawStatusCode()==401){
+            model.addAttribute("tokenError", "재로그인이 필요합니다.");
+            ServletRequestAttributes servletRequestAttributes =
+                    (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletResponse response = servletRequestAttributes.getResponse();
+            // 리프레시 토큰이 만료되면 DB에 장바구니 정보를 옮깁니다.
+            MemberDetailInfoResponseDto memberDetailInfoResponseDto =
+                    (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+            Long memberId = memberDetailInfoResponseDto.getMemberId();
+            shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
+            deleteCookie(response, JwtUtil.ACCESS_COOKIE);
+            Cookie sessionCookie = CookieUtil.findCookie(SESSION_ID);
 //        redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());
 //        deleteCookie(response, SESSION_ID);
-        return "redirect:/login";
+            return "redirect:/login";
+        }
+        model.addAttribute("error", new CustomException(HttpStatus.NOT_FOUND, "페이지를 찾을 수 없습니다."));
+        return "/error/errorPage";
     }
 }
