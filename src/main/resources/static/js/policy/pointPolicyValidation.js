@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // amount 유효성 검사
         if (isNaN(amount)) {
             validationErrors.push("입력된 값이 숫자가 아닙니다.");
-        } else if (policyType === 'AMOUNT' && Math.floor(amount) == 0) {
+        } else if (policyType === 'AMOUNT' && Math.floor(amount) < 0) {
             validationErrors.push("금액 적립 정책의 경우, 적립 수치는 0보다 커야 합니다.");
         } else if (policyType === 'PERCENT' && (amount < 0 || amount > 1)) {
             validationErrors.push("퍼센트 적립 정책의 경우, 적립 수치는 0~1 사이여야 합니다.");

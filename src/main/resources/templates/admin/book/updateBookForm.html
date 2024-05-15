@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminLayout}" xmlns="http://www.w3.org/1999/html">
+      layout:decorate="~{layouts/adminLayout}"
+      xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" rel="stylesheet"/>
+    <link href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" rel="stylesheet"/>
     <title>도서 수정</title>
 </head>
 
@@ -15,38 +15,38 @@
             <div class="col-md-9 offset-md-2">
                 <h2>도서 수정</h2>
 
-                <form id="updateForm" th:action="@{'/admin/books/' + ${book.bookId} + '?page=' +${page}}"
-                      th:method="patch"
-                      enctype="multipart/form-data">
+                <form enctype="multipart/form-data" id="updateForm"
+                      th:action="@{'/admin/books/' + ${book.bookId} + '?page=' +${page}}"
+                      th:method="patch">
 
                     <p>이미지, 출판사, 기여자, 역할, 태그는 수정할 사항이 없으면 그대로 두시면 됩니다.</p>
 
                     <div class="form-group">
                         <label for="title">제목 (한글)</label>
-                        <input type="text" id="title" name="title" class="form-control" pattern="^[가-힣0-9a-zA-Z]+$"
-                               required
-                               th:value="${book != null ? book.title : ''}">
+                        <input class="form-control" id="title" name="title" pattern="^[가-힣0-9a-zA-Z]+$" required
+                               th:value="${book != null ? book.title : ''}"
+                               type="text">
 
                     </div>
 
                     <div class="form-group">
                         <label for="engTitle">제목 (영어)</label>
-                        <input type="text" id="engTitle" name="engTitle" class="form-control" pattern="^[A-Za-z0-9]+$"
-                               required
-                               th:value="${book != null ? book.engTitle : ''}">
+                        <input class="form-control" id="engTitle" name="engTitle" pattern="^[A-Za-z0-9]+$" required
+                               th:value="${book != null ? book.engTitle : ''}"
+                               type="text">
                     </div>
 
 
                     <div>책 소개
                         <div id="descriptionEditor">
                         </div>
-                        <textarea id="description" name="description" style="display: none" required></textarea>
+                        <textarea id="description" name="description" required style="display: none"></textarea>
                     </div>
 
                     <div>목차
                         <div id="indexEditor">
                         </div>
-                        <textarea id="bookIndex" name="bookIndex" style="display: none" required></textarea>
+                        <textarea id="bookIndex" name="bookIndex" required style="display: none"></textarea>
                     </div>
                     <br>
 
@@ -54,84 +54,90 @@
 
                     <div class="form-group">
                         <label for="thumbnail">썸네일 이미지</label>
-                        <input type="file" id="thumbnail" name="thumbnail" class="form-control-file" accept="image/*">
+                        <input accept="image/*" class="form-control-file" id="thumbnail" name="thumbnail" type="file">
                     </div>
 
                     <div class="form-group">
                         <label for="details">세부 이미지</label>
-                        <input type="file" id="details" name="details" class="form-control-file" accept="image/*"
-                               multiple>
+                        <input accept="image/*" class="form-control-file" id="details" multiple name="details"
+                               type="file">
                     </div>
 
                     <div class="form-group">
                         <label for="publishedDate">출판일</label>
-                        <input type="date" id="publishedDate" name="publishedDate" class="form-control" required
-                               th:value="${book != null ? book.publishedDate : ''}">
+                        <input class="form-control" id="publishedDate" name="publishedDate" required
+                               th:value="${book != null ? book.publishedDate : ''}"
+                               type="date">
                     </div>
 
                     <div class="form-group">
                         <label for="price">가격</label>
-                        <input type="number" id="price" name="price" class="form-control" pattern="\d+" required
-                               th:value="${book != null ? book.price : ''}">
+                        <input class="form-control" id="price" name="price" pattern="\d+" required
+                               th:value="${book != null ? book.price : ''}"
+                               type="number">
                     </div>
 
                     <div class="form-group">
                         <label for="salePrice">할인 가격</label>
-                        <input type="number" id="salePrice" name="salePrice" class="form-control" pattern="\d+" required
-                               th:value="${book != null ? book.salePrice : ''}">
+                        <input class="form-control" id="salePrice" name="salePrice" pattern="\d+" required
+                               th:value="${book != null ? book.salePrice : ''}"
+                               type="number">
                     </div>
 
                     <div class="form-group">
                         <label for="isbn">ISBN</label>
-                        <input type="text" id="isbn" name="isbn" class="form-control" required
-                               th:value="${book != null ? book.isbn : ''}">
+                        <input class="form-control" id="isbn" name="isbn" required
+                               th:value="${book != null ? book.isbn : ''}"
+                               type="text">
                     </div>
 
                     <div class="form-group">
                         <label for="pages">페이지 수</label>
-                        <input type="number" id="pages" name="pages" class="form-control" pattern="\d+" required
-                               th:value="${book != null ? book.pages : ''}">
+                        <input class="form-control" id="pages" name="pages" pattern="\d+" required
+                               th:value="${book != null ? book.pages : ''}"
+                               type="number">
                     </div>
 
                     <div class="form-group">
                         <label for="quantity">수량</label>
-                        <input type="number" id="quantity" name="quantity" class="form-control" pattern="\d+" required
-                               th:value="${book != null ? book.quantity : ''}">
+                        <input class="form-control" id="quantity" name="quantity" pattern="\d+" required
+                               th:value="${book != null ? book.quantity : ''}"
+                               type="number">
                     </div>
 
                     <div class="form-group">
-                        <label for="publisherSelect" class="form-label">출판사 선택</label>
-                        <select id="publisherSelect" name="publisherId" class="form-control">
+                        <label class="form-label" for="publisherSelect">출판사 선택</label>
+                        <select class="form-control" id="publisherSelect" name="publisherId">
                             <option value="">출판사를 선택해주세요</option>
                             <option th:each="publisher : ${publisherList}"
-                                    th:value="${publisher.getPublisherId()}"
-                                    th:text="${publisher.getPublisherName()}"></option>
+                                    th:text="${publisher.getPublisherName()}"
+                                    th:value="${publisher.getPublisherId()}"></option>
                         </select>
                     </div>
                     <br>
 
                     <div id="categoryContainer">
                     </div>
-                    <button class="btn btn-primary btn-sm float-right" type="button" id="removeButton">-</button>
-                    <button class="btn btn-primary btn-sm float-right" type="button" id="addButton">+</button>
+                    <button class="btn btn-primary btn-sm float-right" id="removeButton" type="button">-</button>
+                    <button class="btn btn-primary btn-sm float-right" id="addButton" type="button">+</button>
 
 
                     <div class="form-group">
-                        <label for="contributorSelect" class="form-label">기여자 선택</label>
+                        <label class="form-label" for="contributorSelect">기여자 선택</label>
                         <div id="addContributorSelection">
-                            <select id="contributorSelect" name="contributorIdList" class="form-control">
+                            <select class="form-control" id="contributorSelect" name="contributorIdList">
                                 <option value="">기여자를 선택해주세요</option>
                                 <option th:each="contributor : ${contributorList}"
-                                        th:value="${contributor.getContributorId()}"
-                                        th:text="${contributor.getContributorName()}"></option>
+                                        th:text="${contributor.getContributorName()}"
+                                        th:value="${contributor.getContributorId()}"></option>
                             </select>
 
-                            <label for="roleSelect" class="form-label">역할 선택</label>
-                            <select id="roleSelect" name="roleIdList" class="form-control">
+                            <label class="form-label" for="roleSelect">역할 선택</label>
+                            <select class="form-control" id="roleSelect" name="roleIdList">
                                 <option value="">역할을 선택해주세요</option>
                                 <option th:each="role : ${roleList}"
-                                        th:value="${role.getRoleId()}"
-                                        th:text="${role.getRoleName()}">
+                                        th:text="${role.getRoleName()}"
+                                        th:value="${role.getRoleId()}">
                                 </option>
                             </select>
                         </div>
@@ -142,13 +148,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tagSelect" class="form-label">태그 선택</label>
+                        <label class="form-label" for="tagSelect">태그 선택</label>
                         <div id="addTagSelection">
-                            <select id="tagSelect" name="tagIdList" class="form-control">
+                            <select class="form-control" id="tagSelect" name="tagIdList">
                                 <option value="">태그를 선택해주세요</option>
                                 <option th:each="tag : ${tagList}"
-                                        th:value="${tag.getTagId()}"
-                                        th:text="${tag.getTagName()}"></option>
+                                        th:text="${tag.getTagName()}"
+                                        th:value="${tag.getTagId()}"></option>
                             </select>
                         </div>
                         <button class="btn btn-primary btn-sm float-right"
@@ -156,7 +162,7 @@
                         </button>
                     </div>
                     <br>
-                    <button id="updateButton" class="btn btn-primary" type="button">수정</button>
+                    <button class="btn btn-primary" id="updateButton" type="button">수정</button>
                 </form>
             </div>
         </div>
@@ -230,11 +236,11 @@
     //TODO: url 바꾸기
     function fetchChildrenCategories(categoryId, callback) {
         fetch(url + `/categories/${categoryId}/children`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(listResponse => {
+                if (!listResponse.ok) {
+                    throw new Error('Network listResponse was not ok');
                 }
-                return response.json();
+                return listResponse.json();
             })
             .then(data => {
                 callback(data);
@@ -246,11 +252,11 @@
 
     function fetchRootCategories(callback) {
         fetch(url + '/categories')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            .then(listResponse => {
+                if (!listResponse.ok) {
+                    throw new Error('Network listResponse was not ok');
                 }
-                return response.json();
+                return listResponse.json();
             })
             .then(data => {
                 callback(data);

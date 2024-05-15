@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>tossPayments 결제</title>
+    <meta charset="UTF-8"/>
+    <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <link href="/static/css/bulma.min.css" rel="stylesheet">
+    <script src="https://js.tosspayments.com/v1"></script>
+    <script src="/static/js/payment/toss.js"></script>
+</head>
+
+<body>
+
+<section class="hero is-link">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                tossPayments 결제
+            </h1>
+
+        </div>
+    </div>
+</section>
+<section class="section ">
+    <div class="container">
+        <button class="button is-link" onclick="pay('카드',jsons.card);">일반결제</button>
+        <button class="button is-link" onclick="pay('계좌이체',jsons.transfer);">계좌이체</button>
+        <button class="button is-link" onclick="pay('휴대폰',jsons.phone);">휴대폰</button>
+        <button class="button is-link" onclick="pay('문화상품권',jsons.certificate);">문화상품권</button>
+        <button class="button is-link" onclick="pay('도서문화상품권',jsons.bookcert);">도서문화상품권</button>
+        <button class="button is-link" onclick="pay('게임문화상품권',jsons.gamecert);">게임문화상품권</button>
+    </div>
+</section>
+</body>
+<script th:inline="javascript">
+    var order = {
+        "amount": window.opener.document.getElementById("amount").textContent,
+        "orderId": window.opener.document.getElementById("orderNumber").textContent,
+        "orderName": window.opener.document.getElementById("orderName").value,
+        "customerId": window.opener.document.getElementById("customerId").value,
+        "customerName": window.opener.document.getElementById("name").textContent,
+        "point": window.opener.document.getElementById("point").value
+    };
+
+    initPaymentData(order);
+    setTossApiKey(/*[[${tossClientApiKey}]]*/); // 토스 API 키 설정
+    initTossPayments(); // 토스 결제 인스턴스 초기화
+
+</script>
+</html>

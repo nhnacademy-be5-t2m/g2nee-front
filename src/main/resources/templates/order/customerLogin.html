@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/categoryLayout}">
+      layout:decorate="~{layouts/categoryLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>비회원 주문확인 로그인 페이지</title>
     <link href="/css/signup.css" rel="stylesheet">
@@ -12,14 +12,14 @@
 
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
-        <form th:action th:object="${customerOrderInfo}" method="post">
+        <form method="post" th:action th:object="${customerOrderInfo}">
             <br/>
             <label for="orderId">주문번호</label>
-            <input type="text" id="orderId" th:field="*{orderId}" placeholder="주문번호"/>
+            <input id="orderId" placeholder="주문번호" th:field="*{orderId}" type="text"/>
 
             <br/>
             <label for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}" placeholder="비밀번호"/>
+            <input id="password" placeholder="비밀번호" th:field="*{password}" type="password"/>
             <div class="password-invalid hide">영어 숫자, 특수문자를 포함하여 8-20자의 형식으로 작성하여 주십시오.</div>
 
             <br/>
@@ -29,7 +29,7 @@
     </div>
     <!-- Shop Detail End -->
 
-    <script src="/static/js/member/signup.js"></script>
+    <script src="/js/member/signup.js"></script>
 </div>
 
 

@@ -124,7 +124,7 @@ public class BookDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class statusResponse {
+    public static class StatusResponse {
         private BookStatus status;
     }
 
@@ -151,6 +151,18 @@ public class BookDto {
         private final String value;
 
         Sort(String value) {
+            this.value = value;
+        }
+    }
+
+    @Getter
+    public enum SearchCondition {
+
+        INTEGRATION("통합검색"), PUBLISHER("출판사"), CONTRIBUTOR("참여자"), TAG("태그");
+
+        private final String value;
+
+        SearchCondition(String value) {
             this.value = value;
         }
     }

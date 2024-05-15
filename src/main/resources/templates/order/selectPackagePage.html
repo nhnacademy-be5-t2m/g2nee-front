@@ -24,15 +24,15 @@
         </tr>
         </thead>
 
-        <input type="hidden" id="selectPackageId" th:value="1"/>
-        <input type="hidden" id="selectPackagePrice" th:value="0"/>
+        <input id="selectPackageId" th:value="1" type="hidden"/>
+        <input id="selectPackagePrice" th:value="0" type="hidden"/>
         <tbody th:each="package : ${packages.data}">
         <tr>
             <td>
-                <input type="hidden" id="packageId" th:value="${package.getPackageId()}"/>
-                <input type="hidden" id="packagePrice" th:value="${package.getPrice()}"/>
-                <input type="radio" th:name="selectedPackage" th:value="${package.getPackageId()}"
-                       th:checked="${package.name=='미포장'}" onclick="setPackageId(this)">
+                <input id="packageId" th:value="${package.getPackageId()}" type="hidden"/>
+                <input id="packagePrice" th:value="${package.getPrice()}" type="hidden"/>
+                <input onclick="setPackageId(this)" th:checked="${package.name=='미포장'}" th:name="selectedPackage"
+                       th:value="${package.getPackageId()}" type="radio">
             </td>
             <span th:if="${package.name == '미포장'}">
                 <td></td>
@@ -46,7 +46,7 @@
 
             <span th:if="${package.name != '미포장'}">
                 <td>
-                    <img height="100" width="100" th:src="${package.url}" alt="포장지 사진">
+                    <img alt="포장지 사진" height="100" th:src="${package.url}" width="100">
                 </td>
 
                 <td>
@@ -60,7 +60,7 @@
         </tbody>
     </table>
     <div style="margin-bottom: 20px;"></div>
-    <input type="hidden" id="id" th:value="${id}">
+    <input id="id" th:value="${id}" type="hidden">
     <button class="btn btn-primary" onclick="setPackage()">포장지 선택</button>
 
     <br/><br/>
@@ -72,8 +72,8 @@
             <li th:class="${packages.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                 <a class="page-link" th:href="@{'?page=' + ${packages.currentPage - 1 }}"><</a>
             </li>
-            <li th:each="pageButton : ${#numbers.sequence(packages.startPage,packages.endPage)}"
-                th:class="${packages.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+            <li th:class="${packages.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(packages.startPage,packages.endPage)}">
                 <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
             </li>
             <li th:class="${packages.currentPage == packages.totalPage ? 'page-item disabled' : 'page-item'}">
