@@ -22,6 +22,7 @@ import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.order.service.OrderService;
 import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
+import com.t2m.g2nee.front.payment.service.PaymentService;
 import com.t2m.g2nee.front.point.service.PointService;
 import com.t2m.g2nee.front.policyset.deliverypolicy.dto.response.DeliveryPolicyInfoDto;
 import com.t2m.g2nee.front.policyset.deliverypolicy.service.DeliveryPolicyService;
@@ -60,6 +61,7 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderGetService orderGetService;
     private final MyPageService myPageService;
+    private final PaymentService paymentService;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -300,4 +302,22 @@ public class OrderController {
         model.addAttribute("id", id);
         return "order/selectPackagePage";
     }
+
+    /**
+     * 결제 후 주문 상세를 보여줌
+     * @param orderId
+     * @param model
+     * @return
+     */
+    @GetMapping("/{orderId}")
+    public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
+        model.addAttribute("order", orderGetService.getOrderById(orderId));
+        model.addAttribute("orderDetails", orderGetService.getOrderDetailListByOrderId(orderId));
+        model.addAttribute("orderName", orderGetService.getOrderName(orderId));
+        model.addAttribute("payment", paymentService.getPayment(orderId));
+
+        return "order/orderDetailSuccessPayment";
+    }
+
+
 }
