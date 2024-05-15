@@ -35,7 +35,7 @@
         </thead>
 
         <!-- 루트 카테고리 -->
-        <tbody th:each="rootCategory : ${rootCategories}">
+        <tbody th:each="rootCategory : ${categories.data}">
         <tr>
             <td>
                 ● <span th:text="${rootCategory.categoryName}"></span>
@@ -122,6 +122,28 @@
         </div>
         </tbody>
     </table>
+
+    <br/><br/>
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${categories.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${categories.currentPage - 1 }}"><</a>
+            </li>
+            <li th:class="${categories.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(categories.startPage,categories.endPage)}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${categories.currentPage == categories.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${categories.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${categories.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
 
     <br/><br/>
     <a class="btn btn-primary" th:href="@{/admin/categories/save}">새 카테고리</a>

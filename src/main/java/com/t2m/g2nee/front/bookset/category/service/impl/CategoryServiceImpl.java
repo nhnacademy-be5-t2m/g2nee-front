@@ -9,6 +9,7 @@ import com.t2m.g2nee.front.bookset.category.service.CategoryService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryAdaptor adaptor;
+    private static final int MAXPAGEBUTTONS = 5;
 
     public CategoryServiceImpl(CategoryAdaptor adaptor) {
         this.adaptor = adaptor;
@@ -100,6 +102,37 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public PageResponse<CategoryInfoDto> getCategoriesByName(String categoryName, int page) {
         return adaptor.getCategoriesByName(categoryName, page);
+    }
+
+    @Override
+    public PageResponse<CategoryHierarchyDto> getCategories(int page) {
+        List<CategoryHierarchyDto> categories = getRootCategories();
+
+        Long pageSize = 1L;
+
+        List<CategoryHierarchyDto> categoryList = categories.stream()
+                .skip((page - 1) * pageSize).limit(pageSize)
+                .collect(Collectors.toList());
+
+
+        int totalCategories = categories.size();
+        int totalPages = (int) Math.ceil((double) totalCategories / pageSize);
+
+        int startPage = Math.max(1, Math.min(totalPages - MAXPAGEBUTTONS + 1, Math.max(1, page - (MAXPAGEBUTTONS / 2))));
+        int endPage = Math.min(startPage + MAXPAGEBUTTONS - 1, totalPages);
+
+        if (endPage - startPage + 1 < MAXPAGEBUTTONS) {
+            startPage = Math.max(1, endPage - MAXPAGEBUTTONS + 1);
+        }
+
+        return PageResponse.<CategoryHierarchyDto>builder()
+                .data(categoryList)
+                .currentPage(page)
+                .totalPage(totalPages)
+                .startPage(startPage)
+                .endPage(endPage)
+                .totalElements(Long.valueOf(categories.size()))
+                .build();
     }
 
     @Caching(evict = {

@@ -36,8 +36,8 @@ public class AdminCategoryController {
      * @return 카테고리 목록 페이지
      */
     @GetMapping("/categories")
-    public String categoryList() {
-
+    public String categoryList(Model model, @RequestParam(defaultValue = "1") int page) {
+        model.addAttribute("categories", categoryService.getCategories(page));
         return "admin/category/adminCategoryList";
     }
 
@@ -115,7 +115,7 @@ public class AdminCategoryController {
      */
     @GetMapping("/categories/search")
     public String categorySearch(@RequestParam("name") String name,
-                                 @RequestParam int page, Model model) {
+                                 @RequestParam(defaultValue = "1") int page, Model model) {
         model.addAttribute("searchCategoriesPage", categoryService.getCategoriesByName(name, page));
         return "admin/category/adminSearchCategoryList";
     }
