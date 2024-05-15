@@ -14,7 +14,7 @@
         <p>쿠폰이 없습니다.</p>
     </div>
 
-    <div th:if="${not #lists.isEmpty(coupons.data)}" class="container mt-5">
+    <div th:if="${not #lists.isEmpty(coupons.data)}">
         <div class="row">
             <div th:each="coupon : ${coupons.data}" class="col-md-6">
                 <div class="card border-secondary mb-4">

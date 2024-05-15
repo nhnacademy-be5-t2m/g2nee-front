@@ -2,6 +2,8 @@ package com.t2m.g2nee.front.couponType.controller;
 
 import com.t2m.g2nee.front.couponType.dto.request.CouponTypeRequestDto;
 import com.t2m.g2nee.front.couponType.service.CouponTypeService;
+import com.t2m.g2nee.front.couponset.coupon.dto.request.CouponIssueDto;
+import com.t2m.g2nee.front.couponset.coupon.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +24,13 @@ import java.math.BigDecimal;
 @RequestMapping("/admin/couponType")
 public class CouponTypeController {
 
-    @Autowired
     private final CouponTypeService couponTypeService;
 
-    public CouponTypeController(CouponTypeService couponTypeService) {
+    private final CouponService couponService;
+
+    public CouponTypeController(CouponTypeService couponTypeService, CouponService couponService) {
         this.couponTypeService = couponTypeService;
+        this.couponService = couponService;
     }
 
     /**
@@ -120,5 +124,11 @@ public String CouponTypeCreateForm(){
         return "redirect:/admin/couponType";
     }
 
+
+    @PostMapping("/issue")
+    public String issueCoupon(@RequestParam Long couponTypeId){
+        couponService.issueCoupon(new CouponIssueDto(couponTypeId));
+        return "redirect:/admin/couponType";
+    }
 
 }
