@@ -32,7 +32,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentInfoDto getPayment(Long paymentId) {
-        return adaptor.getPayment(paymentId);
+    public PaymentInfoDto getPayment(Long orderId) {
+        return adaptor.getPayment(orderId);
     }
 }

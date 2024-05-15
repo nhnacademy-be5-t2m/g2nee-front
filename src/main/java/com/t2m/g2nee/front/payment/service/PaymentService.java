@@ -24,6 +24,6 @@ public interface PaymentService {
     /**
      * 하나의 결제
      */
-    PaymentInfoDto getPayment(Long paymentId);
+    PaymentInfoDto getPayment(Long orderId);
 
 }

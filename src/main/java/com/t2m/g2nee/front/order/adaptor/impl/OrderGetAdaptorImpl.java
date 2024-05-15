@@ -1,7 +1,10 @@
 package com.t2m.g2nee.front.order.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.order.adaptor.OrderGetAdaptor;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
+import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
@@ -98,18 +101,18 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long customerId, int page) {
+    public PageResponse<OrderForPaymentDto> getOrderListForMembers(Long customerId, int page) {
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
 
         String url = orderUrl + "/members/" + customerId + "/list?page=" + page;
-        ResponseEntity<PageResponse<OrderInfoDto.ListResponse>> orderListEntity
+        ResponseEntity<PageResponse<OrderForPaymentDto>> orderListEntity
                 = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 stringHttpEntity,
-                new ParameterizedTypeReference<PageResponse<OrderInfoDto.ListResponse>>() {
+                new ParameterizedTypeReference<PageResponse<OrderForPaymentDto>>() {
                 }
         );
         return orderListEntity.getBody();
@@ -153,5 +156,20 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
                 stateEntity,
                 String.class
         ).getBody();
+    }
+
+    @Override
+    public String getOrderName(Long orderId) {
+        String url = orderUrl + "/orderName/"+orderId;
+        HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<>() {
+                }
+        );
+        return responseEntity.getBody();
     }
 }

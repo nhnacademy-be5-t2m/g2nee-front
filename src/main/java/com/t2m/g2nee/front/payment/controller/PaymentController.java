@@ -18,10 +18,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -92,11 +92,6 @@ public class PaymentController {
         return "payment/pointPaySuccess";
     }
 
-    @GetMapping("/success")
-    public String successPayment() {
-        return "payment/paymentSuccess";
-    }
-
 
     /**
      * 결제 실패
@@ -110,5 +105,16 @@ public class PaymentController {
         model.addAttribute("message", message);
 
         return "payment/paymentFail";
+    }
+
+
+    /**
+     * 결제 취소
+     */
+    @PostMapping("/{paymentId}")
+    public String paymentCancel(@PathVariable("paymentId") Long paymentId,
+                                @RequestParam("orderId") Long orderId){
+        paymentService.requestCancelPayment(paymentId);
+        return "redirect:/mypage/order/"+orderId;
     }
 }

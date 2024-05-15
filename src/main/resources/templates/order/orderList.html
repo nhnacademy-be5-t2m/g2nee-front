@@ -16,29 +16,28 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
-            <th>주문 번호</th>
+            <th>주문 명</th>
             <th>주문 일자</th>
-            <th>고객 정보</th>
-            <th>총 가격</th>
-            <th>주문 상태</th>
-            <th>비고</th>
+            <th>주문 가격</th>
+            <th>상태</th>
+            <th></th>
         </tr>
         </thead>
 
         <!-- 주문 목록 -->
         <tbody>
         <tr th:each="order : ${orderPage.data}">
-            <td><a th:href="@{'/mypage/order/'+ ${order.orderId}}" th:text="${order.orderNumber}"></a></td>
+            <td th:text="${order.orderName}"></td>
             <td th:text="${order.orderDate}"></td>
-            <td th:text="${order.customerId}"></td>
-            <td th:text="${order.orderAmount}"></td>
-            <td th:text="${order.orderState.name()}"></td>
-            <td>
-                <button>반품 신청</button>
-            </td>
-        </tr>
+            <td th:text="${order.amount}"></td>
+            <td th:text="${order.orderState}"></td>
 
-        <!-- 추가 주문 목록은 이곳에 추가할 수 있습니다 -->
+            <td>
+                <form class="d-inline" th:action="${'/mypage/order/'+ order.orderId}">
+                    <button class="btn btn-sm btn-secondary" type="submit" th:text="상세보기"></button>
+                </form>
+            </td>
+         </tr>
 
         </tbody>
     </table>

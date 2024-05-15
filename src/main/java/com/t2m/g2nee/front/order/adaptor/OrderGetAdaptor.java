@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.order.adaptor;
 
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
+import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
@@ -37,7 +38,7 @@ public interface OrderGetAdaptor {
      * @param customerId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
-    PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long customerId, int page);
+    PageResponse<OrderForPaymentDto> getOrderListForMembers(Long customerId, int page);
 
     /**
      * 전체 주문 목록 조회(Admin용)
@@ -58,5 +59,5 @@ public interface OrderGetAdaptor {
 
     void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest);
 
-
+    String getOrderName(Long orderId);
 }

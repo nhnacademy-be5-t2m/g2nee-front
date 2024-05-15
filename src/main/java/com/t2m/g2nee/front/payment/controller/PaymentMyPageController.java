@@ -9,6 +9,7 @@ import com.t2m.g2nee.front.payment.service.PaymentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,16 +38,4 @@ public class PaymentMyPageController {
         model.addAttribute("payments", paymentService.getPayments(memberId, page));
         return "mypage/paymentPage";
     }
-
-    /**
-     * 주문 id에 따른 결제 내역
-     */
-
-//    /**
-//     * 결제 취소
-//     */
-//    @PostMapping("/{paymentId}")
-//    public String paymentCancel(){
-//        return "";
-//    }
 }
