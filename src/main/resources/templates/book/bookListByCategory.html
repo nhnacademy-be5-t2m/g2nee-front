@@ -57,8 +57,8 @@
                                             <i class="fa fa-search"></i>
                                         </span>
                             <span class="input-group-text bg-transparent text-primary text-muted">
-                            <i class="fa-regular fa-hand-pointer fa-rotate-270"></i>
-                                <span th:text="' ' + '선택한 카테고리에 해당하는 책을 검색할 수 있습니다'"></span>
+                            <i class="fa-solid fa-left-long"></i>
+                                <span th:text="' 선택한 카테고리에 해당하는 책을 통합 검색할 수 있습니다'"></span>
                                    </span>
                         </div>
                     </div>
@@ -125,9 +125,9 @@
                                th:text="'외 ' + ${book.contributorRoleList.size() - 1} + '명'"></span>
                       </span>
                     <div class="d-flex justify-content-center">
-                        <h6 th:text="'₩' + ${book.salePrice}"></h6>
+                        <h6 th:text="'₩' + ${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></h6>
                         <h6 class="text-muted ml-2">
-                            <del th:text="'₩' + ${book.price}"></del>
+                            <del th:text="'₩' + ${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"></del>
                         </h6>
                     </div>
                     <div>
@@ -141,7 +141,7 @@
                           class="badge rounded-pill bg-dark" style="color: white; font-size: 1.1em;"
                           th:text="절판"></span>
                 </div>
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT'} or ${book.bookStatus.name() == 'OUTOFPRINT'}"
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT'} or ${book.bookStatus.name() == 'OUTOFPRINT'}"
                      class="card-footer d-flex justify-content-between bg-light border">
                     <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"

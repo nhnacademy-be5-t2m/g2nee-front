@@ -53,8 +53,8 @@ public class ReviewService {
         return reviewAdaptor.getReviews(bookId, page);
     }
 
-    public ReviewDto.Response getReview(Long memberId, Long bookId) {
+    public ReviewDto.Response getMemberReviews(Long memberId, Long bookId) {
 
-        return reviewAdaptor.getReview(memberId, bookId);
+        return reviewAdaptor.getMemberReviews(memberId, bookId);
     }
 }

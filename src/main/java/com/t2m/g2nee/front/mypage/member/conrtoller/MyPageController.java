@@ -4,14 +4,11 @@ import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
-import com.t2m.g2nee.front.member.dto.response.GradeResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
-import java.math.BigDecimal;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,6 +35,29 @@ public class MyPageController {
         memberService.quitMember(memberId);
         memberService.logout(response);
         return "redirect:/";
+    }
+
+
+    @Member
+    @GetMapping("/pointdetail/member")
+    public String getMemberPointDetail(Model model){
+
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+
+        PageResponse<PointResponseDto> pointPage = pointService.getMemberPointDetail(memberId);
+        Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
+        int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
+
+        model.addAttribute("pointPage",pointPage);
+        model.addAttribute("likesNum",likesNum);
+        model.addAttribute("cartItemNum",cartItemNum);
+        model.addAttribute("memberId",memberId);
+
+        return "mypage/pointPage";
     }
 
     /**

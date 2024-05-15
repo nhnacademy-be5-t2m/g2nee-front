@@ -25,6 +25,13 @@ public interface BookGetAdaptor {
     List<BookDto.ListResponse> getNewBooks();
 
     /**
+     * 주문량이 많은 6권을 조회하는 메서드
+     *
+     * @return List<BookDto.ListResponse>
+     */
+    List<BookDto.ListResponse> getBestseller();
+
+    /**
      * 검색어를 통해 책을 검색하여 조회하는 메서드
      *
      * @param memberId  회원 아이디

@@ -2,6 +2,13 @@ package com.t2m.g2nee.front.point.service;
 
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
+import com.t2m.g2nee.front.point.adaptor.PointAdaptor;
+import com.t2m.g2nee.front.point.dto.PointResponseDto;
+import com.t2m.g2nee.front.utils.PageResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class PointService {
     private final RestTemplate restTemplate;
+    private final PointAdaptor pointAdaptor;
 
     @Value("${gatewayToShopUrl}")
     String gatewayToShopUrl;
@@ -36,5 +44,10 @@ public class PointService {
                 new HttpEntity<>(makeHttpHeaders()),
                 Integer.class
         ).getBody();
+    }
+
+    public PageResponse<PointResponseDto> getMemberPointDetail(Long memberId) {
+
+       return pointAdaptor.getMemberPointDetail(memberId);
     }
 }

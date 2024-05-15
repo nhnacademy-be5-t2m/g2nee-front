@@ -86,9 +86,10 @@ public class BookController {
      */
     @Member
     @GetMapping
-    public String getNewBooks(Model model) {
+    public String getShopMain(Model model) {
 
-        List<BookDto.ListResponse> bookList = bookGetService.getNewBooks();
+        List<BookDto.ListResponse> recentPublishedBookList = bookGetService.getNewBooks();
+        List<BookDto.ListResponse> bestsellerBookList = bookGetService.getBestseller();
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
@@ -99,7 +100,8 @@ public class BookController {
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
 
         model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("bookList", bookList);
+        model.addAttribute("recentPublishedBookList", recentPublishedBookList);
+        model.addAttribute("bestsellerBookList", bestsellerBookList);
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("cartItemNum", cartItemNum);
         model.addAttribute("memberId", memberId);
@@ -120,7 +122,7 @@ public class BookController {
                                   @RequestParam(defaultValue = "") String keyword,
                                   @RequestParam(defaultValue = "1") int page,
                                   @RequestParam(required = false) String sort,
-                                  @RequestParam String condition) {
+                                  @RequestParam(required = false) String condition) {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";

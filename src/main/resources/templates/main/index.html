@@ -51,7 +51,7 @@
             <!--            신간 출력-->
             <div class="col-lg-9">
                 <div class="row px-xl-5 pb-3">
-                    <div th:each="book : ${bookList}" class="col-lg-4 col-md-6 pb-1">
+                    <div th:each="book : ${recentPublishedBookList}" class="col-lg-4 col-md-6 pb-1">
                         <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px; height: 500px;">
                             <p class="text-right">Recent Published</p>
                             <a th:href="@{'/books/' + ${book.bookId}}"
@@ -62,8 +62,37 @@
                             </a>
                             <h5 th:text="${book.title}" class="mb-2 text-center"></h5>
                             <p class="text-muted mb-2 text-center">
-                                <span th:text="'$'+${book.salePrice}"></span>
-                                <span th:text="'$'+${book.price}"
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></span>
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"
+                                      style="color: gray; text-decoration: line-through;"></span>
+                            </p>
+                            <p style="text-align: center;"
+                               th:text="${book.publisherName} +' | ' + ${book.publishedDate}"></p>
+                            <div class="d-flex align-items-center justify-content-center mb-4 pt-2"
+                                 th:if="${book.bookStatus.name() == 'SOLDOUT'}">
+                                <span th:if="${book.bookStatus.name() == 'SOLDOUT'}" class="btn-primary px-4"
+                                      style="padding: 10px 20px; background-color:  #ff1616; color: white; font-size: 1.2em;">매진</span>
+                                <span th:if="${book.bookStatus.name() == 'OUTOFPRINT'}" class="btn-primary px-4"
+                                      style="padding: 10px 20px; background-color: #808080; color: white; font-size: 1.2em;">절판</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row px-xl-5 pb-3">
+                    <div th:each="book : ${bestsellerBookList}" class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px; height: 500px;">
+                            <p class="text-right">Best Seller</p>
+                            <a th:href="@{'/books/' + ${book.bookId}}"
+                               class="cat-img position-relative overflow-hidden mb-3"
+                               style="flex: 1; display: flex; justify-content: center; align-items: center; max-width: 100%; max-height: 300px;">
+                                <img class="img-fluid" th:src="${book.thumbnailImageUrl}" alt="thumbnail"
+                                     style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            </a>
+                            <h5 th:text="${book.title}" class="mb-2 text-center"></h5>
+                            <p class="text-muted mb-2 text-center">
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></span>
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"
                                       style="color: gray; text-decoration: line-through;"></span>
                             </p>
                             <p style="text-align: center;"

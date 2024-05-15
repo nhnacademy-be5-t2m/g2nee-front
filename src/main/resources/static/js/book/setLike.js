@@ -40,10 +40,26 @@ document.querySelectorAll('#likes').forEach(button => {
                 if (liked) {
                     icon.className = "fa-solid fa-heart text-primary";
                     likesNum++;
+                    Swal.fire({
+                        position: "middle",
+                        icon: "success",
+                        title: "해당 책을 찜했습니다.",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                 } else {
                     icon.className = "fa-regular fa-heart text-primary";
                     likesNum--;
+                    Swal.fire({
+                        position: "middle",
+                        icon: "success",
+                        title: "해당 책의 찜을 해제했습니다.",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                 }
+
+
                 badge.textContent = likesNum;
             })
             .catch(error => {

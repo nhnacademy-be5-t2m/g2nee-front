@@ -21,7 +21,7 @@ public interface ReviewAdaptor {
      */
     void updateReview(ReviewDto.Request request);
 
-    ReviewDto.Response getReview(Long memberId, Long bookId);
+    ReviewDto.Response getMemberReviews(Long memberId, Long bookId);
 
     /**
      * 책 리뷰를 조회하는 메서드

@@ -75,7 +75,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
     }
 
     @Override
-    public ReviewDto.Response getReview(Long memberId, Long bookId) {
+    public ReviewDto.Response getMemberReviews(Long memberId, Long bookId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
