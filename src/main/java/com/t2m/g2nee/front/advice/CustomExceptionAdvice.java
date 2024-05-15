@@ -4,6 +4,7 @@ import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 
+import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
@@ -106,6 +107,7 @@ public class CustomExceptionAdvice {
      * @return
      */
     @ExceptionHandler(HttpClientErrorException.class)
+    @Member
     public String invalidToken(Model model) {
         model.addAttribute("tokenError", "로그인 유효시간이 지났습니다. 재로그인 해주세요.");
         ServletRequestAttributes servletRequestAttributes =
