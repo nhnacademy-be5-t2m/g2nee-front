@@ -122,7 +122,7 @@ public class BookController {
                                   @RequestParam(defaultValue = "") String keyword,
                                   @RequestParam(defaultValue = "1") int page,
                                   @RequestParam(required = false) String sort,
-                                  @RequestParam String condition) {
+                                  @RequestParam(required = false) String condition) {
 
         if (!StringUtils.hasText(sort)) {
             sort = "viewCount";
