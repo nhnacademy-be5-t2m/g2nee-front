@@ -22,9 +22,11 @@ public class HttpHeadersUtil {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
 
-        Cookie accessToken = CookieUtil.findCookie(JwtUtil.ACCESS_COOKIE);
-        if (Objects.nonNull(accessToken)) {
-            httpHeaders.add("Authorization", JwtUtil.TOKEN_TYPE + accessToken.getValue());
+        Cookie accessTokenCookie = CookieUtil.findCookie(JwtUtil.ACCESS_COOKIE);
+        if (Objects.nonNull(accessTokenCookie)) {
+            int lastDotIndex = accessTokenCookie.getValue().lastIndexOf('.');
+            String accessToken = accessTokenCookie.getValue().substring(0, lastDotIndex);
+            httpHeaders.add("Authorization", JwtUtil.TOKEN_TYPE + accessToken);
         }
         return httpHeaders;
     }
