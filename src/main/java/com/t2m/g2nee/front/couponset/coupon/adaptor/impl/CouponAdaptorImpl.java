@@ -38,6 +38,7 @@ public class CouponAdaptorImpl implements CouponAdaptor {
     public void initUrl() {
         baseUrl = gateway + "/coupon";
     }
+
     @Override
     public CouponInfoDto requestIssueCoupon(CouponIssueDto request) {
         HttpEntity<CouponIssueDto> entity = new HttpEntity<>(request, makeHttpHeaders());
@@ -63,7 +64,7 @@ public class CouponAdaptorImpl implements CouponAdaptor {
     @Override
     public PageResponse<CouponInfoDto> getMyCoupons(Long customerId, int page) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+customerId)
+                .path("/" + customerId)
                 .queryParam("page", page)
                 .build();
 
@@ -77,7 +78,7 @@ public class CouponAdaptorImpl implements CouponAdaptor {
     @Override
     public PageResponse<CouponInfoDto> getBookCoupons(Long customerId, Long bookId, int page) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+customerId)
+                .path("/" + customerId)
                 .path("/book")
                 .queryParam("bookId", bookId)
                 .queryParam("page", page)
@@ -93,7 +94,7 @@ public class CouponAdaptorImpl implements CouponAdaptor {
     @Override
     public PageResponse<CouponInfoDto> getTotalCoupons(Long customerId, int page) {
         UriComponents url = UriComponentsBuilder.fromUriString(baseUrl)
-                .path("/"+customerId)
+                .path("/" + customerId)
                 .path("/all")
                 .queryParam("page", page)
                 .build();

@@ -46,12 +46,24 @@
                         Sort by
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=viewCount&condition=' + condition : '?sort=viewCount&condition=' + condition}}">인기도 순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=publishedDate&condition=' +condition : '?sort=publisherDate&condition=' + condition}}">출간일 순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceAsc&condition=' +condition : '?sort=salePriceAsc&condition=' + condition}}">가격 낮은 순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceDesc&condition=' + condition : '?sort=salePriceDesc&condition=' + condition}}">가격 높은 순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=score&condition=' + condition : '?sort=score&condition=' + condition}}">평점 순</a>
-                        <a class="dropdown-item" th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=score&condition=' + condition : '?sort=score&condition=' + condition}}">리뷰 순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=viewCount&condition=' + condition : '?sort=viewCount&condition=' + condition}}">인기도
+                            순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=publishedDate&condition=' +condition : '?sort=publisherDate&condition=' + condition}}">출간일
+                            순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceAsc&condition=' +condition : '?sort=salePriceAsc&condition=' + condition}}">가격
+                            낮은 순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=salePriceDesc&condition=' + condition : '?sort=salePriceDesc&condition=' + condition}}">가격
+                            높은 순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=score&condition=' + condition : '?sort=score&condition=' + condition}}">평점
+                            순</a>
+                        <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=score&condition=' + condition : '?sort=score&condition=' + condition}}">리뷰
+                            순</a>
                     </div>
                 </div>
                 <!-- sort 버튼 end -->
@@ -125,21 +137,26 @@
             <nav aria-label="...">
                 <ul class="pagination row justify-content-center">
                     <li>
-                        <a class="page-link" th:href="@{'?page=1'+'&sort=' +${sort}+'&condition='+${condition} +${keyword != null ? '&keyword=' + keyword : ''}}">≪</a>
+                        <a class="page-link"
+                           th:href="@{'?page=1'+'&sort=' +${sort}+'&condition='+${condition} +${keyword != null ? '&keyword=' + keyword : ''}}">≪</a>
                     </li>
                     <li th:class="${bookPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                        <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage - 1 } +'&sort=' +${sort} +'&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}"><</a>
+                        <a class="page-link"
+                           th:href="@{'?page=' + ${bookPage.currentPage - 1 } +'&sort=' +${sort} +'&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}"><</a>
                     </li>
                     <li th:each="pageButton : ${#numbers.sequence(bookPage.startPage,bookPage.endPage)}"
                         th:class="${bookPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
-                        <a class="page-link" th:href="@{'?page=' + ${pageButton}+'&sort=' +${sort} + '&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}"
+                        <a class="page-link"
+                           th:href="@{'?page=' + ${pageButton}+'&sort=' +${sort} + '&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}"
                            th:text="${pageButton}"></a>
                     </li>
                     <li th:class="${bookPage.currentPage == bookPage.totalPage ? 'page-item disabled' : 'page-item'}">
-                        <a class="page-link" th:href="@{'?page=' + ${bookPage.currentPage + 1}+'&sort=' +${sort} + '&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}">></a>
+                        <a class="page-link"
+                           th:href="@{'?page=' + ${bookPage.currentPage + 1}+'&sort=' +${sort} + '&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}">></a>
                     </li>
                     <li>
-                        <a class="page-link" th:href="@{'?page=' + ${bookPage.totalPage}+'&sort=' +${sort} + '&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}">≫</a>
+                        <a class="page-link"
+                           th:href="@{'?page=' + ${bookPage.totalPage}+'&sort=' +${sort} + '&condition='+${condition} + ${keyword != null ? '&keyword=' + keyword : ''}}">≫</a>
                     </li>
                 </ul>
             </nav>

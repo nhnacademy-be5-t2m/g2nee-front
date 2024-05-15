@@ -122,7 +122,8 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
      * @return PageResponse<BookDto.ListResponse>
      */
     @Override
-    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort,String condition) {
+    public PageResponse<BookDto.ListResponse> getBooksBySearch(int page, Long memberId, String keyword, String sort,
+                                                               String condition) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

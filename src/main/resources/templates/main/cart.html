@@ -38,8 +38,10 @@
                     </tr>
                     </tbody>
                     <tbody class="align-middle" th:unless="${cartList == null || cartList.size() == 0}">
-                    <tr id="bookItem" th:each="cart : ${cartList}">
+                    <input type="hidden" id="cartSize" th:value="${cartList.size()}">
+                    <tr class="cartList" id="bookItem" th:id="${cartStat.index}" th:each="cart : ${cartList}">
                         <td id="cart" style="text-align: left;">
+                            <input type="hidden" id="cartBookId" th:value="${cart.bookId}">
                             <img th:src="${cart.imageUrl}" alt="image" style="width: 70px;">
                             <a th:href="@{'/books/' + ${cart.bookId}}">
                             <span style="margin-left: 30px" th:text="${cart.title} + ' - ' + ${cart.engTitle}">
@@ -55,7 +57,8 @@
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input class="cartQuantity form-control form-control-sm bg-secondary text-center" id="quantity" th:data-bookId="${cart.bookId}"
+                                <input class="cartQuantity form-control form-control-sm bg-secondary text-center"
+                                       id="quantity" th:data-bookId="${cart.bookId}"
                                        th:value="${cart.quantity}"
                                        type="text"
                                        value="1">
@@ -99,14 +102,14 @@
                       th:text="'합계 : ₩ ' + ${totalPrice + deliveryPolicy.deliveryFee}"></span>
             </div>
         </div>
-        <button id="orderButton" class="btn btn-block btn-primary">주문하기</button>
+        <button id="orderButton" onclick="checkStockAndBuy()" class="btn btn-block btn-primary">주문하기</button>
     </div>
 
 </div>
 </body>
 </html>
-<script src="/static/js/cart/checkStock.js">
-</script>
+<script src="/static/js/cart/checkStock.js"></script>
+<script src="/static/js/order/order.js"></script>
 <script th:inline="javascript">
 
     let cartItemNum = [[${cartItemNum}]];

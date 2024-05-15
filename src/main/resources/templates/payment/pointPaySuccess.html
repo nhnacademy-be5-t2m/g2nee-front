@@ -9,14 +9,38 @@
 
 <body>
 <div layout:fragment="content">
-    <h4>결제 성공</h4>
-    <p><span th:text="${paymentSuccess.orderName}"></span> 결제가 성공적으로 완료되었습니다.</p>
-    <p>주문 번호: <span th:text="${paymentSuccess.orderNumber}"></span></p>
-    <h5><span th:text="${paymentSuccess.orderName}"></span></h5>
-    <p>결제 수단: <span th:text="${paymentSuccess.payType}"></span></p>
-    <p>결제 금액: <span th:text="${paymentSuccess.amount}"></span></p>
-    <p>승인 날짜: <span th:text="${paymentSuccess.paymentDate}"></span></p>
+    <h4 style="color:red">결제가 성공적으로 완료되었습니다.</h4>
+    <table class="table table-bordered table-hover">
+        <tbody>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">주문 번호</th>
+            <td>
+                <span id="orderNumber" th:text="${paymentSuccess.orderNumber}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">결제 수단</th>
+            <td>
+                <span th:text="${paymentSuccess.payType}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">결제 금액</th>
+            <td>
+                <span th:text="${paymentSuccess.amount}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" for="receiverName" class="order-word" style="width: 20%">주문 완료 날짜</th>
+            <td>
+                <span th:text="${paymentSuccess.paymentDate}"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </br>
 </div>
 
 </body>
 </html>
+

@@ -8,10 +8,15 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- Libraries Stylesheet -->
     <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- Libraries Stylesheet -->
+    <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/static/css/order.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
 </head>
 <body>
-<div>
+<div style="margin:10px">
     <h3> 새 주소 등록 </h3>
     <table border="1" summary>
         <colgroup>
@@ -26,13 +31,14 @@
             <td style="display : flex">
                 <input class="text" id="alias" maxlength="20" required type="text"/>
             </td>
+        </tr>
         <tr>
             <th for="zipcode" scope="row">
                 우편번호
             </th>
             <td style="display : flex">
                 <input class="text" id="zipcode" readonly type="text"/>
-                <button class="postButton" onclick="postAddress()" type="button">우편번호 찾기</button>
+                <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
             </td>
         </tr>
         <tr>
@@ -56,8 +62,8 @@
                 기본 배송지 설정
             </th>
             <td style="display: flex; align-items: center;">
-                <input id="isDefaultYes" name="isDefault" type="radio" value="true"> 예
-                <input checked id="isDefaultNo" name="isDefault" type="radio" value="false"> 아니오
+                <input id="isDefaultYes" name="isDefault" type="radio" value="true" style="margin-left:10px"> 예
+                <input checked id="isDefaultNo" name="isDefault" type="radio" value="false" style="margin-left:10px"> 아니오
             </td>
 
         </tr>
@@ -70,3 +76,4 @@
 </div>
 </body>
 </html>
+
