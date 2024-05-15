@@ -125,9 +125,9 @@
                                th:text="'외 ' + ${book.contributorRoleList.size() - 1} + '명'"></span>
                       </span>
                     <div class="d-flex justify-content-center">
-                        <h6 th:text="'₩' + ${book.salePrice}"></h6>
+                        <h6 th:text="'₩' + ${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></h6>
                         <h6 class="text-muted ml-2">
-                            <del th:text="'₩' + ${book.price}"></del>
+                            <del th:text="'₩' + ${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"></del>
                         </h6>
                     </div>
                     <div>
