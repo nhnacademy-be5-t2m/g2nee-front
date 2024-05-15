@@ -53,9 +53,8 @@ public class MyPageController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        GradeResponseDto gradeInfo= memberService.getTotalAmountForGrade(memberId);
+        GradeResponseDto gradeInfo= memberService.changeGrade(memberId);
         model.addAttribute("gradeInfo",gradeInfo);
-        return "mypage/grade";
+        return "mypage/gradePage";
     }
-
 }

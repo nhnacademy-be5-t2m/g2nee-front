@@ -9,8 +9,26 @@
 
 <body>
 <div layout:fragment="content">
-    <h5></h5>
-    <p></p>
+    <h4>
+        <span th:text="'고객님은 현재 '"></span>
+        <span style="color:red" th:text="${gradeInfo.grade}"></span>
+        <span th:text="' 회원 입니다.'"></span>
+        <span th:text="'  (지난 3개월 주문총액 : '"></span>
+        <span th:text="${gradeInfo.totalAmount}"></span>
+        <span th:text="'원)'"></span>
+    </h4>
+
+    </br>
+    <h4>등급별 포인트 적립</h4>
+    <div style="border: 1px dotted; border-radius:5px; padding:10px;">
+        <p style="color:black">100,000 미만             : [일반회원] 1% 적립</p>
+        <p style="color:black">100,000 이상 200,000 미만 : [로얄회원] 2% 적립</p>
+        <p style="color:black">200,000 이상 300,000 미만 : [골드회원] 3% 적립</p>
+        <p style="color:black">300,000 이상             : [플래티넘회원] 4% 적립</p>
+
+        <p style="color:grey">★ 지난 3개월간의 배송완료된 주문을 기준으로 주문금액 측정해 등급이 산정됩니다.</p>
+        <p style="color:grey">★ 주문시 순수금액을 기준으로 포인트가 적립됩니다.</p>
+    </div>
 </div>
 
 </body>

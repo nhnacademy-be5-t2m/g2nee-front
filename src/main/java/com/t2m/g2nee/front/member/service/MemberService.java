@@ -242,10 +242,16 @@ public class MemberService {
         return response.getBody();
     }
 
-    public GradeResponseDto getTotalAmountForGrade(Long memberId){
+    /**
+     * 회원의 grade 정보를 가져오는 메소드
+     *
+     * @param memberId 정보를 가져올 memberId
+     * @return grade의 정보
+     */
+    public GradeResponseDto changeGrade(Long memberId){
         ResponseEntity<GradeResponseDto> response = restTemplate.exchange(
-                gatewayToShopUrl + "/customer/orders/"+memberId,
-                HttpMethod.POST,
+                gatewayToShopUrl + "/member/getGrade/"+memberId,
+                HttpMethod.GET,
                 new HttpEntity<>(makeHttpHeaders()),
                 GradeResponseDto.class
         );
