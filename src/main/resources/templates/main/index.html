@@ -62,8 +62,8 @@
                             </a>
                             <h5 th:text="${book.title}" class="mb-2 text-center"></h5>
                             <p class="text-muted mb-2 text-center">
-                                <span th:text="'$'+${book.salePrice}"></span>
-                                <span th:text="'$'+${book.price}"
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></span>
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"
                                       style="color: gray; text-decoration: line-through;"></span>
                             </p>
                             <p style="text-align: center;"
@@ -91,8 +91,8 @@
                             </a>
                             <h5 th:text="${book.title}" class="mb-2 text-center"></h5>
                             <p class="text-muted mb-2 text-center">
-                                <span th:text="'$'+${book.salePrice}"></span>
-                                <span th:text="'$'+${book.price}"
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></span>
+                                <span th:text="'₩ '+${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"
                                       style="color: gray; text-decoration: line-through;"></span>
                             </p>
                             <p style="text-align: center;"

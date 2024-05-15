@@ -3,14 +3,79 @@
       layout:decorate="~{layouts/mypageLayout}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        table {
+            text-align: center;
+        }
+        .positive {
+            color: blue;
+        }
+        .negative {
+            color: red;
+        }
+    </style>
     <title>나의 포인트 내역</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
 <div layout:fragment="content">
-
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>
+                <i class="fa-regular fa-calendar"></i>
+                변동 날짜</th>
+            <th>
+                <i class="fa-solid fa-cash-register"></i>
+                포인트 변동 내역</th>
+            <th>
+                <i class="fa-solid fa-check"></i>
+                변동 사유</th>
+        </tr>
+        </thead>
+        <tbody th:each="point : ${pointPage.getData()}">
+        <tr>
+            <td>
+                <span th:text="${#temporals.format(point.getChangeDate(), 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </td>
+            <td>
+                <span th:class="${point.getPoint() >= 0 ? 'positive' : 'negative'}"
+                      th:text="${#numbers.formatInteger(point.getPoint(), 0, 'COMMA')}"></span>
+            </td>
+            <td>
+                <span th:text="${point.getReason().getName()}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <nav aria-label="...">
+            <ul class="pagination row justify-content-center">
+                <li>
+                    <a class="page-link" th:href="@{'?page=1'}">≪</a>
+                </li>
+                <li th:class="${pointPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${pointPage.currentPage - 1 }}"><</a>
+                </li>
+                <li th:class="${pointPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}"
+                    th:each="pageButton : ${#numbers.sequence(pointPage.startPage,pointPage.endPage)}">
+                    <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+                </li>
+                <li th:class="${pointPage.currentPage == pointPage.totalPage ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${pointPage.currentPage + 1}}">></a>
+                </li>
+                <li>
+                    <a class="page-link" th:href="@{'?page=' + ${pointPage.totalPage}}">≫</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
+
 
 </body>
 </html>
