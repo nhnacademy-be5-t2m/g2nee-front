@@ -47,6 +47,15 @@ public interface CategoryService {
     PageResponse<CategoryInfoDto> getCategoriesByName(String categoryName, int page);
 
     /**
+     * 카테고리를 페이징하여 반환합니다.
+     *
+     * @param categoryName
+     * @param page
+     * @return
+     */
+    PageResponse<CategoryHierarchyDto> getCategories(int page);
+
+    /**
      * 카테고리를 생성합니다.
      *
      * @param request

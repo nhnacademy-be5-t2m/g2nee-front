@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/mypageLayout}">
+      layout:decorate="~{layouts/categoryLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <title> 주문 조회</title>
+    <title>결제 완료</title>
+    <link href="/static/css/signup.css" rel="stylesheet">
 </head>
 
 <body>
 <div layout:fragment="content">
-
     <h4><strong th:text="${orderName}" class="card-title"></strong>
     </h4>
     <br/><br/>
@@ -37,13 +36,7 @@
                     <td th:text="${order.orderState.name}"></td>
 
                     <td>
-                            <span th:if="${order.orderState.name == '결제대기'}">
-                                <form class="d-inline" th:action="@{'/order/cancel?orderId='+${order.orderId}}"
-                                      th:method="post">
-                                    <button type="submit" class="btn btn-sm btn-secondary">결제 취소</button>
-                                </form>
-                            </span>
-                        <span th:if="${order.orderState.name == '배송준비'}">
+                            <span th:if="${order.orderState.name == '배송준비'}">
                                 <form class="d-inline"
                                       th:action="@{'/order/payment/' + ${payment.paymentId}+'?orderId='+${order.orderId}}"
                                       th:method="post">
@@ -119,10 +112,10 @@
         <br/><br/>
 
         <div>
-            <a href="javascript:history.back();" style="color: blue;">이전 페이지로 돌아가기</a>
+            <a href="/books" style="color: blue;">메인 화면으로</a>
         </div>
     </div>
-
 </div>
+
 </body>
 </html>

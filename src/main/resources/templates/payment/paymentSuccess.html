@@ -11,19 +11,23 @@
     <link href="/static/css/signup.css" rel="stylesheet">
     <script>
         function closeWindowAndRedirect() {
+            let orderId = document.querySelector('#orderId').value
+
             // 새 창 닫기
             window.close();
 
             // 메인 창이 존재하고 닫히지 않은 경우
             if (window.opener && !window.opener.closed) {
-                window.opener.location.href = "/books"; // 메인 창을 /books로 리다이렉트
+                window.opener.location.href = "/order/" + orderId;
             }
         }
 
         // 새 창이 닫힐 때도 같은 동작을 수행
         window.addEventListener('beforeunload', function (e) {
+            let orderId = document.querySelector('#orderId').value
+
             if (window.opener && !window.opener.closed) {
-                window.opener.location.href = "/books"; // 메인 창 리다이렉트
+                window.opener.location.href = "/order/" + orderId;//주문 상세로 이동
             }
         });
 
@@ -44,6 +48,7 @@
 </head>
 
 <body>
+<input type="hidden" id="orderId" th:value="${paymentSuccess.orderId}"/>
 <div style="margin:20px">
     <h4 style="color:red">결제가 성공적으로 완료되었습니다.</h4>
     <table class="table table-bordered table-hover">
@@ -74,6 +79,7 @@
         </tr>
         </tbody>
     </table>
+
     <div sec:authorize="isAnonymous()">
         <h6 style="color:red">주문번호와 설정하신 비밀번호로 비회원 주문조회가 가능합니다.</h6>
         <button class="btn btn-primary" onclick="copyToClipboard()">주문번호 복사</button>

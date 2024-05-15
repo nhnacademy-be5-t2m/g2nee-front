@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.order.service;
 
 import com.t2m.g2nee.front.order.adaptor.OrderGetAdaptor;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
+import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
@@ -62,7 +63,7 @@ public class OrderGetService {
      * @param memberId 회원Id
      * @return PageResponse<OrderInfoResponseDto
      */
-    public PageResponse<OrderInfoDto.ListResponse> getOrderListForMembers(Long memberId, int page) {
+    public PageResponse<OrderForPaymentDto> getOrderListForMembers(Long memberId, int page) {
         return orderGetAdaptor.getOrderListForMembers(memberId, page);
     }
 
@@ -89,6 +90,10 @@ public class OrderGetService {
 
     public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest) {
         orderGetAdaptor.changeOrderStatus(orderId, stateRequest);
+    }
+
+    public String getOrderName(Long orderId) {
+        return orderGetAdaptor.getOrderName(orderId);
     }
 
 }

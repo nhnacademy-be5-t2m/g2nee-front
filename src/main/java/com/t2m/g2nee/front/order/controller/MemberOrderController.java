@@ -7,8 +7,10 @@ import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
+import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
+import com.t2m.g2nee.front.payment.service.PaymentService;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MemberOrderController {
     private final OrderGetService orderGetService;
     private final MemberAspect memberAspect;
+    private final PaymentService paymentService;
 
 
     @GetMapping("/list")
@@ -41,8 +44,9 @@ public class MemberOrderController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        PageResponse<OrderInfoDto.ListResponse> orderPage = orderGetService.getOrderListForMembers(memberId, page);
+        PageResponse<OrderForPaymentDto> orderPage = orderGetService.getOrderListForMembers(memberId, page);
         model.addAttribute("orderPage", orderPage);
+
 
         return "order/orderList";
     }
@@ -50,15 +54,10 @@ public class MemberOrderController {
     @GetMapping("/{orderId}")
     @Member
     public String getOrder(@PathVariable("orderId") Long orderId, Model model) {
-        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
-        Long memberId = null;
-        if (member != null) {
-            memberId = member.getMemberId();
-        }
-        OrderInfoDto.Response orderResponse = orderGetService.getOrderById(orderId);
-        model.addAttribute("order", orderResponse);
-        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
-        model.addAttribute("orderDetails", detailResponse);
+        model.addAttribute("order", orderGetService.getOrderById(orderId));
+        model.addAttribute("orderDetails", orderGetService.getOrderDetailListByOrderId(orderId));
+        model.addAttribute("orderName", orderGetService.getOrderName(orderId));
+        model.addAttribute("payment", paymentService.getPayment(orderId));
 
         return "order/orderDetail";
     }

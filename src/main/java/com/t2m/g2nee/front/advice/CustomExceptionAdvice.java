@@ -108,8 +108,8 @@ public class CustomExceptionAdvice {
      */
     @ExceptionHandler(HttpClientErrorException.class)
     @Member
-    public String invalidToken(HttpClientErrorException ex,Model model) {
-        if(ex.getRawStatusCode()==401){
+    public String invalidToken(HttpClientErrorException ex, Model model) {
+        if (ex.getRawStatusCode() == 401) {
             model.addAttribute("tokenError", "재로그인이 필요합니다.");
             ServletRequestAttributes servletRequestAttributes =
                     (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
