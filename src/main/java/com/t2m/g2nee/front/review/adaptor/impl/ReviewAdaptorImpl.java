@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.review.adaptor.impl;
 import com.t2m.g2nee.front.review.adaptor.ReviewAdaptor;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -75,7 +76,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
     }
 
     @Override
-    public ReviewDto.Response getReview(Long memberId, Long bookId) {
+    public ReviewDto.Response getMemberReviews(Long memberId, Long bookId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 

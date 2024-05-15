@@ -2,6 +2,7 @@ package com.t2m.g2nee.front.review.adaptor;
 
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ReviewAdaptor {
@@ -21,7 +22,7 @@ public interface ReviewAdaptor {
      */
     void updateReview(ReviewDto.Request request);
 
-    ReviewDto.Response getReview(Long memberId, Long bookId);
+    ReviewDto.Response getMemberReviews(Long memberId, Long bookId);
 
     /**
      * 책 리뷰를 조회하는 메서드
