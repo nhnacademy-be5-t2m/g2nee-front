@@ -6,12 +6,12 @@ import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.GradeResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
 import com.t2m.g2nee.front.point.dto.PointResponseDto;
 import com.t2m.g2nee.front.point.service.PointService;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,9 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MyPageController {
     private final MemberService memberService;
-    private final MemberAspect memberAspect;
     private final PointService pointService;
-
+    private final MemberAspect memberAspect;
 
     /**
      * 회원 탈퇴 후 메인으로 이동하는 메소드
@@ -69,4 +68,21 @@ public class MyPageController {
         return "mypage/pointPage";
     }
 
+    /**
+     * 회원 등급을 보여주는 페이지
+     *
+     * @return 마이페이지의 회원페이지
+     */
+    @GetMapping("/grade")
+    @Member
+    public String getGrade(Model model) {
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+        GradeResponseDto gradeInfo= memberService.changeGrade(memberId);
+        model.addAttribute("gradeInfo",gradeInfo);
+        return "mypage/gradePage";
+    }
 }

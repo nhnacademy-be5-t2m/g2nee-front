@@ -13,7 +13,7 @@
     <form method="post" onsubmit="return signupSubmit()" th:action th:object="${signupForm}">
         <h3>정보입력</h3>
         <div>
-            <table border="1" summary>
+            <table class="table table-bordered table-hover">
                 <colgroup>
                     <col style="width:150px;">
                     <col style="width:1000px;">
@@ -136,8 +136,9 @@
         </div>
 
         <div style="margin-bottom: 20px;"></div>
-        <button type="submit">회원가입</button>
-
+        <div style="text-align: center;">
+            <button class="btn btn-primary" type="submit">회원가입</button>
+        </div>
     </form>
 
 
