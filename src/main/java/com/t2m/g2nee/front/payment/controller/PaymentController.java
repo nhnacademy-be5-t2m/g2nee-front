@@ -1,6 +1,7 @@
 package com.t2m.g2nee.front.payment.controller;
 
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
@@ -72,6 +73,7 @@ public class PaymentController {
             memberId = member.getMemberId().toString();
         }
         shoppingCartService.deleteCart(memberId, httpServletResponse);
+        deleteCookie(httpServletResponse, "cart");
         return "payment/paymentSuccess";
     }
 
@@ -88,6 +90,7 @@ public class PaymentController {
             memberId = member.getMemberId().toString();
         }
         shoppingCartService.deleteCart(memberId, httpServletResponse);
+        deleteCookie(httpServletResponse, "cart");
         return "payment/pointPaySuccess";
     }
 
