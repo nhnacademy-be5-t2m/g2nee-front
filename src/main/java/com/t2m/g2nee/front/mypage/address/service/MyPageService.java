@@ -84,22 +84,6 @@ public class MyPageService {
     }
 
     /**
-     * 배송지를 수정해주는 메소드
-     *
-     * @param addressRequestDto 수정할 배송지의 정보
-     * @return shop으로 보낸 요청의 응답
-     */
-    public ResponseEntity<AddressResponseDto> modifyAddress(Long addressId, AddressRequestDto addressRequestDto) {
-        HttpEntity<AddressRequestDto> requestEntity = new HttpEntity<>(addressRequestDto, makeHttpHeaders());
-        return restTemplate.exchange(
-                gatewayToShopUrl + "/address/modify/" + addressId,
-                HttpMethod.PATCH,
-                requestEntity,
-                AddressResponseDto.class
-        );
-    }
-
-    /**
      * 배송지 정보를 삭제해주는 메소드
      *
      * @param addressId 삭제할 배송지의 id

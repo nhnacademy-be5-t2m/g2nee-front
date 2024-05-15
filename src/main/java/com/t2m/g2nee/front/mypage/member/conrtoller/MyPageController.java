@@ -48,7 +48,7 @@ public class MyPageController {
 
     @Member
     @GetMapping("/pointdetail/member")
-    public String getMemberPointDetail(Model model){
+    public String getMemberPointDetail(Model model) {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
@@ -59,11 +59,13 @@ public class MyPageController {
         PageResponse<PointResponseDto> pointPage = pointService.getMemberPointDetail(memberId);
         Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
+        Integer totalPoint = pointService.getTotalPoint(memberId);
 
-        model.addAttribute("pointPage",pointPage);
-        model.addAttribute("likesNum",likesNum);
-        model.addAttribute("cartItemNum",cartItemNum);
-        model.addAttribute("memberId",memberId);
+        model.addAttribute("pointPage", pointPage);
+        model.addAttribute("likesNum", likesNum);
+        model.addAttribute("cartItemNum", cartItemNum);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("totalPoint", totalPoint);
 
         return "mypage/pointPage";
     }
@@ -81,8 +83,8 @@ public class MyPageController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        GradeResponseDto gradeInfo= memberService.changeGrade(memberId);
-        model.addAttribute("gradeInfo",gradeInfo);
+        GradeResponseDto gradeInfo = memberService.changeGrade(memberId);
+        model.addAttribute("gradeInfo", gradeInfo);
         return "mypage/gradePage";
     }
 }

@@ -70,11 +70,13 @@
                 <hr/>
                 <h4>
                     <i class="fa-solid fa-coins"></i>
-                    <span class="font-weight-semi-bold mb-4" th:text="'판매가 : ₩' + ${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></span>
+                    <span class="font-weight-semi-bold mb-4"
+                          th:text="'판매가 : ₩' + ${#numbers.formatInteger(book.getSalePrice(), 0, 'COMMA')}"></span>
                 </h4>
                 <h5>
                     <i class="fa-solid fa-coins" style="color: gray; text-decoration: line-through;"></i>
-                    <span th:text="'정가 : ₩' + ${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}" style="color: gray; text-decoration: line-through;"></span>
+                    <span th:text="'정가 : ₩' + ${#numbers.formatInteger(book.getPrice(), 0, 'COMMA')}"
+                          style="color: gray; text-decoration: line-through;"></span>
                 </h5>
                 <hr/>
 

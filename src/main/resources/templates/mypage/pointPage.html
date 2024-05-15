@@ -10,9 +10,11 @@
         table {
             text-align: center;
         }
+
         .positive {
             color: blue;
         }
+
         .negative {
             color: red;
         }
@@ -23,18 +25,25 @@
 
 <body>
 <div layout:fragment="content">
+    <h4>
+        <span th:text="'잔여 포인트 : '"></span>
+        <span style="color:blue" th:text="${totalPoint}"></span>
+    </h4>
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>
                 <i class="fa-regular fa-calendar"></i>
-                변동 날짜</th>
+                변동 날짜
+            </th>
             <th>
                 <i class="fa-solid fa-cash-register"></i>
-                포인트 변동 내역</th>
+                포인트 변동 내역
+            </th>
             <th>
                 <i class="fa-solid fa-check"></i>
-                변동 사유</th>
+                변동 사유
+            </th>
         </tr>
         </thead>
         <tbody th:each="point : ${pointPage.getData()}">

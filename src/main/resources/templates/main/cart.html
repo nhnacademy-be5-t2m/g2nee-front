@@ -48,7 +48,8 @@
                             </span>
                             </a>
                         </td>
-                        <td class="align-middle" th:text="'₩ ' + ${#numbers.formatInteger(cart.getPrice(), 0, 'COMMA')}"></td>
+                        <td class="align-middle"
+                            th:text="'₩ ' + ${#numbers.formatInteger(cart.getPrice(), 0, 'COMMA')}"></td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
@@ -70,7 +71,8 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle" th:text="'₩ ' + ${#numbers.formatInteger(cart.getPrice() * cart.getQuantity(), 0, 'COMMA')}"></td>
+                        <td class="align-middle"
+                            th:text="'₩ ' + ${#numbers.formatInteger(cart.getPrice() * cart.getQuantity(), 0, 'COMMA')}"></td>
                         <td class="align-middle">
                             <button id="deleteButton" th:data-bookId="${cart.bookId}"
                                     class="btn btn-sm btn-primary"><i

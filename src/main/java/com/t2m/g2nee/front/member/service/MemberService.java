@@ -18,7 +18,6 @@ import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
-import java.math.BigDecimal;
 import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -248,9 +247,9 @@ public class MemberService {
      * @param memberId 정보를 가져올 memberId
      * @return grade의 정보
      */
-    public GradeResponseDto changeGrade(Long memberId){
+    public GradeResponseDto changeGrade(Long memberId) {
         ResponseEntity<GradeResponseDto> response = restTemplate.exchange(
-                gatewayToShopUrl + "/member/getGrade/"+memberId,
+                gatewayToShopUrl + "/member/getGrade/" + memberId,
                 HttpMethod.GET,
                 new HttpEntity<>(makeHttpHeaders()),
                 GradeResponseDto.class

@@ -5,10 +5,6 @@ import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 import com.t2m.g2nee.front.point.adaptor.PointAdaptor;
 import com.t2m.g2nee.front.point.dto.PointResponseDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -32,7 +28,7 @@ public class PointService {
     String gatewayToShopUrl;
 
     /**
-     * meberId의 포인트 합계를 불러오는 메소드
+     * memberId의 포인트 합계를 불러오는 메소드
      *
      * @param memberId 포인트 정보를 불러올 memberId
      * @return member의 포인트 합계
@@ -48,6 +44,6 @@ public class PointService {
 
     public PageResponse<PointResponseDto> getMemberPointDetail(Long memberId) {
 
-       return pointAdaptor.getMemberPointDetail(memberId);
+        return pointAdaptor.getMemberPointDetail(memberId);
     }
 }

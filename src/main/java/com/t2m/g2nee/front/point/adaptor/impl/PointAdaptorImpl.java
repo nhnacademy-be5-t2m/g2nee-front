@@ -3,7 +3,6 @@ package com.t2m.g2nee.front.point.adaptor.impl;
 import com.t2m.g2nee.front.point.adaptor.PointAdaptor;
 import com.t2m.g2nee.front.point.dto.PointResponseDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

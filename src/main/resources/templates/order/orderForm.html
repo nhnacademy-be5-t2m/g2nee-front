@@ -125,7 +125,8 @@
                 <td style="display : flex">
                     <input type="text" id="zipcode" class="order-text"
                            style="width:100px" readonly/>
-                    <button class="btn btn-primary order-text" onclick="postAddress()" style="padding-top:1px">우편번호 찾기</button>
+                    <button class="btn btn-primary order-text" onclick="postAddress()" style="padding-top:1px">우편번호 찾기
+                    </button>
                 </td>
             </tr>
             <tr>
@@ -239,7 +240,7 @@
             <td sec:authorize="isAuthenticated()">
                 <input type="hidden" id="couponId">
                 <span th:text="'- '+${book.getCouponSale()}"></span>
-                <button class="btn btn-primary"onclick="couponPopUp()"
+                <button class="btn btn-primary" onclick="couponPopUp()"
                         style="margin-left:10px;padding-top:3px">쿠폰 사용
                 </button>
             </td>
@@ -257,7 +258,7 @@
                 <span>+</span>
                 <span type="number" class="packagePrice" id="packagePrice" th:text="${book.getPackagePrice()}"></span>
                 <input class="packageId" type="hidden" id="packageId" th:value="${book.getPackageId()}">
-                <button class="btn btn-primary"onclick="packagePopUp(this)"
+                <button class="btn btn-primary" onclick="packagePopUp(this)"
                         style="margin-left:10px; padding-top:3px;">포장 하기
                 </button>
             </td>
