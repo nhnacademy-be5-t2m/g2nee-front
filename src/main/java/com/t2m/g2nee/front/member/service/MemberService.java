@@ -10,12 +10,15 @@ import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
 import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
+import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
+import com.t2m.g2nee.front.member.dto.response.GradeResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
 import com.t2m.g2nee.front.utils.CookieUtil;
+import java.math.BigDecimal;
 import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -239,11 +242,13 @@ public class MemberService {
         return response.getBody();
     }
 
-    /**
-     * 회원의 지난 3달 주문금액을 받아오는 메소드
-     *
-     * @param memberId 탈퇴할 회원의 memberId
-     */
-    public BigDecimal getTotalAmountForGrade(Long memberId) {
+    public GradeResponseDto getTotalAmountForGrade(Long memberId){
+        ResponseEntity<GradeResponseDto> response = restTemplate.exchange(
+                gatewayToShopUrl + "/customer/orders/"+memberId,
+                HttpMethod.POST,
+                new HttpEntity<>(makeHttpHeaders()),
+                GradeResponseDto.class
+        );
+        return response.getBody();
     }
 }

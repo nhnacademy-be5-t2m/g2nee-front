@@ -4,6 +4,7 @@ import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.GradeResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
 import java.math.BigDecimal;
@@ -52,8 +53,8 @@ public class MyPageController {
         if (member != null) {
             memberId = member.getMemberId();
         }
-        BigDecimal totalAmount= memberService.getTotalAmountForGrade(memberId);
-        memberService.logout(response);
+        GradeResponseDto gradeInfo= memberService.getTotalAmountForGrade(memberId);
+        model.addAttribute("gradeInfo",gradeInfo);
         return "mypage/grade";
     }
 
