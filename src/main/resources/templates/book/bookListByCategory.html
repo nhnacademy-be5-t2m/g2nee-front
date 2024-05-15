@@ -141,7 +141,7 @@
                           class="badge rounded-pill bg-dark" style="color: white; font-size: 1.1em;"
                           th:text="절판"></span>
                 </div>
-                <div th:if="${book.bookStatus.name() == 'SOLDOUT'} or ${book.bookStatus.name() == 'OUTOFPRINT'}"
+                <div th:unless="${book.bookStatus.name() == 'SOLDOUT'} or ${book.bookStatus.name() == 'OUTOFPRINT'}"
                      class="card-footer d-flex justify-content-between bg-light border">
                     <a id="likes" class="btn btn-sm text-dark p-0" th:data-bookId="${book.bookId}"
                        th:data-liked="${book.isLiked().toString()}" th:data-likesNum="${likesNum}"
