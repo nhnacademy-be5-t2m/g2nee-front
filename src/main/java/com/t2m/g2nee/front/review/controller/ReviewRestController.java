@@ -8,6 +8,7 @@ import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.review.service.ReviewService;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class ReviewRestController {
             memberId = member.getMemberId();
         }
 
-        ReviewDto.Response review = reviewService.getReview(memberId, bookId);
+        ReviewDto.Response review = reviewService.getMemberReviews(memberId, bookId);
 
         if (review == null) {
             return ResponseEntity.ok().body(true);

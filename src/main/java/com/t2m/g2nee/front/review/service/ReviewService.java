@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.review.service;
 import com.t2m.g2nee.front.review.adaptor.ReviewAdaptor;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.utils.PageResponse;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,8 +54,8 @@ public class ReviewService {
         return reviewAdaptor.getReviews(bookId, page);
     }
 
-    public ReviewDto.Response getReview(Long memberId, Long bookId) {
+    public ReviewDto.Response getMemberReviews(Long memberId, Long bookId) {
 
-        return reviewAdaptor.getReview(memberId, bookId);
+        return reviewAdaptor.getMemberReviews(memberId, bookId);
     }
 }
