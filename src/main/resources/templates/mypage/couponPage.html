@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/mypageLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>나의 쿠폰</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div th:if="${#lists.isEmpty(coupons.data)}">
+        <p>쿠폰이 없습니다.</p>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(coupons.data)}" class="container mt-5">
+        <div class="row">
+            <div th:each="coupon : ${coupons.data}" class="col-md-6">
+                <div class="card border-secondary mb-4">
+                    <div class="card-body">
+                        <h5><strong th:text="${coupon.name}" class="card-title"></strong>
+                            <span th:text="${coupon.status == '미사용' ? '사용가능' : (coupon.status == '사용' ? '사용완료' : '만료')}"
+                                  th:class="${coupon.status == '미사용' ? 'text-success' : (coupon.status == '사용' ? 'text-danger' : 'text-danger')}">
+                                </span>
+                        </h5>
+
+                        <p>
+                            <strong th:text="${coupon.discount} +' '+ ${coupon.type == '금액쿠폰' ? '원' : '%'}" class="card-text"> </strong>
+                        </p>
+
+                        <p th:text="'최대 '+${coupon.maximumDiscount}+' 원 할인'" class="card-text"></p>
+                        <p th:text="${coupon.minimumOrderAmount}+' 원 이상 구매시 사용 가능'" class="card-text"></p>
+
+                        <p th:text="${coupon.issuedDate}+' ~ '+${coupon.expirationDate}" class="card-text"></p>
+                        <p th:text="${coupon.target}" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br/><br/>
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${coupons.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${coupons.currentPage - 1 }}"><</a>
+            </li>
+            <li th:class="${coupons.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(coupons.startPage,coupons.endPage)}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${coupons.currentPage == coupons.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${coupons.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${coupons.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+
+</body>
+</html>
