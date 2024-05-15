@@ -9,7 +9,6 @@ import com.t2m.g2nee.front.payment.service.PaymentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,7 +27,7 @@ public class PaymentMyPageController {
 
     @Member
     @GetMapping
-    public String getMypayments(@RequestParam(defaultValue = "1") int page, Model model){
+    public String getMypayments(@RequestParam(defaultValue = "1") int page, Model model) {
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;
         if (member != null) {

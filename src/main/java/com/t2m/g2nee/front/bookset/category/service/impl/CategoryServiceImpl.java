@@ -118,7 +118,8 @@ public class CategoryServiceImpl implements CategoryService {
         int totalCategories = categories.size();
         int totalPages = (int) Math.ceil((double) totalCategories / pageSize);
 
-        int startPage = Math.max(1, Math.min(totalPages - MAXPAGEBUTTONS + 1, Math.max(1, page - (MAXPAGEBUTTONS / 2))));
+        int startPage =
+                Math.max(1, Math.min(totalPages - MAXPAGEBUTTONS + 1, Math.max(1, page - (MAXPAGEBUTTONS / 2))));
         int endPage = Math.min(startPage + MAXPAGEBUTTONS - 1, totalPages);
 
         if (endPage - startPage + 1 < MAXPAGEBUTTONS) {

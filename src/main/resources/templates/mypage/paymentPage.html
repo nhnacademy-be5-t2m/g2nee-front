@@ -33,7 +33,8 @@
                         <p th:text="'결제 수단: '+${payment.payType}" class="card-text"></p>
 
                         <p>
-                            <strong th:text="${payment.amount == 0 ? '전액 포인트 결제' : payment.amount + ' 원'}" class="card-text"> </strong>
+                            <strong th:text="${payment.amount == 0 ? '전액 포인트 결제' : payment.amount + ' 원'}"
+                                    class="card-text"> </strong>
                         </p>
 
                         <p>

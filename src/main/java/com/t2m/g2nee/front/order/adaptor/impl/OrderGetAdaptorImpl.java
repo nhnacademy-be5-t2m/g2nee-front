@@ -160,7 +160,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
 
     @Override
     public String getOrderName(Long orderId) {
-        String url = orderUrl + "/orderName/"+orderId;
+        String url = orderUrl + "/orderName/" + orderId;
         HttpEntity<String> entity = new HttpEntity<>(makeHttpHeaders());
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(

@@ -26,7 +26,8 @@
                         </h5>
 
                         <p>
-                            <strong th:text="${coupon.discount} +' '+ ${coupon.type == '금액쿠폰' ? '원' : '%'}" class="card-text"> </strong>
+                            <strong th:text="${coupon.discount} +' '+ ${coupon.type == '금액쿠폰' ? '원' : '%'}"
+                                    class="card-text"> </strong>
                         </p>
 
                         <p th:text="'최대 '+${coupon.maximumDiscount}+' 원 할인'" class="card-text"></p>

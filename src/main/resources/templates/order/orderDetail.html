@@ -18,44 +18,45 @@
         <div class="row px-xl-5">
             <table class="table table-bordered table-hover">
                 <thead>
-                    <tr>
-                        <th>주문 번호</th>
-                        <th>주문 일자</th>
-                        <th>배송 희망 일자</th>
-                        <th>주문 금액</th>
-                        <th>주문 상태</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>주문 번호</th>
+                    <th>주문 일자</th>
+                    <th>배송 희망 일자</th>
+                    <th>주문 금액</th>
+                    <th>주문 상태</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td th:text="${order.orderNumber}"></td>
-                        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:text="${#temporals.format(order.deliveryWishDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${order.orderAmount}"></td>
-                        <td th:text="${order.orderState.name}"></td>
+                <tr>
+                    <td th:text="${order.orderNumber}"></td>
+                    <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(order.deliveryWishDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${order.orderAmount}"></td>
+                    <td th:text="${order.orderState.name}"></td>
 
-                        <td>
+                    <td>
                             <span th:if="${order.orderState.name == '결제대기'}">
                                 <form class="d-inline" th:action="@{'/order/cancel?orderId='+${order.orderId}}"
                                       th:method="post">
-                                    <button type="submit" class="btn btn-sm btn-secondary" >결제 취소</button>
+                                    <button type="submit" class="btn btn-sm btn-secondary">결제 취소</button>
                                 </form>
                             </span>
-                            <span th:if="${order.orderState.name == '배송준비'}">
-                                <form class="d-inline" th:action="@{'/order/payment/' + ${payment.paymentId}+'?orderId='+${order.orderId}}"
+                        <span th:if="${order.orderState.name == '배송준비'}">
+                                <form class="d-inline"
+                                      th:action="@{'/order/payment/' + ${payment.paymentId}+'?orderId='+${order.orderId}}"
                                       th:method="post">
-                                    <button type="submit" class="btn btn-sm btn-secondary" >결제 취소</button>
+                                    <button type="submit" class="btn btn-sm btn-secondary">결제 취소</button>
                                 </form>
                             </span>
-                            <span th:if="${order.orderState.name == '배송중' or order.orderState.name == '배송완료'}">
+                        <span th:if="${order.orderState.name == '배송중' or order.orderState.name == '배송완료'}">
                                 <form class="d-inline" th:action="@{}">
-                                    <button type="submit" class="btn btn-sm btn-secondary" >반품 신청</button>
+                                    <button type="submit" class="btn btn-sm btn-secondary">반품 신청</button>
                                 </form>
                             </span>
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
@@ -77,15 +78,15 @@
                         </thead>
 
                         <tbody>
-                            <tr th:each="orderDetail : ${orderDetails}">
-                                <td th:text="${orderDetail.bookName}"></td>
-                                <td th:text="${orderDetail.quantity}"></td>
-                                <td th:text="${orderDetail.packageName}"></td>
-                                <td th:text="${orderDetail.couponName} == null or orderDetail.couponName == '' ? '없음' : orderDetail.couponName"></td>
-                                <td th:text="${orderDetail.price}"></td>
-                                <td th:text="${orderDetail.isCancelled ? '주문 취소' : '정상 주문'}"
-                                    th:style="${orderDetail.isCancelled ? 'color: red;' : 'color: green;'}"></td>
-                            </tr>
+                        <tr th:each="orderDetail : ${orderDetails}">
+                            <td th:text="${orderDetail.bookName}"></td>
+                            <td th:text="${orderDetail.quantity}"></td>
+                            <td th:text="${orderDetail.packageName}"></td>
+                            <td th:text="${orderDetail.couponName} == null or orderDetail.couponName == '' ? '없음' : orderDetail.couponName"></td>
+                            <td th:text="${orderDetail.price}"></td>
+                            <td th:text="${orderDetail.isCancelled ? '주문 취소' : '정상 주문'}"
+                                th:style="${orderDetail.isCancelled ? 'color: red;' : 'color: green;'}"></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -110,7 +111,8 @@
             <p th:text="'결제 일시: '+${payment?.paymentDate}"></p>
             <p th:text="${payment?.payType eq 'point - 포인트결제' ? '결제 수단: 포인트결제' : '결제 수단: ' + payment?.payType}"></p>
             <p>
-                <strong th:text="'결제 금액: '+${payment?.amount == 0 ? '전액 포인트 결제' : payment?.amount + ' 원'}" class="card-text"> </strong>
+                <strong th:text="'결제 금액: '+${payment?.amount == 0 ? '전액 포인트 결제' : payment?.amount + ' 원'}"
+                        class="card-text"> </strong>
             </p>
         </div>
 

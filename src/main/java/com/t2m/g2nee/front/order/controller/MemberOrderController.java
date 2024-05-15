@@ -36,7 +36,6 @@ public class MemberOrderController {
     private final PaymentService paymentService;
 
 
-
     @GetMapping("/list")
     @Member
     public String orderList(Model model, @RequestParam(required = false, defaultValue = "1") int page) {

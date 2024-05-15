@@ -48,6 +48,7 @@ public interface CategoryService {
 
     /**
      * 카테고리를 페이징하여 반환합니다.
+     *
      * @param categoryName
      * @param page
      * @return

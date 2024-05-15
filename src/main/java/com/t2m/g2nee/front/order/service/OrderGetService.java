@@ -92,7 +92,7 @@ public class OrderGetService {
         orderGetAdaptor.changeOrderStatus(orderId, stateRequest);
     }
 
-    public String getOrderName(Long orderId){
+    public String getOrderName(Long orderId) {
         return orderGetAdaptor.getOrderName(orderId);
     }
 

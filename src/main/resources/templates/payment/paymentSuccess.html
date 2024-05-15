@@ -18,7 +18,7 @@
 
             // 메인 창이 존재하고 닫히지 않은 경우
             if (window.opener && !window.opener.closed) {
-                window.opener.location.href = "/order/"+orderId;
+                window.opener.location.href = "/order/" + orderId;
             }
         }
 
@@ -27,7 +27,7 @@
             let orderId = document.querySelector('#orderId').value
 
             if (window.opener && !window.opener.closed) {
-                window.opener.location.href = "/order/"+orderId;//주문 상세로 이동
+                window.opener.location.href = "/order/" + orderId;//주문 상세로 이동
             }
         });
 

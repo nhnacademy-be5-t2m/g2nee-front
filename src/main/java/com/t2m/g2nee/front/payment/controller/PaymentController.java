@@ -116,8 +116,8 @@ public class PaymentController {
      */
     @PostMapping("/{paymentId}")
     public String paymentCancel(@PathVariable("paymentId") Long paymentId,
-                                @RequestParam("orderId") Long orderId){
+                                @RequestParam("orderId") Long orderId) {
         paymentService.requestCancelPayment(paymentId);
-        return "redirect:/mypage/order/"+orderId;
+        return "redirect:/mypage/order/" + orderId;
     }
 }

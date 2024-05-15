@@ -26,7 +26,8 @@ public class CouponMyPageController {
 
     /**
      * 자신이 가진 모든 쿠폰을 리턴
-     * @param page 현재 페이지
+     *
+     * @param page  현재 페이지
      * @param model 모델
      * @return 내 쿠폰 목록
      */
