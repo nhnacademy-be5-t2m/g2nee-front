@@ -10,38 +10,40 @@
 
 <body>
 <div layout:fragment="content">
+        <!-- Shop Detail Start -->
+        <div class="container-fluid py-5" style="max-width: 500px;">
+            <form>
+                <div>
+                    <table class="table table-bordered table-hover" style="width:100%">
+                        <colgroup>
+                            <col style="width:70px;">
+                            <col style="width:150px;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th class="word" for="username" scope="row">아이디</th>
+                            <td style="display : flex">
+                                <input class="text" id="username" name="username" placeholder="아이디" type="text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="word" for="password" scope="row">비밀번호</th>
+                            <td style="display : flex">
+                                <input class="text" id="password" name="password" placeholder="비밀번호" type="password"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <!-- Shop Detail Start -->
-    <div class="container-fluid py-5">
-        <form>
-            <div>
-                <table border="1" summary>
-                    <colgroup>
-                        <col style="width:150px;">
-                        <col style="width:300px;">
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                        <th class="word" for="username" scope="row">아이디</th>
-                        <td style="display : flex">
-                            <input class="text" id="username" name="username" placeholder="아이디" type="text"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="word" for="password" scope="row">비밀번호</th>
-                        <td style="display : flex">
-                            <input class="text" id="password" name="password" placeholder="비밀번호" type="password"/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div style="margin-bottom: 20px;"></div>
+                <div style="text-align: center;">
+                    <button  type="button" class="btn btn-primary" onclick="loginSubmit()">로그인</button>
+                </div>
+            </form>
+        </div>
+        <!-- Shop Detail End -->
 
-            <div style="margin-bottom: 20px;"></div>
-            <button onclick="loginSubmit()" type="button">로그인</button>
-        </form>
-    </div>
-    <!-- Shop Detail End -->
     <script src="/static/js/member/login.js"></script>
 </div>
 

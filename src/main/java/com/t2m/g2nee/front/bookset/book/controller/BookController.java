@@ -256,7 +256,7 @@ public class BookController {
         model.addAttribute("likesNum", likesNum);
         model.addAttribute("cartItemNum", cartItemNum);
 
-        return "/mypage/bookLikePage";
+        return "mypage/bookLikePage";
 
     }
 
