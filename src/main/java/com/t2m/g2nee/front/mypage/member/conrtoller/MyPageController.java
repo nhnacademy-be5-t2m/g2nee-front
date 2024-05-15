@@ -37,4 +37,22 @@ public class MyPageController {
         return "redirect:/";
     }
 
+    /**
+     * 마이페이지에서 포인트를 확인하는 메소드
+     *
+     * @return 포인트내역 페이지
+     */
+    @GetMapping("/point")
+    @Member
+    public String pointPage() {
+        //TODO : 포인트 내역을 불러와 뿌리기
+        MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+        Long memberId = null;
+        if (member != null) {
+            memberId = member.getMemberId();
+        }
+
+        return "mypage/pointPage";
+    }
+
 }

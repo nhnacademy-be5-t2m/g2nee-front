@@ -3,7 +3,6 @@ package com.t2m.g2nee.front.review.service;
 import com.t2m.g2nee.front.review.adaptor.ReviewAdaptor;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

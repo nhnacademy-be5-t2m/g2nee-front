@@ -88,6 +88,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
     /**
      * 주문량이 많은 6개의 책을 조회하는 메서드
+     *
      * @return List<BookDto.ListResponse>
      */
     @Override
