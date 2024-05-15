@@ -87,6 +87,32 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
     }
 
     /**
+     * 주문량이 많은 6개의 책을 조회하는 메서드
+     * @return List<BookDto.ListResponse>
+     */
+    @Override
+    public List<BookDto.ListResponse> getBestseller() {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        String url = gatewayUrl + "/books/bestseller";
+        // 회원은 삭제된 책을 조회하지 못하게 필터링
+        return restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<List<BookDto.ListResponse>>() {
+                        }
+                ).getBody()
+                .stream()
+                .filter(book -> !book.getBookStatus().equals(BookDto.BookStatus.DELETED))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * 검색어를 통해 책을 검색하여 조회하는 메서드
      *
      * @param memberId 회원 아이디

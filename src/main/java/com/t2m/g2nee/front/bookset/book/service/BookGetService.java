@@ -132,4 +132,8 @@ public class BookGetService {
 
         return bookGetAdaptor.getMemberLikeBook(page,memberId);
     }
+
+    public List<BookDto.ListResponse> getBestseller(){
+        return  bookGetAdaptor.getBestseller();
+    }
 }
