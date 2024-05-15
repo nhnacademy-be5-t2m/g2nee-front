@@ -2,7 +2,6 @@ package com.t2m.g2nee.front.review.adaptor;
 
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.utils.PageResponse;
-import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ReviewAdaptor {
