@@ -1,14 +1,21 @@
 package com.t2m.g2nee.front.mypage.member.conrtoller;
 
+import static com.t2m.g2nee.front.aop.MemberAspect.CART_ITEM_NUM;
+import static com.t2m.g2nee.front.aop.MemberAspect.LIKE_NUM;
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
+import com.t2m.g2nee.front.member.dto.response.GradeResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.service.MemberService;
+import com.t2m.g2nee.front.point.dto.PointResponseDto;
+import com.t2m.g2nee.front.point.service.PointService;
+import com.t2m.g2nee.front.utils.PageResponse;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MyPageController {
     private final MemberService memberService;
+    private final PointService pointService;
     private final MemberAspect memberAspect;
 
     /**
