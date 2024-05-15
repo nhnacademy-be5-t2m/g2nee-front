@@ -3,6 +3,7 @@ package com.t2m.g2nee.front.bookset.book.controller;
 import static com.t2m.g2nee.front.aop.MemberAspect.CART_ITEM_NUM;
 import static com.t2m.g2nee.front.aop.MemberAspect.LIKE_NUM;
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
+import static com.t2m.g2nee.front.bookset.book.dto.BookDto.SearchCondition;
 
 import com.t2m.g2nee.front.annotation.Member;
 import com.t2m.g2nee.front.aop.MemberAspect;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import static com.t2m.g2nee.front.bookset.book.dto.BookDto.SearchCondition;
 
 /**
  * 책 관리 controller 클래스
@@ -135,7 +135,8 @@ public class BookController {
         }
         Long likesNum = (Long) memberAspect.getThreadLocal(LIKE_NUM);
         int cartItemNum = (int) memberAspect.getThreadLocal(CART_ITEM_NUM);
-        PageResponse<BookDto.ListResponse> bookPage = bookGetService.getBooksBySearch(page, memberId, keyword, sort, condition);
+        PageResponse<BookDto.ListResponse> bookPage =
+                bookGetService.getBooksBySearch(page, memberId, keyword, sort, condition);
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
@@ -239,7 +240,7 @@ public class BookController {
 
     @Member
     @GetMapping("/member/likes")
-    public String getMemberLikeBook(Model model,@RequestParam(defaultValue = "1") int page){
+    public String getMemberLikeBook(Model model, @RequestParam(defaultValue = "1") int page) {
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
         Long memberId = null;

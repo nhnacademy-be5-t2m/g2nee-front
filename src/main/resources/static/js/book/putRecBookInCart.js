@@ -7,7 +7,7 @@ document.querySelectorAll('#recBookCartButton').forEach(button => {
         var cartItemNumElement = document.querySelector('#cartItemNum');
 
         let quantity;
-        if(quantityElement === null){
+        if (quantityElement === null) {
             quantity = 1;
         } else {
             quantity = parseInt(quantityElement.value);
@@ -44,7 +44,6 @@ document.querySelectorAll('#recBookCartButton').forEach(button => {
                     showConfirmButton: false,
                     timer: 1500
                 })
-
             )
         cartItemNum += 1;
         cartItemNumElement.textContent = cartItemNum.toString();
