@@ -5,6 +5,7 @@
     <title>주소 등록 창</title>
     <link href="/static/css/signup.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- Libraries Stylesheet -->
     <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -16,32 +17,33 @@
 
 </head>
 <body>
-<div>
-    <h3> 새 주소 등록 </h3>
-    <table border="1" summary>
+<div style="margin:10px">
+    <h2 class="text-center">새 주소 등록</h2>
+    <table class="table table-bordered table-hover">
         <colgroup>
-            <col style="width:150px;">
-            <col style="width:450px;">
+            <col style="width:180px;">
+            <col style="width:420px;">
         </colgroup>
         <tbody>
         <tr>
-            <th for="alias" scope="row">
+            <th for="alias" class="text" scope="row">
                 주소별칭
             </th>
             <td style="display : flex">
                 <input class="text" id="alias" maxlength="20" required type="text"/>
             </td>
         <tr>
-            <th for="zipcode" scope="row">
+            <th for="zipcode" class="text" scope="row">
                 우편번호
             </th>
             <td style="display : flex">
                 <input class="text" id="zipcode" readonly type="text"/>
-                <button class="text" class="postButton" onclick="postAddress()" type="button">우편번호 찾기</button>
+                <button class="btn btn-primary postButton text" onclick="postAddress()" style="padding-top:1px"
+                        th:text="'우편번호 찾기'"></button>
             </td>
         </tr>
         <tr>
-            <th for="address" scope="row">
+            <th for="address" class="text" scope="row">
                 주소
             </th>
             <td style="display : flex">
@@ -49,7 +51,7 @@
             </td>
         </tr>
         <tr>
-            <th for="detail" scope="row">
+            <th for="detail" class="text" scope="row">
                 상세주소
             </th>
             <td style="display : flex">
@@ -57,12 +59,13 @@
             </td>
         </tr>
         <tr>
-            <th for="isDefault" scope="row">
+            <th for="isDefault" class="text" scope="row">
                 기본 배송지 설정
             </th>
             <td style="display: flex; align-items: center;">
-                <input id="isDefaultYes" name="isDefault" type="radio" value="true"> 예
-                <input checked id="isDefaultNo" name="isDefault" type="radio" value="false"> 아니오
+                <input style="margin-left:10px;" id="isDefaultYes" name="isDefault" type="radio" value="true"> 예
+                <input checked id="isDefaultNo" name="isDefault" type="radio" style="margin-left:10px;" value="false">
+                아니오
             </td>
 
         </tr>
@@ -70,7 +73,9 @@
     </table>
 
     <div style="margin-bottom: 20px;"></div>
-    <button class="btn btn-primary" onclick="saveAddressButton()">등록</button>
+    <div style="text-align: center;">
+        <button class="btn btn-primary" onclick="saveAddressButton()">주소 등록</button>
+    </div>
     <script src="/static/js/mypage/address.js"></script>
 </div>
 </body>

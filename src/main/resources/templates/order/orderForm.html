@@ -125,7 +125,8 @@
                 <td style="display : flex">
                     <input type="text" id="zipcode" class="order-text"
                            style="width:100px" readonly/>
-                    <button type="button" class="postButton" onclick="postAddress()">우편번호 찾기</button>
+                    <button class="btn btn-primary order-text" onclick="postAddress()" style="padding-top:1px">우편번호 찾기
+                    </button>
                 </td>
             </tr>
             <tr>
@@ -239,8 +240,8 @@
             <td sec:authorize="isAuthenticated()">
                 <input type="hidden" id="couponId">
                 <span th:text="'- '+${book.getCouponSale()}"></span>
-                <button onclick="couponPopUp()"
-                        style="margin-left:10px">쿠폰 사용
+                <button class="btn btn-primary" onclick="couponPopUp()"
+                        style="margin-left:10px;padding-top:3px">쿠폰 사용
                 </button>
             </td>
             <td>
@@ -257,8 +258,8 @@
                 <span>+</span>
                 <span type="number" class="packagePrice" id="packagePrice" th:text="${book.getPackagePrice()}"></span>
                 <input class="packageId" type="hidden" id="packageId" th:value="${book.getPackageId()}">
-                <button onclick="packagePopUp(this)"
-                        style="margin-left:10px">포장 하기
+                <button class="btn btn-primary" onclick="packagePopUp(this)"
+                        style="margin-left:10px; padding-top:3px;">포장 하기
                 </button>
             </td>
         </tr>
@@ -296,8 +297,8 @@
                     <span type="text">-</span>
                     <span id="totalCouponSale" th:text="${totalCouponSale}"></span>
                     <span type="hidden" id="totalCouponId"></span>
-                    <button type="button" onclick="fullCouponPopUp()"
-                            style="margin-left:15px">쿠폰 사용
+                    <button class="btn btn-primary" type="button" onclick="fullCouponPopUp()"
+                            style="margin-left:15px; padding-top:3px;">쿠폰 사용
                     </button>
                 </td>
             </tr>
@@ -308,7 +309,7 @@
                 <span>+</span>
                 <span id="deliveryFee" th:text="${deliveryFee}"></span>
                 <span style="color:grey; margin-left:10px"
-                      th:text="${freeDeliveryStandard} + '원 이상 주문시 배송비 무료(포장값 제외 결제금액기준)'"></span>
+                      th:text="'['+${freeDeliveryStandard} + '원 이상 주문시 배송비 무료(포장값 제외 결제금액기준)]'"></span>
             </td>
             <tr sec:authorize="isAuthenticated()">
                 <th scope="row" for="name" class="order-word" style="width: 15%">포인트 할인</th>
@@ -334,8 +335,9 @@
             </tbody>
         </table>
     </div>
-    <button type="button" class="btn btn-primary px-3" onclick="submitOrderForm()">결제 하기</button>
-
+    <div style="text-align: center;">
+        <button type="button" class="btn btn-primary px-3" onclick="submitOrderForm()">결제 하기</button>
+    </div>
     <script src="/static/js/order/order.js"></script>
 </div>
 </body>

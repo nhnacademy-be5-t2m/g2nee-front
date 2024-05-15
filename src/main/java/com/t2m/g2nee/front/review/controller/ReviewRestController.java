@@ -40,7 +40,7 @@ public class ReviewRestController {
             memberId = member.getMemberId();
         }
 
-        ReviewDto.Response review = reviewService.getReview(memberId, bookId);
+        ReviewDto.Response review = reviewService.getMemberReviews(memberId, bookId);
 
         if (review == null) {
             return ResponseEntity.ok().body(true);

@@ -10,15 +10,14 @@
 
 <body>
 <div layout:fragment="content">
-
     <!-- Shop Detail Start -->
-    <div class="container-fluid py-5">
+    <div class="container-fluid py-5" style="max-width: 500px;">
         <form>
             <div>
-                <table border="1" summary>
+                <table class="table table-bordered table-hover" style="width:100%">
                     <colgroup>
+                        <col style="width:70px;">
                         <col style="width:150px;">
-                        <col style="width:300px;">
                     </colgroup>
                     <tbody>
                     <tr>
@@ -38,10 +37,13 @@
             </div>
 
             <div style="margin-bottom: 20px;"></div>
-            <button onclick="loginSubmit()" type="button">로그인</button>
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-primary" onclick="loginSubmit()">로그인</button>
+            </div>
         </form>
     </div>
     <!-- Shop Detail End -->
+
     <script src="/static/js/member/login.js"></script>
 </div>
 

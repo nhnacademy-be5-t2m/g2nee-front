@@ -12,6 +12,7 @@ import com.t2m.g2nee.front.config.dto.MemberInfoDto;
 import com.t2m.g2nee.front.member.dto.request.MemberLoginRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignUpNonMemberRequestDto;
 import com.t2m.g2nee.front.member.dto.request.SignupMemberRequestDto;
+import com.t2m.g2nee.front.member.dto.response.GradeResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.member.dto.response.MemberResponse;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
@@ -236,6 +237,22 @@ public class MemberService {
                 HttpMethod.POST,
                 requestEntity,
                 Long.class
+        );
+        return response.getBody();
+    }
+
+    /**
+     * 회원의 grade 정보를 가져오는 메소드
+     *
+     * @param memberId 정보를 가져올 memberId
+     * @return grade의 정보
+     */
+    public GradeResponseDto changeGrade(Long memberId) {
+        ResponseEntity<GradeResponseDto> response = restTemplate.exchange(
+                gatewayToShopUrl + "/member/getGrade/" + memberId,
+                HttpMethod.GET,
+                new HttpEntity<>(makeHttpHeaders()),
+                GradeResponseDto.class
         );
         return response.getBody();
     }
