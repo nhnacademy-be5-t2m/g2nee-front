@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/mypageLayout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>결제 내역</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div th:if="${#lists.isEmpty(payments.data)}">
+        <p>결제 내역이 없습니다.</p>
+    </div>
+
+
+    <div th:if="${not #lists.isEmpty(payments.data)}" class="container mt-5">
+        <div class="row">
+            <div th:each="payment : ${payments.data}" class="col-md-6">
+                <div class="card border-secondary mb-4">
+                    <div class="card-body">
+                        <p th:text="'주문 번호: ' + ${payment.orderNumber}" class="card-text"></p>
+
+                        <h5><strong th:text="${payment.orderName}" class="card-title"></strong>
+                            <span th:text="${payment.payStatus}"
+                                  th:class="${payment.payStatus == '결제완료' ? 'text-success' : 'text-danger'}">
+                                </span>
+                        </h5>
+
+
+                        <p th:text="'결제 일시: '+${payment.paymentDate}" class="card-text"></p>
+                        <p th:text="'결제 수단: '+${payment.payType}" class="card-text"></p>
+
+                        <p>
+                            <strong th:text="${payment.amount == 0 ? '전액 포인트 결제' : payment.amount + ' 원'}" class="card-text"> </strong>
+                        </p>
+
+                        <p>
+                            <a th:href="@{'/mypage/order/'+${payment.orderId}}" class="btn btn-primary">주문 상세</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/><br/>
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${payments.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${payments.currentPage - 1 }}"><</a>
+            </li>
+            <li th:class="${payments.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(payments.startPage,payments.endPage)}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${payments.currentPage == payments.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${payments.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${payments.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>
