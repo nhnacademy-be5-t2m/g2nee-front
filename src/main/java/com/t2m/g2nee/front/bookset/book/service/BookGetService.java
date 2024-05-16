@@ -132,10 +132,11 @@ public class BookGetService {
 
     /**
      * 가격이 변동된 책 리스트를 조회
+     *
      * @param bookList 책 리스트
      * @return List<BookDto.ListResponse>
      */
-    public List<BookDto.ListResponse> getModifiedPriceBook(List<BookDto.ListResponse> bookList){
+    public List<BookDto.ListResponse> getModifiedPriceBook(List<BookDto.ListResponse> bookList) {
 
         List<Long> bookIdList = bookList.stream().map(BookDto.ListResponse::getBookId).collect(Collectors.toList());
         List<BookDto.ListResponse> bookPriceList = bookGetAdaptor.getBookForCheck(bookIdList);

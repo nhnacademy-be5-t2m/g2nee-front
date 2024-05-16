@@ -264,7 +264,7 @@ public class MemberService {
      */
     public String getCustomerPassword(Long customerId) {
         return restTemplate.exchange(
-                gatewayToShopUrl + "/customer/getPassword/"+customerId,
+                gatewayToShopUrl + "/customer/getPassword/" + customerId,
                 HttpMethod.GET,
                 new HttpEntity<>(makeHttpHeaders()),
                 String.class

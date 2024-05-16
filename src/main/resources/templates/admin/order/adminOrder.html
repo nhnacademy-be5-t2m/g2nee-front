@@ -41,18 +41,11 @@
             <td th:text="${order.orderDate}"></td>
             <td th:text="${order.customerName}"></td>
             <td th:text="${order.orderAmount}"></td>
+            <td th:text="${order.orderState.getName()}"></td>
             <td>
-                <form th:action="'@{/admin/orders/status}' + '${order.orderId}'">
-                    <select id="orderStateSelect" name="orderState" th:method="patch">
-                        <option th:each="orderState : ${orderStates}"
-                                th:value="${orderState}" th:text="${orderState.getName()}"
-                                th:selected="${order.orderState.name() == orderState}"></option>
-                    </select>
-                </form>
-            </td>
-            <td>
-                <input type="hidden" name="page" th:value="${orderPage.currentPage}">
-                <button type="submit" class="btn btn-primary">상태 변경</button>
+                <div th:if="${order.orderState.getName()}=='배송준비'">
+                    <a th:href="@{'/admin/orders/status/' + ${order.orderId}}" class="btn btn-primary">배송처리</a>
+                </div>
             </td>
         </tr>
 

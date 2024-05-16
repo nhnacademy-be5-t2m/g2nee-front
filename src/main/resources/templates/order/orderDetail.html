@@ -37,12 +37,6 @@
                     <td th:text="${order.orderState.name}"></td>
 
                     <td>
-                            <span th:if="${order.orderState.name == '결제대기'}">
-                                <form class="d-inline" th:action="@{'/order/cancel?orderId='+${order.orderId}}"
-                                      th:method="post">
-                                    <button type="submit" class="btn btn-sm btn-secondary">결제 취소</button>
-                                </form>
-                            </span>
                         <span th:if="${order.orderState.name == '배송준비'}">
                                 <form class="d-inline"
                                       th:action="@{'/order/payment/' + ${payment.paymentId}+'?orderId='+${order.orderId}}"
@@ -50,11 +44,11 @@
                                     <button type="submit" class="btn btn-sm btn-secondary">결제 취소</button>
                                 </form>
                             </span>
-                        <span th:if="${order.orderState.name == '배송중' or order.orderState.name == '배송완료'}">
-                                <form class="d-inline" th:action="@{}">
-                                    <button type="submit" class="btn btn-sm btn-secondary">반품 신청</button>
-                                </form>
-                            </span>
+                        <span th:if="${order.orderState.name == '배송중' || order.orderState.name == '배송완료'}">
+                            <form class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-secondary">반품 신청</button>
+                            </form>
+                        </span>
                     </td>
                 </tr>
                 </tbody>

@@ -1,4 +1,4 @@
-async function nonmemberOrder(){
+async function nonmemberOrder() {
     let orderId = document.querySelector('#orderId').value;
     let password = document.querySelector('#password').value;
 
@@ -18,11 +18,11 @@ async function nonmemberOrder(){
         return false;
     }
     let requestBody = {
-        orderId:orderId,
-        password:password
+        orderId: orderId,
+        password: password
     };
 
-    try{
+    try {
         const response = await fetch('/member/nonMemberOrderCheck', {
             method: 'POST',
             headers: {
@@ -35,7 +35,7 @@ async function nonmemberOrder(){
 
         console.log(data);
 
-        if(data === "SUCCESS") {
+        if (data === "SUCCESS") {
             const form = document.createElement('form');
             form.method = 'post';
             form.action = '/order/customer/orderDetail';
@@ -64,7 +64,7 @@ async function nonmemberOrder(){
             });
             return false;
         }
-    }catch (error) {
+    } catch (error) {
         console.error('Error:', error);
         return false;
     }

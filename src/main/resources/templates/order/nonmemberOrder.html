@@ -11,29 +11,31 @@
 <body>
 <div layout:fragment="content">
     <div class="container-fluid py-5" style="max-width: 600px;">
-            <div>
-                <table class="table table-bordered table-hover" style="width:100%">
-                    <tbody>
-                    <tr>
-                        <th class="word" for="orderId" scope="row"style="width:100px; margin-top:10px" >주문번호</th>
-                        <td style="display : flex">
-                            <input class="text" id="orderId" name="orderId" placeholder="주문번호" type="text" style="width:400px"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="word" for="password" scope="row" style="width:100px; margin-top:10px">비밀번호</th>
-                        <td style="display : flex">
-                            <input class="text" id="password" name="password" placeholder="비밀번호" type="password" style="width:200px"/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div>
+            <table class="table table-bordered table-hover" style="width:100%">
+                <tbody>
+                <tr>
+                    <th class="word" for="orderId" scope="row" style="width:100px; margin-top:10px">주문번호</th>
+                    <td style="display : flex">
+                        <input class="text" id="orderId" name="orderId" placeholder="주문번호" type="text"
+                               style="width:400px"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="word" for="password" scope="row" style="width:100px; margin-top:10px">비밀번호</th>
+                    <td style="display : flex">
+                        <input class="text" id="password" name="password" placeholder="비밀번호" type="password"
+                               style="width:200px"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <div style="margin-bottom: 20px;"></div>
-            <div style="text-align: center;">
-                <button type="button" class="btn btn-primary px-3" onclick="nonmemberOrder()">비회원 주문조회</button>
-            </div>
+        <div style="margin-bottom: 20px;"></div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-3" onclick="nonmemberOrder()">비회원 주문조회</button>
+        </div>
     </div>
 
     <script src="/static/js/order/nonmemberOrder.js"></script>

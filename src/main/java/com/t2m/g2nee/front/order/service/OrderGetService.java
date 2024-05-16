@@ -87,13 +87,14 @@ public class OrderGetService {
         return null;
     }
 
-    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest) {
+    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderState stateRequest) {
         orderGetAdaptor.changeOrderStatus(orderId, stateRequest);
     }
 
     public String getOrderName(Long orderId) {
         return orderGetAdaptor.getOrderName(orderId);
     }
+
     public Boolean existsOrder(String orderNumber) {
         return orderGetAdaptor.existsOrder(orderNumber);
     }

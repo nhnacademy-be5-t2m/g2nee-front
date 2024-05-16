@@ -102,7 +102,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
 
     @Override
     public Boolean existsOrder(String orderNumber) {
-        HttpEntity<String> requestEntity = new HttpEntity<>(orderNumber,makeHttpHeaders());
+        HttpEntity<String> requestEntity = new HttpEntity<>(orderNumber, makeHttpHeaders());
 
         String url = orderUrl + "/existsOrder";
 
@@ -157,11 +157,11 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
-    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest) {
+    public void changeOrderStatus(Long orderId, OrderInfoDto.OrderState stateRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<OrderInfoDto.OrderStateRequest> stateEntity = new HttpEntity<>(stateRequest, headers);
+        HttpEntity<OrderInfoDto.OrderState> stateEntity = new HttpEntity<>(stateRequest, headers);
         String url = orderUrl + "/state/" + orderId;
 
         restTemplate.exchange(

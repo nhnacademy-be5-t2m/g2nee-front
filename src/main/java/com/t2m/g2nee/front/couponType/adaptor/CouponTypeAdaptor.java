@@ -7,6 +7,7 @@ import com.t2m.g2nee.front.utils.PageResponse;
 
 /**
  * shop에서 쿠폰타입과 관련된 값들을 가져오기 위한 어댑터의 인터페이스
+ *
  * @author : 김수현
  * @since : 1.0
  */
@@ -14,6 +15,7 @@ public interface CouponTypeAdaptor {
 
     /**
      * 쿠폰을 저장합니다.
+     *
      * @param couponTypeRequestDto
      * @return
      */
