@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<head>
+    <title>쿠폰 관리</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2 class="text-center">쿠폰타입 목록</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>쿠폰 이름</th>
+            <th>쿠폰 타입</th>
+            <th>유효기간</th>
+            <th>할인수치</th>
+            <th>최소 주문 금액</th>
+            <th>최대 할인 금액</th>
+            <th>쿠폰상태</th>
+            <th></th>
+
+        </tr>
+        </thead>
+
+        <tbody th:each="couponType : ${CouponTypes.data}">
+        <tr>
+            <td>
+                <span th:text="${couponType.couponTypeName}"></span>
+            </td>
+            <td>
+                <span th:text="${couponType.type}"></span>
+            </td>
+            <td>
+                <span th:text="${couponType.period}+' 일'"></span>
+            </td>
+            <td>
+                <span th:text="${couponType.type == '금액쿠폰' ? couponType.discount + ' 원' : couponType.discount + ' %'}"> </span>
+            </td>
+            <td>
+                <span th:text="${couponType.minimumOrderAmount}+' 원'"></span>
+            </td>
+            <td>
+                <span th:text="${couponType.maximumDiscount}+' 원'"></span>
+            </td>
+            <td>
+                <span th:text="${couponType.status}"></span>
+            </td>
+            <td>
+                <span th:if="${couponType.status == '일괄발급'}">
+                    <form class="d-inline" th:action="@{'/admin/couponType/issue?couponTypeId='+${couponType.couponTypeId}}"
+                          th:method="post">
+                        <button type="submit" class="btn btn-sm btn-secondary" >발급하기</button>
+                    </form>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/><br/>
+    <nav aria-label="...">
+        <ul class="pagination d-flex justify-content-center">
+            <li>
+                <a class="page-link" th:href="@{'?page=1'}">≪</a>
+            </li>
+            <li th:class="${CouponTypes.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${CouponTypes.currentPage - 1 }}"><</a>
+            </li>
+            <li th:each="pageButton : ${#numbers.sequence(CouponTypes.startPage,CouponTypes.endPage)}"
+                th:class="${CouponTypes.currentPage == pageButton ?   'page-item active' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
+            </li>
+            <li th:class="${CouponTypes.currentPage == CouponTypes.totalPage ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${CouponTypes.currentPage + 1}}">></a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{'?page=' + ${CouponTypes.totalPage}}">≫</a>
+            </li>
+        </ul>
+    </nav>
+
+    <br/><br/>
+    <a th:href="@{/admin/couponType/save}" class="btn btn-primary">새 쿠폰타입 생성</a>
+</div>
+</body>
+</html>

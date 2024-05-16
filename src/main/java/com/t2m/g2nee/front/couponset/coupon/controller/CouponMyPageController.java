@@ -44,9 +44,4 @@ public class CouponMyPageController {
         return "mypage/couponPage";
     }
 
-    //책에 대해 사용할 수 있는 쿠폰 조회: couponService.getBookCoupons(customerId, bookId, page);
-
-
-    //전체 주문에 대해 사용할 수 있는 쿠폰 조회: couponService.getTotalCoupons(customerId, page);
-
 }
