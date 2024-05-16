@@ -21,7 +21,5 @@ public class CustomerOrderCheckRequestDto {
 
     private String orderId;
 
-
-    @Pattern(regexp = "^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*_-]).{8,20}$", message = "영어 숫자, 특수문자를 포함하여 8-20자의 형식으로 작성하여 주십시오.")
-    private String password;
+     private String password;
 }

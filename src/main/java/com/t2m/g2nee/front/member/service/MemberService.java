@@ -256,4 +256,18 @@ public class MemberService {
         );
         return response.getBody();
     }
+
+    /**
+     * 비회원의 정보를 불러오는 메소드
+     *
+     * @param customerId 탈퇴할 회원의 memberId
+     */
+    public String getCustomerPassword(Long customerId) {
+        return restTemplate.exchange(
+                gatewayToShopUrl + "/customer/getPassword/"+customerId,
+                HttpMethod.GET,
+                new HttpEntity<>(makeHttpHeaders()),
+                String.class
+        ).getBody();
+    }
 }

@@ -70,5 +70,4 @@ public class CookieUtil {
             response.addCookie(cookie);
         }
     }
-
 }

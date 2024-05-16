@@ -169,9 +169,14 @@ public class ShoppingCartService {
      * @return ShoppingCartDto.Response
      */
     public void deleteCart(String customerId, HttpServletResponse httpServletResponse) {
-        // 비회원일 경우 memberId를 쿠키에서 세션id 값을 가져오거나 쿠키를 새로 생성하고 sessionId를 설정
-        customerId = getCustomerId(customerId, httpServletResponse);
-
+        if(customerId==null){
+            customerId=getCartUUID();
+            if(customerId==null){
+                return;
+            }
+        }else{
+            customerId = getCustomerId(customerId, httpServletResponse);
+        }
         redisTemplate.delete(customerId);
     }
 

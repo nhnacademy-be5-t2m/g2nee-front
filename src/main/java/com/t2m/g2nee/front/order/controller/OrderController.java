@@ -19,6 +19,7 @@ import com.t2m.g2nee.front.order.dto.request.CustomerOrderCheckRequestDto;
 import com.t2m.g2nee.front.order.dto.request.OrderForm;
 import com.t2m.g2nee.front.order.dto.request.OrderSaveRequestDto;
 import com.t2m.g2nee.front.order.dto.response.OrderForPaymentDto;
+import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
 import com.t2m.g2nee.front.order.service.OrderService;
 import com.t2m.g2nee.front.orderset.packagetype.service.PackageTypeService;
@@ -32,6 +33,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +64,7 @@ public class OrderController {
     private final OrderGetService orderGetService;
     private final MyPageService myPageService;
     private final PaymentService paymentService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     /**
      * 비회원의 주문조회 정보를 받는 페이지
@@ -69,10 +72,10 @@ public class OrderController {
      * @param model 모델
      * @return 비회원주문조회 로그인 페이지
      */
-    @GetMapping("/customLogin")
+    @GetMapping("/customer/orderDetail")
     public String customerLogin(Model model) {
         model.addAttribute("customerOrderInfo", new CustomerOrderCheckRequestDto());
-        return "order/customerLogin";
+        return "order/nonmemberOrder";
     }
 
     /**
@@ -82,11 +85,16 @@ public class OrderController {
      * @param model   비회원 정보가 일치하는지 저장할 model
      * @return 성공, 실패 페이지를 보여준다.
      */
-    @PostMapping("/customLogin")
-    public String customerLoginComplete(@ModelAttribute("customerOrderInfo") CustomerOrderCheckRequestDto request,
+    @PostMapping("/customer/orderDetail")
+    public String customerLoginComplete(@ModelAttribute("form") CustomerOrderCheckRequestDto request,
                                         Model model) {
-        //TODO : shop server의 order쪽으로 보내기
-        return "member/customerLogin";
+        OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(request.getOrderId());
+        model.addAttribute("order", orderResponse);
+        Long orderId = orderResponse.getOrderId();
+        model.addAttribute("orderDetails", orderGetService.getOrderDetailListByOrderId(orderId));
+        model.addAttribute("orderName", orderGetService.getOrderName(orderId));
+        model.addAttribute("payment", paymentService.getPayment(orderId));
+        return "order/orderDetail";
     }
 
     /**
@@ -110,7 +118,7 @@ public class OrderController {
             Long memberId = member.getMemberId();
             model.addAttribute("memberId", memberId);
             PointPolicyInfoDto pointPolicyInfoDto = pointPolicyService.getPointPolicyByPolicyName(member.getGrade());
-            rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount());
+            rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount()).multiply(BigDecimal.valueOf(0.01));
 
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
@@ -181,7 +189,7 @@ public class OrderController {
 
             model.addAttribute("memberId", memberId);
             PointPolicyInfoDto pointPolicyInfoDto = pointPolicyService.getPointPolicyByPolicyName(member.getGrade());
-            rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount());
+            rewardRate = new BigDecimal(pointPolicyInfoDto.getAmount()).multiply(BigDecimal.valueOf(0.01));
 
             //회원의 포인트 합계 저장
             Integer totalPoint = pointService.getTotalPoint(memberId);
@@ -254,7 +262,7 @@ public class OrderController {
             SignUpNonMemberRequestDto signUpNonMemberRequestDto
                     = new SignUpNonMemberRequestDto(
                     request.getName(),
-                    request.getPassword(),
+                    passwordEncoder.encode(request.getPassword()),
                     request.getEmail(),
                     request.getPhoneNumber()
             );
@@ -319,6 +327,8 @@ public class OrderController {
 
         return "order/orderDetailSuccessPayment";
     }
+
+
 
 
 }
