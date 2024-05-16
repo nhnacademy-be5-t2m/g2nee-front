@@ -15,7 +15,7 @@
     </div>
 
 
-    <div th:if="${not #lists.isEmpty(payments.data)}" class="container mt-5">
+    <div th:if="${not #lists.isEmpty(payments?.data)}" class="container mt-5">
         <div class="row">
             <div th:each="payment : ${payments.data}" class="col-md-6">
                 <div class="card border-secondary mb-4">
@@ -46,23 +46,23 @@
     </div>
 
     <br/><br/>
-    <nav aria-label="...">
+    <nav th:if="${not #lists.isEmpty(payments?.data)}" aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li>
                 <a class="page-link" th:href="@{'?page=1'}">≪</a>
             </li>
-            <li th:class="${payments.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                <a class="page-link" th:href="@{'?page=' + ${payments.currentPage - 1 }}"><</a>
+            <li th:class="${payments?.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a class="page-link" th:href="@{'?page=' + ${payments?.currentPage - 1 }}"><</a>
             </li>
-            <li th:class="${payments.currentPage == pageButton ?   'page-item active' : 'page-item'}"
-                th:each="pageButton : ${#numbers.sequence(payments.startPage,payments.endPage)}">
+            <li th:class="${payments?.currentPage == pageButton ?   'page-item active' : 'page-item'}"
+                th:each="pageButton : ${#numbers.sequence(payments?.startPage,payments?.endPage)}">
                 <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
             </li>
             <li th:class="${payments.currentPage == payments.totalPage ? 'page-item disabled' : 'page-item'}">
-                <a class="page-link" th:href="@{'?page=' + ${payments.currentPage + 1}}">></a>
+                <a class="page-link" th:href="@{'?page=' + ${payments?.currentPage + 1}}">></a>
             </li>
             <li>
-                <a class="page-link" th:href="@{'?page=' + ${payments.totalPage}}">≫</a>
+                <a class="page-link" th:href="@{'?page=' + ${payments?.totalPage}}">≫</a>
             </li>
         </ul>
     </nav>

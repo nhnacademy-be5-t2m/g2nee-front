@@ -10,10 +10,14 @@
 <body>
 <div layout:fragment="content" class="container my-4">
 
-    <h2 class="text-center">주문 목록</h2>
+    <div th:if="${#lists.isEmpty(orderPage.data)}">
+        <p>주문이 없습니다.</p>
+    </div>
+
+    <h2 th:if="${not #lists.isEmpty(orderPage?.data)}" class="text-center">주문 목록</h2>
 
     <br/><br/>
-    <table class="table table-bordered table-hover">
+    <table th:if="${not #lists.isEmpty(orderPage?.data)}" class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>주문 명</th>
@@ -33,7 +37,7 @@
             <td th:text="${order.orderState}"></td>
 
             <td>
-                <form class="d-inline" th:action="${'/mypage/order/'+ order.orderId}">
+                <form th:action="${'/mypage/order/'+ order.orderId}" class="d-inline">
                     <button class="btn btn-sm btn-secondary" type="submit" th:text="상세보기"></button>
                 </form>
             </td>
@@ -43,23 +47,23 @@
     </table>
 
     <div>
-        <nav aria-label="...">
+        <nav th:if="${not #lists.isEmpty(orderPage?.data)}" aria-label="...">
             <ul class="pagination">
                 <li>
                     <a class="page-link" th:href="@{'?page=1'}">≪</a>
                 </li>
-                <li th:class="${orderPage.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                    <a class="page-link" th:href="@{'?page=' + ${orderPage.currentPage - 1 }}"><</a>
+                <li th:class="${orderPage?.currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                    <a class="page-link" th:href="@{'?page=' + ${orderPage?.currentPage - 1 }}"><</a>
                 </li>
-                <li th:each="pageButton : ${#numbers.sequence(orderPage.startPage,orderPage.endPage)}"
-                    th:class="${orderPage.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
+                <li th:each="pageButton : ${#numbers.sequence(orderPage?.startPage,orderPage?.endPage)}"
+                    th:class="${orderPage?.currentPage == pageButton ?   'page-item disabled' : 'page-item'}">
                     <a class="page-link" th:href="@{'?page=' + ${pageButton}}" th:text="${pageButton}"></a>
                 </li>
                 <li th:class="${orderPage.currentPage == orderPage.totalPage ? 'page-item disabled' : 'page-item'}">
-                    <a class="page-link" th:href="@{'?page=' + ${orderPage.currentPage + 1}}">></a>
+                    <a class="page-link" th:href="@{'?page=' + ${orderPage?.currentPage + 1}}">></a>
                 </li>
                 <li>
-                    <a class="page-link" th:href="@{'?page=' + ${orderPage.totalPage}}">≫</a>
+                    <a class="page-link" th:href="@{'?page=' + ${orderPage?.totalPage}}">≫</a>
                 </li>
             </ul>
         </nav>

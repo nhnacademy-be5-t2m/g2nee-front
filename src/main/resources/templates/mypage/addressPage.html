@@ -9,7 +9,7 @@
 
 <body>
 <div layout:fragment="content">
-    <table class="table table-bordered table-hover">
+    <table th:if="${not #lists.isEmpty(addressList)}" class="table table-bordered table-hover">
         <thead>
         <tr>
             <th></th>
@@ -52,7 +52,7 @@
     <button class="btn btn-primary" onclick="saveAddressPopUp()"
             type="button">새 주소 등록
     </button>
-    <button class="btn btn-primary" onclick="changeDefaultAddress()"
+    <button th:if="${not #lists.isEmpty(addressList)}" class="btn btn-primary" onclick="changeDefaultAddress()"
             type="button">기본 배송지 변경
     </button>
 

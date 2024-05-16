@@ -14,7 +14,7 @@
         <p>쿠폰이 없습니다.</p>
     </div>
 
-    <div th:if="${not #lists.isEmpty(coupons.data)}">
+    <div th:if="${not #lists.isEmpty(coupons?.data)}">
         <div class="row">
             <div th:each="coupon : ${coupons.data}" class="col-md-6">
                 <div class="card border-secondary mb-4">
@@ -42,7 +42,7 @@
 
 
     <br/><br/>
-    <nav aria-label="...">
+    <nav th:if="${not #lists.isEmpty(coupons?.data)}" aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li>
                 <a class="page-link" th:href="@{'?page=1'}">≪</a>
