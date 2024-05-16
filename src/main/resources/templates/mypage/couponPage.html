@@ -10,15 +10,14 @@
 <body>
 <div layout:fragment="content">
 
-    <div th:if="${#lists.isEmpty(coupons.data)}">
+    <div th:if="${#lists.isEmpty(coupons?.data)}">
         <div style="text-align: center">
             <i class="fa-regular fa-face-sad-tear"></i>
-            장바구니가 비어있습니다.
+            쿠폰이 없습니다.
         </div>
-
     </div>
 
-    <div th:if="${not #lists.isEmpty(coupons.data)}">
+    <div th:if="${not #lists.isEmpty(coupons?.data)}">
         <div class="row">
             <div th:each="coupon : ${coupons.data}" class="col-md-6">
                 <div class="card border-secondary mb-4">
@@ -47,7 +46,7 @@
 
 
     <br/><br/>
-    <nav aria-label="...">
+    <nav th:if="${#lists.isEmpty(coupons?.data)}" aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li>
                 <a class="page-link" th:href="@{'?page=1'}">≪</a>

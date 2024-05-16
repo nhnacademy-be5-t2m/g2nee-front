@@ -31,7 +31,6 @@ public class OrderGetService {
      * @return List<OrderDetailDto.Response>
      */
     public List<OrderDetailDto.Response> getOrderDetailListByOrderId(Long orderId) {
-
         return orderGetAdaptor.getOrderDetailListByOrderId(orderId);
     }
 
@@ -94,6 +93,9 @@ public class OrderGetService {
 
     public String getOrderName(Long orderId) {
         return orderGetAdaptor.getOrderName(orderId);
+    }
+    public Boolean existsOrder(String orderNumber) {
+        return orderGetAdaptor.existsOrder(orderNumber);
     }
 
 }

@@ -101,6 +101,20 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     }
 
     @Override
+    public Boolean existsOrder(String orderNumber) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(orderNumber,makeHttpHeaders());
+
+        String url = orderUrl + "/existsOrder";
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                Boolean.class
+        ).getBody();
+    }
+
+    @Override
     public PageResponse<OrderForPaymentDto> getOrderListForMembers(Long customerId, int page) {
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);

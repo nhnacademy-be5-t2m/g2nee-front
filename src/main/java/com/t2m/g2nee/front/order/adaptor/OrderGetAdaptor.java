@@ -60,4 +60,6 @@ public interface OrderGetAdaptor {
     void changeOrderStatus(Long orderId, OrderInfoDto.OrderStateRequest stateRequest);
 
     String getOrderName(Long orderId);
+
+    Boolean existsOrder(String orderNumber);
 }

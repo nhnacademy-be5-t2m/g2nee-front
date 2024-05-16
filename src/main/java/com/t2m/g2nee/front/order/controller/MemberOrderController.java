@@ -61,16 +61,4 @@ public class MemberOrderController {
 
         return "order/orderDetail";
     }
-
-    @GetMapping("/nonmembers/")
-    public String getOrderForNonMember(@RequestParam("orderNumber") String orderNumber, Model model) {
-        OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(orderNumber);
-        model.addAttribute("order", orderResponse);
-
-        Long orderId = orderResponse.getOrderId();
-        List<OrderDetailDto.Response> detailResponse = orderGetService.getOrderDetailListByOrderId(orderId);
-        model.addAttribute("orderDetails", detailResponse);
-
-        return "order/orderDetail";
-    }
 }

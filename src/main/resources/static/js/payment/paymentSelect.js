@@ -1,5 +1,6 @@
 // 선택된 결제 방법을 저장할 변수
 let selectedPaymentMethod = null;
+let paymentWindow = null; // 새 창을 저장할 변수
 
 function selectPaymentMethod(method) {
     if (method === 'naver' || method === 'kakao') {
@@ -89,7 +90,11 @@ function openPaymentWindow() {
     let url = `/order/payment/${selectedPaymentMethod}`;
 
     let windowOptions = `width=${windowWidth},height=${windowHeight},top=${top},left=${left},menubar=no,toolbar=no,status=no,scrollbars=yes,location=no`;
-    let paymentWindow = window.open(url, "_blank", windowOptions);
+    //let paymentWindow = window.open(url, "_blank", windowOptions);
 
-    // paymentWindow.postMessage(order, '*');
+    if (paymentWindow && !paymentWindow.closed) {
+        paymentWindow.focus();
+    } else {
+        paymentWindow = window.open(url, "_blank", windowOptions);
+    }
 }
