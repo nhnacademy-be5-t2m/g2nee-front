@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
           crossOrigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.0.2/toastui-editor.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
     <title>G2nee Book shop</title>
 </head>
 
@@ -42,6 +44,7 @@
                     <input type="hidden" id="bookId" th:value="${book.bookId}">
                     <input type="hidden" id="bookStock" th:value="${book.quantity}">
                     <span th:text="${book.title}"></span>
+                    <br>
                     <small class="text-muted ml-2" th:text="'- ' + ${book.engTitle}"></small>
                 </h3>
                 <div class="mb-3">
@@ -160,14 +163,14 @@
                             <i class="fa-solid fa-circle-exclamation"></i>
                             <span>책 소개</span>
                         </h4>
-                        <p class="mb-4" th:utext="${book.description}"></p>
+                        <div id="description"></div>
                         <hr/>
                         <div>
                             <h4 class="mb-3" style="margin-left: 3px">
                                 <i class="fa-solid fa-bookmark"></i>
                                 <span>목차</span>
                             </h4>
-                            <p th:utext="${book.bookIndex}"></p>
+                            <div id="bookIndex"></div>
                         </div>
                     </div>
 
@@ -338,6 +341,31 @@
 <script src="/static/js/order/order.js">
 </script>
 <script src="/static/js/book/putRecBookInCart.js"></script>
+<script th:inline="javascript">
+
+    // toastUI Viewer
+    let bookIndex = [[${book.bookIndex}]];
+    let description = [[${book.description}]];
+
+    $(document).ready(function () {
+        var indexViewer = new toastui.Editor.factory({
+            el: document.querySelector('#bookIndex'),
+            viewer: true,
+            initialValue: bookIndex
+        });
+
+        var descViewer = new toastui.Editor.factory({
+            el: document.querySelector('#description'),
+            viewer: true,
+            initialValue: description
+        });
+        var indexViewerElement = document.querySelector('#bookIndex .toastui-editor-contents');
+        indexViewerElement.style.fontSize = '15px';
+        var descViewerElement = document.querySelector('#description .toastui-editor-contents');
+        descViewerElement.style.fontSize = '15px';
+    });
+
+</script>
 <script th:inline="javascript">
 
     // 평균 별점

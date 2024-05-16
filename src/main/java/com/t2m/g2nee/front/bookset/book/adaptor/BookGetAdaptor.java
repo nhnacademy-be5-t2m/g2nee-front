@@ -77,12 +77,13 @@ public interface BookGetAdaptor {
     List<BookDto.ListResponse> getRecommendBooks(List<Long> categoryIdList, Long bookId);
 
     /**
-     * 책 재고를 조회하는 메서드
+     * 책 상태를 조회하는 메서드
      *
      * @param bookIdList 책 아이디 리스트
      * @return List<BookDto.ListResponse>
      */
-    List<BookDto.ListResponse> getBookStock(List<Long> bookIdList);
+    List<BookDto.ListResponse> getBookForCheck(List<Long> bookIdList);
+
 
     /**
      * 회원이 좋아요한 책을 조회하는 메서드

@@ -118,13 +118,33 @@ public class BookGetService {
     public List<BookDto.ListResponse> getBookExceedStock(List<BookDto.ListResponse> bookList) {
 
         List<Long> bookIdList = bookList.stream().map(BookDto.ListResponse::getBookId).collect(Collectors.toList());
-        List<BookDto.ListResponse> bookStockList = bookGetAdaptor.getBookStock(bookIdList);
+        List<BookDto.ListResponse> bookStockList = bookGetAdaptor.getBookForCheck(bookIdList);
         List<BookDto.ListResponse> responses = new ArrayList<>();
 
         for (int i = 0; i < bookList.size(); i++) {
 
             if (bookList.get(i).getQuantity() > bookStockList.get(i).getQuantity()) {
                 responses.add(bookStockList.get(i));
+            }
+        }
+        return responses;
+    }
+
+    /**
+     * 가격이 변동된 책 리스트를 조회
+     * @param bookList 책 리스트
+     * @return List<BookDto.ListResponse>
+     */
+    public List<BookDto.ListResponse> getModifiedPriceBook(List<BookDto.ListResponse> bookList){
+
+        List<Long> bookIdList = bookList.stream().map(BookDto.ListResponse::getBookId).collect(Collectors.toList());
+        List<BookDto.ListResponse> bookPriceList = bookGetAdaptor.getBookForCheck(bookIdList);
+        List<BookDto.ListResponse> responses = new ArrayList<>();
+
+        for (int i = 0; i < bookPriceList.size(); i++) {
+
+            if (bookList.get(i).getSalePrice() != bookPriceList.get(i).getSalePrice()) {
+                responses.add(bookPriceList.get(i));
             }
         }
         return responses;

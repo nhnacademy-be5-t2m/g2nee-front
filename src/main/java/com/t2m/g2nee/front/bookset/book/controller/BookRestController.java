@@ -18,11 +18,20 @@ public class BookRestController {
 
     private final BookGetService bookGetService;
 
-    @PostMapping("/stock")
+    @PostMapping("/checkStock")
     public ResponseEntity<List<BookDto.ListResponse>> getBookExceedStock(
             @RequestBody List<BookDto.ListResponse> bookList) {
         List<BookDto.ListResponse> responses = bookGetService.getBookExceedStock(bookList);
 
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+
+    }
+
+    @PostMapping("/checkPrice")
+    public ResponseEntity<List<BookDto.ListResponse>> getModifiedPriceBook(
+            @RequestBody List<BookDto.ListResponse> bookList) {
+
+        List<BookDto.ListResponse> responses = bookGetService.getModifiedPriceBook(bookList);
         return ResponseEntity.status(HttpStatus.OK).body(responses);
 
     }

@@ -42,6 +42,7 @@
                     <tr class="cartList" id="bookItem" th:id="${cartStat.index}" th:each="cart : ${cartList}">
                         <td id="cart" style="text-align: left;">
                             <input type="hidden" id="cartBookId" th:value="${cart.bookId}">
+                            <input type="hidden" id="cartBookPrice" th:value="${cart.price}">
                             <img th:src="${cart.imageUrl}" alt="image" style="width: 70px;">
                             <a th:href="@{'/books/' + ${cart.bookId}}">
                             <span style="margin-left: 30px" th:text="${cart.title} + ' - ' + ${cart.engTitle}">

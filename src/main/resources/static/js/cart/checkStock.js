@@ -7,33 +7,62 @@ async function checkStockAndBuy() {
     cartDetails.forEach((cartDetail, index) => {
         const bookId = cartDetail.querySelector('#cartBookId').value;
         const quantity = cartDetail.querySelector('#quantity').value;
+        const salePrice = cartDetail.querySelector('#cartBookPrice').value;
 
         orderList.push({
             bookId: bookId,
-            quantity: quantity
+            quantity: quantity,
+            salePrice: salePrice
         });
     });
-    fetch('/books/stock', {
+    let checkPriceMessages = [];
+    await fetch('/books/checkPrice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(orderList),
+
     })
         .then(response => response.json())
         .then(data => {
-            let warningMessages = [];
             data.forEach(book => {
-                warningMessages.push('[' + book.title + '] 현재 재고 : ' + book.quantity);
+                checkPriceMessages.push('[' + book.title + '] 현재 가격 : ' + book.salePrice);
             });
 
-            if (warningMessages.length > 0) {
+            if (checkPriceMessages.length > 0) {
+                checkPriceMessages.push('책을 다시 담아주세요');
+                Swal.fire({
+                    icon: 'warning',
+                    title: '가격이 변동된 책이 있습니다..',
+                    html: checkPriceMessages.join('<br/>')
+                });
+                event.preventDefault();
+            }
+        });
+
+    fetch('/books/checkStock', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderList),
+
+    })
+        .then(response => response.json())
+        .then(data => {
+            let checkQuantityMessages = [];
+            data.forEach(book => {
+                checkQuantityMessages.push('[' + book.title + '] 현재 재고 : ' + book.quantity);
+            });
+
+            if (checkQuantityMessages.length > 0) {
                 Swal.fire({
                     icon: 'warning',
                     title: '재고가 부족한 책이 있습니다.',
-                    html: warningMessages.join('<br/>')
+                    html: checkQuantityMessages.join('<br/>')
                 });
-                return false;
+
             } else {
 
                 const form = document.createElement('form');

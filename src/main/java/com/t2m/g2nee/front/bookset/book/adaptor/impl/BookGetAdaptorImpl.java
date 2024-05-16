@@ -296,7 +296,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
     }
 
     @Override
-    public List<BookDto.ListResponse> getBookStock(List<Long> bookIdList) {
+    public List<BookDto.ListResponse> getBookForCheck(List<Long> bookIdList) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -306,7 +306,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
                 .collect(Collectors.joining(","));
 
         String url =
-                gatewayUrl + "/books/stock?bookIdList=" + bookIds;
+                gatewayUrl + "/books/check?bookIdList=" + bookIds;
 
         return restTemplate.exchange(
                         url,
