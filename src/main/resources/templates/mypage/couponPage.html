@@ -11,7 +11,11 @@
 <div layout:fragment="content">
 
     <div th:if="${#lists.isEmpty(coupons.data)}">
-        <p>쿠폰이 없습니다.</p>
+        <div style="text-align: center">
+            <i class="fa-regular fa-face-sad-tear"></i>
+            장바구니가 비어있습니다.
+        </div>
+
     </div>
 
     <div th:if="${not #lists.isEmpty(coupons.data)}">
