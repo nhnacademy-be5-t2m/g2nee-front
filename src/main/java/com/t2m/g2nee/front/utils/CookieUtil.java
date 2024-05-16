@@ -64,7 +64,7 @@ public class CookieUtil {
      */
     public static void deleteCookie(HttpServletResponse response, String key) {
         Cookie cookie = findCookie(key);
-        if(cookie != null){
+        if (cookie != null) {
             cookie.setPath("/");
             Objects.requireNonNull(cookie).setMaxAge(0);
             response.addCookie(cookie);

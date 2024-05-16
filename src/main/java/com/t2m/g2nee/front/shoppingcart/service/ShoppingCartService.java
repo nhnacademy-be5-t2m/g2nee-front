@@ -169,12 +169,12 @@ public class ShoppingCartService {
      * @return ShoppingCartDto.Response
      */
     public void deleteCart(String customerId, HttpServletResponse httpServletResponse) {
-        if(customerId==null){
-            customerId=getCartUUID();
-            if(customerId==null){
+        if (customerId == null) {
+            customerId = getCartUUID();
+            if (customerId == null) {
                 return;
             }
-        }else{
+        } else {
             customerId = getCustomerId(customerId, httpServletResponse);
         }
         redisTemplate.delete(customerId);

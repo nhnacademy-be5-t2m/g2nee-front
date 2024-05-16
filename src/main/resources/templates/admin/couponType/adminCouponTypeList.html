@@ -50,9 +50,10 @@
             </td>
             <td>
                 <span th:if="${couponType.status == '일괄발급'}">
-                    <form class="d-inline" th:action="@{'/admin/couponType/issue?couponTypeId='+${couponType.couponTypeId}}"
+                    <form class="d-inline"
+                          th:action="@{'/admin/couponType/issue?couponTypeId='+${couponType.couponTypeId}}"
                           th:method="post">
-                        <button type="submit" class="btn btn-sm btn-secondary" >발급하기</button>
+                        <button type="submit" class="btn btn-sm btn-secondary">발급하기</button>
                     </form>
                 </span>
             </td>
