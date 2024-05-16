@@ -1,13 +1,13 @@
 package com.t2m.g2nee.front.couponType.dto.request;
 
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 /**
  * 쿠폰 생성을 위한 dto입니다.
+ *
  * @author : 김수현
  * @since : 1.0
  */
@@ -29,7 +29,8 @@ public class CouponTypeRequestDto {
     private Long categoryId;
 
 
-    public CouponTypeRequestDto(Long couponTypeId, String name, Integer period, String type, BigDecimal discount, BigDecimal minimumOrderAmount, BigDecimal maximumDiscount, String status) {
+    public CouponTypeRequestDto(Long couponTypeId, String name, Integer period, String type, BigDecimal discount,
+                                BigDecimal minimumOrderAmount, BigDecimal maximumDiscount, String status) {
         this.couponTypeId = couponTypeId;
         this.name = name;
         this.period = period;
@@ -41,7 +42,9 @@ public class CouponTypeRequestDto {
     }
 
 
-    public CouponTypeRequestDto(Long couponTypeId, String name, Integer period, String type, BigDecimal discount, BigDecimal minimumOrderAmount, BigDecimal maximumOrderAmount, String status, Long bookId) {
+    public CouponTypeRequestDto(Long couponTypeId, String name, Integer period, String type, BigDecimal discount,
+                                BigDecimal minimumOrderAmount, BigDecimal maximumOrderAmount, String status,
+                                Long bookId) {
         this.couponTypeId = couponTypeId;
         this.name = name;
         this.period = period;
@@ -50,6 +53,6 @@ public class CouponTypeRequestDto {
         this.minimumOrderAmount = minimumOrderAmount;
         this.maximumDiscount = maximumDiscount;
         this.status = status;
-        this.bookId= bookId;
+        this.bookId = bookId;
     }
 }

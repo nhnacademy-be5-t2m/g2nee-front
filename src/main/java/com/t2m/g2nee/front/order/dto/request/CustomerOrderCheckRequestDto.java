@@ -1,6 +1,5 @@
 package com.t2m.g2nee.front.order.dto.request;
 
-import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +20,5 @@ public class CustomerOrderCheckRequestDto {
 
     private String orderId;
 
-     private String password;
+    private String password;
 }

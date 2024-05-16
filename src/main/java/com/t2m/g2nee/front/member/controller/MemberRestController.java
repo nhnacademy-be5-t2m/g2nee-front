@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +58,7 @@ public class MemberRestController {
      */
     @PostMapping("/nonMemberOrderCheck")
     public ResponseEntity<String> nonMemberOrderCheck(@RequestBody CustomerOrderCheckRequestDto request) {
-        if(!orderGetService.existsOrder(request.getOrderId())) {
+        if (!orderGetService.existsOrder(request.getOrderId())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body("잘못된 주문번호입니다.");
@@ -67,13 +66,13 @@ public class MemberRestController {
         OrderInfoDto.Response orderResponse = orderGetService.getOrderByNumber(request.getOrderId());
         String password = memberService.getCustomerPassword(orderResponse.getCustomerId());
         String result;
-        if(password.equals("NULL")){
+        if (password.equals("NULL")) {
             result = "잘못된 주문정보입니다.";
-        }else if(password.equals("MEMBER")){
+        } else if (password.equals("MEMBER")) {
             result = "회원 주문입니다. 로그인 후 확인해주세요.";
-        }else if(passwordEncoder.matches(request.getPassword(),password)){
+        } else if (passwordEncoder.matches(request.getPassword(), password)) {
             result = "SUCCESS";
-        }else{
+        } else {
             result = "비밀번호가 일치하지 않습니다.";
         }
 

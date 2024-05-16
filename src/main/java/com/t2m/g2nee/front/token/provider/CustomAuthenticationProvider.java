@@ -23,11 +23,11 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
      * @throws AuthenticationException 인증 실패의 경우 예외를 던짐
      */
     @Override
-        public Authentication authenticate(
-                Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(
+            Authentication authentication) throws AuthenticationException {
 
-            User userDetails
-                    = (User) this.getUserDetailsService()
+        User userDetails
+                = (User) this.getUserDetailsService()
                 .loadUserByUsername((String) authentication.getPrincipal());
 
         return new UsernamePasswordAuthenticationToken(

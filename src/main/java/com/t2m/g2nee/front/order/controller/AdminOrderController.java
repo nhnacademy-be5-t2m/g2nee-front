@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.order.controller;
 
+import static com.t2m.g2nee.front.order.dto.response.OrderInfoDto.OrderState.DELIVERING;
+
 import com.t2m.g2nee.front.order.dto.OrderDetailDto;
 import com.t2m.g2nee.front.order.dto.response.OrderInfoDto;
 import com.t2m.g2nee.front.order.service.OrderGetService;
@@ -9,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,14 +58,12 @@ public class AdminOrderController {
         return "admin/order/adminOrderDetail";
     }
 
-    @PatchMapping("/status/{orderId}")
-    public String changeOrderState(@PathVariable("orderId") Long orderId,
-                                   @ModelAttribute OrderInfoDto.OrderStateRequest stateRequest,
-                                   @RequestParam int page) {
+    @GetMapping("/status/{orderId}")
+    public String changeOrderState(@PathVariable("orderId") Long orderId) {
 
-        orderGetService.changeOrderStatus(orderId, stateRequest);
+        orderGetService.changeOrderStatus(orderId, DELIVERING);
 
-        return "redirect:/admin/orders/list?page=" + page;
+        return "redirect:/admin/orders/list";
     }
 
 }
