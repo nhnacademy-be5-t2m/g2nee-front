@@ -186,20 +186,6 @@ public class BookAdminController {
     }
 
     /**
-     * 책 수량을 추가하는 컨트롤러 입니다.
-     */
-    @PatchMapping("/quantity/{bookId}")
-    public String addBookQuantity(Model model,
-                                  @RequestParam("quantity") int quantity,
-                                  @PathVariable("bookId") Long bookId) {
-
-        int updateQuantity = bookMgmtService.addBookQuantity(bookId, quantity);
-        model.addAttribute("quantity", updateQuantity);
-
-        return "redirect:/admin/books/" + bookId;
-    }
-
-    /**
      * 책 하나 정보를 가져오는 컨트롤러 입니다.
      */
     @GetMapping("/{bookId}")

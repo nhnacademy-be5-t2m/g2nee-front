@@ -74,6 +74,11 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
                         <a class="dropdown-item"
+                           th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=accuracy' : '?sort=accuracy'}}"
+                        >정확도
+                            순
+                        </a>
+                        <a class="dropdown-item"
                            th:href="@{${keyword != null ? '?keyword=' + keyword + '&sort=viewCount' : '?sort=viewCount'}}"
                         >인기도
                             순

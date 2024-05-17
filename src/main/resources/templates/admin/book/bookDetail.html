@@ -6,6 +6,9 @@
     <link crossOrigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
           integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
           referrerpolicy="no-referrer" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.0.2/toastui-editor.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
     <title>admin 도서 조회</title>
 </head>
 
@@ -53,9 +56,10 @@
                 </div>
                 <div>
                     <i class="fa-solid fa-tag"></i>
-                    <span th:each="tag : ${book.tagList}">
-                                <span th:text="${tag.tagName}"></span>
+                    <span th:each="tag, index : ${book.tagList}" th:inline="text">
+                             <span th:text="${tag.tagName + (index.last ? '' : ', ')}"></span>
                             </span>
+
                 </div>
                 <hr/>
                 <h4>
@@ -77,15 +81,16 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input class="form-control bg-secondary text-center" type="text" value="1">
+                        <input id="quantity" class="form-control bg-secondary text-center" type="text" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-plus">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
-                    <span style="margin-right: 10px" th:text="'수량 : ' + ${book.quantity}"></span>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 재고 추가</button>
+                    <span id="bookQuantity" style="margin-right: 10px" th:text="'수량 : ' + ${book.quantity}"></span>
+                    <button id="addQuantity" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> 재고 추가
+                    </button>
                 </div>
             </div>
         </div>
@@ -115,14 +120,14 @@
                             <i class="fa-solid fa-circle-exclamation"></i>
                             <span>책 소개</span>
                         </h4>
-                        <p class="mb-4" th:utext="${book.description}"></p>
+                        <div id="description"></div>
                         <hr/>
                         <div>
                             <h4 class="mb-3" style="margin-left: 3px">
                                 <i class="fa-solid fa-bookmark"></i>
                                 <span>목차</span>
                             </h4>
-                            <p th:utext="${book.bookIndex}"></p>
+                            <div id="bookIndex"></div>
                         </div>
                     </div>
                 </div>
@@ -132,3 +137,42 @@
 </div>
 </body>
 </html>
+<script th:inline="javascript">
+
+    // toastUI Viewer
+    let bookIndex = [[${book.bookIndex}]];
+    let description = [[${book.description}]];
+
+    $(document).ready(function () {
+        var indexViewer = new toastui.Editor.factory({
+            el: document.querySelector('#bookIndex'),
+            viewer: true,
+            initialValue: bookIndex
+        });
+
+        var descViewer = new toastui.Editor.factory({
+            el: document.querySelector('#description'),
+            viewer: true,
+            initialValue: description
+        });
+        var indexViewerElement = document.querySelector('#bookIndex .toastui-editor-contents');
+        indexViewerElement.style.fontSize = '15px';
+        var descViewerElement = document.querySelector('#description .toastui-editor-contents');
+        descViewerElement.style.fontSize = '15px';
+    });
+
+    document.querySelector('#addQuantity').addEventListener('click', function () {
+        let bookId = [[${book.bookId}]];
+        let quantity = document.querySelector('#quantity').getAttribute('value');
+
+        fetch('/books/' + bookId + '?quantity=' + quantity, {
+            method: "PATCH"
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data)
+                document.querySelector('#bookQuantity').textContent = '수량 : ' + data.toString();
+            });
+    });
+
+
+</script>
