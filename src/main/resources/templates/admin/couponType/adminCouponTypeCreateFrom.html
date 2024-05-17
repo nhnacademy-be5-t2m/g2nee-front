@@ -6,7 +6,7 @@
     <meta charset="UTF-8"> <!-- 한글 인코딩 설정 -->
     <title>쿠폰타입 생성</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/js/policy/pointPolicyValidation.js"></script>
+    <script src="/static/js/coupon/couponTypeValidation.js"></script>
 </head>
 
 <body>
@@ -17,50 +17,52 @@
 <!--          th:method="${pointPolicy != null ? 'PUT' : 'POST'}" id="pointPolicyForm">-->
 
         <div class="mb-3">
-            <label for="policyName" class="form-label">쿠폰 이름: </label>
-            <input type="text" class="form-control" name="policyName" id="policyName"
+            <label for="couponTypeName" class="form-label">쿠폰 이름: </label>
+            <input type="text" class="form-control" name="couponTypeName" id="couponTypeName"
                    th:value="${couponType?.couponTypename}">
         </div>
 
         <div class="mb-3">
             <label for="type" class="form-label">쿠폰 타입: </label>
             <br/>
-            <select class="form-select" name="type" id="type" size="5">
-                <option th:selected="${CouponType?.policyType} == 'PERCENT'" value="PERCENT">퍼센트쿠폰</option>
-                <option th:selected="${pointPolicy?.policyType} == 'AMOUNT'" value="AMOUNT">금액쿠폰</option>
+            <select class="form-select" name="couponType" id="type" size="5">
+                <option th:selected="${couponType?.type} == 'PERCENT'" value="PERCENT">퍼센트쿠폰</option>
+                <option th:selected="${couponType?.type} == 'AMOUNT'" value="AMOUNT">금액쿠폰</option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label for="amount" class="form-label">유효기간: </label>
-            <input type="text" class="form-control" name="amount" id="amount"
-                   th:value="${pointPolicy?.amount}">
+            <label for="period" class="form-label">유효기간: </label>
+            <input type="text" class="form-control" name="period" id="period"
+                   th:value="${couponType?.period}">
         </div>
 
     <div class="mb-3">
-        <label for="amount" class="form-label">할인수치: </label>
-        <input type="text" class="form-control" name="amount" id="amount"
-               th:value="${pointPolicy?.amount}">
+        <label for="discount" class="form-label">할인수치: </label>
+        <input type="text" class="form-control" name="amount" id="discount"
+               th:value="${couponType?.discount}">
     </div>
 
     <div class="mb-3">
-        <label for="amount" class="form-label">최소 주문 금액: </label>
-        <input type="text" class="form-control" name="amount" id="amount"
-               th:value="${pointPolicy?.amount}">
+        <label for="minimumOrderAmount" class="form-label">최소 주문 금액: </label>
+        <input type="text" class="form-control" name="minimumOrderAmount" id="minimumOrderAmount"
+               th:value="${couponType?.minimumOrderAmount}">
     </div>
 
     <div class="mb-3">
-        <label for="amount" class="form-label">최대 할인 금액: </label>
-        <input type="text" class="form-control" name="amount" id="amount"
-               th:value="${pointPolicy?.amount}">
+        <label for="maximumOrderAmount" class="form-label">최대 할인 금액: </label>
+        <input type="text" class="form-control" name="maximumOrderAmount" id="maximumOrderAmount"
+               th:value="${couponType?.maximumOrderAmount}">
     </div>
 
     <div class="mb-3">
-        <label for="type" class="form-label">쿠폰 상태: </label>
+        <label for="status" class="form-label">쿠폰 상태: </label>
         <br/>
-        <select class="form-select" name="type" id="type" size="5">
-            <option th:selected="${pointPolicy?.policyType} == 'PERCENT'" value="PERCENT">퍼센트쿠폰</option>
-            <option th:selected="${pointPolicy?.policyType} == 'AMOUNT'" value="AMOUNT">금액쿠폰</option>
+        <select class="form-select" name="status" id="status" size="5">
+            <option th:selected="${couponType?.status} == 'DELETE'" value="DELETE">삭제</option>
+            <option th:selected="${couponType?.status} == 'BATCH'" value="BATCH">일괄발급</option>
+            <option th:selected="${couponType?.status} == 'INDIVIDUAL'" value="INDIVIDUAL">개별발급</option>
+
         </select>
     </div>
 
