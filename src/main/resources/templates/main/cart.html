@@ -102,7 +102,7 @@
                       th:text="'배송비 : ₩ ' +${deliveryPolicy.deliveryFee}"></span>
                 <hr>
                 <span id="totalAmount" style="font-weight: bold; font-size: 1.4em;"
-                      th:text="'합계 : ₩ ' + ${totalPrice + deliveryPolicy.deliveryFee}"></span>
+                      th:text="'합계 : ₩ ' + ${totalPrice + (totalPrice >= 30000 ? 0 : deliveryPolicy.deliveryFee)}"></span>
             </div>
         </div>
         <button id="orderButton" onclick="checkStockAndBuy()" class="btn btn-block btn-primary">주문하기</button>
