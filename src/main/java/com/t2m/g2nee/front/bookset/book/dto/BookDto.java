@@ -158,7 +158,7 @@ public class BookDto {
     @Getter
     public enum SearchCondition {
 
-        INTEGRATION("통합검색"), PUBLISHER("출판사"), CONTRIBUTOR("참여자"), TAG("태그");
+        TITLE("제목"),INTEGRATION("통합검색"), PUBLISHER("출판사"), CONTRIBUTOR("참여자"), TAG("태그");
 
         private final String value;
 
