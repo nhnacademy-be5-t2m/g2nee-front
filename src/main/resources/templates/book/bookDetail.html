@@ -59,8 +59,8 @@
                 </div>
                 <div>
                     <i class="fa-solid fa-tag"></i>
-                    <span th:each="tag : ${book.tagList}">
-                                <span th:text="${tag.tagName}"></span>
+                    <span th:each="tag, index : ${book.tagList}" th:inline="text">
+                             <span th:text="${tag.tagName + (index.last ? '' : ', ')}"></span>
                             </span>
                 </div>
                 <div class="d-flex mb-3">
@@ -653,4 +653,6 @@
             document.getElementById('reviewTitle').textContent = '리뷰작성';
         })
     }
+
+
 </script>
