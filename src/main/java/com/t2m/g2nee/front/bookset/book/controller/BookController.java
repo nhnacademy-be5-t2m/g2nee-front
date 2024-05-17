@@ -125,7 +125,7 @@ public class BookController {
                                   @RequestParam(required = false) String condition) {
 
         if (!StringUtils.hasText(sort)) {
-            sort = "viewCount";
+            sort = "accuracy";
         }
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
@@ -169,7 +169,7 @@ public class BookController {
                                               @PathVariable("categoryId") Long categoryId) {
 
         if (!StringUtils.hasText(sort)) {
-            sort = "viewCount";
+            sort = "accuracy";
         }
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
@@ -211,7 +211,7 @@ public class BookController {
                                       @PathVariable("categoryId") Long categoryId) {
 
         if (!StringUtils.hasText(sort)) {
-            sort = "viewCount";
+            sort = "accuracy";
         }
 
         MemberDetailInfoResponseDto member = (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);

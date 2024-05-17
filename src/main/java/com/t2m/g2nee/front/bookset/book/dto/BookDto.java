@@ -144,7 +144,7 @@ public class BookDto {
     @Getter
     public enum Sort {
 
-        VIEWCOUNT("인기도 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
+        ACCURACY("정확도 순"),VIEWCOUNT("인기도 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
         SALEPRICEDESC("가격 높은 순"),
         SCORE("평점 순"), REVIEW("리뷰 순");
 
