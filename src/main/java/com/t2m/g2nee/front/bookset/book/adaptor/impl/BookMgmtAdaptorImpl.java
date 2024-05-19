@@ -202,6 +202,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         String url = URLDecoder.decode(UriComponentsBuilder
                 .fromHttpUrl(gatewayUrl + "/books/search")
                 .queryParam("page", page)
+                .queryParam("condition", "TITLE")
                 .queryParam("keyword", keyword)
                 .toUriString(), StandardCharsets.UTF_8);
 

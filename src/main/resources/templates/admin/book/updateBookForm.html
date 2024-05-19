@@ -231,11 +231,9 @@
         event.preventDefault();
     }
 
-    const url = 'http://133.186.208.183:8100/api/v1/shop';
-
     //TODO: url 바꾸기
     function fetchChildrenCategories(categoryId, callback) {
-        fetch(url + `/categories/${categoryId}/children`)
+        fetch(`/categories/${categoryId}/children`)
             .then(listResponse => {
                 if (!listResponse.ok) {
                     throw new Error('Network listResponse was not ok');
@@ -251,7 +249,7 @@
     }
 
     function fetchRootCategories(callback) {
-        fetch(url + '/categories')
+        fetch('/categories')
             .then(listResponse => {
                 if (!listResponse.ok) {
                     throw new Error('Network listResponse was not ok');
