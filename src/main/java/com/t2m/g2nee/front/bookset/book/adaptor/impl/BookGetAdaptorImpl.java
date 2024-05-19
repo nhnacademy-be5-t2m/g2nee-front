@@ -4,6 +4,7 @@ import com.t2m.g2nee.front.bookset.book.adaptor.BookGetAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
@@ -132,15 +133,16 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        String url = URLDecoder.decode(UriComponentsBuilder
+        String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
+
+        String url = UriComponentsBuilder
                 .fromHttpUrl(gatewayUrl + "/books/search")
                 .queryParam("memberId", memberId)
                 .queryParam("page", page)
-                .queryParam("keyword", keyword)
                 .queryParam("sort", sort)
                 .queryParam("condition", condition)
-                .toUriString(), StandardCharsets.UTF_8);
-
+                .queryParam("keyword", encodedKeyword)
+                .toUriString();
 
         PageResponse<BookDto.ListResponse> responses = restTemplate.exchange(
                         url,
@@ -230,12 +232,14 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
+        String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
+
         String url = URLDecoder.decode(UriComponentsBuilder
                 .fromHttpUrl(gatewayUrl + "/books/search")
                 .queryParam("memberId", memberId)
                 .queryParam("categoryId", categoryId)
                 .queryParam("page", page)
-                .queryParam("keyword", keyword)
+                .queryParam("keyword", encodedKeyword)
                 .queryParam("sort", sort)
                 .toUriString(), StandardCharsets.UTF_8);
 
