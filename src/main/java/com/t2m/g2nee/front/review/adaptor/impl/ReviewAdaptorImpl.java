@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.review.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.review.adaptor.ReviewAdaptor;
 import com.t2m.g2nee.front.review.dto.ReviewDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -41,7 +43,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
             body.add("image", image.getResource());
         }
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeHttpHeaders());
 
         String url = gatewayUrl + "/reviews";
 
@@ -64,7 +66,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<ReviewDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
         String url = gatewayUrl + "/reviews";
 
         restTemplate.exchange(
@@ -80,7 +82,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
         String url = gatewayUrl + "/reviews?memberId=" + memberId + "&bookId=" + bookId;
 
         return restTemplate.exchange(
@@ -98,7 +100,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/reviews/book/" + bookId + "?page=" + page;
 

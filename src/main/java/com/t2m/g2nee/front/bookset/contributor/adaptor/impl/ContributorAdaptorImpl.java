@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.contributor.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.bookset.contributor.adaptor.ContributorAdaptor;
 import com.t2m.g2nee.front.bookset.contributor.dto.ContributorDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -35,7 +37,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/contributors/list";
 
@@ -59,7 +61,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/contributors";
 
@@ -84,7 +86,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/contributors?page=" + page;
 
@@ -109,7 +111,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<ContributorDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/contributors/" + contributorId;
 
@@ -133,7 +135,7 @@ public class ContributorAdaptorImpl implements ContributorAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/contributors/" + contributorId;
 

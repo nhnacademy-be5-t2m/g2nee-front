@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.role.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.bookset.role.adaptor.RoleAdaptor;
 import com.t2m.g2nee.front.bookset.role.dto.RoleDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -35,7 +37,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/roles/list";
 
@@ -59,7 +61,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/roles";
 
@@ -85,7 +87,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/roles?page=" + page;
 
@@ -110,7 +112,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<RoleDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/roles/" + roleId;
 
@@ -134,7 +136,7 @@ public class RoleAdaptorImpl implements RoleAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/roles/" + roleId;
 

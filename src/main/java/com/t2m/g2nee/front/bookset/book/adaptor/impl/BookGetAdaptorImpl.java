@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.book.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.bookset.book.adaptor.BookGetAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -41,7 +43,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
 
         String url = URLDecoder.decode(UriComponentsBuilder
@@ -70,7 +72,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/books/new";
         // 회원은 삭제된 책을 조회하지 못하게 필터링
@@ -98,7 +100,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/books/bestseller";
         // 회원은 삭제된 책을 조회하지 못하게 필터링
@@ -131,7 +133,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
@@ -181,7 +183,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = URLDecoder.decode(UriComponentsBuilder
                 .fromHttpUrl(gatewayUrl + "/books/category/" + categoryId)
@@ -230,7 +232,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
@@ -276,7 +278,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
         String categoryIds = categoryIdList.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
@@ -304,7 +306,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
         String bookIds = bookIdList.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
@@ -327,7 +329,7 @@ public class BookGetAdaptorImpl implements BookGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
         String url =
                 gatewayUrl + "/books/like/member/" + memberId + "?page=" + page;
 

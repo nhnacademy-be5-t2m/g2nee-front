@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.point.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.point.adaptor.PointAdaptor;
 import com.t2m.g2nee.front.point.dto.PointResponseDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -32,7 +34,7 @@ public class PointAdaptorImpl implements PointAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/point/member/" + memberId;
 

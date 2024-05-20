@@ -45,7 +45,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
         HttpHeaders detailHeaders = new HttpHeaders();
         detailHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> detailEntity = new HttpEntity<>(detailHeaders);
+        HttpEntity<String> detailEntity = new HttpEntity<>(makeHttpHeaders());
         String url = orderUrl + "/orderDetails/" + orderId;
 
         ResponseEntity<List<OrderDetailDto.Response>> detailResponse = restTemplate.exchange(
@@ -69,7 +69,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     public OrderInfoDto.Response getOrderById(Long orderId) {
         HttpHeaders orderHeaders = new HttpHeaders();
         orderHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> orderEntity = new HttpEntity<>(orderHeaders);
+        HttpEntity<String> orderEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = orderUrl + "/order/" + orderId;
         ResponseEntity<OrderInfoDto.Response> responseEntity = restTemplate.exchange(
@@ -86,7 +86,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     public OrderInfoDto.Response getOrderByNumber(String orderNumber) {
         HttpHeaders orderHeaders = new HttpHeaders();
         orderHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> orderEntity = new HttpEntity<>(orderHeaders);
+        HttpEntity<String> orderEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = orderUrl + "/nonmembers/" + orderNumber;
 
@@ -118,7 +118,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
     public PageResponse<OrderForPaymentDto> getOrderListForMembers(Long customerId, int page) {
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
+        HttpEntity<String> stringHttpEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = orderUrl + "/members/" + customerId + "/list?page=" + page;
         ResponseEntity<PageResponse<OrderForPaymentDto>> orderListEntity
@@ -137,7 +137,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
 
         HttpHeaders listHeaders = new HttpHeaders();
         listHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> stringHttpEntity = new HttpEntity<>(listHeaders);
+        HttpEntity<String> stringHttpEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = orderUrl + "/admin/orders/list?page=" + page;
         ResponseEntity<PageResponse<OrderInfoDto.ListResponse>> orderListEntity
@@ -161,7 +161,7 @@ public class OrderGetAdaptorImpl implements OrderGetAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<OrderInfoDto.OrderState> stateEntity = new HttpEntity<>(stateRequest, headers);
+        HttpEntity<OrderInfoDto.OrderState> stateEntity = new HttpEntity<>(stateRequest, makeHttpHeaders());
         String url = orderUrl + "/state/" + orderId;
 
         restTemplate.exchange(

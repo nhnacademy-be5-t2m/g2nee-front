@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.book.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.bookset.book.adaptor.BookMgmtAdaptor;
 import com.t2m.g2nee.front.bookset.book.dto.BookDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -51,7 +53,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         }
         body.addAll("details", multipartFileList);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeHttpHeaders());
 
         String url = gatewayUrl + "/books";
 
@@ -76,7 +78,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
         String url = gatewayUrl + "/books/" + bookId + "/update";
 
         return restTemplate.exchange(
@@ -113,7 +115,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         }
         body.addAll("details", multipartFileList);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeHttpHeaders());
         String url = gatewayUrl + "/books/" + bookId;
 
         restTemplate.exchange(
@@ -137,7 +139,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<BookDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<BookDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
         String url = gatewayUrl + "/books/status/" + bookId;
 
         restTemplate.exchange(
@@ -154,7 +156,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
         String url = gatewayUrl + "/books/quantity/" + bookId + "?quantity=" + quantity;
 
         return restTemplate.exchange(
@@ -179,7 +181,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("page", String.valueOf(page));
 
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, headers);
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, makeHttpHeaders());
         String url = gatewayUrl + "/books/list?page=" + page;
 
         return restTemplate.exchange(
@@ -197,7 +199,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = URLDecoder.decode(UriComponentsBuilder
                 .fromHttpUrl(gatewayUrl + "/books/search")

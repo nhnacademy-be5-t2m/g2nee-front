@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.publisher.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.bookset.publisher.adaptor.PublisherAdaptor;
 import com.t2m.g2nee.front.bookset.publisher.dto.PublisherDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -34,7 +36,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/publishers";
 
@@ -51,7 +53,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/publishers/list";
 
@@ -69,7 +71,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/publishers?page=" + page;
 
@@ -87,7 +89,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<PublisherDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/publishers/" + publisherId;
 
@@ -104,7 +106,7 @@ public class PublisherAdaptorImpl implements PublisherAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/publishers/" + publisherId;
 

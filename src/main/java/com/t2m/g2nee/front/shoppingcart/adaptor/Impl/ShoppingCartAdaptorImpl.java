@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.shoppingcart.adaptor.Impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.shoppingcart.adaptor.ShoppingCartAdaptor;
 import com.t2m.g2nee.front.shoppingcart.dto.ShoppingCartDto;
 import java.util.List;
@@ -27,7 +29,7 @@ public class ShoppingCartAdaptorImpl implements ShoppingCartAdaptor {
     public ShoppingCartDto.Response getBookForCart(String bookId, int quantity) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/carts/book/" + bookId + "?quantity=" + quantity;
 

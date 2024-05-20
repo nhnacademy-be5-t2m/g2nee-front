@@ -54,7 +54,24 @@ public class CustomExceptionAdvice {
      * @return
      */
     @ExceptionHandler(CustomException.class)
+    @Member
     public String showError(CustomException e, Model model) {
+        if(e.getHttpStatus()==HttpStatus.UNAUTHORIZED){
+            model.addAttribute("tokenError", "재로그인이 필요합니다.");
+            ServletRequestAttributes servletRequestAttributes =
+                    (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletResponse response = servletRequestAttributes.getResponse();
+            deleteCookie(response, JwtUtil.ACCESS_COOKIE);
+            // 리프레시 토큰이 만료되면 DB에 장바구니 정보를 옮깁니다.
+            MemberDetailInfoResponseDto memberDetailInfoResponseDto =
+                    (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
+            if (memberDetailInfoResponseDto != null) {
+                Long memberId = memberDetailInfoResponseDto.getMemberId();
+                shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
+            }
+
+            return "redirect:/login";
+        }
         model.addAttribute("error", e);
         return "/error/errorPage";
     }
@@ -114,15 +131,14 @@ public class CustomExceptionAdvice {
             ServletRequestAttributes servletRequestAttributes =
                     (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpServletResponse response = servletRequestAttributes.getResponse();
+            deleteCookie(response, JwtUtil.ACCESS_COOKIE);
             // 리프레시 토큰이 만료되면 DB에 장바구니 정보를 옮깁니다.
             MemberDetailInfoResponseDto memberDetailInfoResponseDto =
                     (MemberDetailInfoResponseDto) memberAspect.getThreadLocal(MEMBER_INFO);
-            Long memberId = memberDetailInfoResponseDto.getMemberId();
-            shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
-            deleteCookie(response, JwtUtil.ACCESS_COOKIE);
-            Cookie sessionCookie = CookieUtil.findCookie(SESSION_ID);
-//        redisTemplate.opsForHash().delete("SPRING_SECURITY_CONTEXT", sessionCookie.getValue());
-//        deleteCookie(response, SESSION_ID);
+            if (memberDetailInfoResponseDto != null) {
+                Long memberId = memberDetailInfoResponseDto.getMemberId();
+                shoppingCartService.migrateCartRedisToDB(String.valueOf(memberId));
+            }
             return "redirect:/login";
         }
         model.addAttribute("error", new CustomException(HttpStatus.NOT_FOUND, "페이지를 찾을 수 없습니다."));

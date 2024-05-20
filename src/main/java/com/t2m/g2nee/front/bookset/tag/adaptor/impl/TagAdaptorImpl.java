@@ -1,5 +1,7 @@
 package com.t2m.g2nee.front.bookset.tag.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
+
 import com.t2m.g2nee.front.bookset.tag.adaptor.TagAdaptor;
 import com.t2m.g2nee.front.bookset.tag.dto.TagDto;
 import com.t2m.g2nee.front.utils.PageResponse;
@@ -34,7 +36,7 @@ public class TagAdaptorImpl implements TagAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/tags/list";
 
@@ -59,7 +61,7 @@ public class TagAdaptorImpl implements TagAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/tags";
 
@@ -84,7 +86,7 @@ public class TagAdaptorImpl implements TagAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/tags?page=" + page;
 
@@ -109,7 +111,7 @@ public class TagAdaptorImpl implements TagAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<TagDto.Request> requestEntity = new HttpEntity<>(request, makeHttpHeaders());
 
         String url = gatewayUrl + "/tags/" + tagId;
 
@@ -133,7 +135,7 @@ public class TagAdaptorImpl implements TagAdaptor {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(makeHttpHeaders());
 
         String url = gatewayUrl + "/tags/" + tagId;
 
