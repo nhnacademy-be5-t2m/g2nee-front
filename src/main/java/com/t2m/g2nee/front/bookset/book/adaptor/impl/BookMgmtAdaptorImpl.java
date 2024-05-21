@@ -53,7 +53,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         }
         body.addAll("details", multipartFileList);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeHttpHeaders());
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         String url = gatewayUrl + "/books";
 
@@ -115,7 +115,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         }
         body.addAll("details", multipartFileList);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeHttpHeaders());
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         String url = gatewayUrl + "/books/" + bookId;
 
         restTemplate.exchange(

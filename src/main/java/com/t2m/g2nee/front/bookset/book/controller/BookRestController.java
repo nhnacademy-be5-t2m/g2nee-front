@@ -42,9 +42,9 @@ public class BookRestController {
     }
 
     @PatchMapping("/{bookId}")
-    public ResponseEntity<Integer> modifyBookQuantity(@PathVariable Long bookId, @RequestParam int quantity){
+    public ResponseEntity<Integer> modifyBookQuantity(@PathVariable Long bookId, @RequestParam int quantity) {
 
-        Integer modifiedQuantity = bookMgmtService.addBookQuantity(bookId,quantity);
+        Integer modifiedQuantity = bookMgmtService.addBookQuantity(bookId, quantity);
 
         return ResponseEntity.ok(modifiedQuantity);
     }

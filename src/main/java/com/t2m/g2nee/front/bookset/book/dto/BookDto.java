@@ -144,7 +144,7 @@ public class BookDto {
     @Getter
     public enum Sort {
 
-        ACCURACY("정확도 순"),VIEWCOUNT("인기도 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
+        ACCURACY("정확도 순"), VIEWCOUNT("인기도 순"), PUBLISHEDDATE("출간일 순"), SALEPRICEASC("가격 낮은 순"),
         SALEPRICEDESC("가격 높은 순"),
         SCORE("평점 순"), REVIEW("리뷰 순");
 
@@ -158,7 +158,7 @@ public class BookDto {
     @Getter
     public enum SearchCondition {
 
-        TITLE("제목"),INTEGRATION("통합검색"), PUBLISHER("출판사"), CONTRIBUTOR("참여자"), TAG("태그");
+        TITLE("제목"), INTEGRATION("통합검색"), PUBLISHER("출판사"), CONTRIBUTOR("참여자"), TAG("태그");
 
         private final String value;
 

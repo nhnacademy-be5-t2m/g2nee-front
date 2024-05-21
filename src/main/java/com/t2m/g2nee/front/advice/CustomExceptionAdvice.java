@@ -1,7 +1,6 @@
 package com.t2m.g2nee.front.advice;
 
 import static com.t2m.g2nee.front.aop.MemberAspect.MEMBER_INFO;
-import static com.t2m.g2nee.front.token.util.JwtUtil.SESSION_ID;
 import static com.t2m.g2nee.front.utils.CookieUtil.deleteCookie;
 
 import com.t2m.g2nee.front.annotation.Member;
@@ -10,8 +9,6 @@ import com.t2m.g2nee.front.exception.CustomException;
 import com.t2m.g2nee.front.member.dto.response.MemberDetailInfoResponseDto;
 import com.t2m.g2nee.front.shoppingcart.service.ShoppingCartService;
 import com.t2m.g2nee.front.token.util.JwtUtil;
-import com.t2m.g2nee.front.utils.CookieUtil;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -56,7 +53,7 @@ public class CustomExceptionAdvice {
     @ExceptionHandler(CustomException.class)
     @Member
     public String showError(CustomException e, Model model) {
-        if(e.getHttpStatus()==HttpStatus.UNAUTHORIZED){
+        if (e.getHttpStatus() == HttpStatus.UNAUTHORIZED) {
             model.addAttribute("tokenError", "재로그인이 필요합니다.");
             ServletRequestAttributes servletRequestAttributes =
                     (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
