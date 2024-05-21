@@ -1,5 +1,6 @@
 package com.t2m.g2nee.front.review.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeFileHttpHeaders;
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.review.adaptor.ReviewAdaptor;
