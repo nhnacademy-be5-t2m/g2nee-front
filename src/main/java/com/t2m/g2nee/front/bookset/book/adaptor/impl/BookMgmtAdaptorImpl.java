@@ -1,5 +1,6 @@
 package com.t2m.g2nee.front.bookset.book.adaptor.impl;
 
+import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeFileHttpHeaders;
 import static com.t2m.g2nee.front.utils.HttpHeadersUtil.makeHttpHeaders;
 
 import com.t2m.g2nee.front.bookset.book.adaptor.BookMgmtAdaptor;
@@ -53,7 +54,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         }
         body.addAll("details", multipartFileList);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeFileHttpHeaders());
 
         String url = gatewayUrl + "/books";
 
@@ -115,7 +116,7 @@ public class BookMgmtAdaptorImpl implements BookMgmtAdaptor {
         }
         body.addAll("details", multipartFileList);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeFileHttpHeaders());
         String url = gatewayUrl + "/books/" + bookId;
 
         restTemplate.exchange(

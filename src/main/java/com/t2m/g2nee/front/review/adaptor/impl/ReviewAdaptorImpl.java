@@ -43,7 +43,7 @@ public class ReviewAdaptorImpl implements ReviewAdaptor {
             body.add("image", image.getResource());
         }
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeHttpHeaders());
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, makeFileHttpHeaders());
 
         String url = gatewayUrl + "/reviews";
 
