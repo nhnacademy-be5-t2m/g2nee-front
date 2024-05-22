@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 /**
  * 책 관리 controller 클래스
@@ -138,6 +139,9 @@ public class BookController {
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksBySearch(page, memberId, keyword, sort, condition);
 
+        String encodedKeyword = UriEncoder.encode(keyword);
+
+        model.addAttribute("encodedKeyword", encodedKeyword);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
@@ -182,6 +186,11 @@ public class BookController {
 
         PageResponse<BookDto.ListResponse> bookPage =
                 bookGetService.getBooksBySearchByCategory(page, memberId, sort, keyword, categoryId);
+
+
+        String encodedKeyword = UriEncoder.encode(keyword);
+
+        model.addAttribute("encodedKeyword", encodedKeyword);
         model.addAttribute("keyword", keyword);
         model.addAttribute("bookPage", bookPage);
         model.addAttribute("sortName", BookDto.Sort.valueOf(sort.toUpperCase()).getValue());
